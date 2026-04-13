@@ -11,8 +11,6 @@
     --text-color-dark: #070700;
 
     /* Dashboard Colors */
-
-    /** Base colors */
     --clr-dark-a0: #000000;
     --clr-light-a0: #ffffff;
 
@@ -59,10 +57,11 @@
     --clr-info-a0: #1e56a3;
     --clr-info-a10: #347ada;
     --clr-info-a20: #74a4e6;
+}
 
-    /** Examples */
-    .bg-primary {
-        color: var(--clr-primary-a50);
-        background-color: var(--clr-surface-a0);
-    }
+body,
+html {
+    margin: 0;
+    min-width: 100vw;
+    min-height: 100vh;
 }
