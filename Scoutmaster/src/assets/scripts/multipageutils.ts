@@ -13,3 +13,12 @@ export function useScreenType(): "phone" | "tablet" | "desktop" {
 
     return isDesktop ? "desktop" : isTablet ? "tablet" : "phone";
 }
+
+/**
+ * Returns whether the user is currently signed in or not
+ *
+ * @returns true | false
+ */
+export function useSignedIn(): true | false {
+    return false;
+}

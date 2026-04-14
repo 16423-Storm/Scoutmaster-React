@@ -1,81 +1,10 @@
-:root {
-    /* Base Colors */
-    --clr-custom-a0: #f8f8ff;
-    --clr-custom-a10: #eb0000;
-    --clr-custom-a20: #90143c;
-    --clr-custom-a30: #3300fc;
-    --clr-custom-a40: #1b2eaa;
-
-    /* Text Colors */
-    --text-color-light: #e3e3e3;
-    --text-color-dark: #070700;
-
-    /* Dashboard Colors */
-    --clr-dark-a0: #000000;
-    --clr-light-a0: #ffffff;
-
-    /** Theme primary colors */
-    --clr-primary-a0: #90143c;
-    --clr-primary-a10: #7f1636;
-    --clr-primary-a20: #6f1730;
-    --clr-primary-a30: #5f172a;
-    --clr-primary-a40: #501624;
-    --clr-primary-a50: #41141e;
-
-    /** Theme surface colors */
-    --clr-surface-a0: #f8f8ff;
-    --clr-surface-a10: #eaeaf0;
-    --clr-surface-a20: #dcdce1;
-    --clr-surface-a30: #ceced3;
-    --clr-surface-a40: #c1c1c5;
-    --clr-surface-a50: #b4b4b6;
-
-    /** Theme tonal surface colors */
-    --clr-surface-tonal-a0: #f0e2e9;
-    --clr-surface-tonal-a10: #e3d7dd;
-    --clr-surface-tonal-a20: #d6cbd1;
-    --clr-surface-tonal-a30: #c9c0c5;
-    --clr-surface-tonal-a40: #bdb5b9;
-    --clr-surface-tonal-a50: #b0aaad;
-
-    /** Success colors */
-    --clr-success-a0: #1b7f5c;
-    --clr-success-a10: #28be8a;
-    --clr-success-a20: #58dbad;
-
-    /** Warning colors */
-    --clr-warning-a0: #b8871f;
-    --clr-warning-a10: #dfae44;
-    --clr-warning-a20: #ebca85;
-
-    /** Danger colors */
-    --clr-danger-a0: #b13535;
-    --clr-danger-a10: #d06262;
-    --clr-danger-a20: #e29d9d;
-
-    /** Info colors */
-    --clr-info-a0: #1e56a3;
-    --clr-info-a10: #347ada;
-    --clr-info-a20: #74a4e6;
-}
-
-body,
-html {
-    min-width: 100vw;
-    min-height: 100vh;
-}
-
-* {
-    margin: 0px;
-    padding: 0px;
-}
-
 .phone-landing-hero {
+    flex-direction: column;
     width: 100%;
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
 
     background: linear-gradient(270deg, #eb0000, #95008a, #3300fc);
     background-size: 600% 600%;
@@ -88,8 +17,89 @@ html {
 
 .phone-landing-herotitle {
     padding: 50px;
+    padding-bottom: 10px;
     box-sizing: border-box;
-    font-size: 3rem;
+    font-size: 3.6rem;
+    font-weight: 900;
+    color: var(--text-color-light);
+}
+
+.phone-landing-herologo {
+    width: 15rem;
+    height: auto;
+}
+
+.phone-landing-navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+    height: 10vh;
+}
+
+.phone-landing-navbar button:not(.phone-landing-signinbutton) {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-decoration: underline;
+
+    transition:
+        transform 0.15s ease,
+        text-shadow 0.15s ease;
+}
+
+.phone-landing-navbar button:not(.phone-landing-signinbutton):active {
+    cursor: pointer;
+
+    text-shadow:
+        0 0 0.6px rgba(255, 255, 255, 0.9),
+        0 0 0.6px rgba(255, 255, 255, 0.9);
+}
+
+.phone-landing-signinbutton {
+    font-size: 1.5rem;
+    border-radius: 10px;
+
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 2px;
+    cursor: pointer;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.15s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.phone-landing-signinbutton:active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.phone-landing-ul {
+    padding-top: 20px;
+    box-sizing: border-box;
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    color: white;
+}
+
+.phone-landing-ul li {
+    margin-bottom: 30px;
+}
+
+.phone-landing-ul:last-child {
+    margin-bottom: 0px;
 }
 
 @-webkit-keyframes phone-landing-gradient {
