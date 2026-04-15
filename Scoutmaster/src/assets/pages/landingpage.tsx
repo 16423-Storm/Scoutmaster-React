@@ -1,12 +1,18 @@
+// Library Imports
 import { useScreenType, useSignedIn } from "../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useRef } from "react";
 import i18n from "i18next";
+
+// Script Imports
 import { languages } from "../scripts/localization.js";
 
+// Component Imports
 import { LanguageDropdown } from "./components/languagedropdown.js";
 
+// Image Imports
 import LogoWhite from "../images/branding/logowhite.png";
+import Together from "../images/icons/friends.png";
 
 function LandingPage() {
     const { t } = useTranslation();
@@ -53,15 +59,21 @@ function LandingPage() {
                     </div>
                     <p className="phone-landing-herotitle">Scoutmaster</p>
                     <img src={LogoWhite} className="phone-landing-herologo" />
-                    <div className="rowcontainer-fillrest">
-                        <div className="halfcontainer">
-                            <ul className="phone-landing-ul">
-                                <li>{t("point1")}</li>
-                                <li>{t("point2")}</li>
-                                <li>{t("point3")}</li>
-                            </ul>
-                        </div>
-                        <div className="halfcontainer"></div>
+                    <div className="centerdiv">
+                        {/* Laptop render of dashboard will go here */}
+                        <p className="phone-landing-heroslogan">
+                            {t("slogan")}
+                        </p>
+                    </div>
+                </div>
+                <div className="fullpage">
+                    <div className="centerdiv-top">
+                        <p className="phone-landing-title1">
+                            {t("landingtitle1")}
+                        </p>
+                        <p className="phone-landing-bodytext">
+                            {t("landingbody1")}
+                        </p>
                     </div>
                 </div>
             </>
