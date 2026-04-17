@@ -1,3 +1,16 @@
+/*
+
+
+
+
+
+LANDING PAGE STYLES
+
+
+
+
+
+*/
 .phone-landing-hero {
     flex-direction: column;
     width: 100%;
@@ -47,8 +60,8 @@
     text-decoration: underline;
 
     transition:
-        transform 0.15s ease,
-        text-shadow 0.15s ease;
+        transform 0.1s ease,
+        text-shadow 0.1s ease;
 }
 
 .phone-landing-navbar button:not(.phone-landing-signinbutton):active {
@@ -74,7 +87,7 @@
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 
     transition:
-        transform 0.15s ease,
+        transform 0.1s ease,
         background 0.2s ease,
         box-shadow 0.2s ease,
         border-color 0.2s ease;
@@ -148,5 +161,283 @@
     }
     100% {
         background-position: 0% 50%;
+    }
+}
+
+/*
+
+
+
+
+
+SIGN UP/SIGN IN STYLES
+
+
+
+
+
+*/
+
+.phone-signup-maincontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--clr-custom-a10);
+    width: 100vw;
+    height: 100vh;
+}
+
+.phone-signup-infocontainer {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 2px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    height: 75%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--text-color-light);
+    flex-direction: column;
+}
+
+.phone-signup-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.phone-signup-title {
+    padding: 20px;
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.phone-signup-text {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    text-align: left;
+    width: 90%;
+    font-weight: 600;
+}
+
+.phone-signup-text-hidden {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    text-align: left;
+    width: 90%;
+    font-weight: 600;
+    max-height: 0;
+    opacity: 0;
+    transition:
+        opacity 180ms ease,
+        transform 180ms ease,
+        max-height 200ms ease;
+}
+
+.phone-signup-text-hidden.show {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 300px;
+}
+
+.phone-signup-input {
+    position: relative;
+    width: 90%;
+    border-radius: 2px;
+    border: none;
+    font-size: 1rem;
+    padding: 3px;
+    box-sizing: border-box;
+}
+
+.phone-signup-input.invalid {
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+
+    background:
+        linear-gradient(#fff, #fff) padding-box,
+        repeating-linear-gradient(
+            90deg,
+            #ffffff 0px,
+            #ffffff 1px,
+            #ffffff 2px,
+            #ffffff 3px,
+            #ffffff 4px,
+            #ffffff 5px,
+            #ffffff 6px,
+            #ffffff 7px,
+            #ffffff 8px,
+            #ffffff 9px,
+            #ffffff 10px,
+            #ffffff 11px,
+            #ffffff 12px,
+            #ffffff 13px,
+            #ffffff 14px,
+            #ffffff 15px,
+            #ffffff 16px,
+            #ff0000 16px,
+            #ff0000 17px,
+            #ff0000 18px,
+            #ff0000 19px,
+            #ff0000 20px,
+            #ff0000 21px,
+            #ff0000 22px,
+            #ff0000 23px,
+            #ff0000 24px,
+            #ff0000 25px,
+            #ff0000 26px,
+            #ff0000 27px,
+            #ff0000 28px,
+            #ff0000 29px,
+            #ff0000 30px,
+            #ff0000 31px,
+            #ff0000 32px
+        );
+
+    background-size: 200% 100%;
+
+    -webkit-animation: phone-input-dash 10s linear infinite;
+    -moz-animation: phone-input-dash 10s linear infinite;
+    -o-animation: phone-input-dash 10s linear infinite;
+    animation: phone-input-dash 10s linear infinite;
+}
+
+.phone-signup-input:focus {
+    outline: none;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.35),
+        0 0 0 3px rgba(0, 0, 0, 0.15);
+    transition:
+        box-shadow 0.1s ease,
+        background-color 0.1s ease;
+}
+
+.phone-signup-passwordlist li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 6px;
+}
+
+.phone-signup-passwordlist li::before {
+    content: "X";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: bold;
+    color: #666666;
+}
+
+.phone-signup-passwordlist li {
+    color: #666666;
+    font-weight: 600;
+}
+
+.phone-signup-passwordlist li.valid::before {
+    content: "✓";
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.phone-signup-passwordlist li.valid {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+}
+
+.phone-signup-passwordlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 80%;
+    opacity: 0;
+    transform: translateY(-8px);
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 180ms ease,
+        transform 180ms ease,
+        max-height 200ms ease;
+}
+
+.phone-signup-passwordlist.show {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 300px;
+    pointer-events: auto;
+}
+
+.phone-signup-button {
+    width: 90%;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    margin: 20px;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+    font-weight: 600;
+    transition:
+        transform 120ms ease,
+        box-shadow 120ms ease,
+        opacity 120ms ease;
+}
+
+.phone-signup-button:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+}
+
+.phone-signup-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+@-webkit-keyframes phone-input-dash {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 200% 0%;
+    }
+}
+
+@-moz-keyframes phone-input-dash {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 200% 0%;
+    }
+}
+
+@-o-keyframes phone-input-dash {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 200% 0%;
+    }
+}
+
+@keyframes phone-input-dash {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 200% 0%;
     }
 }

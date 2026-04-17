@@ -1,5 +1,9 @@
 // Library Imports
-import { useScreenType, useSignedIn } from "../scripts/multipageutils";
+import {
+    useScreenType,
+    useSignedIn,
+    useGoToPage,
+} from "../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useRef } from "react";
 import i18n from "i18next";
@@ -12,7 +16,6 @@ import { LanguageDropdown } from "./components/languagedropdown.js";
 
 // Image Imports
 import LogoWhite from "../images/branding/logowhite.png";
-import Together from "../images/icons/friends.png";
 
 function LandingPage() {
     const { t } = useTranslation();
@@ -38,6 +41,8 @@ function LandingPage() {
         };
     }, []);
 
+    const goToSignUp = useGoToPage("/signup");
+
     const screenType = useScreenType();
     if (screenType === "phone") {
         return (
@@ -53,7 +58,10 @@ function LandingPage() {
                         />
                         <button>{t("wiki")}</button>
                         <button>{t("about")}</button>
-                        <button className="phone-landing-signinbutton">
+                        <button
+                            className="phone-landing-signinbutton"
+                            onClick={goToSignUp}
+                        >
                             {useSignedIn() ? t("signin") : t("signup")}
                         </button>
                     </div>

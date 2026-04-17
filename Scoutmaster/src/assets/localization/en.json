@@ -9,5 +9,15 @@
     "slogan": "The best way to scout.",
 
     "landingtitle1": "What is Scoutmaster?",
-    "landingbody1": "Scoutmaster is a First Tech Challenge scouting tool that will revolutionize how your team scouts."
+    "landingbody1": "Scoutmaster is a First Tech Challenge scouting tool that will revolutionize how your team scouts.",
+
+    "namewithcolon": "Nickname: (Do not put your real name)",
+    "emailwithcolon": "Email:",
+    "passwordwithcolon": "Password:",
+    "mustinclude": "Must Include:",
+    "passwordrequirement1": "8 Characters",
+    "passwordrequirement2": "An uppercase letter",
+    "passwordrequirement3": "A lowercase letter",
+    "passwordrequirement4": "A number",
+    "passwordrequirement5": "A symbol"
 }
