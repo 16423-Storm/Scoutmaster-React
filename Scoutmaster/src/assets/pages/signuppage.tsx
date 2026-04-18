@@ -13,7 +13,6 @@ function SignUpPage() {
     const screenType = useScreenType();
 
     const [form, setForm] = useState<SignUpData>({
-        name: "",
         email: "",
         password: "",
     });
