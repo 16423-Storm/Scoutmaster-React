@@ -42,6 +42,7 @@ function LandingPage() {
     }, []);
 
     const goToSignUp = useGoToPage("/signup");
+    const goToSignIn = useGoToPage("/signin");
 
     const screenType = useScreenType();
     if (screenType === "phone") {
@@ -60,7 +61,7 @@ function LandingPage() {
                         <button>{t("about")}</button>
                         <button
                             className="phone-landing-signinbutton"
-                            onClick={goToSignUp}
+                            onClick={useSignedIn() ? goToSignIn : goToSignUp}
                         >
                             {useSignedIn() ? t("signin") : t("signup")}
                         </button>

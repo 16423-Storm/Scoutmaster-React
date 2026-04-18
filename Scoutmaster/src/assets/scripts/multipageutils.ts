@@ -1,5 +1,6 @@
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
+import { isUserSignedIn } from "./auth";
 
 /**
  * Returns the current screen category based on viewport width.
@@ -21,7 +22,7 @@ export function useScreenType(): "phone" | "tablet" | "desktop" {
  * @returns true | false
  */
 export function useSignedIn(): true | false {
-    return false;
+    return isUserSignedIn();
 }
 
 /**

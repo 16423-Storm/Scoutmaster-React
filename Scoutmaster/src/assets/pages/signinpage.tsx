@@ -1,15 +1,16 @@
 import { useState, useMemo, type ChangeEvent, type FormEvent } from "react";
-import { useScreenType } from "../scripts/multipageutils";
+import { useScreenType } from "../scripts/multipageutils.js";
 import { useTranslation } from "react-i18next";
-import { signUp } from "../scripts/auth.js";
+import { signIn } from "../scripts/auth.js";
 import { MdOutlineEmail, MdOutlineLock } from "react-icons/md";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 import type { UserData, SignUpFocus } from "../scripts/auth.js";
-import { useGoToPage } from "../scripts/multipageutils";
+import { useGoToPage } from "../scripts/multipageutils.js";
 
 import logobanner from "../images/branding/logowhitebanner.png";
 
-function SignUpPage() {
+function SignInPage() {
     const { t } = useTranslation();
     const screenType = useScreenType();
 
@@ -54,19 +55,20 @@ function SignUpPage() {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!canSubmit) return;
-        signUp(form);
+        signIn(form);
     };
 
     const canSubmit = emailValid && passwordValid;
 
-    const goToSignIn = useGoToPage("/signin");
+    const goToSignUp = useGoToPage("/signup");
+    const [showPassword, setShowPassword] = useState(false);
 
     if (screenType === "phone") {
         return (
             <div className="phone-signup-maincontainer">
                 <img className="image85" src={logobanner} />
                 <div className="phone-signup-infocontainer">
-                    <p className="phone-signup-title">{t("signup")}</p>
+                    <p className="phone-signup-title">{t("signin")}</p>
 
                     <form onSubmit={handleSubmit} className="phone-signup-form">
                         <p className="phone-signup-text">
@@ -85,60 +87,47 @@ function SignUpPage() {
                             <MdOutlineLock className="phone-signup-input-icon" />{" "}
                             {t("passwordwithcolon")}
                         </p>
-                        <input
-                            className={`phone-signup-input ${
-                                form.password.length > 0 && !passwordValid
-                                    ? "invalid"
-                                    : ""
-                            }`}
-                            type="password"
-                            value={form.password}
-                            name="password"
-                            onChange={updateField("password")}
-                        />
+                        <div className="phone-signup-password-input-wrapper">
+                            <input
+                                className={`phone-signup-input ${
+                                    form.password.length > 0 && !passwordValid
+                                        ? "invalid"
+                                        : ""
+                                }`}
+                                type={showPassword ? "text" : "password"}
+                                value={form.password}
+                                name="password"
+                                onChange={updateField("password")}
+                            />
 
-                        <p
-                            className={`phone-signup-text-hidden ${
-                                showPasswordRules ? "show" : ""
-                            }`}
-                        >
-                            {t("mustinclude")}
-                        </p>
-
-                        <ul
-                            className={`phone-signup-passwordlist ${
-                                showPasswordRules ? "show" : ""
-                            }`}
-                        >
-                            <li className={inputClass(hasRules.length)}>
-                                {t("passwordrequirement1")}
-                            </li>
-                            <li className={inputClass(hasRules.upper)}>
-                                {t("passwordrequirement2")}
-                            </li>
-                            <li className={inputClass(hasRules.lower)}>
-                                {t("passwordrequirement3")}
-                            </li>
-                            <li className={inputClass(hasRules.number)}>
-                                {t("passwordrequirement4")}
-                            </li>
-                            <li className={inputClass(hasRules.symbol)}>
-                                {t("passwordrequirement5")}
-                            </li>
-                        </ul>
+                            <button
+                                type="button"
+                                className="phone-signup-eye-icon"
+                                onPointerDown={(e) => {
+                                    e.preventDefault();
+                                    setShowPassword((prev) => !prev);
+                                }}
+                            >
+                                {showPassword ? (
+                                    <IoMdEyeOff size={20} />
+                                ) : (
+                                    <IoMdEye size={20} />
+                                )}
+                            </button>
+                        </div>
                         <button
                             type="submit"
                             className="phone-signup-button"
                             disabled={!canSubmit}
                         >
-                            {t("signup")}
+                            {t("signin")}
                         </button>
 
                         <a className="phone-signup-bottomtext">
-                            {t("alreadyhaveaccount")}{" "}
+                            {t("donthaveaccount")}{" "}
                             <span
                                 className="phone-signup-bottomlink"
-                                onClick={goToSignIn}
+                                onClick={goToSignUp}
                             >
                                 {t("clickhere")}
                             </span>
@@ -171,4 +160,4 @@ function SignUpPage() {
     );
 }
 
-export default SignUpPage;
+export default SignInPage;
