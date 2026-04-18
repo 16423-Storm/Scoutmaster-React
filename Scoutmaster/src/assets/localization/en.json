@@ -11,7 +11,6 @@
     "landingtitle1": "What is Scoutmaster?",
     "landingbody1": "Scoutmaster is a First Tech Challenge scouting tool that will revolutionize how your team scouts.",
 
-    "namewithcolon": "Nickname: (Do not put your real name)",
     "emailwithcolon": "Email:",
     "passwordwithcolon": "Password:",
     "mustinclude": "Must Include:",
@@ -19,5 +18,9 @@
     "passwordrequirement2": "An uppercase letter",
     "passwordrequirement3": "A lowercase letter",
     "passwordrequirement4": "A number",
-    "passwordrequirement5": "A symbol"
+    "passwordrequirement5": "A symbol",
+    "alreadyhaveaccount": "Already have an account?",
+    "clickhere": "Click here!",
+    "bysigningupyouagree": "By creating a Scoutmaster account, you agree to the",
+    "privacypolicylowercase": "privacy policy"
 }

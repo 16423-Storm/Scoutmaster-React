@@ -185,6 +185,7 @@ SIGN UP/SIGN IN STYLES
     background-color: var(--clr-custom-a10);
     width: 100vw;
     height: 100vh;
+    flex-direction: column;
 }
 
 .phone-signup-infocontainer {
@@ -195,7 +196,6 @@ SIGN UP/SIGN IN STYLES
     padding: 2px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
     width: 90%;
-    height: 75%;
     border-radius: 10px;
     display: flex;
     justify-content: flex-start;
@@ -228,6 +228,8 @@ SIGN UP/SIGN IN STYLES
     text-align: left;
     width: 90%;
     font-weight: 600;
+    display: flex;
+    align-items: center;
 }
 
 .phone-signup-text-hidden {
@@ -252,6 +254,12 @@ SIGN UP/SIGN IN STYLES
     max-height: 300px;
 }
 
+.phone-signup-input-icon {
+    font-weight: 200;
+    width: 1.3rem;
+    height: auto;
+}
+
 .phone-signup-input {
     position: relative;
     width: 90%;
@@ -260,6 +268,7 @@ SIGN UP/SIGN IN STYLES
     font-size: 1rem;
     padding: 3px;
     box-sizing: border-box;
+    margin-bottom: 10px;
 }
 
 .phone-signup-input.invalid {
@@ -287,23 +296,23 @@ SIGN UP/SIGN IN STYLES
             #ffffff 14px,
             #ffffff 15px,
             #ffffff 16px,
-            #ff0000 16px,
-            #ff0000 17px,
-            #ff0000 18px,
-            #ff0000 19px,
-            #ff0000 20px,
-            #ff0000 21px,
-            #ff0000 22px,
-            #ff0000 23px,
-            #ff0000 24px,
-            #ff0000 25px,
-            #ff0000 26px,
-            #ff0000 27px,
-            #ff0000 28px,
-            #ff0000 29px,
-            #ff0000 30px,
-            #ff0000 31px,
-            #ff0000 32px
+            var(--clr-custom-a10) 16px,
+            var(--clr-custom-a10) 17px,
+            var(--clr-custom-a10) 18px,
+            var(--clr-custom-a10) 19px,
+            var(--clr-custom-a10) 20px,
+            var(--clr-custom-a10) 21px,
+            var(--clr-custom-a10) 22px,
+            var(--clr-custom-a10) 23px,
+            var(--clr-custom-a10) 24px,
+            var(--clr-custom-a10) 25px,
+            var(--clr-custom-a10) 26px,
+            var(--clr-custom-a10) 27px,
+            var(--clr-custom-a10) 28px,
+            var(--clr-custom-a10) 29px,
+            var(--clr-custom-a10) 30px,
+            var(--clr-custom-a10) 31px,
+            var(--clr-custom-a10) 32px
         );
 
     background-size: 200% 100%;
@@ -404,6 +413,26 @@ SIGN UP/SIGN IN STYLES
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+}
+
+.phone-signup-bottomlink {
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+    color: var(--text-color-light);
+    transition: text-shadow 0.1s ease;
+    text-decoration: underline;
+}
+
+.phone-signup-bottomlink:hover {
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.6);
+}
+
+.phone-signup-bottomtext {
+    font-size: 1rem;
+    text-align: center;
+    max-width: 90%;
+    padding: 10px;
 }
 
 @-webkit-keyframes phone-input-dash {

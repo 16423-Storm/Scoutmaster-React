@@ -2,8 +2,11 @@ import { useState, useMemo, type ChangeEvent, type FormEvent } from "react";
 import { useScreenType } from "../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 import { signUp } from "../scripts/auth.js";
+import { MdOutlineEmail, MdOutlineLock } from "react-icons/md";
 
 import type { SignUpData, SignUpFocus } from "../scripts/auth.js";
+
+import logobanner from "../images/branding/logowhitebanner.png";
 
 function SignUpPage() {
     const { t } = useTranslation();
@@ -54,25 +57,17 @@ function SignUpPage() {
         signUp(form);
     };
 
-    const canSubmit = form.name.trim() !== "" && emailValid && passwordValid;
+    const canSubmit = emailValid && passwordValid;
     if (screenType === "phone") {
         return (
             <div className="phone-signup-maincontainer">
+                <img className="image85" src={logobanner} />
                 <div className="phone-signup-infocontainer">
                     <p className="phone-signup-title">{t("signup")}</p>
 
                     <form onSubmit={handleSubmit} className="phone-signup-form">
                         <p className="phone-signup-text">
-                            {t("namewithcolon")}
-                        </p>
-                        <input
-                            className="phone-signup-input"
-                            value={form.name}
-                            name="name"
-                            onChange={updateField("name")}
-                        />
-
-                        <p className="phone-signup-text">
+                            <MdOutlineEmail className="phone-signup-input-icon" />{" "}
                             {t("emailwithcolon")}
                         </p>
                         <input
@@ -80,9 +75,11 @@ function SignUpPage() {
                             value={form.email}
                             name="email"
                             onChange={updateField("email")}
+                            autoFocus
                         />
 
                         <p className="phone-signup-text">
+                            <MdOutlineLock className="phone-signup-input-icon" />{" "}
                             {t("passwordwithcolon")}
                         </p>
                         <input
@@ -126,7 +123,6 @@ function SignUpPage() {
                                 {t("passwordrequirement5")}
                             </li>
                         </ul>
-
                         <button
                             type="submit"
                             className="phone-signup-button"
@@ -134,6 +130,20 @@ function SignUpPage() {
                         >
                             {t("signup")}
                         </button>
+
+                        <a className="phone-signup-bottomtext">
+                            {t("alreadyhaveaccount")}{" "}
+                            <span className="phone-signup-bottomlink">
+                                {t("clickhere")}
+                            </span>
+                        </a>
+
+                        <p className="phone-signup-bottomtext">
+                            {t("bysigningupyouagree")}{" "}
+                            <span className="phone-signup-bottomlink">
+                                {t("privacypolicylowercase")}
+                            </span>
+                        </p>
                     </form>
                 </div>
             </div>
