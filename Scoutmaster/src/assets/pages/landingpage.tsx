@@ -89,18 +89,46 @@ function LandingPage() {
         );
     }
 
-    if (screenType === "tablet") {
-        return (
-            <div>
-                <p>hello</p>
-            </div>
-        );
-    }
-
     return (
-        <div>
-            <p>helloe</p>
-        </div>
+        <>
+            <div className="desktop-landing-hero">
+                <div className="desktop-landing-navbar">
+                    <LanguageDropdown
+                        dropdownRef={dropdownRef}
+                        setLanguageMenuOpen={setLanguageMenuOpen}
+                        currentLanguage={currentLanguage}
+                        languageMenuOpen={languageMenuOpen}
+                        languages={languages}
+                    />
+                    <div className="desktop-landing-navbardivider">
+                        <button>{t("wiki")}</button>
+                        <button>{t("about")}</button>
+                        <button
+                            className="desktop-landing-signinbutton"
+                            onClick={useSignedIn() ? goToSignIn : goToSignUp}
+                        >
+                            {useSignedIn() ? t("signin") : t("signup")}
+                        </button>
+                    </div>
+                </div>
+                <p className="desktop-landing-herotitle">Scoutmaster</p>
+                <img src={LogoWhite} className="desktop-landing-herologo" />
+                <div className="centerdiv">
+                    {/* Laptop render of dashboard will go here */}
+                    <p className="desktop-landing-heroslogan">{t("slogan")}</p>
+                </div>
+            </div>
+            <div className="fullpage">
+                <div className="centerdiv-top">
+                    <p className="desktop-landing-title1">
+                        {t("landingtitle1")}
+                    </p>
+                    <p className="desktop-landing-bodytext">
+                        {t("landingbody1")}
+                    </p>
+                </div>
+            </div>
+        </>
     );
 }
 

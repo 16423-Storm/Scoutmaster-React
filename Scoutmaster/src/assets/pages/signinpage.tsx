@@ -63,7 +63,7 @@ function SignInPage() {
     const goToSignUp = useGoToPage("/signup");
     const [showPassword, setShowPassword] = useState(false);
 
-    if (screenType === "phone") {
+    if (screenType === "phone" || screenType === "tablet") {
         return (
             <div className="phone-signup-maincontainer">
                 <img className="image85" src={logobanner} />
@@ -145,17 +145,83 @@ function SignInPage() {
         );
     }
 
-    if (screenType === "tablet") {
-        return (
-            <div>
-                <p>hello</p>
-            </div>
-        );
-    }
-
     return (
-        <div>
-            <p>helloe</p>
+        <div className="desktop-signup-maincontainer">
+            <img className="image5" src={logobanner} />
+            <div className="desktop-signup-infocontainer">
+                <p className="desktop-signup-title">{t("signin")}</p>
+
+                <form onSubmit={handleSubmit} className="desktop-signup-form">
+                    <p className="desktop-signup-text">
+                        <MdOutlineEmail className="desktop-signup-input-icon" />{" "}
+                        {t("emailwithcolon")}
+                    </p>
+                    <input
+                        className={`desktop-signup-input ${form.email.length > 0 && !emailValid ? "invalid" : ""}`}
+                        value={form.email}
+                        name="email"
+                        onChange={updateField("email")}
+                        autoFocus
+                    />
+
+                    <p className="desktop-signup-text">
+                        <MdOutlineLock className="desktop-signup-input-icon" />{" "}
+                        {t("passwordwithcolon")}
+                    </p>
+                    <div className="desktop-signup-password-input-wrapper">
+                        <input
+                            className={`desktop-signup-input ${
+                                form.password.length > 0 && !passwordValid
+                                    ? "invalid"
+                                    : ""
+                            }`}
+                            type={showPassword ? "text" : "password"}
+                            value={form.password}
+                            name="password"
+                            onChange={updateField("password")}
+                        />
+
+                        <button
+                            type="button"
+                            className="desktop-signup-eye-icon"
+                            onPointerDown={(e) => {
+                                e.preventDefault();
+                                setShowPassword((prev) => !prev);
+                            }}
+                        >
+                            {showPassword ? (
+                                <IoMdEyeOff size={20} />
+                            ) : (
+                                <IoMdEye size={20} />
+                            )}
+                        </button>
+                    </div>
+                    <button
+                        type="submit"
+                        className="desktop-signup-button"
+                        disabled={!canSubmit}
+                    >
+                        {t("signin")}
+                    </button>
+
+                    <a className="desktop-signup-bottomtext">
+                        {t("donthaveaccount")}{" "}
+                        <span
+                            className="desktop-signup-bottomlink"
+                            onClick={goToSignUp}
+                        >
+                            {t("clickhere")}
+                        </span>
+                    </a>
+
+                    <p className="desktop-signup-bottomtext">
+                        {t("bysigningupyouagree")}{" "}
+                        <span className="desktop-signup-bottomlink">
+                            {t("privacypolicylowercase")}
+                        </span>
+                    </p>
+                </form>
+            </div>
         </div>
     );
 }

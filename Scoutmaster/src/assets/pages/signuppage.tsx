@@ -61,7 +61,7 @@ function SignUpPage() {
 
     const goToSignIn = useGoToPage("/signin");
 
-    if (screenType === "phone") {
+    if (screenType === "phone" || screenType === "tablet") {
         return (
             <div className="phone-signup-maincontainer">
                 <img className="image85" src={logobanner} />
@@ -156,17 +156,96 @@ function SignUpPage() {
         );
     }
 
-    if (screenType === "tablet") {
-        return (
-            <div>
-                <p>hello</p>
-            </div>
-        );
-    }
-
     return (
-        <div>
-            <p>helloe</p>
+        <div className="desktop-signup-maincontainer">
+            <img className="image35" src={logobanner} />
+            <div className="desktop-signup-infocontainer">
+                <p className="desktop-signup-title">{t("signup")}</p>
+
+                <form onSubmit={handleSubmit} className="desktop-signup-form">
+                    <p className="desktop-signup-text">
+                        <MdOutlineEmail className="desktop-signup-input-icon" />{" "}
+                        {t("emailwithcolon")}
+                    </p>
+                    <input
+                        className={`desktop-signup-input ${form.email.length > 0 && !emailValid ? "invalid" : ""}`}
+                        value={form.email}
+                        name="email"
+                        onChange={updateField("email")}
+                        autoFocus
+                    />
+
+                    <p className="desktop-signup-text">
+                        <MdOutlineLock className="desktop-signup-input-icon" />{" "}
+                        {t("passwordwithcolon")}
+                    </p>
+                    <input
+                        className={`desktop-signup-input ${
+                            form.password.length > 0 && !passwordValid
+                                ? "invalid"
+                                : ""
+                        }`}
+                        type="password"
+                        value={form.password}
+                        name="password"
+                        onChange={updateField("password")}
+                    />
+
+                    <p
+                        className={`desktop-signup-text-hidden ${
+                            showPasswordRules ? "show" : ""
+                        }`}
+                    >
+                        {t("mustinclude")}
+                    </p>
+
+                    <ul
+                        className={`desktop-signup-passwordlist ${
+                            showPasswordRules ? "show" : ""
+                        }`}
+                    >
+                        <li className={inputClass(hasRules.length)}>
+                            {t("passwordrequirement1")}
+                        </li>
+                        <li className={inputClass(hasRules.upper)}>
+                            {t("passwordrequirement2")}
+                        </li>
+                        <li className={inputClass(hasRules.lower)}>
+                            {t("passwordrequirement3")}
+                        </li>
+                        <li className={inputClass(hasRules.number)}>
+                            {t("passwordrequirement4")}
+                        </li>
+                        <li className={inputClass(hasRules.symbol)}>
+                            {t("passwordrequirement5")}
+                        </li>
+                    </ul>
+                    <button
+                        type="submit"
+                        className="desktop-signup-button"
+                        disabled={!canSubmit}
+                    >
+                        {t("signup")}
+                    </button>
+
+                    <a className="desktop-signup-bottomtext">
+                        {t("alreadyhaveaccount")}{" "}
+                        <span
+                            className="desktop-signup-bottomlink"
+                            onClick={goToSignIn}
+                        >
+                            {t("clickhere")}
+                        </span>
+                    </a>
+
+                    <p className="desktop-signup-bottomtext">
+                        {t("bysigningupyouagree")}{" "}
+                        <span className="desktop-signup-bottomlink">
+                            {t("privacypolicylowercase")}
+                        </span>
+                    </p>
+                </form>
+            </div>
         </div>
     );
 }
