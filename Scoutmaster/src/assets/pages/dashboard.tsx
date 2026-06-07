@@ -4,25 +4,26 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 
+// Component Imports
 import DashboardHome from "./subpages/dashboard/home";
 import DashboardPrescout from "./subpages/dashboard/prescouting.tsx";
 import DashboardMatchScouting from "./subpages/dashboard/matchscouting.tsx";
 import DashboardSummary from "./subpages/dashboard/summary.js";
-import DashboardSettings from "./subpages/dashboard/settings.tsx";
 
 // Script Imports
 import { languages } from "../scripts/localization.js";
 
-function dashboard() {
+// Icon Imports
+import { FaHome, FaGamepad, FaNewspaper } from "react-icons/fa";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+
+function Dashboard() {
     const { t } = useTranslation();
 
-    type Page =
-        | "home"
-        | "prescouting"
-        | "matchscouting"
-        | "summary"
-        | "settings";
+    type Page = "home" | "prescouting" | "matchscouting" | "summary";
+
     const [currentPage, setCurrentPage] = useState<Page>("home");
+    const [sidebarVisible, setSidebarVisible] = useState(true);
 
     function renderCurrentPage() {
         switch (currentPage) {
@@ -34,30 +35,142 @@ function dashboard() {
                 return <DashboardMatchScouting />;
             case "summary":
                 return <DashboardSummary />;
-            case "settings":
-                return <DashboardSettings />;
         }
     }
 
     if (useScreenType() == "desktop") {
         return (
             <>
-                <p>desktop dash</p>
                 <div className="desktop-dash-maincontainer">
-                    <div className="desktop-dash-sidebar"></div>
                     <div className="desktop-dash-dashcontainer">
                         {renderCurrentPage()}
                     </div>
+                    {sidebarVisible && (
+                        <div className="desktop-dash-navbar">
+                            <button
+                                className={
+                                    currentPage == "home"
+                                        ? "desktop-dash-navbar-button-active"
+                                        : "desktop-dash-navbar-button"
+                                }
+                                onClick={() => setCurrentPage("home")}
+                                disabled={currentPage == "home"}
+                            >
+                                <FaHome />
+                                {"\u00A0"}
+                                Home
+                            </button>
+                            <button
+                                className={
+                                    currentPage == "prescouting"
+                                        ? "desktop-dash-navbar-button-active"
+                                        : "desktop-dash-navbar-button"
+                                }
+                                onClick={() => setCurrentPage("prescouting")}
+                                disabled={currentPage == "prescouting"}
+                            >
+                                <FaMagnifyingGlass />
+                                {"\u00A0"}
+                                Prescout
+                            </button>
+                            <button
+                                className={
+                                    currentPage == "matchscouting"
+                                        ? "desktop-dash-navbar-button-active"
+                                        : "desktop-dash-navbar-button"
+                                }
+                                onClick={() => setCurrentPage("matchscouting")}
+                                disabled={currentPage == "matchscouting"}
+                            >
+                                <FaGamepad />
+                                {"\u00A0"}
+                                Match Scout
+                            </button>
+                            <button
+                                className={
+                                    currentPage == "summary"
+                                        ? "desktop-dash-navbar-button-active"
+                                        : "desktop-dash-navbar-button"
+                                }
+                                onClick={() => setCurrentPage("summary")}
+                                disabled={currentPage == "summary"}
+                            >
+                                <FaNewspaper />
+                                {"\u00A0"}
+                                Summary
+                            </button>
+                        </div>
+                    )}
                 </div>
             </>
         );
     } else {
         return (
             <>
-                <p>phone or tablet dash</p>
+                <div className="phone-dash-maincontainer">
+                    {sidebarVisible && (
+                        <div className="phone-dash-navbar">
+                            <button
+                                className={
+                                    currentPage == "home"
+                                        ? "phone-dash-navbar-button-active"
+                                        : "phone-dash-navbar-button"
+                                }
+                                onClick={() => setCurrentPage("home")}
+                                disabled={currentPage == "home"}
+                            >
+                                <FaHome />
+                                {"\u00A0"}
+                                Home
+                            </button>
+                            <button
+                                className={
+                                    currentPage == "prescouting"
+                                        ? "phone-dash-navbar-button-active"
+                                        : "phone-dash-navbar-button"
+                                }
+                                onClick={() => setCurrentPage("prescouting")}
+                                disabled={currentPage == "prescouting"}
+                            >
+                                <FaMagnifyingGlass />
+                                {"\u00A0"}
+                                Prescout
+                            </button>
+                            <button
+                                className={
+                                    currentPage == "matchscouting"
+                                        ? "phone-dash-navbar-button-active"
+                                        : "phone-dash-navbar-button"
+                                }
+                                onClick={() => setCurrentPage("matchscouting")}
+                                disabled={currentPage == "matchscouting"}
+                            >
+                                <FaGamepad />
+                                {"\u00A0"}
+                                Match Scout
+                            </button>
+                            <button
+                                className={
+                                    currentPage == "summary"
+                                        ? "phone-dash-navbar-button-active"
+                                        : "phone-dash-navbar-button"
+                                }
+                                onClick={() => setCurrentPage("summary")}
+                                disabled={currentPage == "summary"}
+                            >
+                                <FaNewspaper />
+                                {"\u00A0"}
+                                Summary
+                            </button>
+                        </div>
+                    )}
+                    <div className="phone-dash-dashcontainer">
+                        {renderCurrentPage()}
+                    </div>
+                </div>
             </>
         );
     }
 }
 
-export default dashboard;
+export default Dashboard;
