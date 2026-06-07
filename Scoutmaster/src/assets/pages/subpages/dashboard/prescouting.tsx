@@ -1,5 +1,5 @@
-function dashboardPrescout() {
+function DashboardPrescout() {
     return <>prescout</>;
 }
 
-export default dashboardPrescout;
+export default DashboardPrescout;

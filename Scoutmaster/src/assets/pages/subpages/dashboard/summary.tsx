@@ -1,5 +1,5 @@
-function dashboardSummary() {
+function DashboardSummary() {
     return <>summary</>;
 }
 
-export default dashboardSummary;
+export default DashboardSummary;

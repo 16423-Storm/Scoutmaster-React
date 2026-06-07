@@ -1,5 +1,5 @@
-function dashboardMatchScouting() {
+function DashboardMatchScouting() {
     return <>match scouting</>;
 }
 
-export default dashboardMatchScouting;
+export default DashboardMatchScouting;

@@ -549,3 +549,43 @@ SIGN UP/SIGN IN STYLES
         background-position: 200% 0%;
     }
 }
+
+/*
+
+
+
+
+
+DASHBOARD STYLES
+
+
+
+
+
+*/
+
+.desktop-dash-maincontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+}
+
+.desktop-dash-sidebar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    flex-direction: column;
+}
+
+.desktop-dash-dashcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+}

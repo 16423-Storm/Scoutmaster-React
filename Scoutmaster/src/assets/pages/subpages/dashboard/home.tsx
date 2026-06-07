@@ -1,5 +1,5 @@
-function dashboardHome() {
+function DashboardHome() {
     return <>home</>;
 }
 
-export default dashboardHome;
+export default DashboardHome;

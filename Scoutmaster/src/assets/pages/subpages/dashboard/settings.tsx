@@ -1,5 +1,5 @@
-function dashboardSettings() {
+function DashboardSettings() {
     return <>settings</>;
 }
 
-export default dashboardSettings;
+export default DashboardSettings;
