@@ -23,7 +23,7 @@ function Dashboard() {
     type Page = "home" | "prescouting" | "matchscouting" | "summary";
 
     const [currentPage, setCurrentPage] = useState<Page>("home");
-    const [sidebarVisible, setSidebarVisible] = useState(true);
+    const [navbarVisible, setNavbarVisible] = useState(true);
 
     function renderCurrentPage() {
         switch (currentPage) {
@@ -42,10 +42,7 @@ function Dashboard() {
         return (
             <>
                 <div className="desktop-dash-maincontainer">
-                    <div className="desktop-dash-dashcontainer">
-                        {renderCurrentPage()}
-                    </div>
-                    {sidebarVisible && (
+                    {navbarVisible && (
                         <div className="desktop-dash-navbar">
                             <button
                                 className={
@@ -58,7 +55,7 @@ function Dashboard() {
                             >
                                 <FaHome />
                                 {"\u00A0"}
-                                Home
+                                {t("home")}
                             </button>
                             <button
                                 className={
@@ -71,7 +68,7 @@ function Dashboard() {
                             >
                                 <FaMagnifyingGlass />
                                 {"\u00A0"}
-                                Prescout
+                                {t("prescout")}
                             </button>
                             <button
                                 className={
@@ -84,7 +81,7 @@ function Dashboard() {
                             >
                                 <FaGamepad />
                                 {"\u00A0"}
-                                Match Scout
+                                {t("matchscout")}
                             </button>
                             <button
                                 className={
@@ -97,10 +94,13 @@ function Dashboard() {
                             >
                                 <FaNewspaper />
                                 {"\u00A0"}
-                                Summary
+                                {t("summary")}
                             </button>
                         </div>
                     )}
+                    <div className="desktop-dash-dashcontainer">
+                        {renderCurrentPage()}
+                    </div>
                 </div>
             </>
         );
@@ -108,7 +108,7 @@ function Dashboard() {
         return (
             <>
                 <div className="phone-dash-maincontainer">
-                    {sidebarVisible && (
+                    {navbarVisible && (
                         <div className="phone-dash-navbar">
                             <button
                                 className={
@@ -121,7 +121,7 @@ function Dashboard() {
                             >
                                 <FaHome />
                                 {"\u00A0"}
-                                Home
+                                {t("home")}
                             </button>
                             <button
                                 className={
@@ -134,7 +134,7 @@ function Dashboard() {
                             >
                                 <FaMagnifyingGlass />
                                 {"\u00A0"}
-                                Prescout
+                                {t("prescout")}
                             </button>
                             <button
                                 className={
@@ -147,7 +147,7 @@ function Dashboard() {
                             >
                                 <FaGamepad />
                                 {"\u00A0"}
-                                Match Scout
+                                {t("matchscout")}
                             </button>
                             <button
                                 className={
@@ -160,7 +160,7 @@ function Dashboard() {
                             >
                                 <FaNewspaper />
                                 {"\u00A0"}
-                                Summary
+                                {t("summary")}
                             </button>
                         </div>
                     )}

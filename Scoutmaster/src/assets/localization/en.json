@@ -23,5 +23,10 @@
     "clickhere": "Click here!",
     "bysigningupyouagree": "By creating a Scoutmaster account, you agree to the",
     "privacypolicylowercase": "privacy policy",
-    "donthaveaccount": "Don't have an account?"
+    "donthaveaccount": "Don't have an account?",
+
+    "home": "Home",
+    "prescout": "Prescout",
+    "matchscout": "Match Scout",
+    "summary": "Summary"
 }
