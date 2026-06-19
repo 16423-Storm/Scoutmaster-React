@@ -10,6 +10,10 @@
     --text-color-light: #e3e3e3;
     --text-color-dark: #070700;
 
+    /* Dark Mode Compatability */
+    --white: #fff;
+    --black: #000;
+
     /* Dashboard Colors */
     --clr-dark-a0: #000000;
     --clr-light-a0: #ffffff;

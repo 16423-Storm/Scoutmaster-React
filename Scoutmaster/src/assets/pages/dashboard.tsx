@@ -17,6 +17,8 @@ import { languages } from "../scripts/localization.js";
 import { FaHome, FaGamepad, FaNewspaper } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
+import IconLogo from "../images/branding/iconlogo.svg?react";
+
 function Dashboard() {
     const { t } = useTranslation();
 
@@ -24,6 +26,7 @@ function Dashboard() {
 
     const [currentPage, setCurrentPage] = useState<Page>("home");
     const [navbarVisible, setNavbarVisible] = useState(true);
+    const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
     function renderCurrentPage() {
         switch (currentPage) {
@@ -41,63 +44,77 @@ function Dashboard() {
     if (useScreenType() == "desktop") {
         return (
             <>
-                <div className="desktop-dash-maincontainer">
-                    {navbarVisible && (
-                        <div className="desktop-dash-navbar">
-                            <button
-                                className={
-                                    currentPage == "home"
-                                        ? "desktop-dash-navbar-button-active"
-                                        : "desktop-dash-navbar-button"
-                                }
-                                onClick={() => setCurrentPage("home")}
-                                disabled={currentPage == "home"}
-                            >
-                                <FaHome />
-                                {"\u00A0"}
-                                {t("home")}
-                            </button>
-                            <button
-                                className={
-                                    currentPage == "prescouting"
-                                        ? "desktop-dash-navbar-button-active"
-                                        : "desktop-dash-navbar-button"
-                                }
-                                onClick={() => setCurrentPage("prescouting")}
-                                disabled={currentPage == "prescouting"}
-                            >
-                                <FaMagnifyingGlass />
-                                {"\u00A0"}
-                                {t("prescout")}
-                            </button>
-                            <button
-                                className={
-                                    currentPage == "matchscouting"
-                                        ? "desktop-dash-navbar-button-active"
-                                        : "desktop-dash-navbar-button"
-                                }
-                                onClick={() => setCurrentPage("matchscouting")}
-                                disabled={currentPage == "matchscouting"}
-                            >
-                                <FaGamepad />
-                                {"\u00A0"}
-                                {t("matchscout")}
-                            </button>
-                            <button
-                                className={
-                                    currentPage == "summary"
-                                        ? "desktop-dash-navbar-button-active"
-                                        : "desktop-dash-navbar-button"
-                                }
-                                onClick={() => setCurrentPage("summary")}
-                                disabled={currentPage == "summary"}
-                            >
-                                <FaNewspaper />
-                                {"\u00A0"}
-                                {t("summary")}
-                            </button>
+                {navbarVisible &&
+                    (sidebarExpanded ? (
+                        <div
+                            className="desktop-dash-sidebar-expanded"
+                            onMouseLeave={() => setSidebarExpanded(false)}
+                        >
+                            <div className="desktop-dash-sidebar-logocontainer">
+                                <IconLogo className="desktop-dash-sidebar-logo" />
+                            </div>
+                            <div className="desktop-dash-sidebar-half">
+                                <div className="desktop-dash-sidebar-mainbutton">
+                                    <FaHome />
+                                    {""}
+                                    Home
+                                </div>
+                                <div className="desktop-dash-sidebar-mainbutton">
+                                    <FaMagnifyingGlass />
+                                    {""}
+                                    Prescouting
+                                </div>
+                                <div className="desktop-dash-sidebar-mainbutton">
+                                    <FaGamepad />
+                                    {""}
+                                    Match Scouting
+                                </div>
+                                <div className="desktop-dash-sidebar-mainbutton">
+                                    <FaNewspaper />
+                                    {""}
+                                    Summary
+                                </div>
+                            </div>
+                            <div className="desktop-dash-sidebar-half"></div>
                         </div>
-                    )}
+                    ) : (
+                        <div
+                            className="desktop-dash-sidebar"
+                            onMouseEnter={() => setSidebarExpanded(true)}
+                        >
+                            <div className="desktop-dash-sidebar-logocontainer">
+                                <IconLogo className="desktop-dash-sidebar-logo" />
+                            </div>
+                            <div className="desktop-dash-sidebar-half">
+                                <div
+                                    className="desktop-dash-sidebar-mainbutton"
+                                    style={{ justifyContent: "center" }}
+                                >
+                                    <FaHome />
+                                </div>
+                                <div
+                                    className="desktop-dash-sidebar-mainbutton"
+                                    style={{ justifyContent: "center" }}
+                                >
+                                    <FaMagnifyingGlass />
+                                </div>
+                                <div
+                                    className="desktop-dash-sidebar-mainbutton"
+                                    style={{ justifyContent: "center" }}
+                                >
+                                    <FaGamepad />
+                                </div>
+                                <div
+                                    className="desktop-dash-sidebar-mainbutton"
+                                    style={{ justifyContent: "center" }}
+                                >
+                                    <FaNewspaper />
+                                </div>
+                            </div>
+                            <div className="desktopd-dash-sidebar-half"></div>
+                        </div>
+                    ))}
+                <div className="desktop-dash-maincontainer">
                     <div className="desktop-dash-dashcontainer">
                         {renderCurrentPage()}
                     </div>
@@ -108,6 +125,9 @@ function Dashboard() {
         return (
             <>
                 <div className="phone-dash-maincontainer">
+                    <div className="phone-dash-dashcontainer">
+                        {renderCurrentPage()}
+                    </div>
                     {navbarVisible && (
                         <div className="phone-dash-navbar">
                             <button
@@ -120,7 +140,7 @@ function Dashboard() {
                                 disabled={currentPage == "home"}
                             >
                                 <FaHome />
-                                {"\u00A0"}
+                                {""}
                                 {t("home")}
                             </button>
                             <button
@@ -133,7 +153,7 @@ function Dashboard() {
                                 disabled={currentPage == "prescouting"}
                             >
                                 <FaMagnifyingGlass />
-                                {"\u00A0"}
+                                {""}
                                 {t("prescout")}
                             </button>
                             <button
@@ -164,9 +184,6 @@ function Dashboard() {
                             </button>
                         </div>
                     )}
-                    <div className="phone-dash-dashcontainer">
-                        {renderCurrentPage()}
-                    </div>
                 </div>
             </>
         );

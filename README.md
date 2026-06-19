@@ -1,5 +1,5 @@
 <p align="center">
-  <img fill="currentColor" src="Scoutmaster\src\assets\images\branding\logowhitebanner.svg" alt="Banner Logo">
+  <img fill="currentColor" src="Scoutmaster\src\assets\images\branding\logobanner.svg" alt="Banner Logo">
 </p>
 
 ---
