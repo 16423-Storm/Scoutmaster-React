@@ -615,6 +615,7 @@ DASHBOARD STYLES
     align-items: center;
     width: 100%;
     height: 10%;
+    border-bottom: 1px solid var(--clr-surface-tonal-a50);
 }
 
 .desktop-dash-sidebar-logo {
@@ -625,8 +626,8 @@ DASHBOARD STYLES
 
 .desktop-dash-sidebar-half {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    box-sizing: border-box;
+    padding-left: 6.7%;
     height: 45%;
     width: 100%;
     flex-direction: column;
@@ -635,18 +636,45 @@ DASHBOARD STYLES
 .desktop-dash-sidebar-mainbutton {
     white-space: nowrap;
     width: 90%;
-    height: 20%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     flex-direction: row;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.15s;
 }
 
-.desktop-dash-sidebar-mainbutton * {
+.desktop-dash-sidebar-mainbutton *,
+.desktop-dash-sidebar-mainbutton-active * {
     font-size: 2rem;
     box-sizing: border-box;
     padding: 5px;
 }
 
+@media screen and (max-width: 1190px) {
+    .desktop-dash-sidebar-expanded {
+        width: 20%;
+    }
+}
+
 .desktop-dash-sidebar-mainbutton:hover {
-    background-color: red;
+    background-color: var(--clr-surface-a30);
+    transition: background-color 0.15s;
+}
+
+.desktop-dash-sidebar-mainbutton-active {
+    white-space: nowrap;
+    width: 90%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 10px;
+    background-color: var(--clr-surface-a30);
+    pointer-events: none;
 }

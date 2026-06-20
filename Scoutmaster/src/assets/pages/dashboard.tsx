@@ -14,7 +14,7 @@ import DashboardSummary from "./subpages/dashboard/summary.js";
 import { languages } from "../scripts/localization.js";
 
 // Icon Imports
-import { FaHome, FaGamepad, FaNewspaper } from "react-icons/fa";
+import { FaHome, FaGamepad, FaNewspaper, FaSun, FaMoon } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 import IconLogo from "../images/branding/iconlogo.svg?react";
@@ -54,28 +54,75 @@ function Dashboard() {
                                 <IconLogo className="desktop-dash-sidebar-logo" />
                             </div>
                             <div className="desktop-dash-sidebar-half">
-                                <div className="desktop-dash-sidebar-mainbutton">
+                                <div
+                                    className={
+                                        currentPage == "home"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onClick={
+                                        currentPage !== "home"
+                                            ? () => setCurrentPage("home")
+                                            : undefined
+                                    }
+                                >
                                     <FaHome />
                                     {""}
                                     Home
                                 </div>
-                                <div className="desktop-dash-sidebar-mainbutton">
+                                <div
+                                    className={
+                                        currentPage == "prescouting"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onClick={
+                                        currentPage !== "prescouting"
+                                            ? () =>
+                                                  setCurrentPage("prescouting")
+                                            : undefined
+                                    }
+                                >
                                     <FaMagnifyingGlass />
                                     {""}
                                     Prescouting
                                 </div>
-                                <div className="desktop-dash-sidebar-mainbutton">
+                                <div
+                                    className={
+                                        currentPage == "matchscouting"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onClick={
+                                        currentPage !== "matchscouting"
+                                            ? () =>
+                                                  setCurrentPage(
+                                                      "matchscouting",
+                                                  )
+                                            : undefined
+                                    }
+                                >
                                     <FaGamepad />
                                     {""}
                                     Match Scouting
                                 </div>
-                                <div className="desktop-dash-sidebar-mainbutton">
+                                <div
+                                    className={
+                                        currentPage == "summary"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onClick={
+                                        currentPage !== "summary"
+                                            ? () => setCurrentPage("summary")
+                                            : undefined
+                                    }
+                                >
                                     <FaNewspaper />
                                     {""}
                                     Summary
                                 </div>
                             </div>
-                            <div className="desktop-dash-sidebar-half"></div>
                         </div>
                     ) : (
                         <div
@@ -87,31 +134,46 @@ function Dashboard() {
                             </div>
                             <div className="desktop-dash-sidebar-half">
                                 <div
-                                    className="desktop-dash-sidebar-mainbutton"
+                                    className={
+                                        currentPage == "home"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
                                     style={{ justifyContent: "center" }}
                                 >
                                     <FaHome />
                                 </div>
                                 <div
-                                    className="desktop-dash-sidebar-mainbutton"
+                                    className={
+                                        currentPage == "prescouting"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
                                     style={{ justifyContent: "center" }}
                                 >
                                     <FaMagnifyingGlass />
                                 </div>
                                 <div
-                                    className="desktop-dash-sidebar-mainbutton"
+                                    className={
+                                        currentPage == "matchscouting"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
                                     style={{ justifyContent: "center" }}
                                 >
                                     <FaGamepad />
                                 </div>
                                 <div
-                                    className="desktop-dash-sidebar-mainbutton"
+                                    className={
+                                        currentPage == "summary"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
                                     style={{ justifyContent: "center" }}
                                 >
                                     <FaNewspaper />
                                 </div>
                             </div>
-                            <div className="desktopd-dash-sidebar-half"></div>
                         </div>
                     ))}
                 <div className="desktop-dash-maincontainer">
