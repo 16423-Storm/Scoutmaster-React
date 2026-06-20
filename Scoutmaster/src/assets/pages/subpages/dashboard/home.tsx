@@ -7,7 +7,13 @@ function DashboardHome() {
     if (useScreenType() == "desktop") {
         return (
             <>
-                <p>home desktop</p>
+                <div className="desktop-dash-maincontainer">
+                    <div className="desktop-dash-home-divider">
+                        <div className="desktop-dash-home-infodisplay"></div>
+                        <div className="desktop-dash-home-infodisplay"></div>
+                        <div className="desktop-dash-home-infodisplay"></div>
+                    </div>
+                </div>
             </>
         );
     } else {

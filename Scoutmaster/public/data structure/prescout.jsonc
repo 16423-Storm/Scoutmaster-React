@@ -1,0 +1,24 @@
+{
+    "16423": {
+        "structure": {
+            "numOfQuestions": 6,
+            // the type of questions
+            "questionorder": ["lt", "st", "cb", "r", "auto", "picture"],
+        },
+        "teams": {
+            "1": {
+                // for images, the image name will be Scouting team number - picof Scouted team number, so XXXXX-picof-XXXXX
+                "data": [
+                    "lorem ipsum",
+                    "situm dilor",
+                    true,
+                    213,
+                    "IMAGINEANSVGPATHRIGHTHERE",
+                    "16423-picof1.png",
+                ],
+            },
+            "2": {},
+            "3": {},
+        },
+    },
+}

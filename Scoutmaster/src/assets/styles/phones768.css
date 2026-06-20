@@ -542,6 +542,7 @@ DASHBOARD STYLES
 .phone-dash-maincontainer {
     display: flex;
     justify-content: center;
+    align-items: end;
     width: 100%;
     height: 100vh;
     flex-direction: column;
@@ -551,7 +552,7 @@ DASHBOARD STYLES
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 90%;
     height: 100%;
 }
 
@@ -560,7 +561,7 @@ DASHBOARD STYLES
     position: absolute;
     align-items: center;
     justify-content: flex-start;
-    width: 50px;
+    width: 10%;
     height: 100%;
     background-color: var(--clr-surface-a10);
     border-right: 1px solid;
@@ -679,4 +680,108 @@ DASHBOARD STYLES
     border-radius: 10px;
     background-color: var(--clr-surface-a30);
     pointer-events: none;
+}
+/*
+
+
+
+
+
+DASHBOARD SETTINGS STYLES
+
+
+
+
+
+*/
+
+.phone-dash-settings-contentcontainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+
+.phone-dash-settings-navcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 75%;
+    margin: 10px;
+    background-color: var(--clr-surface-a0);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.phone-dash-settings-navcontainer button {
+    width: 100%;
+    border: none;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 1rem;
+    transition: background-color 0.15s;
+}
+
+.phone-dash-settings-navcontainer
+    button:not(.phone-dash-settings-navcontainer-activebutton) {
+    background-color: transparent;
+}
+
+.phone-dash-settings-navcontainer button:first-child {
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.phone-dash-settings-navcontainer button:last-child {
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.phone-dash-settings-navcontainer button:not(:last-child):not(:first-child) {
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.phone-dash-settings-navcontainer button:hover {
+    background-color: var(--clr-surface-a10);
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.phone-dash-settings-navcontainer button:active {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+}
+
+.phone-dash-settings-navcontainer-activebutton {
+    background-color: var(--clr-surface-a10);
+    pointer-events: none;
+}
+
+.phone-dash-settings-navcontainer-activebutton:first-child {
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.phone-dash-settings-navcontainer-activebutton:last-child {
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.phone-dash-settings-navcontainer-activebutton:not(:last-child):not(
+        :first-child
+    ) {
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.phone-dash-settings-infocontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+    background-color: var(--clr-surface-a0);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
 }

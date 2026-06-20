@@ -100,7 +100,60 @@ function DashboardSettings() {
     } else {
         return (
             <>
-                <p>settings phone</p>
+                <div
+                    className="phone-dash-maincontainer"
+                    style={{ alignItems: "center" }}
+                >
+                    <div className="phone-dash-settings-contentcontainer">
+                        <div className="phone-dash-settings-navcontainer">
+                            <button
+                                className={
+                                    currentPage === "general"
+                                        ? "phone-dash-settings-navcontainer-activebutton"
+                                        : ""
+                                }
+                                onClick={() => setCurrentPage("general")}
+                            >
+                                {t("general")}
+                            </button>
+                            <button
+                                className={
+                                    currentPage === "account"
+                                        ? "phone-dash-settings-navcontainer-activebutton"
+                                        : ""
+                                }
+                                onClick={() => setCurrentPage("account")}
+                            >
+                                {t("account")}
+                            </button>
+                            <button
+                                className={
+                                    currentPage === "groupmanagement"
+                                        ? "phone-dash-settings-navcontainer-activebutton"
+                                        : ""
+                                }
+                                onClick={() =>
+                                    setCurrentPage("groupmanagement")
+                                }
+                            >
+                                {t("groupmanagement")}
+                            </button>
+                            <button
+                                className={
+                                    currentPage === "process"
+                                        ? "phone-dash-settings-navcontainer-activebutton"
+                                        : ""
+                                }
+                                onClick={() => setCurrentPage("process")}
+                            >
+                                {t("process")}
+                            </button>
+                        </div>
+                        <div className="phone-dash-settings-infocontainer">
+                            {renderCurrentPage()}
+                        </div>
+                    </div>
+                </div>
             </>
         );
     }
