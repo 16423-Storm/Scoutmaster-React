@@ -19,48 +19,48 @@
     --clr-light-a0: #ffffff;
 
     /** Theme primary colors */
-    --clr-primary-a0: #90143c;
-    --clr-primary-a10: #7f1636;
-    --clr-primary-a20: #6f1730;
-    --clr-primary-a30: #5f172a;
-    --clr-primary-a40: #501624;
-    --clr-primary-a50: #41141e;
+    --clr-primary-a0: #eb0000;
+    --clr-primary-a10: #cc3600;
+    --clr-primary-a20: #ae2d00;
+    --clr-primary-a30: #912400;
+    --clr-primary-a40: #751b00;
+    --clr-primary-a50: #5b1300;
 
     /** Theme surface colors */
     --clr-surface-a0: #f8f8ff;
-    --clr-surface-a10: #eaeaf0;
-    --clr-surface-a20: #dcdce1;
-    --clr-surface-a30: #ceced3;
-    --clr-surface-a40: #c1c1c5;
-    --clr-surface-a50: #b4b4b6;
+    --clr-surface-a10: #ebebf2;
+    --clr-surface-a20: #dfdfe4;
+    --clr-surface-a30: #d3d3d7;
+    --clr-surface-a40: #c6c6ca;
+    --clr-surface-a50: #bababe;
 
     /** Theme tonal surface colors */
-    --clr-surface-tonal-a0: #f0e2e9;
-    --clr-surface-tonal-a10: #e3d7dd;
-    --clr-surface-tonal-a20: #d6cbd1;
-    --clr-surface-tonal-a30: #c9c0c5;
-    --clr-surface-tonal-a40: #bdb5b9;
-    --clr-surface-tonal-a50: #b0aaad;
+    --clr-surface-tonal-a0: #fae8e9;
+    --clr-surface-tonal-a10: #edddde;
+    --clr-surface-tonal-a20: #e0d2d3;
+    --clr-surface-tonal-a30: #d4c8c8;
+    --clr-surface-tonal-a40: #c8bdbe;
+    --clr-surface-tonal-a50: #bbb3b3;
 
     /** Success colors */
-    --clr-success-a0: #1b7f5c;
-    --clr-success-a10: #28be8a;
-    --clr-success-a20: #58dbad;
+    --clr-success-a0: #4aff6b;
+    --clr-success-a10: #74ff86;
+    --clr-success-a20: #94ff9d;
 
     /** Warning colors */
-    --clr-warning-a0: #b8871f;
-    --clr-warning-a10: #dfae44;
-    --clr-warning-a20: #ebca85;
+    --clr-warning-a0: #ffac38;
+    --clr-warning-a10: #ffb961;
+    --clr-warning-a20: #ffc681;
 
     /** Danger colors */
-    --clr-danger-a0: #b13535;
-    --clr-danger-a10: #d06262;
-    --clr-danger-a20: #e29d9d;
+    --clr-danger-a0: #ff6161;
+    --clr-danger-a10: #ff7c79;
+    --clr-danger-a20: #ff9590;
 
     /** Info colors */
-    --clr-info-a0: #1e56a3;
-    --clr-info-a10: #347ada;
-    --clr-info-a20: #74a4e6;
+    --clr-info-a0: #61c2ff;
+    --clr-info-a10: #7dccff;
+    --clr-info-a20: #96d5ff;
 }
 
 body,
@@ -68,6 +68,7 @@ html {
     min-width: 100vw;
     min-height: 100vh;
     overflow-x: hidden;
+    background-color: var(--clr-surface-a0);
 }
 
 @font-face {
@@ -79,6 +80,11 @@ html {
     margin: 0px;
     padding: 0px;
     font-family: "RethinkSans";
+    color: var(--black);
+    transition:
+        color 0.15s,
+        background-color 0.15s,
+        border-color 0.15s;
 }
 
 .nav-language-dropdown div {

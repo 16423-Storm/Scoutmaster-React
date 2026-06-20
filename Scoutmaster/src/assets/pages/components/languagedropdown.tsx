@@ -12,6 +12,7 @@ type Parameters = {
     currentLanguage: Language;
     languageMenuOpen: boolean;
     languages: Language[];
+    color?: boolean;
 };
 
 export function LanguageDropdown({
@@ -20,6 +21,7 @@ export function LanguageDropdown({
     currentLanguage,
     languageMenuOpen,
     languages,
+    color = false,
 }: Parameters) {
     return (
         <div
@@ -32,7 +34,7 @@ export function LanguageDropdown({
                 style={{
                     background: "transparent",
                     border: "none",
-                    color: "white",
+                    color: color ? "var(--black)" : "var(--white)",
                     cursor: "pointer",
                     fontSize: "1rem",
                     display: "flex",
@@ -74,7 +76,9 @@ export function LanguageDropdown({
                                 style={{
                                     padding: "0.5rem 1rem",
                                     cursor: "pointer",
-                                    color: "white",
+                                    color: color
+                                        ? "var(--black)"
+                                        : "var(--white)",
                                     whiteSpace: "nowrap",
                                     transition: "background 0.2s",
                                     textAlign: "center",

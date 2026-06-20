@@ -28,5 +28,13 @@
     "home": "Home",
     "prescout": "Prescout",
     "matchscout": "Match Scout",
-    "summary": "Summary"
+    "summary": "Summary",
+    "settings": "Settings",
+
+    "general": "General",
+    "account": "Account",
+    "groupmanagement": "Group Management",
+    "process": "Process",
+    "darklightmode": "Dark/Light Mode:",
+    "language": "Language:"
 }

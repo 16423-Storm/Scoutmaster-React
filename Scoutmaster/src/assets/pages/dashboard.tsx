@@ -80,7 +80,7 @@ function Dashboard() {
                                 >
                                     <FaHome />
                                     {""}
-                                    Home
+                                    {t("home")}
                                 </div>
                                 <div
                                     className={
@@ -97,7 +97,7 @@ function Dashboard() {
                                 >
                                     <FaMagnifyingGlass />
                                     {""}
-                                    Prescouting
+                                    {t("prescouting")}
                                 </div>
                                 <div
                                     className={
@@ -116,7 +116,7 @@ function Dashboard() {
                                 >
                                     <FaGamepad />
                                     {""}
-                                    Match Scouting
+                                    {t("matchscouting")}
                                 </div>
                                 <div
                                     className={
@@ -132,7 +132,7 @@ function Dashboard() {
                                 >
                                     <FaNewspaper />
                                     {""}
-                                    Summary
+                                    {t("summary")}
                                 </div>
                             </div>
                             <div className="desktop-dash-sidebar-bottomhalf">
@@ -150,7 +150,7 @@ function Dashboard() {
                                 >
                                     <FaGear />
                                     {""}
-                                    Settings
+                                    {t("settings")}
                                 </div>
                             </div>
                         </div>
