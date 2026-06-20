@@ -1,5 +1,9 @@
 // Library Imports
-import { useScreenType, useSignedIn } from "../scripts/multipageutils";
+import {
+    useScreenType,
+    useSignedIn,
+    useIsLightMode,
+} from "../scripts/multipageutils";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
@@ -8,21 +12,27 @@ import i18n from "i18next";
 import DashboardHome from "./subpages/dashboard/home";
 import DashboardPrescout from "./subpages/dashboard/prescouting.tsx";
 import DashboardMatchScouting from "./subpages/dashboard/matchscouting.tsx";
-import DashboardSummary from "./subpages/dashboard/summary.js";
+import DashboardSummary from "./subpages/dashboard/summary.tsx";
+import DashboardSettings from "./subpages/dashboard/settings.tsx";
 
 // Script Imports
 import { languages } from "../scripts/localization.js";
 
 // Icon Imports
 import { FaHome, FaGamepad, FaNewspaper, FaSun, FaMoon } from "react-icons/fa";
-import { FaMagnifyingGlass } from "react-icons/fa6";
+import { FaMagnifyingGlass, FaGear } from "react-icons/fa6";
 
 import IconLogo from "../images/branding/iconlogo.svg?react";
 
 function Dashboard() {
     const { t } = useTranslation();
 
-    type Page = "home" | "prescouting" | "matchscouting" | "summary";
+    type Page =
+        | "home"
+        | "prescouting"
+        | "matchscouting"
+        | "summary"
+        | "settings";
 
     const [currentPage, setCurrentPage] = useState<Page>("home");
     const [navbarVisible, setNavbarVisible] = useState(true);
@@ -38,6 +48,8 @@ function Dashboard() {
                 return <DashboardMatchScouting />;
             case "summary":
                 return <DashboardSummary />;
+            case "settings":
+                return <DashboardSettings />;
         }
     }
 
@@ -123,6 +135,24 @@ function Dashboard() {
                                     Summary
                                 </div>
                             </div>
+                            <div className="desktop-dash-sidebar-bottomhalf">
+                                <div
+                                    className={
+                                        currentPage == "settings"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onClick={
+                                        currentPage !== "settings"
+                                            ? () => setCurrentPage("settings")
+                                            : undefined
+                                    }
+                                >
+                                    <FaGear />
+                                    {""}
+                                    Settings
+                                </div>
+                            </div>
                         </div>
                     ) : (
                         <div
@@ -172,6 +202,22 @@ function Dashboard() {
                                     style={{ justifyContent: "center" }}
                                 >
                                     <FaNewspaper />
+                                </div>
+                            </div>
+                            <div className="desktop-dash-sidebar-bottomhalf">
+                                <div
+                                    className={
+                                        currentPage == "settings"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onClick={
+                                        currentPage !== "settings"
+                                            ? () => setCurrentPage("settings")
+                                            : undefined
+                                    }
+                                >
+                                    <FaGear />
                                 </div>
                             </div>
                         </div>

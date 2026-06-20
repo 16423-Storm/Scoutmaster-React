@@ -583,6 +583,7 @@ DASHBOARD STYLES
     display: flex;
     position: absolute;
     align-items: center;
+    justify-content: flex-start;
     width: 50px;
     height: 100%;
     background-color: var(--clr-surface-a10);
@@ -633,6 +634,15 @@ DASHBOARD STYLES
     flex-direction: column;
 }
 
+.desktop-dash-sidebar-bottomhalf {
+    display: flex;
+    box-sizing: border-box;
+    padding-left: 6.7%;
+    height: 45%;
+    flex-direction: column;
+    justify-content: end;
+}
+
 .desktop-dash-sidebar-mainbutton {
     white-space: nowrap;
     width: 90%;
@@ -648,7 +658,8 @@ DASHBOARD STYLES
 }
 
 .desktop-dash-sidebar-mainbutton *,
-.desktop-dash-sidebar-mainbutton-active * {
+.desktop-dash-sidebar-mainbutton-active *,
+.desktop-dash-sidebar-secondarybuttons * {
     font-size: 2rem;
     box-sizing: border-box;
     padding: 5px;

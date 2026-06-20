@@ -2,6 +2,8 @@ import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { isUserSignedIn } from "./auth";
 
+var isLightMode = true;
+
 /**
  * Returns the current screen category based on viewport width.
  *
@@ -43,4 +45,19 @@ export function useGoToPage(page: string) {
     };
 
     return goToPage;
+}
+
+/**
+ * Returns whether the current theme is light mode or not
+ * @returns true | false
+ */
+export function useIsLightMode(): true | false {
+    return isLightMode;
+}
+
+/**
+ * Flips current theme, if dark mode, it switches to light, and vice versa
+ */
+export function useFlipTheme() {
+    isLightMode = !isLightMode;
 }
