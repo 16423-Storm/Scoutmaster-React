@@ -4,7 +4,7 @@ import {
     useSignedIn,
     useIsLightMode,
 } from "../scripts/multipageutils";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 
@@ -14,6 +14,7 @@ import DashboardPrescout from "./subpages/dashboard/prescouting.tsx";
 import DashboardMatchScouting from "./subpages/dashboard/matchscouting.tsx";
 import DashboardSummary from "./subpages/dashboard/summary.tsx";
 import DashboardSettings from "./subpages/dashboard/settings.tsx";
+import Blocker499 from "./components/blocker.tsx";
 
 // Script Imports
 import { languages } from "../scripts/localization.js";
@@ -21,6 +22,8 @@ import { languages } from "../scripts/localization.js";
 // Icon Imports
 import { FaHome, FaGamepad, FaNewspaper, FaSun, FaMoon } from "react-icons/fa";
 import { FaMagnifyingGlass, FaGear } from "react-icons/fa6";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { MdOutlineCancel } from "react-icons/md";
 
 import IconLogo from "../images/branding/iconlogo.svg?react";
 
@@ -53,7 +56,31 @@ function Dashboard() {
         }
     }
 
-    if (useScreenType() == "desktop") {
+    const sidebarRef = useRef<HTMLDivElement | null>(null);
+
+    var screenType = useScreenType();
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as Node;
+
+            if (
+                sidebarRef.current &&
+                !sidebarRef.current.contains(target) &&
+                screenType != "desktop"
+            ) {
+                setSidebarExpanded(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    if (screenType == "desktop") {
         return (
             <>
                 {navbarVisible &&
@@ -232,66 +259,255 @@ function Dashboard() {
     } else {
         return (
             <>
+                {navbarVisible && (
+                    <>
+                        {sidebarExpanded && <Blocker499 />}
+                        <div
+                            className={
+                                sidebarExpanded
+                                    ? "phone-dash-sidebar-expanded"
+                                    : "phone-dash-sidebar"
+                            }
+                            ref={sidebarRef}
+                        >
+                            {sidebarExpanded ? (
+                                <>
+                                    <div
+                                        className="phone-dash-sidebar-logocontainer"
+                                        onClick={() =>
+                                            setSidebarExpanded(false)
+                                        }
+                                    >
+                                        <div
+                                            className="phone-dash-sidebar-logobutton"
+                                            style={{
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            <MdOutlineCancel />
+                                        </div>
+                                    </div>
+                                    <div className="phone-dash-sidebar-half">
+                                        <div
+                                            className={
+                                                currentPage == "home"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            onClick={
+                                                currentPage !== "home"
+                                                    ? () =>
+                                                          setCurrentPage("home")
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaHome />
+                                            {""}
+                                            {t("home")}
+                                        </div>
+                                        <div
+                                            className={
+                                                currentPage == "prescouting"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            onClick={
+                                                currentPage !== "prescouting"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "prescouting",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaMagnifyingGlass />
+                                            {""}
+                                            {t("prescouting")}
+                                        </div>
+                                        <div
+                                            className={
+                                                currentPage == "matchscouting"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            onClick={
+                                                currentPage !== "matchscouting"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "matchscouting",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaGamepad />
+                                            {""}
+                                            {t("matchscouting")}
+                                        </div>
+                                        <div
+                                            className={
+                                                currentPage == "summary"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            onClick={
+                                                currentPage !== "summary"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "summary",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaNewspaper />
+                                            {""}
+                                            {t("summary")}
+                                        </div>
+                                    </div>
+                                    <div className="phone-dash-sidebar-bottomhalf">
+                                        <div
+                                            className={
+                                                currentPage == "settings"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            onClick={
+                                                currentPage !== "settings"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "settings",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaGear />
+                                            {""}
+                                            {t("settings")}
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div
+                                        className="phone-dash-sidebar-logocontainer"
+                                        onClick={() => setSidebarExpanded(true)}
+                                    >
+                                        <div
+                                            className="phone-dash-sidebar-logobutton"
+                                            style={{
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            <RxHamburgerMenu />
+                                        </div>
+                                    </div>
+                                    <div className="phone-dash-sidebar-half">
+                                        <div
+                                            className={
+                                                currentPage == "home"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            style={{
+                                                justifyContent: "center",
+                                            }}
+                                            onClick={
+                                                currentPage !== "home"
+                                                    ? () =>
+                                                          setCurrentPage("home")
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaHome />
+                                        </div>
+                                        <div
+                                            className={
+                                                currentPage == "prescouting"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            style={{
+                                                justifyContent: "center",
+                                            }}
+                                            onClick={
+                                                currentPage !== "prescouting"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "prescouting",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaMagnifyingGlass />
+                                        </div>
+                                        <div
+                                            className={
+                                                currentPage == "matchscouting"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            style={{
+                                                justifyContent: "center",
+                                            }}
+                                            onClick={
+                                                currentPage !== "matchscouting"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "matchscouting",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaGamepad />
+                                        </div>
+                                        <div
+                                            className={
+                                                currentPage == "summary"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            style={{
+                                                justifyContent: "center",
+                                            }}
+                                            onClick={
+                                                currentPage !== "summary"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "summary",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaNewspaper />
+                                        </div>
+                                    </div>
+                                    <div className="phone-dash-sidebar-bottomhalf">
+                                        <div
+                                            className={
+                                                currentPage == "settings"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            onClick={
+                                                currentPage !== "settings"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "settings",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaGear />
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </>
+                )}
                 <div className="phone-dash-maincontainer">
                     <div className="phone-dash-dashcontainer">
                         {renderCurrentPage()}
                     </div>
-                    {navbarVisible && (
-                        <div className="phone-dash-navbar">
-                            <button
-                                className={
-                                    currentPage == "home"
-                                        ? "phone-dash-navbar-button-active"
-                                        : "phone-dash-navbar-button"
-                                }
-                                onClick={() => setCurrentPage("home")}
-                                disabled={currentPage == "home"}
-                            >
-                                <FaHome />
-                                {""}
-                                {t("home")}
-                            </button>
-                            <button
-                                className={
-                                    currentPage == "prescouting"
-                                        ? "phone-dash-navbar-button-active"
-                                        : "phone-dash-navbar-button"
-                                }
-                                onClick={() => setCurrentPage("prescouting")}
-                                disabled={currentPage == "prescouting"}
-                            >
-                                <FaMagnifyingGlass />
-                                {""}
-                                {t("prescout")}
-                            </button>
-                            <button
-                                className={
-                                    currentPage == "matchscouting"
-                                        ? "phone-dash-navbar-button-active"
-                                        : "phone-dash-navbar-button"
-                                }
-                                onClick={() => setCurrentPage("matchscouting")}
-                                disabled={currentPage == "matchscouting"}
-                            >
-                                <FaGamepad />
-                                {"\u00A0"}
-                                {t("matchscout")}
-                            </button>
-                            <button
-                                className={
-                                    currentPage == "summary"
-                                        ? "phone-dash-navbar-button-active"
-                                        : "phone-dash-navbar-button"
-                                }
-                                onClick={() => setCurrentPage("summary")}
-                                disabled={currentPage == "summary"}
-                            >
-                                <FaNewspaper />
-                                {"\u00A0"}
-                                {t("summary")}
-                            </button>
-                        </div>
-                    )}
                 </div>
             </>
         );

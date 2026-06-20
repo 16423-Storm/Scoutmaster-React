@@ -539,78 +539,12 @@ DASHBOARD STYLES
 
 
 */
-
 .phone-dash-maincontainer {
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 100%;
     height: 100vh;
     flex-direction: column;
-}
-
-.phone-dash-navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    flex-direction: row;
-}
-
-.phone-dash-navbar-button:first-child {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25%;
-    font-size: 0.75rem;
-    border: none;
-    border-right: 1px black solid;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    box-sizing: border-box;
-}
-
-.phone-dash-navbar-button:last-child {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25%;
-    font-size: 0.75rem;
-    border: none;
-    border-left: 1px black solid;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    box-sizing: border-box;
-}
-
-.phone-dash-navbar-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25%;
-    font-size: 0.75rem;
-    border: none;
-    border-left: 1px black solid;
-    border-right: 1px black solid;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    box-sizing: border-box;
-}
-
-.phone-dash-navbar-button:hover {
-    cursor: pointer;
-}
-
-.phone-dash-navbar-button-active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25%;
-    font-size: 0.75rem;
-    border: none;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    box-sizing: border-box;
 }
 
 .phone-dash-dashcontainer {
@@ -619,4 +553,130 @@ DASHBOARD STYLES
     align-items: center;
     width: 100%;
     height: 100%;
+}
+
+.phone-dash-sidebar {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: flex-start;
+    width: 50px;
+    height: 100%;
+    background-color: var(--clr-surface-a10);
+    border-right: 1px solid;
+    box-sizing: border-box;
+    border-color: var(--clr-surface-tonal-a50);
+    transition: width 0.1s;
+    flex-direction: column;
+    box-shadow: 8px 0 10px -10px rgba(0, 0, 0, 0.3);
+}
+
+.phone-dash-sidebar-expanded {
+    display: flex;
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background-color: var(--clr-surface-a10);
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid;
+    box-sizing: border-box;
+    border-color: var(--clr-surface-tonal-a50);
+    z-index: 500;
+    transition: width 0.1s;
+    flex-direction: column;
+    box-shadow: 8px 0 10px -10px rgba(0, 0, 0, 0.3);
+}
+
+.phone-dash-sidebar-logocontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    border-bottom: 1px solid var(--clr-surface-tonal-a50);
+}
+
+.phone-dash-sidebar-logo {
+    height: auto;
+    width: 2rem;
+    color: var(--black);
+}
+
+.phone-dash-sidebar-half {
+    display: flex;
+    box-sizing: border-box;
+    padding-left: 6.7%;
+    height: 45%;
+    width: 100%;
+    flex-direction: column;
+}
+
+.phone-dash-sidebar-bottomhalf {
+    display: flex;
+    box-sizing: border-box;
+    padding-left: 6.7%;
+    height: 45%;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.phone-dash-sidebar-logobutton {
+    white-space: nowrap;
+    width: 90%;
+    font-size: 1.5rem;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.phone-dash-sidebar-mainbutton {
+    white-space: nowrap;
+    width: 90%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.phone-dash-sidebar-mainbutton *,
+.phone-dash-sidebar-mainbutton-active *,
+.phone-dash-sidebar-secondarybuttons * {
+    font-size: 2rem;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.phone-dash-sidebar-mainbutton:hover {
+    background-color: var(--clr-surface-a30);
+    transition: background-color 0.15s;
+}
+
+.phone-dash-sidebar-mainbutton:active {
+    background-color: var(--clr-surface-a40);
+}
+
+.phone-dash-sidebar-mainbutton-active {
+    white-space: nowrap;
+    width: 90%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 10px;
+    background-color: var(--clr-surface-a30);
+    pointer-events: none;
 }
