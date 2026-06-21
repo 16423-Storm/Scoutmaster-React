@@ -641,6 +641,7 @@ DASHBOARD STYLES
     box-sizing: border-box;
     padding-left: 6.7%;
     height: 45%;
+    width: 100%;
     flex-direction: column;
     justify-content: end;
 }
@@ -891,4 +892,11 @@ HOME STYLES
     background-color: var(--clr-surface-a0);
     border: 1px solid var(--clr-surface-tonal-a10);
     border-radius: 10px;
+}
+
+.desktop-dash-home-infodisplay-chartcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
 }

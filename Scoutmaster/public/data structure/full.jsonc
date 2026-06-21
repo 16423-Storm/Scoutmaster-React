@@ -1,5 +1,5 @@
 {
-    "16423": {
+    "prescout": {
         "structure": {
             "numOfQuestions": 6,
             // the type of questions
@@ -16,9 +16,28 @@
                     "IMAGINEANSVGPATHRIGHTHERE",
                     "16423-picof1.png",
                 ],
+                "matchesIn": [1, 5, 67],
             },
             "2": {},
             "3": {},
+        },
+    },
+    "matchscout": {
+        "Q1": {
+            "highlighted": [true, true, false, true],
+            "teams": [1234, 1222, 1223, 1313],
+            "red1": [45, 45, 45, 45],
+            "red2": [55, 55, 55, 55],
+            "blue1": [555, 555, 555, 555],
+            "blue2": [1, 1, 1, 1],
+        },
+        "Q2": {
+            "highlighted": [true, true, false, true],
+            "teams": [1234, 1222, 1223, 1313],
+            "red1": [45, 45, 45, 45],
+            "red2": [55, 55, 55, 55],
+            "blue1": [555, 555, 555, 555],
+            "blue2": [1, 1, 1, 1],
         },
     },
 }
