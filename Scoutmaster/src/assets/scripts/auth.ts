@@ -36,3 +36,11 @@ export function signIn(data: UserData) {
 export function isUserSignedIn() {
     return true;
 }
+
+/**
+ * Returns the number of members in user's group
+ * @returns {number} Number of Members
+ */
+export function getNumberOfMembers() {
+    return 1;
+}

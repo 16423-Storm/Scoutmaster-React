@@ -14,13 +14,15 @@ import DashboardPrescout from "./subpages/dashboard/prescouting.tsx";
 import DashboardMatchScouting from "./subpages/dashboard/matchscouting.tsx";
 import DashboardSummary from "./subpages/dashboard/summary.tsx";
 import DashboardSettings from "./subpages/dashboard/settings.tsx";
+import DashboardCompetition from "./subpages/dashboard/competition.tsx";
 import Blocker499 from "./components/blocker.tsx";
 
 // Script Imports
 import { languages } from "../scripts/localization.js";
+import { dashboardStart } from "../scripts/localstorageutils.ts";
 
 // Icon Imports
-import { FaHome, FaGamepad, FaNewspaper, FaSun, FaMoon } from "react-icons/fa";
+import { FaHome, FaGamepad, FaNewspaper, FaMedal } from "react-icons/fa";
 import { FaMagnifyingGlass, FaGear } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { MdOutlineCancel } from "react-icons/md";
@@ -35,6 +37,7 @@ function Dashboard() {
         | "prescouting"
         | "matchscouting"
         | "summary"
+        | "competition"
         | "settings";
 
     const [currentPage, setCurrentPage] = useState<Page>("home");
@@ -51,6 +54,8 @@ function Dashboard() {
                 return <DashboardMatchScouting />;
             case "summary":
                 return <DashboardSummary />;
+            case "competition":
+                return <DashboardCompetition />;
             case "settings":
                 return <DashboardSettings />;
         }
@@ -78,6 +83,10 @@ function Dashboard() {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
+    }, []);
+
+    useEffect(() => {
+        dashboardStart();
     }, []);
 
     if (screenType == "desktop") {
@@ -161,6 +170,23 @@ function Dashboard() {
                                     {""}
                                     {t("summary")}
                                 </div>
+                                <div
+                                    className={
+                                        currentPage == "competition"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onClick={
+                                        currentPage !== "competition"
+                                            ? () =>
+                                                  setCurrentPage("competition")
+                                            : undefined
+                                    }
+                                >
+                                    <FaMedal />
+                                    {""}
+                                    {t("competition")}
+                                </div>
                             </div>
                             <div className="desktop-dash-sidebar-bottomhalf">
                                 <div
@@ -229,6 +255,16 @@ function Dashboard() {
                                     style={{ justifyContent: "center" }}
                                 >
                                     <FaNewspaper />
+                                </div>
+                                <div
+                                    className={
+                                        currentPage == "competition"
+                                            ? "desktop-dash-sidebar-mainbutton-active"
+                                            : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    style={{ justifyContent: "center" }}
+                                >
+                                    <FaMedal />
                                 </div>
                             </div>
                             <div className="desktop-dash-sidebar-bottomhalf">
@@ -362,6 +398,25 @@ function Dashboard() {
                                             {""}
                                             {t("summary")}
                                         </div>
+                                        <div
+                                            className={
+                                                currentPage == "competition"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            onClick={
+                                                currentPage !== "competition"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "competition",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaMedal />
+                                            {""}
+                                            {t("competition")}
+                                        </div>
                                     </div>
                                     <div className="phone-dash-sidebar-bottomhalf">
                                         <div
@@ -478,6 +533,26 @@ function Dashboard() {
                                             }
                                         >
                                             <FaNewspaper />
+                                        </div>
+                                        <div
+                                            className={
+                                                currentPage == "competition"
+                                                    ? "phone-dash-sidebar-mainbutton-active"
+                                                    : "phone-dash-sidebar-mainbutton"
+                                            }
+                                            style={{
+                                                justifyContent: "center",
+                                            }}
+                                            onClick={
+                                                currentPage !== "competition"
+                                                    ? () =>
+                                                          setCurrentPage(
+                                                              "competition",
+                                                          )
+                                                    : undefined
+                                            }
+                                        >
+                                            <FaMedal />
                                         </div>
                                     </div>
                                     <div className="phone-dash-sidebar-bottomhalf">
