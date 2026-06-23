@@ -18,5 +18,9 @@
     {
         "key": "CAONMIQ",
         "name": "Mississauga Qualifier"
+    },
+    {
+        "key": "CUSTOM",
+        "name": "Custom Competition"
     }
 ]

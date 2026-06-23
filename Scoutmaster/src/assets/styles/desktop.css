@@ -928,7 +928,6 @@ COMPETITION STYLES
 
 .desktop-dash-comp-infodisplay {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 33%;
@@ -938,11 +937,12 @@ COMPETITION STYLES
     background-color: var(--clr-surface-a0);
     border: 1px solid var(--clr-surface-tonal-a10);
     border-radius: 10px;
+    max-height: 98%;
+    overflow-y: auto;
 }
 
 .desktop-dash-comp-infodisplay-title {
     font-size: 1.5rem;
-    font-weight: 900;
     margin-bottom: 10px;
 }
 
@@ -981,7 +981,7 @@ COMPETITION STYLES
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.desktop-dash-comp-searchdrop p {
+.desktop-dash-comp-searchdrop > p {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -997,14 +997,14 @@ COMPETITION STYLES
 
 .desktop-dash-comp-searchdrop div {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
     background-color: var(--clr-surface-a0);
     overflow: hidden;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
     transition: background-color 0.15s;
 }
 
@@ -1030,4 +1030,178 @@ COMPETITION STYLES
 .desktop-dash-comp-searchdrop div:active {
     background-color: var(--clr-surface-a20);
     cursor: pointer;
+}
+
+.desktop-dash-comp-infodisplay-bordercontainer {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    flex-direction: column;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.desktop-dash-comp-infodisplay-table {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    overflow-x: hidden;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.desktop-dash-comp-infodisplay-table div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    background-color: var(--clr-surface-a0);
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: background-color 0.15s;
+}
+
+.desktop-dash-comp-infodisplay-table div:first-child {
+    border-top: 2px solid var(--clr-surface-tonal-a10);
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-comp-infodisplay-table div:last-child {
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-comp-infodisplay-table div:not(:last-child) {
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-comp-infodisplay-table div:hover {
+    background-color: var(--clr-surface-a10);
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.desktop-dash-comp-infodisplay-table div:active {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+}
+
+.desktop-dash-comp-infodisplay-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+    background-color: var(--clr-surface-a10);
+    border-radius: 10px;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    padding: 5px;
+}
+
+.desktop-dash-comp-infodisplay-button:hover {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+}
+
+.desktop-dash-comp-infodisplay-button:active {
+    background-color: var(--clr-surface-a30);
+}
+
+/*
+
+
+
+
+
+POPUP/TOAST STYLES
+
+
+
+
+
+*/
+
+.desktop-warningpopup {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    z-index: 501;
+    width: 30vw;
+    height: 25vh;
+    position: absolute;
+    background-color: var(--clr-surface-a30);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 12px;
+}
+
+.desktop-warningpopup * {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.desktop-warningpopup > div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    height: 25%;
+    width: 100%;
+}
+
+.desktop-warningpopup > div > button {
+    height: 100%;
+    width: 35%;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    transition: transform 0.1s ease-in-out;
+}
+
+.desktop-warningpopup-cancel {
+    background-color: var(--clr-danger-a0);
+}
+
+.desktop-warningpopup-continue {
+    background-color: var(--clr-success-a0);
+}
+
+.desktop-warningpopup-cancel:hover {
+    background-color: var(--clr-danger-a10);
+    cursor: pointer;
+}
+
+.desktop-warningpopup-continue:hover {
+    background-color: var(--clr-success-a10);
+    cursor: pointer;
+}
+
+.desktop-warningpopup-cancel:active {
+    background-color: var(--clr-danger-a10);
+    transform: scale(0.98);
+}
+
+.desktop-warningpopup-continue:active {
+    background-color: var(--clr-success-a10);
+    transform: scale(0.98);
+}
+
+.desktop-warningpopup-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.desktop-warningpopup-message {
+    text-align: center;
+    font-size: 1rem;
 }

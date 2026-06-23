@@ -274,11 +274,7 @@ function Dashboard() {
                                             ? "desktop-dash-sidebar-mainbutton-active"
                                             : "desktop-dash-sidebar-mainbutton"
                                     }
-                                    onClick={
-                                        currentPage !== "settings"
-                                            ? () => setCurrentPage("settings")
-                                            : undefined
-                                    }
+                                    style={{ justifyContent: "center" }}
                                 >
                                     <FaGear />
                                 </div>
@@ -562,6 +558,9 @@ function Dashboard() {
                                                     ? "phone-dash-sidebar-mainbutton-active"
                                                     : "phone-dash-sidebar-mainbutton"
                                             }
+                                            style={{
+                                                justifyContent: "center",
+                                            }}
                                             onClick={
                                                 currentPage !== "settings"
                                                     ? () =>

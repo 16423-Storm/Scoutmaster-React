@@ -4,10 +4,13 @@ import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import { getCompKey } from "../../../scripts/localstorageutils";
+import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
 
 import data from "./comps.json";
 
 import { FaRegSadTear } from "react-icons/fa";
+
+import { WarningModal } from "../../components/popups";
 
 function DashboardCompetition() {
     const { t } = useTranslation();
@@ -58,7 +61,10 @@ function DashboardCompetition() {
                                         {filteredData.length > 0 ? (
                                             filteredData.map((item) => (
                                                 <div key={item.key}>
-                                                    {item.name}
+                                                    <p>{item.name}</p>
+                                                    <p className="notetext">
+                                                        {item.key}
+                                                    </p>
                                                 </div>
                                             ))
                                         ) : (
@@ -73,6 +79,69 @@ function DashboardCompetition() {
                                         )}
                                     </div>
                                 )}
+                            </div>
+                            <button
+                                className="desktop-dash-comp-infodisplay-button"
+                                style={{ marginTop: "10px" }}
+                            >
+                                Switch to Custom
+                            </button>
+                            <p className="notetext" style={{ padding: "10px" }}>
+                                If you want to scout a custom competition, type
+                                "CUSTOM", you can also switch the current
+                                competition to a custom one.
+                            </p>
+                            <div
+                                className="desktop-dash-comp-infodisplay-bordercontainer"
+                                style={{ fontSize: "1.5rem" }}
+                            >
+                                List of Teams:
+                                <div className="desktop-dash-comp-infodisplay-table">
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                    <div>16423</div>
+                                </div>
                             </div>
                         </div>
                         <div className="desktop-dash-comp-infodisplay"></div>
