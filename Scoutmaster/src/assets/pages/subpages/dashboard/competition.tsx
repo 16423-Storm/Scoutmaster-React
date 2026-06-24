@@ -3,7 +3,7 @@ import { useScreenType } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
-import { getCompKey } from "../../../scripts/localstorageutils";
+import { getCompKey, setCustom } from "../../../scripts/localstorageutils";
 import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
 
 import data from "./comps.json";
@@ -17,6 +17,13 @@ function DashboardCompetition() {
 
     const [search, setSearch] = useState("");
     const [filteredData, setFilteredData] = useState(data);
+
+    const [customWarningVisible, setCustomWarningVisible] = useState(false);
+
+    function switchToCustom() {
+        setCustomWarningVisible(false);
+        setCustom();
+    }
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -44,6 +51,14 @@ function DashboardCompetition() {
     if (useScreenType() == "desktop") {
         return (
             <>
+                {customWarningVisible && (
+                    <WarningModal
+                        title="Warning!"
+                        message="If you switch this competition to custom, it will keep all existing data, but it will no longer get new info from the FTC API"
+                        onCancel={() => setCustomWarningVisible(false)}
+                        onContinue={switchToCustom}
+                    />
+                )}
                 <div className="desktop-dash-maincontainer">
                     <div className="desktop-dash-comp-divider">
                         <div className="desktop-dash-comp-infodisplay">
@@ -83,6 +98,7 @@ function DashboardCompetition() {
                             <button
                                 className="desktop-dash-comp-infodisplay-button"
                                 style={{ marginTop: "10px" }}
+                                onClick={() => setCustomWarningVisible(true)}
                             >
                                 Switch to Custom
                             </button>
@@ -96,52 +112,7 @@ function DashboardCompetition() {
                                 style={{ fontSize: "1.5rem" }}
                             >
                                 List of Teams:
-                                <div className="desktop-dash-comp-infodisplay-table">
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                    <div>16423</div>
-                                </div>
+                                <div className="desktop-dash-comp-infodisplay-table"></div>
                             </div>
                         </div>
                         <div className="desktop-dash-comp-infodisplay"></div>

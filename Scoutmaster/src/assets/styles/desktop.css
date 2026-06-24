@@ -1067,6 +1067,12 @@ COMPETITION STYLES
     transition: background-color 0.15s;
 }
 
+.desktop-dash-comp-infodisplay-table p {
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
 .desktop-dash-comp-infodisplay-table div:first-child {
     border-top: 2px solid var(--clr-surface-tonal-a10);
     border-bottom: 1px solid var(--clr-surface-tonal-a10);

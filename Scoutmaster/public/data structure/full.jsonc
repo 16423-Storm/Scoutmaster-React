@@ -9,6 +9,7 @@
         },
         "teams": {
             "1": {
+                "name": "TEAM1",
                 // for images, the image name will be Scouting team number - picof Scouted team number, so XXXXX-picof-XXXXX
                 "data": [
                     "lorem ipsum",

@@ -90,6 +90,24 @@ export function setCompKey(compkey: string) {
 }
 
 /**
+ * Switches current competition to a custom one
+ */
+export function setCustom() {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+        parsed.custom = true;
+        localStorage.setItem("data", JSON.parse(parsed));
+    } catch {
+        return;
+    }
+}
+
+/**
  * Hydrates local storage with data from database
  */
 export function hydrate() {}
@@ -115,6 +133,7 @@ export type PrescoutData = {
     };
     teams: {
         [teamId: string]: {
+            name: string;
             data?: any[];
             matchesIn?: number[];
         };
