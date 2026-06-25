@@ -938,7 +938,6 @@ COMPETITION STYLES
     border: 1px solid var(--clr-surface-tonal-a10);
     border-radius: 10px;
     max-height: 98%;
-    overflow-y: auto;
 }
 
 .desktop-dash-comp-infodisplay-title {
@@ -965,6 +964,7 @@ COMPETITION STYLES
     border: 1px solid;
     border-color: var(--clr-surface-tonal-a10);
     padding: 4px;
+    box-sizing: border-box;
 }
 
 .desktop-dash-comp-searchdrop {
@@ -1104,19 +1104,20 @@ COMPETITION STYLES
     align-items: center;
     box-sizing: border-box;
     font-size: 1.5rem;
-    background-color: var(--clr-surface-a10);
+    background-color: var(--clr-surface-a0);
     border-radius: 10px;
     border: 1px solid var(--clr-surface-tonal-a10);
     padding: 5px;
+    width: 95%;
 }
 
 .desktop-dash-comp-infodisplay-button:hover {
-    background-color: var(--clr-surface-a20);
+    background-color: var(--clr-surface-a10);
     cursor: pointer;
 }
 
 .desktop-dash-comp-infodisplay-button:active {
-    background-color: var(--clr-surface-a30);
+    background-color: var(--clr-surface-a20);
 }
 
 /*

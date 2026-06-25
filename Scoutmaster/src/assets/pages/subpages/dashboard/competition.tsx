@@ -3,7 +3,12 @@ import { useScreenType } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
-import { getCompKey, setCustom } from "../../../scripts/localstorageutils";
+import {
+    getCompKey,
+    setCustom,
+    setCompKey,
+    useCustom,
+} from "../../../scripts/localstorageutils";
 import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
 
 import data from "./comps.json";
@@ -15,15 +20,37 @@ import { WarningModal } from "../../components/popups";
 function DashboardCompetition() {
     const { t } = useTranslation();
 
+    const isCustom = useCustom((state) => state.isCustom);
+
+    const [currentKey, setCurrentKey] = useState(getCompKey());
+
     const [search, setSearch] = useState("");
     const [filteredData, setFilteredData] = useState(data);
 
     const [customWarningVisible, setCustomWarningVisible] = useState(false);
+    const [compWarningVisible, setCompWarningVisible] = useState(false);
 
     function switchToCustom() {
         setCustomWarningVisible(false);
         setCustom();
     }
+
+    const [targetSwitchKey, setTargetSwitchKey] = useState("");
+
+    function switchCompWarningPrompt(key: string) {
+        setCompWarningVisible(true);
+        setTargetSwitchKey(key);
+    }
+
+    // function switchComp() {
+    //     if (targetSwitchKey == "") {
+    //         return;
+    //     }
+    //     setCompWarningVisible(false);
+    //     setCompKey(targetSwitchKey);
+    //     setCurrentKey(targetSwitchKey);
+    //     setSearch("");
+    // }
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -59,11 +86,19 @@ function DashboardCompetition() {
                         onContinue={switchToCustom}
                     />
                 )}
+                {compWarningVisible && (
+                    <WarningModal
+                        title="Warning!"
+                        message="If you switch to this competition, all existing scouting data will be deleted!"
+                        onCancel={() => setCompWarningVisible(false)}
+                        onContinue={() => setCompWarningVisible(false)}
+                    />
+                )}
                 <div className="desktop-dash-maincontainer">
                     <div className="desktop-dash-comp-divider">
                         <div className="desktop-dash-comp-infodisplay">
                             <p className="desktop-dash-comp-infodisplay-title">
-                                Currently Scouting: ...
+                                Currently Scouting: {currentKey}
                             </p>
                             <div className="desktop-dash-comp-searchcontainer">
                                 <input
@@ -75,7 +110,14 @@ function DashboardCompetition() {
                                     <div className="desktop-dash-comp-searchdrop">
                                         {filteredData.length > 0 ? (
                                             filteredData.map((item) => (
-                                                <div key={item.key}>
+                                                <div
+                                                    key={item.key}
+                                                    onClick={() =>
+                                                        switchCompWarningPrompt(
+                                                            item.key,
+                                                        )
+                                                    }
+                                                >
                                                     <p>{item.name}</p>
                                                     <p className="notetext">
                                                         {item.key}
@@ -99,6 +141,7 @@ function DashboardCompetition() {
                                 className="desktop-dash-comp-infodisplay-button"
                                 style={{ marginTop: "10px" }}
                                 onClick={() => setCustomWarningVisible(true)}
+                                disabled={isCustom}
                             >
                                 Switch to Custom
                             </button>

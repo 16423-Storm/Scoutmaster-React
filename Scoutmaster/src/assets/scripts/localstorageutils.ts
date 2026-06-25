@@ -1,4 +1,5 @@
 import { getNumberOfMembers } from "./auth";
+import { create } from "zustand";
 
 // GENERAL LOCAL STORAGE MANAGEMENT
 export type LocalStorageData = {
@@ -83,7 +84,7 @@ export function setCompKey(compkey: string) {
     try {
         const parsed = JSON.parse(data);
         parsed.compkey = compkey;
-        localStorage.setItem("data", JSON.parse(parsed));
+        localStorage.setItem("data", JSON.stringify(parsed));
     } catch {
         return;
     }
@@ -101,11 +102,21 @@ export function setCustom() {
     try {
         const parsed = JSON.parse(data);
         parsed.custom = true;
-        localStorage.setItem("data", JSON.parse(parsed));
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useCustom.getState().setCustom(true);
     } catch {
         return;
     }
 }
+
+export const useCustom = create<{
+    isCustom: boolean;
+    setCustom: (value: boolean) => void;
+}>((set) => ({
+    isCustom: true,
+
+    setCustom: (value) => set({ isCustom: value }),
+}));
 
 /**
  * Hydrates local storage with data from database
