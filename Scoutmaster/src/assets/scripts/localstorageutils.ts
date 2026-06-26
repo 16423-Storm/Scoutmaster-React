@@ -1,5 +1,8 @@
 import { getNumberOfMembers } from "./auth";
 import { create } from "zustand";
+import { successToast, errorToast } from "./misc/toastmanager";
+
+import i18n from "./localization";
 
 // GENERAL LOCAL STORAGE MANAGEMENT
 export type LocalStorageData = {
@@ -20,9 +23,7 @@ export function clearLocalStorage() {
  * Manages initialization of all data related to dashboard
  */
 export function dashboardStart() {
-    if (getNumberOfMembers() == 1) {
-        createSkeleton(false);
-    }
+    return;
 }
 
 /**
@@ -55,18 +56,22 @@ export function createSkeleton(force: boolean) {
 }
 
 /**
- * Returns the current competition key if available, "NONE" if not
+ * Returns the current competition key from localstorage if available, "NONE" if not
  * @returns {string} competition key or "NONE"
  */
 export function getCompKey() {
     const data = localStorage.getItem("data");
     if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
         return "NONE";
     }
 
     try {
         return JSON.parse(data).compkey;
-    } catch {
+    } catch (e) {
+        console.error(`ERROR: Failed to get competition key: ` + e);
+        errorToast(i18n.t("dataloaderror"), 3000);
         return "NONE";
     }
 }
@@ -76,8 +81,11 @@ export function getCompKey() {
  * @param {string} compkey - Competition Key
  */
 export function setCompKey(compkey: string) {
+    createSkeleton(true);
     const data = localStorage.getItem("data");
     if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -85,26 +93,65 @@ export function setCompKey(compkey: string) {
         const parsed = JSON.parse(data);
         parsed.compkey = compkey;
         localStorage.setItem("data", JSON.stringify(parsed));
-    } catch {
+        useCompKey.getState().setCompKey(compkey);
+        successToast(i18n.t("compsuccess"), 2000);
+    } catch (e) {
+        console.error("ERROR: Failed to set competition: " + e);
+        errorToast(i18n.t("seterror"), 3000);
         return;
+    }
+}
+
+export const useCompKey = create<{
+    compKey: string;
+    setCompKey: (value: string) => void;
+}>((set) => ({
+    compKey: getCompKey(),
+
+    setCompKey: (value) => set({ compKey: value }),
+}));
+
+/**
+ * Returns the current custom status from localstorage if available
+ * @returns {boolean} custom
+ */
+export function getCustom() {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return false;
+    }
+
+    try {
+        return JSON.parse(data).custom;
+    } catch (e) {
+        console.error(`ERROR: Could not get custom: ` + e);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return false;
     }
 }
 
 /**
  * Switches current competition to a custom one
  */
-export function setCustom() {
+export function setCustom(custom: boolean) {
     const data = localStorage.getItem("data");
     if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
     try {
         const parsed = JSON.parse(data);
-        parsed.custom = true;
+        parsed.custom = custom;
         localStorage.setItem("data", JSON.stringify(parsed));
-        useCustom.getState().setCustom(true);
-    } catch {
+        useCustom.getState().setCustom(custom);
+        successToast(i18n.t("customsuccess"), 2000);
+    } catch (e) {
+        console.error("ERROR: Could not set competition to custom: " + e);
+        errorToast(i18n.t("seterror"), 3000);
         return;
     }
 }
@@ -113,7 +160,7 @@ export const useCustom = create<{
     isCustom: boolean;
     setCustom: (value: boolean) => void;
 }>((set) => ({
-    isCustom: true,
+    isCustom: getCustom(),
 
     setCustom: (value) => set({ isCustom: value }),
 }));
@@ -164,7 +211,7 @@ export function loadPrescoutTeams() {}
  */
 export function loadTeamData(team: string) {
     if (!/^\d+$/.test(team)) {
-        throw new TypeError("team must be a numeric string");
+        console.error("ERROR: Team must be a numeric string");
     }
 }
 

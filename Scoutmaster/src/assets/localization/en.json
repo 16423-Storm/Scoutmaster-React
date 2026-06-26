@@ -37,5 +37,22 @@
     "groupmanagement": "Group Management",
     "process": "Process",
     "darklightmode": "Dark/Light Mode:",
-    "language": "Language:"
+    "language": "Language:",
+
+    "warning!": "Warning!",
+    "customwarning": "If you switch this competition to custom, it will keep all existing data, but it will no longer get new info from the FTC API, this CANNOT be reverted.",
+    "compwarning": "If you switch to this competition, all existing scouting data will be deleted!",
+    "currentlyscouting": "Currently Scouting: {{compkey}}",
+    "noresultsfound": "No Results Found",
+    "compalreadycustom": "Competition already set to custom",
+    "switchtocustom": "Switch to Custom",
+    "customnotice": "If you want to scout a custom competition, type \"CUSTOM\", you can also switch the current competition to a custom one.",
+    "listofteams": "List of Teams:",
+
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "compsuccess": "Successfully switched competition!",
+    "customsuccess": "Successfully set competition to custom!",
+    "dataloaderror": "Error loading data, please reload page and try again",
+    "seterror": "Error setting data, please reload page and try again"
 }

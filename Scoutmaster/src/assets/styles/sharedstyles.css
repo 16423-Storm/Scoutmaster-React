@@ -88,8 +88,14 @@ html {
         border-color 0.15s;
 }
 
-*:not(svg) {
+*:not(path):not(svg) {
     color: var(--black);
+}
+
+.Toastify__toast-icon,
+.Toastify--animate-icon,
+.Toastify__zoom-enter {
+    color: unset;
 }
 
 *::-webkit-scrollbar {

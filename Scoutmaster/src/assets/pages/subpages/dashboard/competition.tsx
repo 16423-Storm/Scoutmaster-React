@@ -8,8 +8,9 @@ import {
     setCustom,
     setCompKey,
     useCustom,
+    useCompKey,
 } from "../../../scripts/localstorageutils";
-import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
+import { Bounce, ToastContainer } from "react-toastify";
 
 import data from "./comps.json";
 
@@ -21,8 +22,7 @@ function DashboardCompetition() {
     const { t } = useTranslation();
 
     const isCustom = useCustom((state) => state.isCustom);
-
-    const [currentKey, setCurrentKey] = useState(getCompKey());
+    const currentKey = useCompKey((state) => state.compKey);
 
     const [search, setSearch] = useState("");
     const [filteredData, setFilteredData] = useState(data);
@@ -32,7 +32,7 @@ function DashboardCompetition() {
 
     function switchToCustom() {
         setCustomWarningVisible(false);
-        setCustom();
+        setCustom(true);
     }
 
     const [targetSwitchKey, setTargetSwitchKey] = useState("");
@@ -42,15 +42,14 @@ function DashboardCompetition() {
         setTargetSwitchKey(key);
     }
 
-    // function switchComp() {
-    //     if (targetSwitchKey == "") {
-    //         return;
-    //     }
-    //     setCompWarningVisible(false);
-    //     setCompKey(targetSwitchKey);
-    //     setCurrentKey(targetSwitchKey);
-    //     setSearch("");
-    // }
+    function switchComp() {
+        if (targetSwitchKey == "") {
+            return;
+        }
+        setCompWarningVisible(false);
+        setCompKey(targetSwitchKey);
+        setSearch("");
+    }
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -78,27 +77,42 @@ function DashboardCompetition() {
     if (useScreenType() == "desktop") {
         return (
             <>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                    transition={Bounce}
+                />
                 {customWarningVisible && (
                     <WarningModal
-                        title="Warning!"
-                        message="If you switch this competition to custom, it will keep all existing data, but it will no longer get new info from the FTC API"
+                        title={t("warning!")}
+                        message={t("customwarning")}
                         onCancel={() => setCustomWarningVisible(false)}
                         onContinue={switchToCustom}
                     />
                 )}
                 {compWarningVisible && (
                     <WarningModal
-                        title="Warning!"
-                        message="If you switch to this competition, all existing scouting data will be deleted!"
+                        title={t("warning!")}
+                        message={t("compwarning")}
                         onCancel={() => setCompWarningVisible(false)}
-                        onContinue={() => setCompWarningVisible(false)}
+                        onContinue={switchComp}
                     />
                 )}
                 <div className="desktop-dash-maincontainer">
                     <div className="desktop-dash-comp-divider">
                         <div className="desktop-dash-comp-infodisplay">
                             <p className="desktop-dash-comp-infodisplay-title">
-                                Currently Scouting: {currentKey}
+                                {t("currentlyscouting", {
+                                    compkey: currentKey,
+                                })}
                             </p>
                             <div className="desktop-dash-comp-searchcontainer">
                                 <input
@@ -131,30 +145,44 @@ function DashboardCompetition() {
                                                         paddingRight: "8px",
                                                     }}
                                                 />
-                                                No Results Found
+                                                {t("noresultsfound")}
                                             </p>
                                         )}
                                     </div>
                                 )}
                             </div>
-                            <button
-                                className="desktop-dash-comp-infodisplay-button"
-                                style={{ marginTop: "10px" }}
-                                onClick={() => setCustomWarningVisible(true)}
-                                disabled={isCustom}
-                            >
-                                Switch to Custom
-                            </button>
-                            <p className="notetext" style={{ padding: "10px" }}>
-                                If you want to scout a custom competition, type
-                                "CUSTOM", you can also switch the current
-                                competition to a custom one.
-                            </p>
+                            {isCustom ? (
+                                <p
+                                    className="notetext"
+                                    style={{ padding: "10px" }}
+                                >
+                                    {t("compalreadycustom")}
+                                </p>
+                            ) : (
+                                <>
+                                    <button
+                                        className="desktop-dash-comp-infodisplay-button"
+                                        style={{ marginTop: "10px" }}
+                                        onClick={() =>
+                                            setCustomWarningVisible(true)
+                                        }
+                                        disabled={isCustom}
+                                    >
+                                        {t("switchtocustom")}
+                                    </button>
+                                    <p
+                                        className="notetext"
+                                        style={{ padding: "10px" }}
+                                    >
+                                        {t("customnotice")}
+                                    </p>
+                                </>
+                            )}
                             <div
                                 className="desktop-dash-comp-infodisplay-bordercontainer"
                                 style={{ fontSize: "1.5rem" }}
                             >
-                                List of Teams:
+                                {t("listofteams")}
                                 <div className="desktop-dash-comp-infodisplay-table"></div>
                             </div>
                         </div>

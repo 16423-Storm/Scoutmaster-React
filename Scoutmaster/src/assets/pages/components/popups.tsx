@@ -1,5 +1,6 @@
 import { useScreenType } from "../../scripts/multipageutils";
 import { Blocker499 } from "./blocker";
+import { useTranslation } from "react-i18next";
 
 type PropsOfWarningModal = {
     title: string;
@@ -16,6 +17,7 @@ export function WarningModal({
     onContinue,
     onCancel,
 }: PropsOfWarningModal) {
+    const { t } = useTranslation();
     if (useScreenType() == "desktop") {
         return (
             <>
@@ -28,13 +30,13 @@ export function WarningModal({
                             className="desktop-warningpopup-cancel"
                             onClick={onCancel}
                         >
-                            Cancel
+                            {t("cancel")}
                         </button>
                         <button
                             className="desktop-warningpopup-continue"
                             onClick={onContinue}
                         >
-                            Continue
+                            {t("continue")}
                         </button>
                     </div>
                 </div>
