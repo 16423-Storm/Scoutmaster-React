@@ -53,6 +53,7 @@ export function createSkeleton(force: boolean) {
     };
 
     localStorage.setItem("data", JSON.stringify(skeleton));
+    useCustom.getState().setCustom(false);
 }
 
 /**
