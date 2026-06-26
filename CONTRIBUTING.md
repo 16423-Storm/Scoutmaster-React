@@ -93,7 +93,7 @@ Consider joining [our discord](https://discord.gg/zbTEvwccV) to get update notif
 
 # Localization
 
-Like mentioned earlier, if you know a language that Scoutmaster is not already localized in, first check the [issues tab](https://github.com/16423-Storm/Scoutmaster-React/issues) to see if anyone else is already localizing that language, if not, then follow the steps below:
+Like mentioned earlier, if you know a language that Scoutmaster is not already localized in, first check the [issues tab](https://github.com/16423-Storm/Scoutmaster-React/issues) to see if anyone else is already localizing that language, if not, make an issue with the localization label, then follow the steps below:
 
 _First, before we go on, please understand that right now, Scoutmaster only supports languages that read from left to right, no right to left languages yet..._
 
