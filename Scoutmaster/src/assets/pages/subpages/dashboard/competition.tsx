@@ -9,6 +9,7 @@ import {
     setCompKey,
     useCustom,
     useCompKey,
+    useTeams,
 } from "../../../scripts/localstorageutils";
 import { Bounce, ToastContainer } from "react-toastify";
 
@@ -16,13 +17,14 @@ import data from "./comps.json";
 
 import { FaRegSadTear } from "react-icons/fa";
 
-import { WarningModal } from "../../components/popups";
+import { WarningModal, AddTeamModal } from "../../components/popups";
 
 function DashboardCompetition() {
     const { t } = useTranslation();
 
     const isCustom = useCustom((state) => state.isCustom);
     const currentKey = useCompKey((state) => state.compKey);
+    const teams = useTeams((state) => state.teams);
 
     const [search, setSearch] = useState("");
     const [filteredData, setFilteredData] = useState(data);
@@ -90,6 +92,7 @@ function DashboardCompetition() {
                     theme="colored"
                     transition={Bounce}
                 />
+                <AddTeamModal />
                 {customWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -183,7 +186,15 @@ function DashboardCompetition() {
                                 style={{ fontSize: "1.5rem" }}
                             >
                                 {t("listofteams")}
-                                <div className="desktop-dash-comp-infodisplay-table"></div>
+                                <div className="desktop-dash-comp-infodisplay-table">
+                                    {Object.entries(teams).map(
+                                        ([teamNum, team]) => (
+                                            <div key={teamNum}>
+                                                {teamNum} - {team.name}
+                                            </div>
+                                        ),
+                                    )}
+                                </div>
                             </div>
                         </div>
                         <div className="desktop-dash-comp-infodisplay"></div>

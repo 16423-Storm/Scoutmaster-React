@@ -1160,8 +1160,11 @@ POPUP/TOAST STYLES
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    height: 25%;
     width: 100%;
+}
+
+.desktop-warningpopup:not(#avoidwarningpopupheight) > div {
+    height: 25%;
 }
 
 .desktop-warningpopup > div > button {
@@ -1211,4 +1214,53 @@ POPUP/TOAST STYLES
 .desktop-warningpopup-message {
     text-align: center;
     font-size: 1rem;
+}
+
+.desktop-popupinput-parentcontainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start !important;
+    width: 100%;
+    flex-direction: row;
+}
+
+.desktop-popupinput-childcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    flex-direction: column;
+    font-size: 1rem;
+}
+
+.desktop-popupinput-childcontainer p {
+    font-size: 1rem;
+    color: var(--black);
+}
+
+.desktop-popupinput-childcontainer input {
+    padding: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 90%;
+    margin: 0px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.desktop-popupinput-childcontainer div {
+    font-size: 0.7rem;
+    font-weight: bolder;
+    margin: 0px;
+    margin-top: 2px;
+    width: 90%;
+    text-align: right;
+}
+
+.desktop-popupinput-maxedinput {
+    border: 1px solid red !important;
+}
+
+.desktop-popupinput-maxedinput:focus {
+    outline: 2px solid red !important;
 }

@@ -166,6 +166,76 @@ export const useCustom = create<{
     setCustom: (value) => set({ isCustom: value }),
 }));
 
+type Team = {
+    name: string;
+    data: (string | number | boolean)[];
+    matchesIn: number[];
+};
+
+type Teams = {
+    [teamId: string]: Team;
+};
+
+/**
+ * Returns the current listed teams from localstorage if available
+ * @returns {Teams} teams
+ */
+export function getTeams() {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return {};
+    }
+
+    try {
+        return JSON.parse(data).prescout.teams as Teams;
+    } catch (e) {
+        console.error(`ERROR: Could not get teams: ` + e);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return {};
+    }
+}
+
+export function addTeam(num: number, name: string) {
+    if (Object.hasOwn(getTeams(), num.toString())) {
+        console.error("ERROR: Attempted to add duplicate team");
+        errorToast("Team already added", 3000);
+        return;
+    }
+
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+        parsed.prescout.teams[num.toString()] = {
+            name: name,
+            data: [],
+            matchesIn: [],
+        };
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useTeams.getState().setTeams(getTeams());
+        successToast("Team successfully added", 2000);
+    } catch (e) {
+        console.error("ERROR: Could not add team: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+}
+
+export const useTeams = create<{
+    teams: Teams;
+    setTeams: (value: Teams) => void;
+}>((set) => ({
+    teams: getTeams(),
+    setTeams: (value) => set({ teams: value }),
+}));
+
 /**
  * Hydrates local storage with data from database
  */
@@ -191,11 +261,7 @@ export type PrescoutData = {
         questionOrder: string[];
     };
     teams: {
-        [teamId: string]: {
-            name: string;
-            data?: any[];
-            matchesIn?: number[];
-        };
+        [teamId: string]: Team;
     };
 };
 

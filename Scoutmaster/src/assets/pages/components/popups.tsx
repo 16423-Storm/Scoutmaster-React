@@ -1,6 +1,8 @@
 import { useScreenType } from "../../scripts/multipageutils";
 import { Blocker499 } from "./blocker";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import type { ChangeEvent } from "react";
 
 type PropsOfWarningModal = {
     title: string;
@@ -35,6 +37,95 @@ export function WarningModal({
                         <button
                             className="desktop-warningpopup-continue"
                             onClick={onContinue}
+                        >
+                            {t("continue")}
+                        </button>
+                    </div>
+                </div>
+            </>
+        );
+    } else {
+        return <></>;
+    }
+}
+
+export function AddTeamModal(onCancel: () => void, onContinue: () => void) {
+    const { t } = useTranslation();
+
+    const [inputNumber, setInputNumber] = useState(0);
+    const [inputTeam, setInputTeam] = useState("");
+
+    const handleNumberInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const value = Number(event.target);
+        setInputNumber(value);
+    };
+
+    const handleTeamInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setInputTeam(value);
+    };
+
+    function handleContinue() {
+        onContinue();
+
+        //TODO: ADD THE LOGIC TO ACTUALLY ADD THE TEAM HERE
+    }
+
+    if (useScreenType() == "desktop") {
+        return (
+            <>
+                <Blocker499 />
+                <div
+                    className="desktop-warningpopup"
+                    id="avoidwarningpopupheight"
+                >
+                    <p className="desktop-warningpopup-title">Add Team</p>
+                    <div className="desktop-popupinput-parentcontainer">
+                        <div className="desktop-popupinput-childcontainer">
+                            <p>Team Number:</p>
+                            <input
+                                placeholder="e.g. 16423"
+                                type="number"
+                                min={0}
+                                max={99999}
+                                value={inputNumber}
+                                onChange={handleNumberInputChange}
+                            />
+                        </div>
+                        <div className="desktop-popupinput-childcontainer">
+                            <p>Team Name:</p>
+                            <input
+                                value={inputTeam}
+                                placeholder="e.g. Storm"
+                                maxLength={90}
+                                onChange={handleTeamInputChange}
+                                className={
+                                    inputTeam.length === 90
+                                        ? "desktop-popupinput-maxedinput"
+                                        : undefined
+                                }
+                            />
+                            <div
+                                style={
+                                    inputTeam.length === 90
+                                        ? { color: "red" }
+                                        : undefined
+                                }
+                            >
+                                {inputTeam.length}/90
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button
+                            className="desktop-warningpopup-cancel"
+                            onClick={onCancel}
+                        >
+                            {t("cancel")}
+                        </button>
+                        <button
+                            className="desktop-warningpopup-continue"
+                            onClick={handleContinue}
                         >
                             {t("continue")}
                         </button>
