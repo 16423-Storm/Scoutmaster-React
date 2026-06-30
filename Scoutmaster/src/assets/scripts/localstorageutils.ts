@@ -189,7 +189,10 @@ export function getTeams() {
     }
 
     try {
-        return JSON.parse(data).prescout.teams as Teams;
+        const teams = JSON.parse(data).prescout.teams as Teams;
+        return Object.fromEntries(
+            Object.entries(teams).sort(([a], [b]) => Number(a) - Number(b)),
+        );
     } catch (e) {
         console.error(`ERROR: Could not get teams: ` + e);
         errorToast(i18n.t("dataloaderror"), 3000);

@@ -3,6 +3,7 @@ import { Blocker499 } from "./blocker";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
+import { addTeam } from "../../scripts/localstorageutils";
 
 type PropsOfWarningModal = {
     title: string;
@@ -49,14 +50,25 @@ export function WarningModal({
     }
 }
 
-export function AddTeamModal(onCancel: () => void, onContinue: () => void) {
+/**
+ * @param onCancel - What occurs when user presses cancel
+ * @param onContinue - What occurs when user presses continue, NOTE: This function handles the logic to add the team on its own, onContinue is just for UI purposes
+ * @returns The popup for adding a team to the list
+ */
+export function AddTeamModal({
+    onCancel,
+    onContinue,
+}: {
+    onCancel: () => void;
+    onContinue: () => void;
+}) {
     const { t } = useTranslation();
 
     const [inputNumber, setInputNumber] = useState(0);
     const [inputTeam, setInputTeam] = useState("");
 
     const handleNumberInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(event.target);
+        const value = Number(event.target.value);
         setInputNumber(value);
     };
 
@@ -68,7 +80,7 @@ export function AddTeamModal(onCancel: () => void, onContinue: () => void) {
     function handleContinue() {
         onContinue();
 
-        //TODO: ADD THE LOGIC TO ACTUALLY ADD THE TEAM HERE
+        addTeam(inputNumber, inputTeam);
     }
 
     if (useScreenType() == "desktop") {

@@ -16,6 +16,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 import data from "./comps.json";
 
 import { FaRegSadTear } from "react-icons/fa";
+import { IoAddCircleOutline } from "react-icons/io5";
 
 import { WarningModal, AddTeamModal } from "../../components/popups";
 
@@ -31,6 +32,7 @@ function DashboardCompetition() {
 
     const [customWarningVisible, setCustomWarningVisible] = useState(false);
     const [compWarningVisible, setCompWarningVisible] = useState(false);
+    const [addTeamVisible, setAddTeamVisible] = useState(false);
 
     function switchToCustom() {
         setCustomWarningVisible(false);
@@ -92,7 +94,12 @@ function DashboardCompetition() {
                     theme="colored"
                     transition={Bounce}
                 />
-                <AddTeamModal />
+                {addTeamVisible && (
+                    <AddTeamModal
+                        onCancel={() => setAddTeamVisible(false)}
+                        onContinue={() => setAddTeamVisible(false)}
+                    />
+                )}
                 {customWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -195,6 +202,9 @@ function DashboardCompetition() {
                                         ),
                                     )}
                                 </div>
+                                <button onClick={() => setAddTeamVisible(true)}>
+                                    <IoAddCircleOutline /> Add Team
+                                </button>
                             </div>
                         </div>
                         <div className="desktop-dash-comp-infodisplay"></div>

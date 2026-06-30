@@ -1044,6 +1044,35 @@ COMPETITION STYLES
     overflow-y: auto;
 }
 
+.desktop-dash-comp-infodisplay-bordercontainer button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 35%;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition:
+        background-color,
+        transform 0.1s ease-in-out;
+}
+
+.desktop-dash-comp-infodisplay-bordercontainer button {
+    background-color: var(--clr-success-a0);
+}
+
+.desktop-dash-comp-infodisplay-bordercontainer button:hover {
+    background-color: var(--clr-success-a10);
+    cursor: pointer;
+}
+
+.desktop-dash-comp-infodisplay-bordercontainer button:active {
+    background-color: var(--clr-success-a10);
+    transform: scale(0.98);
+}
+
 .desktop-dash-comp-infodisplay-table {
     display: flex;
     align-items: center;
@@ -1078,11 +1107,7 @@ COMPETITION STYLES
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.desktop-dash-comp-infodisplay-table div:last-child {
-    border-top: 1px solid var(--clr-surface-tonal-a10);
-}
-
-.desktop-dash-comp-infodisplay-table div:not(:last-child) {
+.desktop-dash-comp-infodisplay-table div {
     border-top: 1px solid var(--clr-surface-tonal-a10);
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
@@ -1143,11 +1168,12 @@ POPUP/TOAST STYLES
     width: 30vw;
     height: 25vh;
     position: absolute;
-    background-color: var(--clr-surface-a30);
+    background-color: var(--clr-surface-a10);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     box-sizing: border-box;
     padding: 12px;
+    border: 1px solid var(--clr-surface-tonal-a10);
 }
 
 .desktop-warningpopup * {
@@ -1174,7 +1200,9 @@ POPUP/TOAST STYLES
     border-radius: 10px;
     border: none;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    transition: transform 0.1s ease-in-out;
+    transition:
+        background-color,
+        transform 0.1s ease-in-out;
 }
 
 .desktop-warningpopup-cancel {
@@ -1245,7 +1273,8 @@ POPUP/TOAST STYLES
     width: 90%;
     margin: 0px;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    background-color: var(--white);
 }
 
 .desktop-popupinput-childcontainer div {
