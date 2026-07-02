@@ -9,6 +9,7 @@ import "./assets/styles/desktop.css";
 import "./assets/styles/phones768.css";
 import "./assets/styles/tablet1024.css";
 import "./assets/styles/sharedstyles.css";
+import "./assets/styles/misc/localization.css";
 
 createRoot(document.getElementById("root")!).render(
     <BrowserRouter>

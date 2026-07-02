@@ -148,12 +148,12 @@ i18n.use(initReactI18next).init({
 });
 ```
 
-8. Add your language here too, and add the correct flag emoji for it (this emoji process is causing some issues for us, it may be updated in the future, but for now it is what it is)
+8. Add your language here too, and add the correct country code for it.
 
 ```typescript
 export const languages = [
-    { code: "en", label: "EN", flag: "🇬🇧" },
-    { code: "fr", label: "FR", flag: "🇫🇷" },
+    { code: "en", label: "EN", flag: "GB" },
+    { code: "fr", label: "FR", flag: "FR" },
 ];
 ```
 

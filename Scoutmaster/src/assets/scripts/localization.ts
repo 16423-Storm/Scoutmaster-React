@@ -34,12 +34,12 @@ i18n.use(initReactI18next).init({
 });
 
 export const languages = [
-    { code: "en", label: "EN", flag: "🇬🇧" },
-    // { code: "fr", label: "FR", flag: "🇫🇷" },
-    // { code: "es", label: "ES", flag: "🇪🇸" },
-    // { code: "pt", label: "PT", flag: "🇵🇹" },
-    // { code: "ro", label: "RO", flag: "🇷🇴" },
-    // { code: "tr", label: "TR", flag: "🇹🇷" },
+    { code: "en", label: "EN", flag: "GB" },
+    // { code: "fr", label: "FR", flag: "FR" },
+    // { code: "es", label: "ES", flag: "ES" },
+    // { code: "pt", label: "PT", flag: "PT" },
+    // { code: "ro", label: "RO", flag: "RO" },
+    // { code: "tr", label: "TR", flag: "TR" },
 ];
 
 export default i18n;

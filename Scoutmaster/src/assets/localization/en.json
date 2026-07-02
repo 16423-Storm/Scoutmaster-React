@@ -42,17 +42,23 @@
     "warning!": "Warning!",
     "customwarning": "If you switch this competition to custom, it will keep all existing data, but it will no longer get new info from the FTC API, this CANNOT be reverted.",
     "compwarning": "If you switch to this competition, all existing scouting data will be deleted!",
+    "deleteteamwarning": "If you continue, team {{number}} will be deleted, and this competition will be switched to custom. It will keep all existing data, but it will no longer get new info from the FTC API, this CANNOT be reverted.",
     "currentlyscouting": "Currently Scouting: {{compkey}}",
     "noresultsfound": "No Results Found",
     "compalreadycustom": "Competition already set to custom",
     "switchtocustom": "Switch to Custom",
     "customnotice": "If you want to scout a custom competition, type \"CUSTOM\", you can also switch the current competition to a custom one.",
     "listofteams": "List of Teams:",
+    "addteam": "Add Team",
 
     "cancel": "Cancel",
     "continue": "Continue",
     "compsuccess": "Successfully switched competition!",
     "customsuccess": "Successfully set competition to custom!",
     "dataloaderror": "Error loading data, please reload page and try again",
-    "seterror": "Error setting data, please reload page and try again"
+    "seterror": "Error setting data, please reload page and try again",
+    "teamadded": "Team successfully added",
+    "teamdeleted": "Team successfully deleted",
+
+    "totalmatches": "Total Matches: {{num}}"
 }

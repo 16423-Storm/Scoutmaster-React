@@ -10,12 +10,13 @@ import {
     useCustom,
     useCompKey,
     useTeams,
+    deleteTeam,
 } from "../../../scripts/localstorageutils";
 import { Bounce, ToastContainer } from "react-toastify";
 
 import data from "./comps.json";
 
-import { FaRegSadTear } from "react-icons/fa";
+import { FaRegSadTear, FaTrash } from "react-icons/fa";
 import { IoAddCircleOutline } from "react-icons/io5";
 
 import { WarningModal, AddTeamModal } from "../../components/popups";
@@ -33,6 +34,15 @@ function DashboardCompetition() {
     const [customWarningVisible, setCustomWarningVisible] = useState(false);
     const [compWarningVisible, setCompWarningVisible] = useState(false);
     const [addTeamVisible, setAddTeamVisible] = useState(false);
+    const [deleteTeamWarningVisible, setDeleteTeamWarningVisible] =
+        useState(false);
+
+    const [targetDeleteTeam, setTargetDeleteTeam] = useState("");
+
+    function promptDeleteTeam(team: string) {
+        setTargetDeleteTeam(team);
+        setDeleteTeamWarningVisible(true);
+    }
 
     function switchToCustom() {
         setCustomWarningVisible(false);
@@ -114,6 +124,16 @@ function DashboardCompetition() {
                         message={t("compwarning")}
                         onCancel={() => setCompWarningVisible(false)}
                         onContinue={switchComp}
+                    />
+                )}
+                {deleteTeamWarningVisible && (
+                    <WarningModal
+                        title={t("warning!")}
+                        message={t("deleteteamwarning", {
+                            number: targetDeleteTeam,
+                        })}
+                        onCancel={() => setDeleteTeamWarningVisible(false)}
+                        onContinue={() => deleteTeam(targetDeleteTeam, true)}
                     />
                 )}
                 <div className="desktop-dash-maincontainer">
@@ -198,16 +218,28 @@ function DashboardCompetition() {
                                         ([teamNum, team]) => (
                                             <div key={teamNum}>
                                                 {teamNum} - {team.name}
+                                                <FaTrash
+                                                    className="desktop-dash-comp-infodisplay-table-deletebutton"
+                                                    onClick={() =>
+                                                        promptDeleteTeam(
+                                                            teamNum,
+                                                        )
+                                                    }
+                                                />
                                             </div>
                                         ),
                                     )}
                                 </div>
                                 <button onClick={() => setAddTeamVisible(true)}>
-                                    <IoAddCircleOutline /> Add Team
+                                    <IoAddCircleOutline /> {t("addteam")}
                                 </button>
                             </div>
                         </div>
-                        <div className="desktop-dash-comp-infodisplay"></div>
+                        <div className="desktop-dash-comp-infodisplay">
+                            <p className="desktop-dash-comp-infodisplay-title">
+                                {t("totalmatches", { num: "50" })}
+                            </p>
+                        </div>
                         <div className="desktop-dash-comp-infodisplay"></div>
                     </div>
                 </div>

@@ -79,8 +79,7 @@ export function AddTeamModal({
 
     function handleContinue() {
         onContinue();
-
-        addTeam(inputNumber, inputTeam);
+        addTeam(inputNumber, inputTeam, true);
     }
 
     if (useScreenType() == "desktop") {

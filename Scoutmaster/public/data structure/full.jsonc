@@ -26,7 +26,7 @@
         },
     },
     "matchscout": {
-        "Q1": {
+        "1": {
             "highlighted": [true, true, false, true],
             "teams": [1234, 1222, 1223, 1313],
             "red1": [45, 45, 45, 45],
@@ -34,7 +34,7 @@
             "blue1": [555, 555, 555, 555],
             "blue2": [1, 1, 1, 1],
         },
-        "Q2": {
+        "2": {
             "highlighted": [true, true, false, true],
             "teams": [1234, 1222, 1223, 1313],
             "red1": [45, 45, 45, 45],

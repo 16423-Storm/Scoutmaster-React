@@ -134,13 +134,18 @@ export function getCustom() {
 }
 
 /**
- * Switches current competition to a custom one
+ * Sets status of competition being custom
+ *
+ * @param {boolean} custom - What to set custom to
+ * @param {boolean} [toast = true] - Whether or not success/error toasts will be shown, true by default
  */
-export function setCustom(custom: boolean) {
+export function setCustom(custom: boolean, toast = true) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        if (toast) {
+            errorToast(i18n.t("dataloaderror"), 3000);
+        }
         return;
     }
 
@@ -149,10 +154,14 @@ export function setCustom(custom: boolean) {
         parsed.custom = custom;
         localStorage.setItem("data", JSON.stringify(parsed));
         useCustom.getState().setCustom(custom);
-        successToast(i18n.t("customsuccess"), 2000);
+        if (toast) {
+            successToast(i18n.t("customsuccess"), 2000);
+        }
     } catch (e) {
         console.error("ERROR: Could not set competition to custom: " + e);
-        errorToast(i18n.t("seterror"), 3000);
+        if (toast) {
+            errorToast(i18n.t("seterror"), 3000);
+        }
         return;
     }
 }
@@ -200,7 +209,13 @@ export function getTeams() {
     }
 }
 
-export function addTeam(num: number, name: string) {
+/**
+ * Add team to competition
+ * @param {number} num - Team number
+ * @param {string} name - Team name
+ * @param {boolean} [custom = false] - Whether to set competition to custom or not, false by default
+ */
+export function addTeam(num: number, name: string, custom = false) {
     if (Object.hasOwn(getTeams(), num.toString())) {
         console.error("ERROR: Attempted to add duplicate team");
         errorToast("Team already added", 3000);
@@ -223,7 +238,37 @@ export function addTeam(num: number, name: string) {
         };
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());
-        successToast("Team successfully added", 2000);
+        successToast(i18n.t("teamadded"), 2000);
+        if (custom) {
+            setCustom(true, false);
+        }
+    } catch (e) {
+        console.error("ERROR: Could not add team: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+}
+
+export function deleteTeam(num: string, custom: boolean) {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+        if (!parsed.prescout.teams[num]) {
+            console.warn("WARNING: Team does not exist");
+        }
+        delete parsed.prescout.teams[num];
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useTeams.getState().setTeams(getTeams());
+        successToast(i18n.t("teamdeleted"), 2000);
+        if (custom) {
+            setCustom(true, false);
+        }
     } catch (e) {
         console.error("ERROR: Could not add team: " + e);
         errorToast(i18n.t("seterror"), 3000);

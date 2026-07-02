@@ -1091,9 +1091,10 @@ COMPETITION STYLES
     width: 100%;
     background-color: var(--clr-surface-a0);
     overflow: hidden;
-    padding: 20px;
+    padding: 3px 10px;
     box-sizing: border-box;
     transition: background-color 0.15s;
+    font-size: 1rem;
 }
 
 .desktop-dash-comp-infodisplay-table p {
@@ -1112,7 +1113,7 @@ COMPETITION STYLES
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.desktop-dash-comp-infodisplay-table div:hover {
+/* .desktop-dash-comp-infodisplay-table div:hover {
     background-color: var(--clr-surface-a10);
     cursor: pointer;
     transition: background-color 0.15s;
@@ -1121,7 +1122,7 @@ COMPETITION STYLES
 .desktop-dash-comp-infodisplay-table div:active {
     background-color: var(--clr-surface-a20);
     cursor: pointer;
-}
+} */
 
 .desktop-dash-comp-infodisplay-button {
     display: flex;
@@ -1143,6 +1144,25 @@ COMPETITION STYLES
 
 .desktop-dash-comp-infodisplay-button:active {
     background-color: var(--clr-surface-a20);
+}
+
+.desktop-dash-comp-infodisplay-table-deletebutton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    transition: transform 0.1s ease-in-out;
+}
+
+.desktop-dash-comp-infodisplay-table-deletebutton:hover {
+    color: var(--clr-danger-a0);
+    cursor: pointer;
+}
+
+.desktop-dash-comp-infodisplay-table-deletebutton:active {
+    color: var(--clr-danger-a0);
+    cursor: pointer;
+    transform: scale(0.8);
 }
 
 /*

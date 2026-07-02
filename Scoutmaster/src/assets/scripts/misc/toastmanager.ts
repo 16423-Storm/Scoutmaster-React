@@ -27,3 +27,17 @@ export function errorToast(message: string, time: number) {
         transition: Bounce,
     });
 }
+
+export function warnToast(message: string, time: number) {
+    toast.warn(message, {
+        position: "bottom-right",
+        autoClose: time,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+    });
+}
