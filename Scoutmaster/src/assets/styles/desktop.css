@@ -907,7 +907,7 @@ HOME STYLES
 
 
 
-COMPETITION STYLES
+COMPETITION CONTAINER 1 STYLES
 
 
 
@@ -1163,6 +1163,90 @@ COMPETITION STYLES
     color: var(--clr-danger-a0);
     cursor: pointer;
     transform: scale(0.8);
+}
+
+/*
+
+
+
+
+
+COMPETITION CONTAINER 2 STYLES
+
+
+
+
+
+*/
+
+.desktop-dash-comp-infodisplay-matchtable {
+    width: 95%;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.desktop-dash-comp-infodisplay-matchtable-row {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.desktop-dash-comp-infodisplay-matchtable-row > div {
+    padding: 2px 0px;
+}
+
+.desktop-dash-comp-infodisplay-matchtable-column1 {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    border-right: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-comp-infodisplay-matchtable-row:not(:last-child) {
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-comp-infodisplay-matchtable-column2345header {
+    box-sizing: border-box;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+}
+
+.desktop-dash-comp-infodisplay-matchtable-column2345header:not(:last-child),
+.desktop-dash-comp-infodisplay-matchtable-column23:not(:last-child),
+.desktop-dash-comp-infodisplay-matchtable-column45:not(:last-child) {
+    border-right: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-comp-infodisplay-matchtable-column23,
+.desktop-dash-comp-infodisplay-matchtable-column45 {
+    box-sizing: border-box;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.desktop-dash-comp-infodisplay-matchtable-column23 {
+    background-color: var(--clr-red-alliance);
+}
+
+.desktop-dash-comp-infodisplay-matchtable-column45 {
+    background-color: var(--clr-blue-alliance);
 }
 
 /*

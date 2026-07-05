@@ -61,6 +61,10 @@
     --clr-info-a0: #61c2ff;
     --clr-info-a10: #7dccff;
     --clr-info-a20: #96d5ff;
+
+    /** FTC related colors*/
+    --clr-red-alliance: #f7bcb7;
+    --clr-blue-alliance: #b7dcfa;
 }
 
 body,

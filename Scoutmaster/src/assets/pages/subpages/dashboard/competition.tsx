@@ -239,6 +239,45 @@ function DashboardCompetition() {
                             <p className="desktop-dash-comp-infodisplay-title">
                                 {t("totalmatches", { num: "50" })}
                             </p>
+                            <div className="desktop-dash-comp-infodisplay-matchtable">
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div
+                                        className="desktop-dash-comp-infodisplay-matchtable-column1"
+                                        style={{ fontWeight: "bolder" }}
+                                    >
+                                        Match
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
+                                        Red 1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
+                                        Red 2
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
+                                        Blue 1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
+                                        Blue 2
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="desktop-dash-comp-infodisplay"></div>
                     </div>

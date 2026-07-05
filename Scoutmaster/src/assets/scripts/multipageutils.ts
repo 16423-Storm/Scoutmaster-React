@@ -109,6 +109,8 @@ export function useFlipTheme() {
         rootStyle.setProperty("--clr-info-a0", "#61c2ff");
         rootStyle.setProperty("--clr-info-a10", "#7dccff");
         rootStyle.setProperty("--clr-info-a20", "#96d5ff");
+        rootStyle.setProperty("--clr-red-alliance", "#f7bcb7");
+        rootStyle.setProperty("--clr-blue-alliance", "#b7dcfa");
     } else {
         rootStyle.setProperty("--black", "#ffffff");
         rootStyle.setProperty("--white", "#000000");
@@ -144,6 +146,11 @@ export function useFlipTheme() {
         rootStyle.setProperty("--clr-info-a0", "#61c2ff");
         rootStyle.setProperty("--clr-info-a10", "#85cfff");
         rootStyle.setProperty("--clr-info-a20", "#a5dbff");
+        // These colors are in here in case we ever choose to switch the dark mode alliance colors, not exactly sure which shades are best
+        // rootStyle.setProperty("--clr-red-alliance", "#644846");
+        // rootStyle.setProperty("--clr-blue-alliance", "#425666");
+        rootStyle.setProperty("--clr-red-alliance", "#542d2d");
+        rootStyle.setProperty("--clr-blue-alliance", "#28374e");
     }
     return useThemeStore((state) => state.flipTheme);
 }
