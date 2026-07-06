@@ -192,11 +192,12 @@ html {
 }
 
 .blocker499 {
-    width: 100vw;
+    box-sizing: border-box;
+    width: 100%;
     height: 100vh;
-    background-color: "rgba(0, 0, 0, 0.2)";
+    inset: 0;
     z-index: 499;
-    position: absolute;
+    position: fixed;
     backdrop-filter: blur(5px);
 }
 

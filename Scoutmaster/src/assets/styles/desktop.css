@@ -1074,10 +1074,8 @@ COMPETITION CONTAINER 1 STYLES
 }
 
 .desktop-dash-comp-infodisplay-table {
-    display: flex;
-    align-items: center;
+    border-top: 1px solid var(--clr-surface-tonal-a10);
     width: 100%;
-    flex-direction: column;
     overflow-x: hidden;
     max-height: 80%;
     overflow-y: auto;
@@ -1104,7 +1102,6 @@ COMPETITION CONTAINER 1 STYLES
 }
 
 .desktop-dash-comp-infodisplay-table div:first-child {
-    border-top: 2px solid var(--clr-surface-tonal-a10);
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 

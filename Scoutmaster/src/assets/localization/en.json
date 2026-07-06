@@ -60,5 +60,10 @@
     "teamadded": "Team successfully added",
     "teamdeleted": "Team successfully deleted",
 
-    "totalmatches": "Total Matches: {{num}}"
+    "totalmatches": "Total Matches: {{num}}",
+    "match": "Match",
+    "red1": "Red 1",
+    "red2": "Red 2",
+    "blue1": "Blue 1",
+    "blue2": "Blue 2"
 }

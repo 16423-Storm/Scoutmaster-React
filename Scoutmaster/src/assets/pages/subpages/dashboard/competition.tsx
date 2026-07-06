@@ -44,6 +44,11 @@ function DashboardCompetition() {
         setDeleteTeamWarningVisible(true);
     }
 
+    function handleDeleteTeam(team: string) {
+        deleteTeam(team, true);
+        setDeleteTeamWarningVisible(false);
+    }
+
     function switchToCustom() {
         setCustomWarningVisible(false);
         setCustom(true);
@@ -133,7 +138,7 @@ function DashboardCompetition() {
                             number: targetDeleteTeam,
                         })}
                         onCancel={() => setDeleteTeamWarningVisible(false)}
-                        onContinue={() => deleteTeam(targetDeleteTeam, true)}
+                        onContinue={() => handleDeleteTeam(targetDeleteTeam)}
                     />
                 )}
                 <div className="desktop-dash-maincontainer">
@@ -245,19 +250,19 @@ function DashboardCompetition() {
                                         className="desktop-dash-comp-infodisplay-matchtable-column1"
                                         style={{ fontWeight: "bolder" }}
                                     >
-                                        Match
+                                        {t("match")}
                                     </div>
                                     <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
-                                        Red 1
+                                        {t("red1")}
                                     </div>
                                     <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
-                                        Red 2
+                                        {t("red2")}
                                     </div>
                                     <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
-                                        Blue 1
+                                        {t("blue1")}
                                     </div>
                                     <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
-                                        Blue 2
+                                        {t("blue2")}
                                     </div>
                                 </div>
                                 <div className="desktop-dash-comp-infodisplay-matchtable-row">
@@ -287,10 +292,153 @@ function DashboardCompetition() {
     } else {
         return (
             <>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                    transition={Bounce}
+                />
+                {addTeamVisible && (
+                    <AddTeamModal
+                        onCancel={() => setAddTeamVisible(false)}
+                        onContinue={() => setAddTeamVisible(false)}
+                    />
+                )}
+                {customWarningVisible && (
+                    <WarningModal
+                        title={t("warning!")}
+                        message={t("customwarning")}
+                        onCancel={() => setCustomWarningVisible(false)}
+                        onContinue={switchToCustom}
+                    />
+                )}
+                {compWarningVisible && (
+                    <WarningModal
+                        title={t("warning!")}
+                        message={t("compwarning")}
+                        onCancel={() => setCompWarningVisible(false)}
+                        onContinue={switchComp}
+                    />
+                )}
+                {deleteTeamWarningVisible && (
+                    <WarningModal
+                        title={t("warning!")}
+                        message={t("deleteteamwarning", {
+                            number: targetDeleteTeam,
+                        })}
+                        onCancel={() => setDeleteTeamWarningVisible(false)}
+                        onContinue={() => handleDeleteTeam(targetDeleteTeam)}
+                    />
+                )}
                 <div className="phone-dash-maincontainer">
                     <div className="phone-dash-comp-overflowhandler">
                         <div className="phone-dash-comp-divider">
-                            <div className="phone-dash-comp-infodisplay"></div>
+                            <div className="phone-dash-comp-infodisplay">
+                                <p className="phone-dash-comp-infodisplay-title">
+                                    {t("currentlyscouting", {
+                                        compkey: currentKey,
+                                    })}
+                                </p>
+                                <div className="phone-dash-comp-searchcontainer">
+                                    <input
+                                        className="phone-dash-comp-search"
+                                        value={search}
+                                        onChange={handleInputChange}
+                                    />
+                                    {search && (
+                                        <div className="phone-dash-comp-searchdrop">
+                                            {filteredData.length > 0 ? (
+                                                filteredData.map((item) => (
+                                                    <div
+                                                        key={item.key}
+                                                        onClick={() =>
+                                                            switchCompWarningPrompt(
+                                                                item.key,
+                                                            )
+                                                        }
+                                                    >
+                                                        <p>{item.name}</p>
+                                                        <p className="notetext">
+                                                            {item.key}
+                                                        </p>
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <p>
+                                                    <FaRegSadTear
+                                                        style={{
+                                                            paddingRight: "8px",
+                                                        }}
+                                                    />
+                                                    {t("noresultsfound")}
+                                                </p>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                                {isCustom ? (
+                                    <p
+                                        className="notetext"
+                                        style={{ padding: "10px" }}
+                                    >
+                                        {t("compalreadycustom")}
+                                    </p>
+                                ) : (
+                                    <>
+                                        <button
+                                            className="phone-dash-comp-infodisplay-button"
+                                            style={{ marginTop: "10px" }}
+                                            onClick={() =>
+                                                setCustomWarningVisible(true)
+                                            }
+                                            disabled={isCustom}
+                                        >
+                                            {t("switchtocustom")}
+                                        </button>
+                                        <p
+                                            className="notetext"
+                                            style={{ padding: "10px" }}
+                                        >
+                                            {t("customnotice")}
+                                        </p>
+                                    </>
+                                )}
+                                <div
+                                    className="phone-dash-comp-infodisplay-bordercontainer"
+                                    style={{ fontSize: "1.5rem" }}
+                                >
+                                    {t("listofteams")}
+                                    <div className="phone-dash-comp-infodisplay-table">
+                                        {Object.entries(teams).map(
+                                            ([teamNum, team]) => (
+                                                <div key={teamNum}>
+                                                    {teamNum} - {team.name}
+                                                    <FaTrash
+                                                        className="phone-dash-comp-infodisplay-table-deletebutton"
+                                                        onClick={() =>
+                                                            promptDeleteTeam(
+                                                                teamNum,
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            ),
+                                        )}
+                                    </div>
+                                    <button
+                                        onClick={() => setAddTeamVisible(true)}
+                                    >
+                                        <IoAddCircleOutline /> {t("addteam")}
+                                    </button>
+                                </div>
+                            </div>
                             <div className="phone-dash-comp-infodisplay"></div>
                             <div className="phone-dash-comp-infodisplay"></div>
                         </div>

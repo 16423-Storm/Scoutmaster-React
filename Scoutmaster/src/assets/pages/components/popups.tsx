@@ -46,7 +46,29 @@ export function WarningModal({
             </>
         );
     } else {
-        return <></>;
+        return (
+            <>
+                <Blocker499 />
+                <div className="phone-warningpopup">
+                    <p className="phone-warningpopup-title">{title}</p>
+                    <p className="phone-warningpopup-message">{message}</p>
+                    <div>
+                        <button
+                            className="phone-warningpopup-cancel"
+                            onClick={onCancel}
+                        >
+                            {t("cancel")}
+                        </button>
+                        <button
+                            className="phone-warningpopup-continue"
+                            onClick={onContinue}
+                        >
+                            {t("continue")}
+                        </button>
+                    </div>
+                </div>
+            </>
+        );
     }
 }
 
@@ -145,6 +167,66 @@ export function AddTeamModal({
             </>
         );
     } else {
-        return <></>;
+        return (
+            <>
+                <Blocker499 />
+                <div
+                    className="phone-warningpopup"
+                    id="avoidwarningpopupheight"
+                >
+                    <p className="phone-warningpopup-title">Add Team</p>
+                    <div className="phone-popupinput-parentcontainer">
+                        <div className="phone-popupinput-childcontainer">
+                            <p>Team Number:</p>
+                            <input
+                                placeholder="e.g. 16423"
+                                type="number"
+                                min={0}
+                                max={99999}
+                                value={inputNumber}
+                                onChange={handleNumberInputChange}
+                            />
+                        </div>
+                        <div className="phone-popupinput-childcontainer">
+                            <p>Team Name:</p>
+                            <input
+                                value={inputTeam}
+                                placeholder="e.g. Storm"
+                                maxLength={90}
+                                onChange={handleTeamInputChange}
+                                className={
+                                    inputTeam.length === 90
+                                        ? "phone-popupinput-maxedinput"
+                                        : undefined
+                                }
+                            />
+                            <div
+                                style={
+                                    inputTeam.length === 90
+                                        ? { color: "red" }
+                                        : undefined
+                                }
+                            >
+                                {inputTeam.length}/90
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button
+                            className="phone-warningpopup-cancel"
+                            onClick={onCancel}
+                        >
+                            {t("cancel")}
+                        </button>
+                        <button
+                            className="phone-warningpopup-continue"
+                            onClick={handleContinue}
+                        >
+                            {t("continue")}
+                        </button>
+                    </div>
+                </div>
+            </>
+        );
     }
 }
