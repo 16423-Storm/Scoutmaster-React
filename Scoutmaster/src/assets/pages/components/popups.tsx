@@ -3,7 +3,7 @@ import { Blocker499 } from "./blocker";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
-import { addTeam } from "../../scripts/localstorageutils";
+import { addTeam } from "../../scripts/localstorage";
 
 type PropsOfWarningModal = {
     title: string;

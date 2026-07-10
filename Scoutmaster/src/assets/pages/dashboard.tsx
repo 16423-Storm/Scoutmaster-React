@@ -19,7 +19,7 @@ import Blocker499 from "./components/blocker.tsx";
 
 // Script Imports
 import { languages } from "../scripts/localization.js";
-import { dashboardStart } from "../scripts/localstorageutils.ts";
+import { dashboardStart } from "../scripts/localstorage";
 
 // Icon Imports
 import { FaHome, FaGamepad, FaNewspaper, FaMedal } from "react-icons/fa";
