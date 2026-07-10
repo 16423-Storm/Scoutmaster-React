@@ -1095,6 +1095,10 @@ COMPETITION CONTAINER 1 STYLES
     font-size: 1rem;
 }
 
+.desktop-dash-comp-infodisplay-table div:nth-child(even) {
+    background-color: var(--clr-surface-a10);
+}
+
 .desktop-dash-comp-infodisplay-table p {
     font-size: 1rem;
     width: 100%;
@@ -1208,6 +1212,7 @@ COMPETITION CONTAINER 2 STYLES
     align-items: center;
     width: 20%;
     border-right: 1px solid var(--clr-surface-tonal-a10);
+    background-color: var(--clr-surface-a0);
 }
 
 .desktop-dash-comp-infodisplay-matchtable-row:not(:last-child) {
@@ -1244,6 +1249,15 @@ COMPETITION CONTAINER 2 STYLES
 
 .desktop-dash-comp-infodisplay-matchtable-column45 {
     background-color: var(--clr-blue-alliance);
+}
+
+.desktop-dash-comp-infodisplay-matchtable-row:nth-child(even) > div {
+    filter: brightness(0.93);
+}
+
+.desktop-dash-comp-infodisplay-matchtable-row:nth-child(even)
+    > .desktop-dash-comp-infodisplay-matchtable-column1 {
+    background-color: var(--clr-surface-a10);
 }
 
 /*

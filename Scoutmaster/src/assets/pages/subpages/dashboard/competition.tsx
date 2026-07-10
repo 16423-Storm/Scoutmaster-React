@@ -11,7 +11,7 @@ import {
     useCompKey,
     useTeams,
     deleteTeam,
-} from "../../../scripts/localstorageutils";
+} from "../../../scripts/localstorage";
 import { Bounce, ToastContainer } from "react-toastify";
 
 import data from "./comps.json";
@@ -263,6 +263,550 @@ function DashboardCompetition() {
                                     </div>
                                     <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
                                         {t("blue2")}
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column1">
+                                        Q1
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column23">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
+                                    </div>
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column45">
+                                        16423
                                     </div>
                                 </div>
                                 <div className="desktop-dash-comp-infodisplay-matchtable-row">
