@@ -1,0 +1,12 @@
+/* Misc */
+@import "./misc/landingpage.css";
+@import "./misc/signin.css";
+@import "./misc/popup.css";
+
+/* Dashboard */
+@import "./dashboard/dashboard.css";
+
+/* Dashboard Pages */
+@import "./dashboard/dashboardpages/home.css";
+@import "./dashboard/dashboardpages/competition.css";
+@import "./dashboard/dashboardpages/settings.css";

@@ -5,11 +5,10 @@ import App from "./App.tsx";
 
 import "./assets/scripts/localization.js";
 
-import "./assets/styles/desktop.css";
-import "./assets/styles/phones768.css";
-import "./assets/styles/tablet1024.css";
-import "./assets/styles/sharedstyles.css";
-import "./assets/styles/misc/localization.css";
+import "./assets/styles/desktop/index.css";
+import "./assets/styles/phone768/index.css";
+import "./assets/styles/tablet1024/index.css";
+import "./assets/styles/misc/index.css";
 
 createRoot(document.getElementById("root")!).render(
     <BrowserRouter>

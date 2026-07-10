@@ -77,7 +77,7 @@ html {
 
 @font-face {
     font-family: "RethinkSans";
-    src: url("../fonts/RethinkSans.ttf");
+    src: url("../../fonts/RethinkSans.ttf");
 }
 
 * {

@@ -1,0 +1,159 @@
+.phone-landing-hero {
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background:
+        repeating-radial-gradient(
+            circle at 0 0,
+            transparent 0,
+            rgba(160, 0, 35, 0.22) 31px
+        ),
+        repeating-linear-gradient(rgba(90, 0, 40, 0.15), rgba(140, 0, 45, 0.3)),
+        linear-gradient(270deg, #eb4000, #95008a, #3300fc);
+    background-size:
+        auto,
+        auto,
+        600% 600%;
+    animation: phone-landing-gradient 17s ease infinite;
+}
+
+.phone-landing-herotitle {
+    padding: 50px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 3.6rem;
+    font-weight: 900;
+    color: var(--text-color-light);
+}
+
+.phone-landing-herologo {
+    width: 15rem;
+    height: auto;
+}
+
+.phone-landing-navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+    height: 10vh;
+}
+
+.phone-landing-navbar button:not(.phone-landing-signinbutton) {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-decoration: underline;
+
+    transition:
+        transform 0.1s ease,
+        text-shadow 0.1s ease;
+}
+
+.phone-landing-navbar button:not(.phone-landing-signinbutton):active {
+    cursor: pointer;
+
+    text-shadow:
+        0 0 0.6px rgba(255, 255, 255, 0.9),
+        0 0 0.6px rgba(255, 255, 255, 0.9);
+}
+
+.phone-landing-signinbutton {
+    font-size: 1.5rem;
+    border-radius: 10px;
+
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 2px;
+    cursor: pointer;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.1s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.phone-landing-signinbutton:active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.phone-landing-heroslogan {
+    color: white;
+    padding-top: 100px;
+    font-size: 1rem;
+}
+
+.phone-landing-title1 {
+    font-size: 2rem;
+    padding: 20px;
+    box-sizing: border-box;
+    font-weight: 600;
+}
+
+.phone-landing-bodytext {
+    max-width: 90%;
+    font-size: 1rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+@-webkit-keyframes phone-landing-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+@-moz-keyframes phone-landing-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+@-o-keyframes phone-landing-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+@keyframes phone-landing-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}

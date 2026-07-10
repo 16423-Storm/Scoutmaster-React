@@ -1,0 +1,36 @@
+.phone-dash-home-overflowhandler {
+    width: 100%;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.phone-dash-home-divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px;
+    justify-content: flex-start;
+}
+
+.phone-dash-home-infodisplay {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--clr-surface-a0);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+}
+
+.phone-dash-home-infodisplay-chartcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+}
