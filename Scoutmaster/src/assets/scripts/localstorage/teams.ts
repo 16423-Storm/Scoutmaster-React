@@ -99,7 +99,7 @@ export function deleteTeam(num: string, custom: boolean) {
             setCustom(true, false);
         }
     } catch (e) {
-        console.error("ERROR: Could not add team: " + e);
+        console.error("ERROR: Could not delete team: " + e);
         errorToast(i18n.t("seterror"), 3000);
         return;
     }
@@ -112,11 +112,6 @@ export const useTeams = create<{
     teams: getTeams(),
     setTeams: (value) => set({ teams: value }),
 }));
-
-/**
- * Hydrates local storage with data from database
- */
-export function hydrate() {}
 
 // PRESCOUT MANAGEMENT
 //

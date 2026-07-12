@@ -61,3 +61,8 @@ export function createSkeleton(force: boolean) {
     localStorage.setItem("data", JSON.stringify(skeleton));
     resetAllStates();
 }
+
+/**
+ * Hydrates local storage with data from database
+ */
+export function hydrate() {}
