@@ -78,16 +78,13 @@ export function addMatch(
         console.error(
             "Not all team slots filled, if needed, set empty slots to negative numbers to prevent confusion",
         );
-        errorToast(
-            "Not all team slots filled, if needed, fill with negative numbers",
-            3000,
-        );
+        errorToast(i18n.t("matchnotenoughteams"), 3000);
         return;
     }
 
     if (new Set(teams).size !== 4) {
         console.error("Duplicate teams added");
-        errorToast("Duplicate teams added", 3000);
+        errorToast(i18n.t("matchduplicateteams"), 3000);
         return;
     }
 
@@ -103,13 +100,13 @@ export function addMatch(
         parsed.matchscout[key.toString()] = {};
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
-        successToast("Successfully added match", 2000);
+        successToast(i18n.t("matchadded"), 2000);
         if (custom) {
             setCustom(true, false);
         }
     } catch (e) {
         console.error("ERROR: Could not add match: " + e);
-        errorToast("Could not add match", 3000);
+        errorToast(i18n.t("seterror"), 3000);
         return;
     }
 }
@@ -130,13 +127,13 @@ export function deleteMatch(num: string, custom: boolean) {
         delete parsed.matchscout[num];
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
-        successToast("Successfully deleted match", 2000);
+        successToast(i18n.t("matchdeleted"), 2000);
         if (custom) {
             setCustom(true, false);
         }
     } catch (e) {
         console.error("ERROR: Could not delete team: " + e);
-        errorToast("Could not delete match", 3000);
+        errorToast(i18n.t("seterror"), 3000);
         return;
     }
 }

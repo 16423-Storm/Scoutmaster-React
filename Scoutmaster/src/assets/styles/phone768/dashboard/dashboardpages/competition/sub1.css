@@ -1,48 +1,40 @@
-/*
-
-
-
-
-
-COMPETITION CONTAINER 1 STYLES
-
-
-
-
-
-*/
-
-.desktop-dash-comp-divider {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.phone-dash-comp-overflowhandler {
     width: 100%;
-    height: 100%;
-    flex-direction: row;
-    box-sizing: border-box;
-    padding: 50px;
+    min-height: 0;
+    overflow-y: auto;
 }
 
-.desktop-dash-comp-infodisplay {
+.phone-dash-comp-divider {
     display: flex;
     align-items: center;
+    width: 100%;
     flex-direction: column;
-    width: 33%;
+    box-sizing: border-box;
+    padding: 10px;
+    justify-content: flex-start;
+}
+
+.phone-dash-comp-infodisplay {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
     box-sizing: border-box;
     padding: 10px;
     margin: 10px;
     background-color: var(--clr-surface-a0);
     border: 1px solid var(--clr-surface-tonal-a10);
     border-radius: 10px;
-    max-height: 98%;
+    max-height: 500px;
 }
 
-.desktop-dash-comp-infodisplay-title {
+.phone-dash-comp-infodisplay-title {
     font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
-.desktop-dash-comp-searchcontainer {
+.phone-dash-comp-searchcontainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +42,7 @@ COMPETITION CONTAINER 1 STYLES
     position: relative;
 }
 
-.desktop-dash-comp-search {
+.phone-dash-comp-search {
     width: 95%;
     display: flex;
     justify-content: center;
@@ -64,7 +56,7 @@ COMPETITION CONTAINER 1 STYLES
     box-sizing: border-box;
 }
 
-.desktop-dash-comp-searchdrop {
+.phone-dash-comp-searchdrop {
     width: 95%;
     top: 100%;
     position: absolute;
@@ -78,7 +70,7 @@ COMPETITION CONTAINER 1 STYLES
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.desktop-dash-comp-searchdrop > p {
+.phone-dash-comp-searchdrop > p {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -92,7 +84,7 @@ COMPETITION CONTAINER 1 STYLES
     transition: background-color 0.15s;
 }
 
-.desktop-dash-comp-searchdrop div {
+.phone-dash-comp-searchdrop div {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -105,31 +97,31 @@ COMPETITION CONTAINER 1 STYLES
     transition: background-color 0.15s;
 }
 
-.desktop-dash-comp-searchdrop div:first-child {
+.phone-dash-comp-searchdrop div:first-child {
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.desktop-dash-comp-searchdrop div:last-child {
+.phone-dash-comp-searchdrop div:last-child {
     border-top: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.desktop-dash-comp-searchdrop div:not(:last-child):not(:first-child) {
+.phone-dash-comp-searchdrop div:not(:last-child):not(:first-child) {
     border-top: 1px solid var(--clr-surface-tonal-a10);
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.desktop-dash-comp-searchdrop div:hover {
+.phone-dash-comp-searchdrop div:hover {
     background-color: var(--clr-surface-a10);
     cursor: pointer;
     transition: background-color 0.15s;
 }
 
-.desktop-dash-comp-searchdrop div:active {
+.phone-dash-comp-searchdrop div:active {
     background-color: var(--clr-surface-a20);
     cursor: pointer;
 }
 
-.desktop-dash-comp-infodisplay-bordercontainer {
+.phone-dash-comp-infodisplay-bordercontainer {
     width: 95%;
     display: flex;
     justify-content: center;
@@ -141,12 +133,14 @@ COMPETITION CONTAINER 1 STYLES
     overflow-y: auto;
 }
 
-.desktop-dash-comp-infodisplay-bordercontainer button {
+.phone-dash-comp-infodisplay-bordercontainer button {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px;
-    width: 35%;
+    box-sizing: border-box;
+    padding: 3px;
+    width: 80%;
     font-size: 1.2rem;
     border-radius: 10px;
     border: none;
@@ -156,21 +150,21 @@ COMPETITION CONTAINER 1 STYLES
         transform 0.1s ease-in-out;
 }
 
-.desktop-dash-comp-infodisplay-bordercontainer button {
+.phone-dash-comp-infodisplay-bordercontainer button {
     background-color: var(--clr-success-a0);
 }
 
-.desktop-dash-comp-infodisplay-bordercontainer button:hover {
+.phone-dash-comp-infodisplay-bordercontainer button:hover {
     background-color: var(--clr-success-a10);
     cursor: pointer;
 }
 
-.desktop-dash-comp-infodisplay-bordercontainer button:active {
+.phone-dash-comp-infodisplay-bordercontainer button:active {
     background-color: var(--clr-success-a10);
     transform: scale(0.98);
 }
 
-.desktop-dash-comp-infodisplay-table {
+.phone-dash-comp-infodisplay-table {
     border-top: 1px solid var(--clr-surface-tonal-a10);
     width: 100%;
     overflow-x: hidden;
@@ -178,7 +172,7 @@ COMPETITION CONTAINER 1 STYLES
     overflow-y: auto;
 }
 
-.desktop-dash-comp-infodisplay-table div {
+.phone-dash-comp-infodisplay-table div {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -192,37 +186,37 @@ COMPETITION CONTAINER 1 STYLES
     font-size: 1rem;
 }
 
-.desktop-dash-comp-infodisplay-table div:nth-child(even) {
+.phone-dash-comp-infodisplay-table div:nth-child(even) {
     background-color: var(--clr-surface-a10);
 }
 
-.desktop-dash-comp-infodisplay-table p {
+.phone-dash-comp-infodisplay-table p {
     font-size: 1rem;
     width: 100%;
     text-align: center;
 }
 
-.desktop-dash-comp-infodisplay-table div:first-child {
+.phone-dash-comp-infodisplay-table div:first-child {
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.desktop-dash-comp-infodisplay-table div {
+.phone-dash-comp-infodisplay-table div {
     border-top: 1px solid var(--clr-surface-tonal-a10);
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 
-/* .desktop-dash-comp-infodisplay-table div:hover {
+/* .phone-dash-comp-infodisplay-table div:hover {
     background-color: var(--clr-surface-a10);
     cursor: pointer;
     transition: background-color 0.15s;
 }
 
-.desktop-dash-comp-infodisplay-table div:active {
+.phone-dash-comp-infodisplay-table div:active {
     background-color: var(--clr-surface-a20);
     cursor: pointer;
 } */
 
-.desktop-dash-comp-infodisplay-button {
+.phone-dash-comp-infodisplay-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -235,16 +229,16 @@ COMPETITION CONTAINER 1 STYLES
     width: 95%;
 }
 
-.desktop-dash-comp-infodisplay-button:hover {
+.phone-dash-comp-infodisplay-button:hover {
     background-color: var(--clr-surface-a10);
     cursor: pointer;
 }
 
-.desktop-dash-comp-infodisplay-button:active {
+.phone-dash-comp-infodisplay-button:active {
     background-color: var(--clr-surface-a20);
 }
 
-.desktop-dash-comp-infodisplay-table-deletebutton {
+.phone-dash-comp-infodisplay-table-deletebutton {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -252,107 +246,13 @@ COMPETITION CONTAINER 1 STYLES
     transition: transform 0.1s ease-in-out;
 }
 
-.desktop-dash-comp-infodisplay-table-deletebutton:hover {
+.phone-dash-comp-infodisplay-table-deletebutton:hover {
     color: var(--clr-danger-a0);
     cursor: pointer;
 }
 
-.desktop-dash-comp-infodisplay-table-deletebutton:active {
+.phone-dash-comp-infodisplay-table-deletebutton:active {
     color: var(--clr-danger-a0);
     cursor: pointer;
     transform: scale(0.8);
-}
-
-/*
-
-
-
-
-
-COMPETITION CONTAINER 2 STYLES
-
-
-
-
-
-*/
-
-.desktop-dash-comp-infodisplay-matchtable {
-    width: 95%;
-    border: 1px solid var(--clr-surface-tonal-a10);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
-    max-height: 80%;
-    overflow-y: auto;
-}
-
-.desktop-dash-comp-infodisplay-matchtable-row {
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.desktop-dash-comp-infodisplay-matchtable-row > div {
-    padding: 2px 0px;
-}
-
-.desktop-dash-comp-infodisplay-matchtable-column1 {
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20%;
-    border-right: 1px solid var(--clr-surface-tonal-a10);
-    background-color: var(--clr-surface-a0);
-}
-
-.desktop-dash-comp-infodisplay-matchtable-row:not(:last-child) {
-    border-bottom: 1px solid var(--clr-surface-tonal-a10);
-}
-
-.desktop-dash-comp-infodisplay-matchtable-column2345header {
-    box-sizing: border-box;
-    width: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bolder;
-}
-
-.desktop-dash-comp-infodisplay-matchtable-column2345header:not(:last-child),
-.desktop-dash-comp-infodisplay-matchtable-column23:not(:last-child),
-.desktop-dash-comp-infodisplay-matchtable-column45:not(:last-child) {
-    border-right: 1px solid var(--clr-surface-tonal-a10);
-}
-
-.desktop-dash-comp-infodisplay-matchtable-column23,
-.desktop-dash-comp-infodisplay-matchtable-column45 {
-    box-sizing: border-box;
-    width: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.desktop-dash-comp-infodisplay-matchtable-column23 {
-    background-color: var(--clr-red-alliance);
-}
-
-.desktop-dash-comp-infodisplay-matchtable-column45 {
-    background-color: var(--clr-blue-alliance);
-}
-
-.desktop-dash-comp-infodisplay-matchtable-row:nth-child(even) > div {
-    filter: brightness(0.93);
-}
-
-.desktop-dash-comp-infodisplay-matchtable-row:nth-child(even)
-    > .desktop-dash-comp-infodisplay-matchtable-column1 {
-    background-color: var(--clr-surface-a10);
 }

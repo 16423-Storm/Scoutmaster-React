@@ -47,7 +47,7 @@ export function getTeams() {
 export function addTeam(num: number, name: string, custom = false) {
     if (Object.hasOwn(getTeams(), num.toString())) {
         console.error("ERROR: Attempted to add duplicate team");
-        errorToast("Team already added", 3000);
+        errorToast(i18n.t("teamduplicate"), 3000);
         return;
     }
 

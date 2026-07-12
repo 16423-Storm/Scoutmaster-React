@@ -59,11 +59,17 @@
     "seterror": "Error setting data, please reload page and try again",
     "teamadded": "Team successfully added",
     "teamdeleted": "Team successfully deleted",
+    "teamduplicate": "Duplicate team added",
+    "matchadded": "Match successfully added",
+    "matchdeleted": "Match successfully deleted",
+    "matchduplicateteams": "Duplicate teams added",
+    "matchnotenoughteams": "Not all team slots filled, if needed, fill with negative numbers",
 
     "totalmatches": "Total Matches: {{num}}",
     "match": "Match",
     "red1": "Red 1",
     "red2": "Red 2",
     "blue1": "Blue 1",
-    "blue2": "Blue 2"
+    "blue2": "Blue 2",
+    "addmatch": "Add Match"
 }

@@ -38,6 +38,9 @@ function DashboardCompetition() {
     const [addTeamVisible, setAddTeamVisible] = useState(false);
     const [deleteTeamWarningVisible, setDeleteTeamWarningVisible] =
         useState(false);
+    const [addMatchVisible, setAddMatchVisible] = useState(false);
+    const [deleteMatchWarningVisible, setDeleteMatchWarningVisible] =
+        useState(false);
 
     const [targetDeleteTeam, setTargetDeleteTeam] = useState("");
 
@@ -143,6 +146,10 @@ function DashboardCompetition() {
                         onContinue={() => handleDeleteTeam(targetDeleteTeam)}
                     />
                 )}
+                {deleteMatchWarningVisible && (
+                    <WarningModal title="warning!" message="BLAH BLah BNLAH" />
+                )}
+
                 <div className="desktop-dash-maincontainer">
                     <div className="desktop-dash-comp-divider">
                         <div className="desktop-dash-comp-infodisplay">
@@ -289,6 +296,9 @@ function DashboardCompetition() {
                                     ),
                                 )}
                             </div>
+                            <button className="desktop-dash-comp-infodisplay-greenbutton">
+                                <IoAddCircleOutline /> {t("addmatch")}
+                            </button>
                         </div>
                         <div className="desktop-dash-comp-infodisplay"></div>
                     </div>

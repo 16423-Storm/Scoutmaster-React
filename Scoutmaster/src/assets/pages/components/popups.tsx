@@ -230,3 +230,84 @@ export function AddTeamModal({
         );
     }
 }
+
+/**
+ * @param onCancel - What occurs when user presses cancel
+ * @param onContinue - What occurs when user presses continue, NOTE: This function handles the logic to add the match on its own, onContinue is just for UI purposes
+ * @returns The popup for adding a match to the list
+ */
+export function addMatchModal({
+    onCancel,
+    onContinue,
+}: {
+    onCancel: () => void;
+    onContinue: () => void;
+}) {
+    const { t } = useTranslation();
+
+    if (useScreenType() == "desktop") {
+        return (
+            <>
+                <Blocker499 />
+                <div
+                    className="desktop-warningpopup"
+                    id="avoidwarningpopupheight"
+                >
+                    <p className="desktop-warningpopup-title">Add Team</p>
+                    <div className="desktop-popupinput-parentcontainer">
+                        <div className="desktop-popupinput-childcontainer">
+                            <p>Team Number:</p>
+                            <input
+                                placeholder="e.g. 16423"
+                                type="number"
+                                min={0}
+                                max={99999}
+                                // value={inputNumber}
+                                // onChange={handleNumberInputChange}
+                            />
+                        </div>
+                        <div className="desktop-popupinput-childcontainer">
+                            <p>Team Name:</p>
+                            <input
+                                // value={inputTeam}
+                                placeholder="e.g. Storm"
+                                maxLength={90}
+                                // onChange={handleTeamInputChange}
+                                // className={
+                                //     inputTeam.length === 90
+                                //         ? "desktop-popupinput-maxedinput"
+                                //         : undefined
+                                // }
+                            />
+                            <div
+                            // style={
+                            //     inputTeam.length === 90
+                            //         ? { color: "red" }
+                            //         : undefined
+                            // }
+                            >
+                                {/* {inputTeam.length}/90 */}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button
+                            className="desktop-warningpopup-cancel"
+                            onClick={onCancel}
+                        >
+                            {t("cancel")}
+                        </button>
+                        <button
+                            className="desktop-warningpopup-continue"
+                            // onClick={handleContinue}
+                        >
+                            {t("continue")}
+                        </button>
+                    </div>
+                </div>
+            </>
+        );
+    } else {
+        return <></>;
+    }
+}
