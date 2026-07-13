@@ -39,7 +39,7 @@ export function getMatches() {
     }
 
     try {
-        const matches = JSON.parse(data).matchscout as Matches;
+        const matches = JSON.parse(data).match as Matches;
         return Object.fromEntries(
             Object.entries(matches).sort(([a], [b]) => Number(a) - Number(b)),
         );
@@ -59,17 +59,25 @@ export function getMatches() {
  * @param {number} blue2 - Team for blue 2
  */
 export function addMatch(
-    key: string,
     red1: number,
     red2: number,
     blue1: number,
     blue2: number,
-    custom = false,
+    custom: boolean = false,
+    key: number | null = null,
 ) {
-    if (Object.hasOwn(getMatches(), key)) {
-        console.error("ERROR: Attempted to add duplicate match");
-        errorToast("Match already added", 3000);
-        return;
+    const matches = getMatches();
+    if (key != null) {
+        if (Object.hasOwn(matches, key)) {
+            console.error("ERROR: Attempted to add duplicate match");
+            errorToast("Match already added", 3000);
+            return;
+        }
+    } else {
+        key = 1;
+        while (Object.hasOwn(matches, key)) {
+            key++;
+        }
     }
 
     const teams = [red1, red2, blue1, blue2];
@@ -97,7 +105,13 @@ export function addMatch(
 
     try {
         const parsed = JSON.parse(data);
-        parsed.matchscout[key.toString()] = {};
+        parsed.match[key.toString()] = {
+            teams,
+            red1,
+            red2,
+            blue1,
+            blue2,
+        };
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
         successToast(i18n.t("matchadded"), 2000);
@@ -121,10 +135,10 @@ export function deleteMatch(num: string, custom: boolean) {
 
     try {
         const parsed = JSON.parse(data);
-        if (!parsed.matchscout[num]) {
+        if (!parsed.match[num]) {
             console.warn("WARNING: Match does not exist");
         }
-        delete parsed.matchscout[num];
+        delete parsed.match[num];
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
         successToast(i18n.t("matchdeleted"), 2000);

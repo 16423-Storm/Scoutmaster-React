@@ -2,6 +2,7 @@ import type { MatchData } from "./matches";
 import type { PrescoutData } from "./teams";
 import { useCustom } from "./competitions";
 import { useTeams } from "./teams";
+import { useMatches } from "./matches";
 
 export type LocalStorageData = {
     compkey: string;
@@ -30,6 +31,7 @@ export function dashboardStart() {
 export function resetAllStates() {
     useCustom.getState().setCustom(false);
     useTeams.getState().setTeams({});
+    useMatches.getState().setMatches({});
 }
 
 /**

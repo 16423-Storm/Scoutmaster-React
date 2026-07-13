@@ -6,12 +6,15 @@
     z-index: 501;
     width: 30vw;
     height: 25vh;
-    position: absolute;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: var(--clr-surface-a10);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     box-sizing: border-box;
-    padding: 12px;
+    padding: 12px 0px;
     border: 1px solid var(--clr-surface-tonal-a10);
 }
 
@@ -46,20 +49,28 @@
 
 .desktop-warningpopup-cancel {
     background-color: var(--clr-danger-a0);
+    transition:
+        background-color,
+        transform 0.1s ease-in-out;
 }
 
 .desktop-warningpopup-continue {
     background-color: var(--clr-success-a0);
+    transition:
+        background-color,
+        transform 0.1s ease-in-out;
 }
 
 .desktop-warningpopup-cancel:hover {
     background-color: var(--clr-danger-a10);
     cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
 }
 
 .desktop-warningpopup-continue:hover {
     background-color: var(--clr-success-a10);
     cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
 }
 
 .desktop-warningpopup-cancel:active {
@@ -73,8 +84,8 @@
 }
 
 .desktop-warningpopup-title {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 2rem;
+    font-weight: 900;
     text-align: center;
 }
 
@@ -127,8 +138,23 @@
 
 .desktop-popupinput-maxedinput {
     border: 1px solid red !important;
+    transition: box-shadow outline 5s;
 }
 
 .desktop-popupinput-maxedinput:focus {
     outline: 2px solid red !important;
+    outline-offset: 2px;
+    box-shadow: 0 0 16px rgba(220, 53, 69, 0.5);
+}
+
+.desktop-popupinput-highlightedbody {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column !important;
+    background-color: var(--clr-surface-a20);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    width: 100%;
 }

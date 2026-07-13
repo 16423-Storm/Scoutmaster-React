@@ -67,3 +67,54 @@
 .phone-dash-comp-infodisplay-matchtable-column45 {
     background-color: var(--clr-blue-alliance);
 }
+
+.phone-dash-comp-infodisplay-matchtable-row:nth-child(odd) > div {
+    filter: brightness(0.93);
+}
+
+.phone-dash-comp-infodisplay-matchtable-row:nth-child(odd)
+    > .phone-dash-comp-infodisplay-matchtable-column1 {
+    background-color: var(--clr-surface-a10);
+}
+
+.phone-dash-comp-infodisplay-matchtable-row:not(
+        :has(> .phone-dash-comp-infodisplay-matchtable-column2345header)
+    ):hover {
+    filter: brightness(0.96);
+    cursor: pointer;
+}
+
+.phone-dash-comp-infodisplay-matchtable-row:not(
+        :has(> .phone-dash-comp-infodisplay-matchtable-column2345header)
+    ):active {
+    filter: brightness(0.94);
+    cursor: pointer;
+}
+
+.phone-dash-comp-infodisplay-greenbutton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    box-sizing: border-box;
+    padding: 3px;
+    width: 80%;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    background-color: var(--clr-success-a0);
+    transition:
+        background-color,
+        transform 0.1s ease-in-out;
+}
+
+.phone-dash-comp-infodisplay-greenbutton:hover {
+    background-color: var(--clr-success-a10);
+    cursor: pointer;
+}
+
+.phone-dash-comp-infodisplay-greenbutton:active {
+    background-color: var(--clr-success-a10);
+    transform: scale(0.98);
+}

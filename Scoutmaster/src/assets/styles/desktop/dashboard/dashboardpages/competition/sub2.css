@@ -17,6 +17,7 @@
     flex-direction: row;
     width: 100%;
     box-sizing: border-box;
+    transition: filter 0.1s;
 }
 
 .desktop-dash-comp-infodisplay-matchtable-row > div {
@@ -31,6 +32,7 @@
     width: 20%;
     border-right: 1px solid var(--clr-surface-tonal-a10);
     background-color: var(--clr-surface-a0);
+    font-size: 0.75rem;
 }
 
 .desktop-dash-comp-infodisplay-matchtable-row:not(:last-child) {
@@ -59,6 +61,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 0.75rem;
 }
 
 .desktop-dash-comp-infodisplay-matchtable-column23 {
@@ -69,13 +72,27 @@
     background-color: var(--clr-blue-alliance);
 }
 
-.desktop-dash-comp-infodisplay-matchtable-row:nth-child(even) > div {
+.desktop-dash-comp-infodisplay-matchtable-row:nth-child(odd) > div {
     filter: brightness(0.93);
 }
 
-.desktop-dash-comp-infodisplay-matchtable-row:nth-child(even)
+.desktop-dash-comp-infodisplay-matchtable-row:nth-child(odd)
     > .desktop-dash-comp-infodisplay-matchtable-column1 {
     background-color: var(--clr-surface-a10);
+}
+
+.desktop-dash-comp-infodisplay-matchtable-row:not(
+        :has(> .desktop-dash-comp-infodisplay-matchtable-column2345header)
+    ):hover {
+    filter: brightness(0.96);
+    cursor: pointer;
+}
+
+.desktop-dash-comp-infodisplay-matchtable-row:not(
+        :has(> .desktop-dash-comp-infodisplay-matchtable-column2345header)
+    ):active {
+    filter: brightness(0.94);
+    cursor: pointer;
 }
 
 .desktop-dash-comp-infodisplay-greenbutton {

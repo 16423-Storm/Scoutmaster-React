@@ -12,6 +12,7 @@ import {
     useTeams,
     deleteTeam,
     useMatches,
+    deleteMatch,
 } from "../../../scripts/localstorage";
 import { Bounce, ToastContainer } from "react-toastify";
 
@@ -20,7 +21,11 @@ import data from "./comps.json";
 import { FaRegSadTear, FaTrash } from "react-icons/fa";
 import { IoAddCircleOutline } from "react-icons/io5";
 
-import { WarningModal, AddTeamModal } from "../../components/popups";
+import {
+    WarningModal,
+    AddTeamModal,
+    AddMatchModal,
+} from "../../components/popups";
 
 function DashboardCompetition() {
     const { t } = useTranslation();
@@ -44,6 +49,8 @@ function DashboardCompetition() {
 
     const [targetDeleteTeam, setTargetDeleteTeam] = useState("");
 
+    const [targetDeleteMatch, setTargetDeleteMatch] = useState("");
+
     function promptDeleteTeam(team: string) {
         setTargetDeleteTeam(team);
         setDeleteTeamWarningVisible(true);
@@ -57,6 +64,16 @@ function DashboardCompetition() {
     function switchToCustom() {
         setCustomWarningVisible(false);
         setCustom(true);
+    }
+
+    function promptDeleteMatch(match: string) {
+        setTargetDeleteMatch(match);
+        setDeleteMatchWarningVisible(true);
+    }
+
+    function handleDeleteMatch() {
+        deleteMatch(targetDeleteMatch, true);
+        setDeleteMatchWarningVisible(false);
     }
 
     const [targetSwitchKey, setTargetSwitchKey] = useState("");
@@ -114,12 +131,14 @@ function DashboardCompetition() {
                     theme="colored"
                     transition={Bounce}
                 />
+
                 {addTeamVisible && (
                     <AddTeamModal
                         onCancel={() => setAddTeamVisible(false)}
                         onContinue={() => setAddTeamVisible(false)}
                     />
                 )}
+
                 {customWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -128,6 +147,7 @@ function DashboardCompetition() {
                         onContinue={switchToCustom}
                     />
                 )}
+
                 {compWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -136,6 +156,7 @@ function DashboardCompetition() {
                         onContinue={switchComp}
                     />
                 )}
+
                 {deleteTeamWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -146,8 +167,23 @@ function DashboardCompetition() {
                         onContinue={() => handleDeleteTeam(targetDeleteTeam)}
                     />
                 )}
+
+                {addMatchVisible && (
+                    <AddMatchModal
+                        onCancel={() => setAddMatchVisible(false)}
+                        onContinue={() => setAddMatchVisible(false)}
+                    />
+                )}
+
                 {deleteMatchWarningVisible && (
-                    <WarningModal title="warning!" message="BLAH BLah BNLAH" />
+                    <WarningModal
+                        title={t("warning!")}
+                        message={t("deletematchwarning", {
+                            number: targetDeleteMatch,
+                        })}
+                        onCancel={() => setDeleteMatchWarningVisible(false)}
+                        onContinue={handleDeleteMatch}
+                    />
                 )}
 
                 <div className="desktop-dash-maincontainer">
@@ -251,14 +287,13 @@ function DashboardCompetition() {
                         </div>
                         <div className="desktop-dash-comp-infodisplay">
                             <p className="desktop-dash-comp-infodisplay-title">
-                                {t("totalmatches", { num: "50" })}
+                                {t("totalmatches", {
+                                    num: Object.keys(matches ?? {}).length,
+                                })}
                             </p>
                             <div className="desktop-dash-comp-infodisplay-matchtable">
                                 <div className="desktop-dash-comp-infodisplay-matchtable-row">
-                                    <div
-                                        className="desktop-dash-comp-infodisplay-matchtable-column1"
-                                        style={{ fontWeight: "bolder" }}
-                                    >
+                                    <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
                                         {t("match")}
                                     </div>
                                     <div className="desktop-dash-comp-infodisplay-matchtable-column2345header">
@@ -276,7 +311,13 @@ function DashboardCompetition() {
                                 </div>
                                 {Object.entries(matches).map(
                                     ([matchNum, match]) => (
-                                        <div className="desktop-dash-comp-infodisplay-matchtable-row">
+                                        <div
+                                            className="desktop-dash-comp-infodisplay-matchtable-row"
+                                            key={matchNum}
+                                            onClick={() =>
+                                                promptDeleteMatch(matchNum)
+                                            }
+                                        >
                                             <div className="desktop-dash-comp-infodisplay-matchtable-column1">
                                                 Q{matchNum}
                                             </div>
@@ -296,7 +337,10 @@ function DashboardCompetition() {
                                     ),
                                 )}
                             </div>
-                            <button className="desktop-dash-comp-infodisplay-greenbutton">
+                            <button
+                                className="desktop-dash-comp-infodisplay-greenbutton"
+                                onClick={() => setAddMatchVisible(true)}
+                            >
                                 <IoAddCircleOutline /> {t("addmatch")}
                             </button>
                         </div>
@@ -321,12 +365,14 @@ function DashboardCompetition() {
                     theme="colored"
                     transition={Bounce}
                 />
+
                 {addTeamVisible && (
                     <AddTeamModal
                         onCancel={() => setAddTeamVisible(false)}
                         onContinue={() => setAddTeamVisible(false)}
                     />
                 )}
+
                 {customWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -335,6 +381,7 @@ function DashboardCompetition() {
                         onContinue={switchToCustom}
                     />
                 )}
+
                 {compWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -343,6 +390,7 @@ function DashboardCompetition() {
                         onContinue={switchComp}
                     />
                 )}
+
                 {deleteTeamWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -353,6 +401,25 @@ function DashboardCompetition() {
                         onContinue={() => handleDeleteTeam(targetDeleteTeam)}
                     />
                 )}
+
+                {addMatchVisible && (
+                    <AddMatchModal
+                        onCancel={() => setAddMatchVisible(false)}
+                        onContinue={() => setAddMatchVisible(false)}
+                    />
+                )}
+
+                {deleteMatchWarningVisible && (
+                    <WarningModal
+                        title={t("warning!")}
+                        message={t("deletematchwarning", {
+                            number: targetDeleteMatch,
+                        })}
+                        onCancel={() => setDeleteMatchWarningVisible(false)}
+                        onContinue={handleDeleteMatch}
+                    />
+                )}
+
                 <div className="phone-dash-maincontainer">
                     <div className="phone-dash-comp-overflowhandler">
                         <div className="phone-dash-comp-divider">
@@ -455,7 +522,65 @@ function DashboardCompetition() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="phone-dash-comp-infodisplay"></div>
+                            <div className="phone-dash-comp-infodisplay">
+                                <p className="phone-dash-comp-infodisplay-title">
+                                    {t("totalmatches", {
+                                        num: Object.keys(matches ?? {}).length,
+                                    })}
+                                </p>
+                                <div className="phone-dash-comp-infodisplay-matchtable">
+                                    <div className="phone-dash-comp-infodisplay-matchtable-row">
+                                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                            {t("match")}
+                                        </div>
+                                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                            {t("red1")}
+                                        </div>
+                                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                            {t("red2")}
+                                        </div>
+                                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                            {t("blue1")}
+                                        </div>
+                                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                            {t("blue2")}
+                                        </div>
+                                    </div>
+                                    {Object.entries(matches).map(
+                                        ([matchNum, match]) => (
+                                            <div
+                                                className="phone-dash-comp-infodisplay-matchtable-row"
+                                                key={matchNum}
+                                                onClick={() =>
+                                                    promptDeleteMatch(matchNum)
+                                                }
+                                            >
+                                                <div className="phone-dash-comp-infodisplay-matchtable-column1">
+                                                    Q{matchNum}
+                                                </div>
+                                                <div className="phone-dash-comp-infodisplay-matchtable-column23">
+                                                    {match.red1}
+                                                </div>
+                                                <div className="phone-dash-comp-infodisplay-matchtable-column23">
+                                                    {match.red2}
+                                                </div>
+                                                <div className="phone-dash-comp-infodisplay-matchtable-column45">
+                                                    {match.blue1}
+                                                </div>
+                                                <div className="phone-dash-comp-infodisplay-matchtable-column45">
+                                                    {match.blue2}
+                                                </div>
+                                            </div>
+                                        ),
+                                    )}
+                                </div>
+                                <button
+                                    className="phone-dash-comp-infodisplay-greenbutton"
+                                    onClick={() => setAddMatchVisible(true)}
+                                >
+                                    <IoAddCircleOutline /> {t("addmatch")}
+                                </button>
+                            </div>
                             <div className="phone-dash-comp-infodisplay"></div>
                         </div>
                     </div>

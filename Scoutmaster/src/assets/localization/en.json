@@ -43,6 +43,7 @@
     "customwarning": "If you switch this competition to custom, it will keep all existing data, but it will no longer get new info from the FTC API, this CANNOT be reverted.",
     "compwarning": "If you switch to this competition, all existing scouting data will be deleted!",
     "deleteteamwarning": "If you continue, team {{number}} will be deleted, and this competition will be switched to custom. It will keep all existing data, but it will no longer get new info from the FTC API, this CANNOT be reverted.",
+    "deletematchwarning": "If you continue, qualification match {{number}} will be deleted, and this competition will be switched to custom. It will keep all existing data, but it will no longer get new info from the FTC API, this CANNOT be reverted.",
     "currentlyscouting": "Currently Scouting: {{compkey}}",
     "noresultsfound": "No Results Found",
     "compalreadycustom": "Competition already set to custom",
@@ -71,5 +72,9 @@
     "red2": "Red 2",
     "blue1": "Blue 1",
     "blue2": "Blue 2",
+    "red1colon": "Red 1:",
+    "red2colon": "Red 2:",
+    "blue1colon": "Blue 1:",
+    "blue2colon": "Blue 2:",
     "addmatch": "Add Match"
 }
