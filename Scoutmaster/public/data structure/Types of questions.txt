@@ -1,0 +1,17 @@
+ln = long note (paragraph) [string]
+sn = short note [string]
+
+cb = checkbox [boolean]
+mc = multichoice (up to 10) (string array of the choices selected) [string array]
+
+a = auto [svg/image]
+img = image [image]
+
+n = number input [int]
+r = radio input [int]
+st = stars (a property for how many stars is selectable from 1-10) [int]
+sc = single choice (up to 10) (each choice is a number, the int is the choice number) [int]
+
+***** This is proposed for the future, it will not be in at the start ***** rnk = rank (up to 10) (each possibility is numbered, then arranged in an array for the rank) [int array]
+
+sections, each question is given a number ID (literally just its index in the questions) and then a sections json organizes sections in this style

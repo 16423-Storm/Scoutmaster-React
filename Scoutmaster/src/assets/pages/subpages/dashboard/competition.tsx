@@ -27,6 +27,8 @@ import {
     AddMatchModal,
 } from "../../components/popups";
 
+import { CompetitionQuestion } from "./prescout/competitionquestion";
+
 function DashboardCompetition() {
     const { t } = useTranslation();
 
@@ -114,6 +116,13 @@ function DashboardCompetition() {
             setFilteredData([]);
         }
     }, [search]);
+
+    const [dummyData, setDummyData] = useState([
+        { id: "1", text: "Build a prototype", type: "st" },
+        { id: "2", text: "Write comprehensive tests", type: "sn" },
+        { id: "3", text: "Deploy to production", type: "sn" },
+        { id: "4", text: "Gather client feedback", type: "sn" },
+    ]);
 
     if (useScreenType() == "desktop") {
         return (
@@ -344,7 +353,23 @@ function DashboardCompetition() {
                                 <IoAddCircleOutline /> {t("addmatch")}
                             </button>
                         </div>
-                        <div className="desktop-dash-comp-infodisplay"></div>
+                        <div className="desktop-dash-comp-infodisplay">
+                            <p className="desktop-dash-comp-infodisplay-title">
+                                Questions
+                            </p>
+                            <div className="desktop-dash-comp-infodisplay-bordercontainer">
+                                <ul className="list">
+                                    {dummyData.map(({ id, text }, index) => (
+                                        <CompetitionQuestion
+                                            key={id}
+                                            id={Number(id)}
+                                            index={index}
+                                            text={text}
+                                        />
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </>

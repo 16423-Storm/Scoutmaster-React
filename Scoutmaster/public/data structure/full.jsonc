@@ -2,23 +2,38 @@
     "compkey": "CAONBOQ",
     "custom": false,
     "prescout": {
-        "structure": {
-            "numOfQuestions": 6,
-            // the type of questions
-            "questionorder": ["lt", "st", "cb", "r", "auto", "picture"],
-        },
+        "structure": [
+            {
+                "id": "1",
+                "type": "sn",
+                "title": "How cool is that?",
+            },
+            {
+                "id": "2",
+                "type": "mc",
+                "title": "What are they good at?",
+                "opt": {
+                    "1": "Skill",
+                    "2": "Power",
+                    "3": "Speed",
+                },
+            },
+        ],
+        "sections": [
+            {
+                "title": "Big Section",
+                "headersize": 1, // can be 1, 2, or 3
+                "questions": ["1", "5"],
+            },
+        ],
         "teams": {
             "1": {
                 "name": "TEAM1",
                 // for images, the image name will be Scouting team number - picof Scouted team number, so XXXXX-picof-XXXXX
-                "data": [
-                    "lorem ipsum",
-                    "situm dilor",
-                    true,
-                    213,
-                    "IMAGINEANSVGPATHRIGHTHERE",
-                    "16423-picof1.png",
-                ],
+                "answers": {
+                    "1": "very cool",
+                    "2": ["1", "2"],
+                },
                 "matchesIn": [1, 5, 67],
             },
             "2": {},
