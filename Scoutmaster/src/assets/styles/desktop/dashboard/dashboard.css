@@ -65,7 +65,7 @@
 .desktop-dash-sidebar-half {
     display: flex;
     box-sizing: border-box;
-    padding-left: 6.7%;
+    padding-left: 4px;
     height: 45%;
     width: 100%;
     flex-direction: column;
@@ -74,11 +74,17 @@
 .desktop-dash-sidebar-bottomhalf {
     display: flex;
     box-sizing: border-box;
-    padding-left: 6.7%;
+    padding-left: 4px;
     height: 45%;
     width: 100%;
     flex-direction: column;
     justify-content: end;
+}
+
+.desktop-dash-sidebar-bottomhalf-borderplaceholder {
+    margin-left: -4px;
+    padding-left: 4px;
+    border-top: 1px solid var(--clr-surface-tonal-a50);
 }
 
 .desktop-dash-sidebar-mainbutton {

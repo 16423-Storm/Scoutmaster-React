@@ -22,8 +22,14 @@ import { languages } from "../scripts/localization.js";
 import { dashboardStart } from "../scripts/localstorage";
 
 // Icon Imports
-import { FaHome, FaGamepad, FaNewspaper, FaMedal } from "react-icons/fa";
-import { FaMagnifyingGlass, FaGear } from "react-icons/fa6";
+import {
+    FaHome,
+    FaGamepad,
+    FaNewspaper,
+    FaMedal,
+    FaBook,
+} from "react-icons/fa";
+import { FaMagnifyingGlass, FaGear, FaB } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { MdOutlineCancel } from "react-icons/md";
 
@@ -189,21 +195,38 @@ function Dashboard() {
                                 </div>
                             </div>
                             <div className="desktop-dash-sidebar-bottomhalf">
-                                <div
-                                    className={
-                                        currentPage == "settings"
-                                            ? "desktop-dash-sidebar-mainbutton-active"
-                                            : "desktop-dash-sidebar-mainbutton"
-                                    }
-                                    onClick={
-                                        currentPage !== "settings"
-                                            ? () => setCurrentPage("settings")
-                                            : undefined
-                                    }
-                                >
-                                    <FaGear />
-                                    {""}
-                                    {t("settings")}
+                                <div className="desktop-dash-sidebar-bottomhalf-borderplaceholder">
+                                    <div
+                                        className={
+                                            "desktop-dash-sidebar-mainbutton"
+                                        }
+                                        // onClick={
+                                        //     currentPage !== "settings"
+                                        //         ? () => setCurrentPage("settings")
+                                        //         : undefined
+                                        // }
+                                    >
+                                        <FaBook />
+                                        {""}
+                                        {t("wiki")}
+                                    </div>
+                                    <div
+                                        className={
+                                            currentPage == "settings"
+                                                ? "desktop-dash-sidebar-mainbutton-active"
+                                                : "desktop-dash-sidebar-mainbutton"
+                                        }
+                                        onClick={
+                                            currentPage !== "settings"
+                                                ? () =>
+                                                      setCurrentPage("settings")
+                                                : undefined
+                                        }
+                                    >
+                                        <FaGear />
+                                        {""}
+                                        {t("settings")}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -268,15 +291,25 @@ function Dashboard() {
                                 </div>
                             </div>
                             <div className="desktop-dash-sidebar-bottomhalf">
-                                <div
-                                    className={
-                                        currentPage == "settings"
-                                            ? "desktop-dash-sidebar-mainbutton-active"
-                                            : "desktop-dash-sidebar-mainbutton"
-                                    }
-                                    style={{ justifyContent: "center" }}
-                                >
-                                    <FaGear />
+                                <div className="desktop-dash-sidebar-bottomhalf-borderplaceholder">
+                                    <div
+                                        className={
+                                            "desktop-dash-sidebar-mainbutton"
+                                        }
+                                        style={{ justifyContent: "center" }}
+                                    >
+                                        <FaBook />
+                                    </div>
+                                    <div
+                                        className={
+                                            currentPage == "settings"
+                                                ? "desktop-dash-sidebar-mainbutton-active"
+                                                : "desktop-dash-sidebar-mainbutton"
+                                        }
+                                        style={{ justifyContent: "center" }}
+                                    >
+                                        <FaGear />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -415,24 +448,43 @@ function Dashboard() {
                                         </div>
                                     </div>
                                     <div className="phone-dash-sidebar-bottomhalf">
-                                        <div
-                                            className={
-                                                currentPage == "settings"
-                                                    ? "phone-dash-sidebar-mainbutton-active"
-                                                    : "phone-dash-sidebar-mainbutton"
-                                            }
-                                            onClick={
-                                                currentPage !== "settings"
-                                                    ? () =>
-                                                          setCurrentPage(
-                                                              "settings",
-                                                          )
-                                                    : undefined
-                                            }
-                                        >
-                                            <FaGear />
-                                            {""}
-                                            {t("settings")}
+                                        <div className="phone-dash-sidebar-bottomhalf-borderplaceholder">
+                                            <div
+                                                className={
+                                                    "phone-dash-sidebar-mainbutton"
+                                                }
+                                                // onClick={
+                                                //     currentPage !== "settings"
+                                                //         ? () =>
+                                                //               setCurrentPage(
+                                                //                   "settings",
+                                                //               )
+                                                //         : undefined
+                                                // }
+                                            >
+                                                <FaBook />
+                                                {""}
+                                                {t("wiki")}
+                                            </div>
+                                            <div
+                                                className={
+                                                    currentPage == "settings"
+                                                        ? "phone-dash-sidebar-mainbutton-active"
+                                                        : "phone-dash-sidebar-mainbutton"
+                                                }
+                                                onClick={
+                                                    currentPage !== "settings"
+                                                        ? () =>
+                                                              setCurrentPage(
+                                                                  "settings",
+                                                              )
+                                                        : undefined
+                                                }
+                                            >
+                                                <FaGear />
+                                                {""}
+                                                {t("settings")}
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -552,25 +604,45 @@ function Dashboard() {
                                         </div>
                                     </div>
                                     <div className="phone-dash-sidebar-bottomhalf">
-                                        <div
-                                            className={
-                                                currentPage == "settings"
-                                                    ? "phone-dash-sidebar-mainbutton-active"
-                                                    : "phone-dash-sidebar-mainbutton"
-                                            }
-                                            style={{
-                                                justifyContent: "center",
-                                            }}
-                                            onClick={
-                                                currentPage !== "settings"
-                                                    ? () =>
-                                                          setCurrentPage(
-                                                              "settings",
-                                                          )
-                                                    : undefined
-                                            }
-                                        >
-                                            <FaGear />
+                                        <div className="phone-dash-sidebar-bottomhalf-borderplaceholder">
+                                            <div
+                                                className={
+                                                    "phone-dash-sidebar-mainbutton"
+                                                }
+                                                style={{
+                                                    justifyContent: "center",
+                                                }}
+                                                // onClick={
+                                                //     currentPage !== "settings"
+                                                //         ? () =>
+                                                //               setCurrentPage(
+                                                //                   "settings",
+                                                //               )
+                                                //         : undefined
+                                                // }
+                                            >
+                                                <FaBook />
+                                            </div>
+                                            <div
+                                                className={
+                                                    currentPage == "settings"
+                                                        ? "phone-dash-sidebar-mainbutton-active"
+                                                        : "phone-dash-sidebar-mainbutton"
+                                                }
+                                                style={{
+                                                    justifyContent: "center",
+                                                }}
+                                                onClick={
+                                                    currentPage !== "settings"
+                                                        ? () =>
+                                                              setCurrentPage(
+                                                                  "settings",
+                                                              )
+                                                        : undefined
+                                                }
+                                            >
+                                                <FaGear />
+                                            </div>
                                         </div>
                                     </div>
                                 </>
