@@ -222,7 +222,7 @@ function ProcessPage() {
     return (
         <>
             <div className="desktop-dash-settings-infocontainer-setting">
-                <p>Specify Custom Team Country</p>
+                <p>{t("customteamcountry")}</p>
                 <input
                     type="checkbox"
                     checked={useSpecifyCustomCountry() === true}

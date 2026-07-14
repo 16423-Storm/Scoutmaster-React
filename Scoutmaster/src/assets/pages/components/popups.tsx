@@ -136,7 +136,7 @@ export function AddTeamModal({
                             : { height: useIsAkwardHeight() ? "40vh" : "25vh" }
                     }
                 >
-                    <p className="desktop-warningpopup-title">Add Team</p>
+                    <p className="desktop-warningpopup-title">{t("addteam")}</p>
                     <div className="desktop-popupinput-highlightedbody">
                         {specifyCustomCountry && (
                             <div
@@ -144,10 +144,10 @@ export function AddTeamModal({
                                 style={{ justifyContent: "center" }}
                             >
                                 <div className="desktop-popupinput-childcontainer">
-                                    <p>Country Code</p>
+                                    <p>{t("countrycode")}</p>
                                     <input
-                                        placeholder="e.g. CA"
-                                        maxLength={2}
+                                        placeholder={t("examplecountrycode")}
+                                        maxLength={7}
                                         value={inputCode}
                                         onChange={handleCodeChange}
                                     />
@@ -156,9 +156,9 @@ export function AddTeamModal({
                         )}
                         <div className="desktop-popupinput-parentcontainer">
                             <div className="desktop-popupinput-childcontainer">
-                                <p>Team Number:</p>
+                                <p>{t("teamnumber")}</p>
                                 <input
-                                    placeholder="e.g. 16423"
+                                    placeholder={t("exampleteamnumber4")}
                                     type="number"
                                     min={0}
                                     max={99999}
@@ -167,10 +167,10 @@ export function AddTeamModal({
                                 />
                             </div>
                             <div className="desktop-popupinput-childcontainer">
-                                <p>Team Name:</p>
+                                <p>{t("teamname")}</p>
                                 <input
                                     value={inputTeam}
-                                    placeholder="e.g. Storm"
+                                    placeholder={t("exampleteamname")}
                                     maxLength={90}
                                     onChange={handleTeamInputChange}
                                     className={
@@ -221,7 +221,7 @@ export function AddTeamModal({
                             : { height: useIsAkwardHeight() ? "40vh" : "30vh" }
                     }
                 >
-                    <p className="phone-warningpopup-title">Add Team</p>
+                    <p className="phone-warningpopup-title">{t("addteam")}</p>
                     <div className="phone-popupinput-highlightedbody">
                         {specifyCustomCountry && (
                             <div
@@ -229,10 +229,10 @@ export function AddTeamModal({
                                 style={{ justifyContent: "center" }}
                             >
                                 <div className="phone-popupinput-childcontainer">
-                                    <p>Country Code</p>
+                                    <p>{t("countrycode")}</p>
                                     <input
-                                        placeholder="e.g. CA"
-                                        maxLength={2}
+                                        placeholder={t("examplecountrycode")}
+                                        maxLength={7}
                                         value={inputCode}
                                         onChange={handleCodeChange}
                                     />
@@ -241,9 +241,9 @@ export function AddTeamModal({
                         )}
                         <div className="phone-popupinput-parentcontainer">
                             <div className="phone-popupinput-childcontainer">
-                                <p>Team Number:</p>
+                                <p>{t("teamnumber")}</p>
                                 <input
-                                    placeholder="e.g. 16423"
+                                    placeholder={t("exampleteamnumber4")}
                                     type="number"
                                     min={0}
                                     max={99999}
@@ -252,10 +252,10 @@ export function AddTeamModal({
                                 />
                             </div>
                             <div className="phone-popupinput-childcontainer">
-                                <p>Team Name:</p>
+                                <p>{t("teamname")}</p>
                                 <input
                                     value={inputTeam}
-                                    placeholder="e.g. Storm"
+                                    placeholder={t("exampleteamname")}
                                     maxLength={90}
                                     onChange={handleTeamInputChange}
                                     className={
@@ -361,7 +361,7 @@ export function AddMatchModal({
                                 <p>{t("red1colon")}</p>
                                 <input
                                     value={red1Input}
-                                    placeholder="e.g. 16420"
+                                    placeholder={t("exampleteamnumber1")}
                                     type="number"
                                     onChange={handleRed1Change}
                                     max={999999}
@@ -378,7 +378,7 @@ export function AddMatchModal({
                                 <p>{t("red2colon")}</p>
                                 <input
                                     value={red2Input}
-                                    placeholder="e.g. 16421"
+                                    placeholder={t("exampleteamnumber2")}
                                     type="number"
                                     onChange={handleRed2Change}
                                     max={999999}
@@ -397,7 +397,7 @@ export function AddMatchModal({
                                 <p>{t("blue1colon")}</p>
                                 <input
                                     value={blue1Input}
-                                    placeholder="e.g. 16422"
+                                    placeholder={t("exampleteamnumber3")}
                                     type="number"
                                     onChange={handleBlue1Change}
                                     max={999999}
@@ -414,7 +414,7 @@ export function AddMatchModal({
                                 <p>{t("blue2colon")}</p>
                                 <input
                                     value={blue2Input}
-                                    placeholder="e.g. 16423"
+                                    placeholder={t("exampleteamnumber4")}
                                     type="number"
                                     onChange={handleBlue2Change}
                                     max={999999}
@@ -465,7 +465,7 @@ export function AddMatchModal({
                                 <p>{t("red1colon")}</p>
                                 <input
                                     value={red1Input}
-                                    placeholder="e.g. 16420"
+                                    placeholder={t("exampleteamnumber1")}
                                     type="number"
                                     onChange={handleRed1Change}
                                     max={999999}
@@ -482,7 +482,7 @@ export function AddMatchModal({
                                 <p>{t("red2colon")}</p>
                                 <input
                                     value={red2Input}
-                                    placeholder="e.g. 16421"
+                                    placeholder={t("exampleteamnumber2")}
                                     type="number"
                                     onChange={handleRed2Change}
                                     max={999999}
@@ -501,7 +501,7 @@ export function AddMatchModal({
                                 <p>{t("blue1colon")}</p>
                                 <input
                                     value={blue1Input}
-                                    placeholder="e.g. 16422"
+                                    placeholder={t("exampleteamnumber3")}
                                     type="number"
                                     onChange={handleBlue1Change}
                                     max={999999}
@@ -518,7 +518,7 @@ export function AddMatchModal({
                                 <p>{t("blue2colon")}</p>
                                 <input
                                     value={blue2Input}
-                                    placeholder="e.g. 16423"
+                                    placeholder={t("exampleteamnumber4")}
                                     type="number"
                                     onChange={handleBlue2Change}
                                     max={999999}

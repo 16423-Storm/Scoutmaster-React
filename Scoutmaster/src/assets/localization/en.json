@@ -38,6 +38,7 @@
     "process": "Process",
     "darklightmode": "Dark/Light Mode:",
     "language": "Language:",
+    "customteamcountry": "Specify Custom Team Country:",
 
     "warning!": "Warning!",
     "customwarning": "If you switch this competition to custom, it will keep all existing data, but it will no longer get new info from the FTC API, this CANNOT be reverted.",
@@ -76,5 +77,14 @@
     "red2colon": "Red 2:",
     "blue1colon": "Blue 1:",
     "blue2colon": "Blue 2:",
-    "addmatch": "Add Match"
+    "addmatch": "Add Match",
+    "teamname": "Team Name:",
+    "teamnumber": "Team Number:",
+    "countrycode": "Country Code:",
+    "examplecountrycode": "e.g. CA",
+    "exampleteamnumber1": "e.g. 16420",
+    "exampleteamnumber2": "e.g. 16421",
+    "exampleteamnumber3": "e.g. 16422",
+    "exampleteamnumber4": "e.g. 16423",
+    "exmapleteamname": "e.g. Storm"
 }

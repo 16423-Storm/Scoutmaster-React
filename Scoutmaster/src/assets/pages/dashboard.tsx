@@ -104,7 +104,10 @@ function Dashboard() {
                             className="desktop-dash-sidebar-expanded"
                             onMouseLeave={() => setSidebarExpanded(false)}
                         >
-                            <div className="desktop-dash-sidebar-logocontainer">
+                            <div
+                                className="desktop-dash-sidebar-logocontainer"
+                                onTouchStart={() => setSidebarExpanded(false)}
+                            >
                                 <IconLogo className="desktop-dash-sidebar-logo" />
                             </div>
                             <div className="desktop-dash-sidebar-half">
@@ -235,7 +238,10 @@ function Dashboard() {
                             className="desktop-dash-sidebar"
                             onMouseEnter={() => setSidebarExpanded(true)}
                         >
-                            <div className="desktop-dash-sidebar-logocontainer">
+                            <div
+                                className="desktop-dash-sidebar-logocontainer"
+                                onTouchStart={() => setSidebarExpanded(true)}
+                            >
                                 <IconLogo className="desktop-dash-sidebar-logo" />
                             </div>
                             <div className="desktop-dash-sidebar-half">
@@ -244,6 +250,11 @@ function Dashboard() {
                                         currentPage == "home"
                                             ? "desktop-dash-sidebar-mainbutton-active"
                                             : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onTouchStart={
+                                        currentPage !== "home"
+                                            ? () => setCurrentPage("home")
+                                            : undefined
                                     }
                                     style={{ justifyContent: "center" }}
                                 >
@@ -255,6 +266,12 @@ function Dashboard() {
                                             ? "desktop-dash-sidebar-mainbutton-active"
                                             : "desktop-dash-sidebar-mainbutton"
                                     }
+                                    onTouchStart={
+                                        currentPage !== "prescouting"
+                                            ? () =>
+                                                  setCurrentPage("prescouting")
+                                            : undefined
+                                    }
                                     style={{ justifyContent: "center" }}
                                 >
                                     <FaMagnifyingGlass />
@@ -264,6 +281,14 @@ function Dashboard() {
                                         currentPage == "matchscouting"
                                             ? "desktop-dash-sidebar-mainbutton-active"
                                             : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onTouchStart={
+                                        currentPage !== "matchscouting"
+                                            ? () =>
+                                                  setCurrentPage(
+                                                      "matchscouting",
+                                                  )
+                                            : undefined
                                     }
                                     style={{ justifyContent: "center" }}
                                 >
@@ -275,6 +300,11 @@ function Dashboard() {
                                             ? "desktop-dash-sidebar-mainbutton-active"
                                             : "desktop-dash-sidebar-mainbutton"
                                     }
+                                    onTouchStart={
+                                        currentPage !== "summary"
+                                            ? () => setCurrentPage("summary")
+                                            : undefined
+                                    }
                                     style={{ justifyContent: "center" }}
                                 >
                                     <FaNewspaper />
@@ -284,6 +314,12 @@ function Dashboard() {
                                         currentPage == "competition"
                                             ? "desktop-dash-sidebar-mainbutton-active"
                                             : "desktop-dash-sidebar-mainbutton"
+                                    }
+                                    onTouchStart={
+                                        currentPage !== "competition"
+                                            ? () =>
+                                                  setCurrentPage("competition")
+                                            : undefined
                                     }
                                     style={{ justifyContent: "center" }}
                                 >
@@ -305,6 +341,12 @@ function Dashboard() {
                                             currentPage == "settings"
                                                 ? "desktop-dash-sidebar-mainbutton-active"
                                                 : "desktop-dash-sidebar-mainbutton"
+                                        }
+                                        onTouchStart={
+                                            currentPage !== "settings"
+                                                ? () =>
+                                                      setCurrentPage("settings")
+                                                : undefined
                                         }
                                         style={{ justifyContent: "center" }}
                                     >
