@@ -6,6 +6,8 @@ import { useTeams } from "../../../scripts/localstorage";
 import { Progress3 } from "../../components/progressbar";
 import Flag from "../../components/flag";
 
+import { getNumOfQuestions } from "../../../scripts/localstorage";
+
 function DashboardPrescout() {
     const { t } = useTranslation();
 
@@ -18,13 +20,14 @@ function DashboardPrescout() {
                     <div className="desktop-dash-prescout-infodisplay">
                         <div className="desktop-dash-prescout-infodisplay-titlecontainer">
                             <p>
-                                Not Scouted:{" "}
+                                Fully Scouted:{" "}
                                 <span
-                                    style={{ color: "rgba(235, 54, 54, 0.6)" }}
+                                    style={{ color: "rgba(99, 255, 107, 0.6)" }}
                                 >
                                     122
                                 </span>
                             </p>
+
                             <p>
                                 Partially Scouted:{" "}
                                 <span
@@ -34,18 +37,18 @@ function DashboardPrescout() {
                                 </span>
                             </p>
                             <p>
-                                Fully Scouted:{" "}
+                                Not Scouted:{" "}
                                 <span
-                                    style={{ color: "rgba(99, 255, 107, 0.6)" }}
+                                    style={{ color: "rgba(235, 54, 54, 0.6)" }}
                                 >
                                     122
                                 </span>
                             </p>
                         </div>
                         <Progress3
-                            color1="rgba(235, 54, 54, 0.6)"
+                            color1="rgba(99, 255, 107, 0.6)"
                             color2="rgba(255, 196, 0, 0.74)"
-                            color3="rgba(99, 255, 107, 0.6)"
+                            color3="rgba(235, 54, 54, 0.6)"
                             percents={[10, 50, 40]}
                         />
                         <div
@@ -57,12 +60,17 @@ function DashboardPrescout() {
                                 {Object.entries(teams).map(
                                     ([teamNum, team]) => (
                                         <div key={teamNum}>
+                                            <StatusColor
+                                                numAnswered={team.data.length}
+                                            />
                                             {teamNum} - {team.name}{" "}
-                                            {team.code && (
+                                            {team.code ? (
                                                 <Flag
                                                     code={team.code}
                                                     imageClass="desktop-dash-prescout-infodisplay-table-flag"
                                                 />
+                                            ) : (
+                                                <div></div>
                                             )}
                                         </div>
                                     ),
@@ -85,3 +93,20 @@ function DashboardPrescout() {
 }
 
 export default DashboardPrescout;
+
+function StatusColor({ numAnswered }: { numAnswered: number }) {
+    const numOfQuestions = getNumOfQuestions();
+    if (numOfQuestions == numAnswered) {
+        return (
+            <div className="desktop-dash-prescout-infodisplay-table-statusindicator-green"></div>
+        );
+    } else if (numAnswered > 0) {
+        return (
+            <div className="desktop-dash-prescout-infodisplay-table-statusindicator-yellow"></div>
+        );
+    } else {
+        return (
+            <div className="desktop-dash-prescout-infodisplay-table-statusindicator-red"></div>
+        );
+    }
+}

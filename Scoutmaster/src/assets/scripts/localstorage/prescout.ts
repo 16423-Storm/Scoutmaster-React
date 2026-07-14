@@ -1,4 +1,6 @@
 import type { Team } from "./teams";
+import { successToast, errorToast } from "../misc/toastmanager";
+import i18n from "../localization";
 
 export type PrescoutData = {
     structure: Question[];
@@ -40,6 +42,24 @@ export type QuestionSection = {
     headersize: 1 | 2 | 3;
     questions: string[];
 };
+
+export function getNumOfQuestions() {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return {};
+    }
+
+    try {
+        const questionsAmount = JSON.parse(data).prescout.structure.length;
+        return questionsAmount;
+    } catch (e) {
+        console.error(`ERROR: Could not get amount of questions: ` + e);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return {};
+    }
+}
 
 /**
  * Returns an array of all teams being prescouted
