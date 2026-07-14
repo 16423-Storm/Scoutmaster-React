@@ -4,7 +4,10 @@ import SignUpPage from "./assets/pages/signuppage";
 import SignInPage from "./assets/pages/signinpage";
 import Dashboard from "./assets/pages/dashboard";
 
+import { useStartTheme } from "./assets/scripts/multipageutils";
+
 function App() {
+    useStartTheme();
     return (
         <Routes>
             <Route path="/" element={<LandingPage />} />

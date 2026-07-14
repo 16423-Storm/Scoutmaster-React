@@ -4,6 +4,8 @@ import {
     useSignedIn,
     useIsLightMode,
     useFlipTheme,
+    useSpecifyCustomCountry,
+    flipCustomCountry,
 } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 import { useState, useRef, useEffect } from "react";
@@ -215,7 +217,20 @@ function GroupPage() {
 }
 
 function ProcessPage() {
-    return <></>;
+    const { t } = useTranslation();
+
+    return (
+        <>
+            <div className="desktop-dash-settings-infocontainer-setting">
+                <p>Specify Custom Team Country</p>
+                <input
+                    type="checkbox"
+                    checked={useSpecifyCustomCountry() === true}
+                    onChange={flipCustomCountry()}
+                />
+            </div>
+        </>
+    );
 }
 
 export default DashboardSettings;

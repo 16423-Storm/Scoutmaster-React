@@ -1,0 +1,13 @@
+.progressbar-maincontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 20px;
+    width: 95%;
+}
+
+.progressbar-progress {
+    height: 100%;
+}

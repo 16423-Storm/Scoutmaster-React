@@ -117,13 +117,6 @@ function DashboardCompetition() {
         }
     }, [search]);
 
-    const [dummyData, setDummyData] = useState([
-        { id: "1", text: "Build a prototype", type: "st" },
-        { id: "2", text: "Write comprehensive tests", type: "sn" },
-        { id: "3", text: "Deploy to production", type: "sn" },
-        { id: "4", text: "Gather client feedback", type: "sn" },
-    ]);
-
     if (useScreenType() == "desktop") {
         return (
             <>
@@ -294,7 +287,10 @@ function DashboardCompetition() {
                                 </button>
                             </div>
                         </div>
-                        <div className="desktop-dash-comp-infodisplay">
+                        <div
+                            className="desktop-dash-comp-infodisplay"
+                            style={{ width: "66%" }}
+                        >
                             <p className="desktop-dash-comp-infodisplay-title">
                                 {t("totalmatches", {
                                     num: Object.keys(matches ?? {}).length,
@@ -352,23 +348,6 @@ function DashboardCompetition() {
                             >
                                 <IoAddCircleOutline /> {t("addmatch")}
                             </button>
-                        </div>
-                        <div className="desktop-dash-comp-infodisplay">
-                            <p className="desktop-dash-comp-infodisplay-title">
-                                Questions
-                            </p>
-                            <div className="desktop-dash-comp-infodisplay-bordercontainer">
-                                <ul className="list">
-                                    {dummyData.map(({ id, text }, index) => (
-                                        <CompetitionQuestion
-                                            key={id}
-                                            id={Number(id)}
-                                            index={index}
-                                            text={text}
-                                        />
-                                    ))}
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -606,7 +585,6 @@ function DashboardCompetition() {
                                     <IoAddCircleOutline /> {t("addmatch")}
                                 </button>
                             </div>
-                            <div className="phone-dash-comp-infodisplay"></div>
                         </div>
                     </div>
                 </div>

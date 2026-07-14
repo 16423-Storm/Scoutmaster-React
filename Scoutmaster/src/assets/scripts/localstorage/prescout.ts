@@ -1,12 +1,45 @@
-// export type PrescoutData = {
-//     structure: {
-//         numOfQuestions: number;
-//         questionOrder: string[];
-//     };
-//     teams: {
-//         [teamId: string]: Team;
-//     };
-// };
+import type { Team } from "./teams";
+
+export type PrescoutData = {
+    structure: Question[];
+    sections: QuestionSection[];
+    teams: {
+        [teamId: string]: Team;
+    };
+};
+
+export type Question =
+    | {
+          id: string;
+          type: "ln" | "sn" | "cb" | "a" | "img" | "n";
+          title: string;
+      }
+    | {
+          id: string;
+          type: "mc" | "sc";
+          title: string;
+          opt: {
+              [key: string]: string;
+          };
+      }
+    | {
+          id: string;
+          type: "r";
+          title: string;
+          minmax: [number, number];
+      }
+    | {
+          id: string;
+          type: "st";
+          title: string;
+          stars: number;
+      };
+
+export type QuestionSection = {
+    title: string;
+    headersize: 1 | 2 | 3;
+    questions: string[];
+};
 
 /**
  * Returns an array of all teams being prescouted

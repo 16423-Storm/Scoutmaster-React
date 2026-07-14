@@ -1,5 +1,5 @@
 import type { MatchData } from "./matches";
-import type { PrescoutData } from "./teams";
+import type { PrescoutData } from "./prescout";
 import { useCustom } from "./competitions";
 import { useTeams } from "./teams";
 import { useMatches } from "./matches";
@@ -51,10 +51,8 @@ export function createSkeleton(force: boolean) {
         compkey: "",
         custom: false,
         prescout: {
-            structure: {
-                numOfQuestions: 0,
-                questionOrder: [],
-            },
+            structure: [],
+            sections: [],
             teams: {},
         },
         match: {},

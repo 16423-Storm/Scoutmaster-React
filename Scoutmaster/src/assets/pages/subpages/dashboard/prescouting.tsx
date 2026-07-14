@@ -1,5 +1,87 @@
+import { useScreenType, useAdmin } from "../../../scripts/multipageutils";
+import { useTranslation } from "react-i18next";
+
+import { useTeams } from "../../../scripts/localstorage";
+
+import { Progress3 } from "../../components/progressbar";
+import Flag from "../../components/flag";
+
 function DashboardPrescout() {
-    return <>prescout</>;
+    const { t } = useTranslation();
+
+    const teams = useTeams((state) => state.teams);
+
+    if (useScreenType() == "desktop") {
+        return (
+            <div className="desktop-dash-maincontainer">
+                <div className="desktop-dash-prescout-divider">
+                    <div className="desktop-dash-prescout-infodisplay">
+                        <div className="desktop-dash-prescout-infodisplay-titlecontainer">
+                            <p>
+                                Not Scouted:{" "}
+                                <span
+                                    style={{ color: "rgba(235, 54, 54, 0.6)" }}
+                                >
+                                    122
+                                </span>
+                            </p>
+                            <p>
+                                Partially Scouted:{" "}
+                                <span
+                                    style={{ color: "rgba(255, 196, 0, 0.74)" }}
+                                >
+                                    122
+                                </span>
+                            </p>
+                            <p>
+                                Fully Scouted:{" "}
+                                <span
+                                    style={{ color: "rgba(99, 255, 107, 0.6)" }}
+                                >
+                                    122
+                                </span>
+                            </p>
+                        </div>
+                        <Progress3
+                            color1="rgba(235, 54, 54, 0.6)"
+                            color2="rgba(255, 196, 0, 0.74)"
+                            color3="rgba(99, 255, 107, 0.6)"
+                            percents={[10, 50, 40]}
+                        />
+                        <div
+                            className="desktop-dash-prescout-infodisplay-bordercontainer"
+                            style={{ fontSize: "1.5rem", marginTop: "10px" }}
+                        >
+                            {t("listofteams")}
+                            <div className="desktop-dash-prescout-infodisplay-table">
+                                {Object.entries(teams).map(
+                                    ([teamNum, team]) => (
+                                        <div key={teamNum}>
+                                            {teamNum} - {team.name}{" "}
+                                            {team.code && (
+                                                <Flag
+                                                    code={team.code}
+                                                    imageClass="desktop-dash-prescout-infodisplay-table-flag"
+                                                />
+                                            )}
+                                        </div>
+                                    ),
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        className="desktop-dash-prescout-admin-infodisplay"
+                        style={
+                            useAdmin() ? undefined : { borderStyle: "dashed" }
+                        }
+                    ></div>
+                </div>
+            </div>
+        );
+    } else {
+        return <></>;
+    }
 }
 
 export default DashboardPrescout;

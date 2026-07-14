@@ -4,10 +4,11 @@ import { create } from "zustand";
 
 import { setCustom } from "./competitions";
 
-type Team = {
+export type Team = {
     name: string;
-    data: (string | number | boolean)[];
+    data: (string | number | boolean | string[] | number[] | boolean[])[];
     matchesIn: number[];
+    code?: string;
 };
 
 type Teams = {
@@ -42,9 +43,15 @@ export function getTeams() {
  * Add team to competition
  * @param {number} num - Team number
  * @param {string} name - Team name
+ * @param {string} code - Team country code (optional)
  * @param {boolean} [custom = false] - Whether to set competition to custom or not, false by default
  */
-export function addTeam(num: number, name: string, custom = false) {
+export function addTeam(
+    num: number,
+    name: string,
+    custom = false,
+    code?: string,
+) {
     if (Object.hasOwn(getTeams(), num.toString())) {
         console.error("ERROR: Attempted to add duplicate team");
         errorToast(i18n.t("teamduplicate"), 3000);
@@ -64,6 +71,7 @@ export function addTeam(num: number, name: string, custom = false) {
             name: name,
             data: [],
             matchesIn: [],
+            ...(code ? { code: code } : {}),
         };
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());

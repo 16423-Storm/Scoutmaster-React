@@ -2,6 +2,7 @@
 @import "./misc/landingpage.css";
 @import "./misc/signin.css";
 @import "./misc/popup.css";
+@import "./misc/progressbar.css";
 
 /* Dashboard */
 @import "./dashboard/dashboard.css";
@@ -9,8 +10,9 @@
 /* Dashboard Pages */
 @import "./dashboard/dashboardpages/home.css";
 
+@import "./dashboard/dashboardpages/prescout.css";
+
 @import "./dashboard/dashboardpages/competition/sub1.css";
 @import "./dashboard/dashboardpages/competition/sub2.css";
-@import "./dashboard/dashboardpages/competition/sub3.css";
 
 @import "./dashboard/dashboardpages/settings.css";

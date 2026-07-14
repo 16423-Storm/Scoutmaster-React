@@ -1,4 +1,8 @@
-import { useScreenType } from "../../scripts/multipageutils";
+import {
+    useScreenType,
+    useIsAkwardHeight,
+    useSpecifyCustomCountry,
+} from "../../scripts/multipageutils";
 import { Blocker499 } from "./blocker";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -91,6 +95,7 @@ export function AddTeamModal({
 
     const [inputNumber, setInputNumber] = useState(0);
     const [inputTeam, setInputTeam] = useState("");
+    const [inputCode, setInputCode] = useState("");
 
     const handleNumberInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = Number(event.target.value);
@@ -102,9 +107,20 @@ export function AddTeamModal({
         setInputTeam(value);
     };
 
+    const handleCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setInputCode(value);
+    };
+
+    const specifyCustomCountry = useSpecifyCustomCountry();
+
     function handleContinue() {
         onContinue();
-        addTeam(inputNumber, inputTeam, true);
+        if (specifyCustomCountry) {
+            addTeam(inputNumber, inputTeam, true, inputCode);
+        } else {
+            addTeam(inputNumber, inputTeam, true);
+        }
     }
 
     if (useScreenType() == "desktop") {
@@ -114,9 +130,30 @@ export function AddTeamModal({
                 <div
                     className="desktop-warningpopup"
                     id="avoidwarningpopupheight"
+                    style={
+                        specifyCustomCountry
+                            ? { height: useIsAkwardHeight() ? "55vh" : "40vh" }
+                            : { height: useIsAkwardHeight() ? "40vh" : "25vh" }
+                    }
                 >
                     <p className="desktop-warningpopup-title">Add Team</p>
                     <div className="desktop-popupinput-highlightedbody">
+                        {specifyCustomCountry && (
+                            <div
+                                className="desktop-popupinput-parentcontainer"
+                                style={{ justifyContent: "center" }}
+                            >
+                                <div className="desktop-popupinput-childcontainer">
+                                    <p>Country Code</p>
+                                    <input
+                                        placeholder="e.g. CA"
+                                        maxLength={2}
+                                        value={inputCode}
+                                        onChange={handleCodeChange}
+                                    />
+                                </div>
+                            </div>
+                        )}
                         <div className="desktop-popupinput-parentcontainer">
                             <div className="desktop-popupinput-childcontainer">
                                 <p>Team Number:</p>
@@ -178,9 +215,30 @@ export function AddTeamModal({
                 <div
                     className="phone-warningpopup"
                     id="avoidwarningpopupheight"
+                    style={
+                        specifyCustomCountry
+                            ? { height: useIsAkwardHeight() ? "55vh" : "40vh" }
+                            : { height: useIsAkwardHeight() ? "40vh" : "30vh" }
+                    }
                 >
                     <p className="phone-warningpopup-title">Add Team</p>
                     <div className="phone-popupinput-highlightedbody">
+                        {specifyCustomCountry && (
+                            <div
+                                className="phone-popupinput-parentcontainer"
+                                style={{ justifyContent: "center" }}
+                            >
+                                <div className="phone-popupinput-childcontainer">
+                                    <p>Country Code</p>
+                                    <input
+                                        placeholder="e.g. CA"
+                                        maxLength={2}
+                                        value={inputCode}
+                                        onChange={handleCodeChange}
+                                    />
+                                </div>
+                            </div>
+                        )}
                         <div className="phone-popupinput-parentcontainer">
                             <div className="phone-popupinput-childcontainer">
                                 <p>Team Number:</p>
@@ -289,7 +347,10 @@ export function AddMatchModal({
                 <div
                     className="desktop-warningpopup"
                     id="avoidwarningpopupheight"
-                    style={{ width: "50vw", height: "35vh" }}
+                    style={{
+                        width: "50vw",
+                        height: useIsAkwardHeight() ? "50vh" : "35vh",
+                    }}
                 >
                     <p className="desktop-warningpopup-title">
                         {t("addmatch")}
@@ -392,7 +453,10 @@ export function AddMatchModal({
                 <div
                     className="phone-warningpopup"
                     id="avoidwarningpopupheight"
-                    style={{ width: "90vw", height: "60vh" }}
+                    style={{
+                        width: "90vw",
+                        height: useIsAkwardHeight() ? "55vh" : "40vh",
+                    }}
                 >
                     <p className="phone-warningpopup-title">{t("addmatch")}</p>
                     <div className="phone-popupinput-highlightedbody">
