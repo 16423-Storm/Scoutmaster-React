@@ -1,14 +1,30 @@
-import { useScreenType, useAdmin } from "../../../scripts/multipageutils";
+import { useScreenType, useIsAdmin } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import { useTeams } from "../../../scripts/localstorage";
 
 import { Progress3 } from "../../components/progressbar";
+import {
+    Listbox,
+    ListboxButton,
+    ListboxOption,
+    ListboxOptions,
+} from "@headlessui/react";
+
 import Flag from "../../components/flag";
 
 import { getNumOfQuestions } from "../../../scripts/localstorage";
+
+import { FaGhost, FaTrash } from "react-icons/fa";
+import { MdDragIndicator } from "react-icons/md";
+
+import type { Question, QuestionSection } from "../../../scripts/localstorage";
+
+import { DragDropProvider } from "@dnd-kit/react";
+import { useSortable } from "@dnd-kit/react/sortable";
+import { move } from "@dnd-kit/helpers";
 
 function DashboardPrescout() {
     const { t } = useTranslation();
@@ -35,6 +51,8 @@ function DashboardPrescout() {
         (percentageCounts[1] / percentageTotal) * 100,
         (percentageCounts[0] / percentageTotal) * 100,
     ];
+
+    const [items, setItems] = useState(createRange(100));
 
     if (useScreenType() == "desktop") {
         return (
@@ -72,7 +90,7 @@ function DashboardPrescout() {
                             color3="rgb(146, 45, 45)"
                             color2="rgb(221, 169, 0)"
                             color1="rgb(45, 146, 50)"
-                            percents={[10, 20, 70]}
+                            percents={percentages}
                         />
                         <div
                             className="desktop-dash-prescout-infodisplay-bordercontainer"
@@ -104,9 +122,47 @@ function DashboardPrescout() {
                     <div
                         className="desktop-dash-prescout-admin-infodisplay"
                         style={
-                            useAdmin() ? undefined : { borderStyle: "dashed" }
+                            useIsAdmin() ? undefined : { borderStyle: "dashed" }
                         }
-                    ></div>
+                    >
+                        {useIsAdmin() ? (
+                            <>
+                                <p className="desktop-dash-comp-infodisplay-title">
+                                    Questions:
+                                </p>
+                                <DragDropProvider
+                                    onDragEnd={(event) => {
+                                        setItems((items) => move(items, event));
+                                    }}
+                                >
+                                    <ul className="desktop-dash-prescout-admin-infodisplay-questionlist">
+                                        {items.map((id, index) => (
+                                            <DesktopSortableQuestion
+                                                key={id}
+                                                id={id}
+                                                index={index}
+                                            />
+                                        ))}
+                                    </ul>
+                                </DragDropProvider>
+                            </>
+                        ) : (
+                            <p
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <FaGhost
+                                    style={{
+                                        paddingRight: "8px",
+                                    }}
+                                />
+                                {t("nothingtoseehere")}
+                            </p>
+                        )}
+                    </div>
                 </div>
             </div>
         );
@@ -132,4 +188,108 @@ function StatusColor({ numAnswered }: { numAnswered: number }) {
             <div className="desktop-dash-prescout-infodisplay-table-statusindicator-red"></div>
         );
     }
+}
+
+function DesktopSortableQuestion({
+    question,
+    section,
+    id,
+    index,
+}:
+    | {
+          question?: Question;
+          section?: never;
+          id: number;
+          index: number;
+      }
+    | {
+          question?: never;
+          section?: QuestionSection;
+          id: number;
+          index: number;
+      }) {
+    const [element, setElement] = useState<Element | null>(null);
+    const handleRef = useRef<HTMLButtonElement | null>(null);
+    const { isDragging } = useSortable({
+        id,
+        index,
+        element,
+        handle: handleRef,
+    });
+
+    const people = [
+        { id: 1, name: "Durward Reynolds" },
+        { id: 2, name: "Kenton Towne" },
+        { id: 3, name: "Therese Wunsch" },
+        { id: 4, name: "Benedict Kessler" },
+        { id: 5, name: "Katelyn Rohan" },
+        { id: 1, name: "Durward Reynolds" },
+        { id: 2, name: "Kenton Towne" },
+        { id: 3, name: "Therese Wunsch" },
+        { id: 4, name: "Benedict Kessler" },
+        { id: 5, name: "Katelyn Rohan" },
+        { id: 1, name: "Durward Reynolds" },
+        { id: 2, name: "Kenton Towne" },
+        { id: 3, name: "Therese Wunsch" },
+        { id: 4, name: "Benedict Kessler" },
+        { id: 5, name: "Katelyn Rohan" },
+        { id: 1, name: "Durward Reynolds" },
+        { id: 2, name: "Kenton Towne" },
+        { id: 3, name: "Therese Wunsch" },
+        { id: 4, name: "Benedict Kessler" },
+        { id: 5, name: "Katelyn Rohan" },
+    ];
+
+    const [selectedPerson, setSelectedPerson] = useState(people[0]);
+    const [query, setQuery] = useState("");
+
+    const filteredPeople =
+        query === ""
+            ? people
+            : people.filter((person) => {
+                  return person.name
+                      .toLowerCase()
+                      .includes(query.toLowerCase());
+              });
+
+    return (
+        <div
+            ref={setElement}
+            className="desktop-dash-prescout-admin-infodisplay-question"
+            data-shadow={isDragging || undefined}
+        >
+            <div className="desktop-dash-prescout-admin-infodisplay-dropdowncontainer">
+                <Listbox value={selectedPerson} onChange={setSelectedPerson}>
+                    <ListboxButton className="desktop-dash-prescout-admin-infodisplay-dropdownbutton">
+                        {selectedPerson.name} ▼
+                    </ListboxButton>
+                    <ListboxOptions
+                        anchor="bottom"
+                        className="desktop-dash-prescout-admin-infodisplay-dropdownbody"
+                    >
+                        {people.map((person) => (
+                            <ListboxOption
+                                key={person.id}
+                                value={person}
+                                className="desktop-dash-prescout-admin-infodisplay-dropdownoption"
+                            >
+                                {person.name}
+                            </ListboxOption>
+                        ))}
+                    </ListboxOptions>
+                </Listbox>
+            </div>
+            {id}
+            <button
+                ref={handleRef}
+                className="desktop-dash-prescout-admin-infodisplay-question-handle"
+            >
+                <MdDragIndicator />
+            </button>
+        </div>
+    );
+}
+
+function createRange(length: number) {
+    return Array.from({ length }, (_, i) => i + 1);
 }

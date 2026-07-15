@@ -49,7 +49,7 @@ export function useSignedIn(): true | false {
  * just whether to show the UI or not
  * @returns true | false
  */
-export function useAdmin(): true | false {
+export function useIsAdmin(): true | false {
     return true;
 }
 
