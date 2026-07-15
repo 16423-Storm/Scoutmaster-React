@@ -6,8 +6,19 @@
     overflow: hidden;
     height: 20px;
     width: 95%;
+    padding: 2px;
+    background-color: var(--clr-surface-a20);
+    box-sizing: border-box;
 }
 
 .progressbar-progress {
     height: 100%;
+}
+
+.progressbar-progress:last-child {
+    border-radius: 0px 20px 20px 0px;
+}
+
+.progressbar-progress:first-child {
+    border-radius: 20px 0px 0px 20px;
 }
