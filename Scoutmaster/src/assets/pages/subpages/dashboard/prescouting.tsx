@@ -2,6 +2,7 @@ import { useScreenType, useIsAdmin } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 
 import { useState, useRef } from "react";
+import type { ChangeEvent } from "react";
 
 import { useTeams } from "../../../scripts/localstorage";
 
@@ -17,8 +18,17 @@ import Flag from "../../components/flag";
 
 import { getNumOfQuestions } from "../../../scripts/localstorage";
 
-import { FaGhost, FaTrash } from "react-icons/fa";
+import { FaGhost, FaTrash, FaImage } from "react-icons/fa";
+import { FaPencilAlt } from "react-icons/fa";
 import { MdDragIndicator } from "react-icons/md";
+import { MdNotes } from "react-icons/md";
+import { FaRegStickyNote } from "react-icons/fa";
+import { MdCheckBox } from "react-icons/md";
+import { GrRadialSelected } from "react-icons/gr";
+import { PiPath } from "react-icons/pi";
+import { Bs123 } from "react-icons/bs";
+import { RxSlider } from "react-icons/rx";
+import { GiStarsStack } from "react-icons/gi";
 
 import type { Question, QuestionSection } from "../../../scripts/localstorage";
 
@@ -217,40 +227,26 @@ function DesktopSortableQuestion({
         handle: handleRef,
     });
 
-    const people = [
-        { id: 1, name: "Durward Reynolds" },
-        { id: 2, name: "Kenton Towne" },
-        { id: 3, name: "Therese Wunsch" },
-        { id: 4, name: "Benedict Kessler" },
-        { id: 5, name: "Katelyn Rohan" },
-        { id: 1, name: "Durward Reynolds" },
-        { id: 2, name: "Kenton Towne" },
-        { id: 3, name: "Therese Wunsch" },
-        { id: 4, name: "Benedict Kessler" },
-        { id: 5, name: "Katelyn Rohan" },
-        { id: 1, name: "Durward Reynolds" },
-        { id: 2, name: "Kenton Towne" },
-        { id: 3, name: "Therese Wunsch" },
-        { id: 4, name: "Benedict Kessler" },
-        { id: 5, name: "Katelyn Rohan" },
-        { id: 1, name: "Durward Reynolds" },
-        { id: 2, name: "Kenton Towne" },
-        { id: 3, name: "Therese Wunsch" },
-        { id: 4, name: "Benedict Kessler" },
-        { id: 5, name: "Katelyn Rohan" },
+    const questionTypes = [
+        { id: "ln", name: "Long Note" },
+        { id: "sn", name: "Short Note" },
+        { id: "cb", name: "Checkbox" },
+        { id: "mc", name: "Multichoice" },
+        { id: "a", name: "Autonomous Path" },
+        { id: "img", name: "Image" },
+        { id: "n", name: "Number" },
+        { id: "r", name: "Slider" },
+        { id: "st", name: "Stars" },
+        { id: "sc", name: "Single Choice" },
     ];
 
-    const [selectedPerson, setSelectedPerson] = useState(people[0]);
-    const [query, setQuery] = useState("");
+    const [selectedType, setSelectedType] = useState(questionTypes[0]);
 
-    const filteredPeople =
-        query === ""
-            ? people
-            : people.filter((person) => {
-                  return person.name
-                      .toLowerCase()
-                      .includes(query.toLowerCase());
-              });
+    const [titleInput, setTitleInput] = useState("");
+    const handleTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setTitleInput(value);
+    };
 
     return (
         <div
@@ -258,28 +254,60 @@ function DesktopSortableQuestion({
             className="desktop-dash-prescout-admin-infodisplay-question"
             data-shadow={isDragging || undefined}
         >
-            <div className="desktop-dash-prescout-admin-infodisplay-dropdowncontainer">
-                <Listbox value={selectedPerson} onChange={setSelectedPerson}>
-                    <ListboxButton className="desktop-dash-prescout-admin-infodisplay-dropdownbutton">
-                        {selectedPerson.name} ▼
-                    </ListboxButton>
-                    <ListboxOptions
-                        anchor="bottom"
-                        className="desktop-dash-prescout-admin-infodisplay-dropdownbody"
-                    >
-                        {people.map((person) => (
-                            <ListboxOption
-                                key={person.id}
-                                value={person}
-                                className="desktop-dash-prescout-admin-infodisplay-dropdownoption"
-                            >
-                                {person.name}
-                            </ListboxOption>
-                        ))}
-                    </ListboxOptions>
-                </Listbox>
+            <div className="desktop-dashprescout-admin-infodisplay-managecontainer">
+                <FaPencilAlt className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton" />
+                <FaTrash className="desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton" />
             </div>
-            {id}
+            <div className="desktop-dash-prescout-admin-infodisplay-questionlayoutcontainer1">
+                <QuestionIcon type={selectedType.id} />
+                <div className="desktop-dash-prescout-admin-infodisplay-dropdowncontainer">
+                    <Listbox value={selectedType} onChange={setSelectedType}>
+                        <ListboxButton className="desktop-dash-prescout-admin-infodisplay-dropdownbutton">
+                            {selectedType.name} ▼
+                        </ListboxButton>
+                        <ListboxOptions
+                            anchor="bottom"
+                            className="desktop-dash-prescout-admin-infodisplay-dropdownbody"
+                        >
+                            {questionTypes.map((question) => (
+                                <ListboxOption
+                                    key={question.id}
+                                    value={question}
+                                    className="desktop-dash-prescout-admin-infodisplay-dropdownoption"
+                                >
+                                    {question.name}
+                                </ListboxOption>
+                            ))}
+                        </ListboxOptions>
+                    </Listbox>
+                    {isMoreFieldsNeeded(selectedType.id) && (
+                        <p className="notetext">
+                            More fields required, press edit (pencil) to finish
+                        </p>
+                    )}
+                </div>
+                <div className="desktop-dash-prescout-admin-infodisplay-questioninputcontainer">
+                    <input
+                        value={titleInput}
+                        onChange={handleTitleInputChange}
+                        maxLength={100}
+                        className={
+                            titleInput.length === 100
+                                ? "desktop-popupinput-maxedinput"
+                                : undefined
+                        }
+                    />
+                    <p
+                        style={
+                            titleInput.length === 100
+                                ? { color: "red" }
+                                : undefined
+                        }
+                    >
+                        {titleInput.length}/100
+                    </p>
+                </div>
+            </div>
             <button
                 ref={handleRef}
                 className="desktop-dash-prescout-admin-infodisplay-question-handle"
@@ -288,6 +316,53 @@ function DesktopSortableQuestion({
             </button>
         </div>
     );
+}
+
+function QuestionIcon({ type }: { type: string }) {
+    if (type == "ln") {
+        return (
+            <MdNotes className="desktop-dash-prescout-admin-infodisplay-questionicon" />
+        );
+    } else if (type == "sn") {
+        return (
+            <FaRegStickyNote className="desktop-dash-prescout-admin-infodisplay-questionicon" />
+        );
+    } else if (type == "cb") {
+        return (
+            <MdCheckBox className="desktop-dash-prescout-admin-infodisplay-questionicon" />
+        );
+    } else if (type == "mc" || type == "sc") {
+        return (
+            <GrRadialSelected className="desktop-dash-prescout-admin-infodisplay-questionicon" />
+        );
+    } else if (type == "a") {
+        return (
+            <PiPath className="desktop-dash-prescout-admin-infodisplay-questionicon" />
+        );
+    } else if (type == "img") {
+        return (
+            <FaImage className="desktop-dash-prescout-admin-infodisplay-questionicon" />
+        );
+    } else if (type == "n") {
+        return (
+            <Bs123 className="desktop-dash-prescout-admin-infodisplay-questionicon" />
+        );
+    } else if (type == "r") {
+        return (
+            <RxSlider className="desktop-dash-prescout-admin-infodisplay-questionicon" />
+        );
+    } else {
+        return (
+            <GiStarsStack className="desktop-dash-prescout-admin-infodisplay-questionicon" />
+        );
+    }
+}
+
+function isMoreFieldsNeeded(type: string) {
+    if (type == "r" || type == "st" || type == "mc" || type == "sc") {
+        return true;
+    }
+    return false;
 }
 
 function createRange(length: number) {

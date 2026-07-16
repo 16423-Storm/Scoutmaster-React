@@ -196,7 +196,7 @@
 
 .desktop-dash-prescout-admin-infodisplay-question {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: row;
     width: 95%;
@@ -247,7 +247,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 15%;
+    flex-direction: column;
+    width: 20%;
 }
 
 .desktop-dash-prescout-admin-infodisplay-dropdownbutton {
@@ -258,6 +259,7 @@
     border: 1px solid var(--clr-surface-tonal-a10);
     border-radius: 10px;
     padding: 5px;
+    width: 100%;
 }
 
 .desktop-dash-prescout-admin-infodisplay-dropdownbutton:hover {
@@ -295,4 +297,80 @@
 .desktop-dash-prescout-admin-infodisplay-dropdownoption:active {
     background-color: var(--clr-surface-a20);
     cursor: pointer;
+}
+
+.desktop-dashprescout-admin-infodisplay-managecontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 10%;
+    gap: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton {
+    font-size: 1.5rem;
+    transition: transform 0.1s ease-in-out;
+}
+
+.desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton:hover {
+    cursor: pointer;
+    color: var(--clr-surface-a50);
+}
+
+.desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton:active {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+.desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton {
+    font-size: 1.5rem;
+    transition: transform 0.1s ease-in-out;
+}
+
+.desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton:hover {
+    cursor: pointer;
+    color: var(--clr-danger-a0);
+}
+
+.desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton:active {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+.desktop-dash-prescout-admin-infodisplay-questionicon {
+    font-size: 1.5rem;
+}
+
+.desktop-dash-prescout-admin-infodisplay-questionlayoutcontainer1 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+}
+
+.desktop-dash-prescout-admin-infodisplay-questioninputcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 50%;
+    gap: 4px;
+}
+
+.desktop-dash-prescout-admin-infodisplay-questioninputcontainer input {
+    width: 100%;
+    font-size: 1.5rem;
+    background-color: var(--clr-surface-a10);
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+.desktop-dash-prescout-admin-infodisplay-questioninputcontainer p {
+    font-size: 0.75rem;
 }
