@@ -1,6 +1,11 @@
 import { useScreenType, useIsAdmin } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
-import { updateQuestion, useQuestions } from "../../../scripts/localstorage";
+import {
+    deleteQuestion,
+    updateQuestion,
+    useQuestions,
+    useSections,
+} from "../../../scripts/localstorage";
 
 import { useState, useRef } from "react";
 import type { ChangeEvent } from "react";
@@ -14,6 +19,7 @@ import {
     ListboxOption,
     ListboxOptions,
 } from "@headlessui/react";
+import { WarningModal } from "../../components/popups";
 
 import Flag from "../../components/flag";
 
@@ -63,149 +69,169 @@ function DashboardPrescout() {
         (percentageCounts[0] / percentageTotal) * 100,
     ];
 
-    const questions = useQuestions((state) => state.questions);
+    const sections = useSections((state) => state.sections);
+
+    const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
+
+    const [questionToDelete, setQuestionToDelete] = useState("");
+
+    function promptDelete(target: string) {
+        setDeleteWarningVisible(true);
+        setQuestionToDelete(target);
+    }
+
+    function handleDelete() {
+        setDeleteWarningVisible(false);
+        deleteQuestion(questionToDelete, false);
+    }
 
     if (useScreenType() == "desktop") {
         return (
-            <div className="desktop-dash-maincontainer">
-                <div className="desktop-dash-prescout-divider">
-                    <div className="desktop-dash-prescout-infodisplay">
-                        <div className="desktop-dash-prescout-infodisplay-titlecontainer">
-                            <p>
-                                Fully Scouted:{" "}
-                                <span
-                                    style={{ color: "rgba(99, 255, 107, 0.6)" }}
-                                >
-                                    {percentageCounts[2]}
-                                </span>
-                            </p>
-
-                            <p>
-                                Partially Scouted:{" "}
-                                <span
-                                    style={{ color: "rgba(255, 196, 0, 0.74)" }}
-                                >
-                                    {percentageCounts[1]}
-                                </span>
-                            </p>
-                            <p>
-                                Not Scouted:{" "}
-                                <span
-                                    style={{ color: "rgba(235, 54, 54, 0.6)" }}
-                                >
-                                    {percentageCounts[0]}
-                                </span>
-                            </p>
-                        </div>
-                        <Progress3
-                            color3="rgb(146, 45, 45)"
-                            color2="rgb(221, 169, 0)"
-                            color1="rgb(45, 146, 50)"
-                            percents={percentages}
-                        />
-                        <div
-                            className="desktop-dash-prescout-infodisplay-bordercontainer"
-                            style={{ fontSize: "1.5rem", marginTop: "10px" }}
-                        >
-                            {t("listofteams")}
-                            <div className="desktop-dash-prescout-infodisplay-table">
-                                {Object.entries(teams).map(
-                                    ([teamNum, team]) => (
-                                        <div key={teamNum}>
-                                            <StatusColor
-                                                numAnswered={team.data.length}
-                                            />
-                                            {teamNum} - {team.name}{" "}
-                                            {team.code ? (
-                                                <Flag
-                                                    code={team.code}
-                                                    imageClass="desktop-dash-prescout-infodisplay-table-flag"
-                                                />
-                                            ) : (
-                                                <div></div>
-                                            )}
-                                        </div>
-                                    ),
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        className="desktop-dash-prescout-admin-infodisplay"
-                        style={
-                            useIsAdmin() ? undefined : { borderStyle: "dashed" }
-                        }
-                    >
-                        {useIsAdmin() ? (
-                            <>
-                                <p className="desktop-dash-comp-infodisplay-title">
-                                    Questions:
+            <>
+                {deleteWarningVisible && (
+                    <WarningModal
+                        title={t("warning!")}
+                        message={t("deletequestionwarning")}
+                        onCancel={() => setDeleteWarningVisible(false)}
+                        onContinue={handleDelete}
+                    />
+                )}
+                <div className="desktop-dash-maincontainer">
+                    <div className="desktop-dash-prescout-divider">
+                        <div className="desktop-dash-prescout-infodisplay">
+                            <div className="desktop-dash-prescout-infodisplay-titlecontainer">
+                                <p>
+                                    Fully Scouted:{" "}
+                                    <span
+                                        style={{
+                                            color: "rgba(99, 255, 107, 0.6)",
+                                        }}
+                                    >
+                                        {percentageCounts[2]}
+                                    </span>
                                 </p>
-                                <DragDropProvider
-                                    onDragEnd={(event) => {
-                                        const sortedQuestions = Object.entries(
-                                            questions,
-                                        )
-                                            .sort(
-                                                (
-                                                    [, questionA],
-                                                    [, questionB],
-                                                ) =>
-                                                    questionA.index -
-                                                    questionB.index,
-                                            )
-                                            .map(([id]) => id);
 
-                                        const changedOrder = move(
-                                            sortedQuestions,
-                                            event,
-                                        );
-
-                                        changedOrder.forEach((id, index) => {
-                                            updateQuestion(id, { index }, true);
-                                        });
-                                    }}
-                                >
-                                    <ul className="desktop-dash-prescout-admin-infodisplay-questionlist">
-                                        {Object.entries(questions)
-                                            .sort(
-                                                (
-                                                    [, questionA],
-                                                    [, questionB],
-                                                ) =>
-                                                    questionA.index -
-                                                    questionB.index,
-                                            )
-                                            .map(([id, question], index) => (
-                                                <DesktopSortableQuestion
-                                                    key={id}
-                                                    id={Number(id)}
-                                                    question={question}
-                                                    index={index}
-                                                />
-                                            ))}
-                                    </ul>
-                                </DragDropProvider>
-                            </>
-                        ) : (
-                            <p
+                                <p>
+                                    Partially Scouted:{" "}
+                                    <span
+                                        style={{
+                                            color: "rgba(255, 196, 0, 0.74)",
+                                        }}
+                                    >
+                                        {percentageCounts[1]}
+                                    </span>
+                                </p>
+                                <p>
+                                    Not Scouted:{" "}
+                                    <span
+                                        style={{
+                                            color: "rgba(235, 54, 54, 0.6)",
+                                        }}
+                                    >
+                                        {percentageCounts[0]}
+                                    </span>
+                                </p>
+                            </div>
+                            <Progress3
+                                color3="rgb(146, 45, 45)"
+                                color2="rgb(221, 169, 0)"
+                                color1="rgb(45, 146, 50)"
+                                percents={percentages}
+                            />
+                            <div
+                                className="desktop-dash-prescout-infodisplay-bordercontainer"
                                 style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
+                                    fontSize: "1.5rem",
+                                    marginTop: "10px",
                                 }}
                             >
-                                <FaGhost
+                                {t("listofteams")}
+                                <div className="desktop-dash-prescout-infodisplay-table">
+                                    {Object.entries(teams).map(
+                                        ([teamNum, team]) => (
+                                            <div key={teamNum}>
+                                                <StatusColor
+                                                    numAnswered={
+                                                        team.data.length
+                                                    }
+                                                />
+                                                {teamNum} - {team.name}{" "}
+                                                {team.code ? (
+                                                    <Flag
+                                                        code={team.code}
+                                                        imageClass="desktop-dash-prescout-infodisplay-table-flag"
+                                                    />
+                                                ) : (
+                                                    <div></div>
+                                                )}
+                                            </div>
+                                        ),
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="desktop-dash-prescout-admin-infodisplay"
+                            style={
+                                useIsAdmin()
+                                    ? undefined
+                                    : { borderStyle: "dashed" }
+                            }
+                        >
+                            {useIsAdmin() ? (
+                                <>
+                                    <p className="desktop-dash-comp-infodisplay-title">
+                                        Questions:
+                                    </p>
+                                    <DragDropProvider
+                                        onDragEnd={() => {
+                                            console.log(sections);
+                                        }}
+                                    >
+                                        <ul className="desktop-dash-prescout-admin-infodisplay-questionlist">
+                                            {Object.entries(sections)
+                                                .sort(
+                                                    (
+                                                        [, sectionA],
+                                                        [, sectionB],
+                                                    ) =>
+                                                        sectionA.index -
+                                                        sectionB.index,
+                                                )
+                                                .map(([id, section], index) => (
+                                                    <DesktopSortableSection
+                                                        key={id}
+                                                        id={id}
+                                                        deletePrompt={
+                                                            promptDelete
+                                                        }
+                                                        section={section}
+                                                        index={index}
+                                                    />
+                                                ))}
+                                        </ul>
+                                    </DragDropProvider>
+                                </>
+                            ) : (
+                                <p
                                     style={{
-                                        paddingRight: "8px",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
                                     }}
-                                />
-                                {t("nothingtoseehere")}
-                            </p>
-                        )}
+                                >
+                                    <FaGhost
+                                        style={{
+                                            paddingRight: "8px",
+                                        }}
+                                    />
+                                    {t("nothingtoseehere")}
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         );
     } else {
         return <></>;
@@ -231,24 +257,52 @@ function StatusColor({ numAnswered }: { numAnswered: number }) {
     }
 }
 
-function DesktopSortableQuestion({
-    question,
-    section,
+function DesktopSortableSection({
     id,
     index,
-}:
-    | {
-          question: Question;
-          section?: never;
-          id: number;
-          index: number;
-      }
-    | {
-          question?: never;
-          section?: QuestionSection;
-          id: number;
-          index: number;
-      }) {
+    section,
+    deletePrompt,
+}: {
+    id: string;
+    index: number;
+    section: QuestionSection;
+    deletePrompt: (target: string) => void;
+}) {
+    const questions = useQuestions((state) => state.questions);
+
+    const correctQuestions = section.questions.filter(
+        (questionId) => questions[questionId],
+    );
+
+    return (
+        <ul
+            className="desktop-dash-prescout-admin-infodisplay-questionlist"
+            style={{ overflowY: "unset" }}
+        >
+            {correctQuestions.map((questionId, index) => (
+                <DesktopSortableQuestion
+                    key={questionId}
+                    id={Number(questionId)}
+                    question={questions[questionId]}
+                    index={index}
+                    deletePrompt={deletePrompt}
+                />
+            ))}
+        </ul>
+    );
+}
+
+function DesktopSortableQuestion({
+    question,
+    id,
+    index,
+    deletePrompt,
+}: {
+    question: Question;
+    id: number;
+    index: number;
+    deletePrompt: (target: string) => void;
+}) {
     const [element, setElement] = useState<Element | null>(null);
     const handleRef = useRef<HTMLButtonElement | null>(null);
     const { isDragging } = useSortable({
@@ -269,7 +323,7 @@ function DesktopSortableQuestion({
         { id: "r", name: "Slider" },
         { id: "st", name: "Stars" },
         { id: "sc", name: "Single Choice" },
-    ];
+    ] as const;
 
     const [selectedType, setSelectedType] = useState(
         questionTypes.find((type) => type.id === question?.type) ??
@@ -282,6 +336,10 @@ function DesktopSortableQuestion({
         setTitleInput(value);
     };
 
+    const handleTitleInputBlur = () => {
+        updateQuestion(id.toString(), { title: titleInput }, false);
+    };
+
     return (
         <div
             ref={setElement}
@@ -292,12 +350,25 @@ function DesktopSortableQuestion({
                 {isMoreFieldsNeeded(selectedType.id) && (
                     <FaPencilAlt className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton" />
                 )}
-                <FaTrash className="desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton" />
+                <FaTrash
+                    className="desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton"
+                    onClick={() => deletePrompt(String(id))}
+                />
             </div>
             <div className="desktop-dash-prescout-admin-infodisplay-questionlayoutcontainer1">
                 <QuestionIcon type={selectedType.id} />
                 <div className="desktop-dash-prescout-admin-infodisplay-dropdowncontainer">
-                    <Listbox value={selectedType} onChange={setSelectedType}>
+                    <Listbox
+                        value={selectedType}
+                        onChange={(type) => {
+                            setSelectedType(type);
+                            updateQuestion(
+                                id.toString(),
+                                { type: type.id },
+                                false,
+                            );
+                        }}
+                    >
                         <ListboxButton className="desktop-dash-prescout-admin-infodisplay-dropdownbutton">
                             {selectedType.name} ▼
                         </ListboxButton>
@@ -326,6 +397,7 @@ function DesktopSortableQuestion({
                     <input
                         value={titleInput}
                         onChange={handleTitleInputChange}
+                        onBlur={handleTitleInputBlur}
                         maxLength={100}
                         className={
                             titleInput.length === 100

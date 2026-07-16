@@ -88,5 +88,9 @@
     "exampleteamnumber4": "e.g. 16423",
     "exampleteamname": "e.g. Storm",
 
-    "nothingtoseehere": "Nothing to see here..."
+    "nothingtoseehere": "Nothing to see here...",
+    "questionadded": "Question successfully added",
+    "questiondeleted": "Question successfully deleted",
+    "questionupdated": "Question successfully updated",
+    "deletequestionwarning": "If you continue, this question will be deleted, this CANNOT be reverted."
 }
