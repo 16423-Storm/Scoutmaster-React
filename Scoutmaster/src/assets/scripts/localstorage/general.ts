@@ -51,8 +51,8 @@ export function createSkeleton(force: boolean) {
         compkey: "",
         custom: false,
         prescout: {
-            structure: [],
-            sections: [],
+            structure: {},
+            sections: {},
             teams: {},
         },
         match: {},

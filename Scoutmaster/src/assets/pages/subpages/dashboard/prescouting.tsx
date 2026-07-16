@@ -1,5 +1,6 @@
 import { useScreenType, useIsAdmin } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
+import { updateQuestion, useQuestions } from "../../../scripts/localstorage";
 
 import { useState, useRef } from "react";
 import type { ChangeEvent } from "react";
@@ -62,7 +63,7 @@ function DashboardPrescout() {
         (percentageCounts[0] / percentageTotal) * 100,
     ];
 
-    const [items, setItems] = useState(createRange(100));
+    const questions = useQuestions((state) => state.questions);
 
     if (useScreenType() == "desktop") {
         return (
@@ -142,17 +143,47 @@ function DashboardPrescout() {
                                 </p>
                                 <DragDropProvider
                                     onDragEnd={(event) => {
-                                        setItems((items) => move(items, event));
+                                        const sortedQuestions = Object.entries(
+                                            questions,
+                                        )
+                                            .sort(
+                                                (
+                                                    [, questionA],
+                                                    [, questionB],
+                                                ) =>
+                                                    questionA.index -
+                                                    questionB.index,
+                                            )
+                                            .map(([id]) => id);
+
+                                        const changedOrder = move(
+                                            sortedQuestions,
+                                            event,
+                                        );
+
+                                        changedOrder.forEach((id, index) => {
+                                            updateQuestion(id, { index }, true);
+                                        });
                                     }}
                                 >
                                     <ul className="desktop-dash-prescout-admin-infodisplay-questionlist">
-                                        {items.map((id, index) => (
-                                            <DesktopSortableQuestion
-                                                key={id}
-                                                id={id}
-                                                index={index}
-                                            />
-                                        ))}
+                                        {Object.entries(questions)
+                                            .sort(
+                                                (
+                                                    [, questionA],
+                                                    [, questionB],
+                                                ) =>
+                                                    questionA.index -
+                                                    questionB.index,
+                                            )
+                                            .map(([id, question], index) => (
+                                                <DesktopSortableQuestion
+                                                    key={id}
+                                                    id={Number(id)}
+                                                    question={question}
+                                                    index={index}
+                                                />
+                                            ))}
                                     </ul>
                                 </DragDropProvider>
                             </>
@@ -207,7 +238,7 @@ function DesktopSortableQuestion({
     index,
 }:
     | {
-          question?: Question;
+          question: Question;
           section?: never;
           id: number;
           index: number;
@@ -240,9 +271,12 @@ function DesktopSortableQuestion({
         { id: "sc", name: "Single Choice" },
     ];
 
-    const [selectedType, setSelectedType] = useState(questionTypes[0]);
+    const [selectedType, setSelectedType] = useState(
+        questionTypes.find((type) => type.id === question?.type) ??
+            questionTypes[0],
+    );
 
-    const [titleInput, setTitleInput] = useState("");
+    const [titleInput, setTitleInput] = useState(question?.title ?? "");
     const handleTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setTitleInput(value);
@@ -255,7 +289,9 @@ function DesktopSortableQuestion({
             data-shadow={isDragging || undefined}
         >
             <div className="desktop-dashprescout-admin-infodisplay-managecontainer">
-                <FaPencilAlt className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton" />
+                {isMoreFieldsNeeded(selectedType.id) && (
+                    <FaPencilAlt className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton" />
+                )}
                 <FaTrash className="desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton" />
             </div>
             <div className="desktop-dash-prescout-admin-infodisplay-questionlayoutcontainer1">
@@ -282,7 +318,7 @@ function DesktopSortableQuestion({
                     </Listbox>
                     {isMoreFieldsNeeded(selectedType.id) && (
                         <p className="notetext">
-                            More fields required, press edit (pencil) to finish
+                            More fields required, press edit (pencil), to finish
                         </p>
                     )}
                 </div>
@@ -363,8 +399,4 @@ function isMoreFieldsNeeded(type: string) {
         return true;
     }
     return false;
-}
-
-function createRange(length: number) {
-    return Array.from({ length }, (_, i) => i + 1);
 }
