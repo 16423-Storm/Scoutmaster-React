@@ -228,6 +228,8 @@
     background-color: transparent;
     border: none;
     color: var(--clr-surface-a50);
+    font-size: 2rem;
+    padding: 10px 0px;
 }
 
 .desktop-dash-prescout-admin-infodisplay-question-handle:hover,

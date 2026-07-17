@@ -377,6 +377,17 @@ export const useSections = create<{
     setSections: (value) => set({ sections: value }),
 }));
 
+export function updateSectionOrder(
+    sections: Array<{
+        sectionId: string;
+        questions: string[];
+    }>,
+) {
+    sections.forEach((array) => {
+        updateSection(array.sectionId, { questions: array.questions }, false);
+    });
+}
+
 /**
  * Returns an array of all teams being prescouted
  * @returns

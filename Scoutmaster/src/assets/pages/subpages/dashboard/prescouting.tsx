@@ -5,6 +5,7 @@ import {
     updateQuestion,
     useQuestions,
     useSections,
+    updateSectionOrder,
 } from "../../../scripts/localstorage";
 
 import { useState, useRef } from "react";
@@ -39,9 +40,8 @@ import { GiStarsStack } from "react-icons/gi";
 
 import type { Question, QuestionSection } from "../../../scripts/localstorage";
 
-import { DragDropProvider } from "@dnd-kit/react";
+import { DragDropProvider, useDroppable } from "@dnd-kit/react";
 import { useSortable } from "@dnd-kit/react/sortable";
-import { move } from "@dnd-kit/helpers";
 
 function DashboardPrescout() {
     const { t } = useTranslation();
@@ -84,6 +84,8 @@ function DashboardPrescout() {
         setDeleteWarningVisible(false);
         deleteQuestion(questionToDelete, false);
     }
+
+    const sortRef = useRef<HTMLUListElement>(null);
 
     if (useScreenType() == "desktop") {
         return (
@@ -185,10 +187,59 @@ function DashboardPrescout() {
                                     </p>
                                     <DragDropProvider
                                         onDragEnd={() => {
-                                            console.log(sections);
+                                            requestAnimationFrame(() => {
+                                                const sections = [
+                                                    ...(sortRef.current?.querySelectorAll(
+                                                        ":scope > [data-section-id]",
+                                                    ) ?? []),
+                                                ];
+
+                                                const sectionOrder =
+                                                    sections.map((section) => {
+                                                        const questions = [
+                                                            ...section.querySelectorAll(
+                                                                ":scope > [data-question-id]",
+                                                            ),
+                                                        ]
+                                                            .filter(
+                                                                (element) => {
+                                                                    return (
+                                                                        !element.hasAttribute(
+                                                                            "data-dnd-placeholder",
+                                                                        ) &&
+                                                                        !element.hasAttribute(
+                                                                            "inert",
+                                                                        )
+                                                                    );
+                                                                },
+                                                            )
+                                                            .map(
+                                                                (element) =>
+                                                                    element.getAttribute(
+                                                                        "data-question-id",
+                                                                    )!,
+                                                            );
+
+                                                        return {
+                                                            sectionId:
+                                                                section.getAttribute(
+                                                                    "data-section-id",
+                                                                )!,
+                                                            questions,
+                                                        };
+                                                    });
+
+                                                console.log(sectionOrder);
+                                                updateSectionOrder(
+                                                    sectionOrder,
+                                                );
+                                            });
                                         }}
                                     >
-                                        <ul className="desktop-dash-prescout-admin-infodisplay-questionlist">
+                                        <ul
+                                            className="desktop-dash-prescout-admin-infodisplay-questionlist"
+                                            ref={sortRef}
+                                        >
                                             {Object.entries(sections)
                                                 .sort(
                                                     (
@@ -199,7 +250,7 @@ function DashboardPrescout() {
                                                         sectionB.index,
                                                 )
                                                 .map(([id, section], index) => (
-                                                    <DesktopSortableSection
+                                                    <DesktopSection
                                                         key={id}
                                                         id={id}
                                                         deletePrompt={
@@ -257,7 +308,7 @@ function StatusColor({ numAnswered }: { numAnswered: number }) {
     }
 }
 
-function DesktopSortableSection({
+function DesktopSection({
     id,
     index,
     section,
@@ -268,6 +319,12 @@ function DesktopSortableSection({
     section: QuestionSection;
     deletePrompt: (target: string) => void;
 }) {
+    const { isDropTarget, ref } = useDroppable({
+        id: `section-${id}`,
+    });
+
+    console.log(id, isDropTarget);
+
     const questions = useQuestions((state) => state.questions);
 
     const correctQuestions = section.questions.filter(
@@ -275,9 +332,11 @@ function DesktopSortableSection({
     );
 
     return (
-        <ul
+        <div
             className="desktop-dash-prescout-admin-infodisplay-questionlist"
-            style={{ overflowY: "unset" }}
+            style={{ overflowY: "unset", borderWidth: "2px" }}
+            data-section-id={id}
+            ref={ref}
         >
             {correctQuestions.map((questionId, index) => (
                 <DesktopSortableQuestion
@@ -288,7 +347,7 @@ function DesktopSortableSection({
                     deletePrompt={deletePrompt}
                 />
             ))}
-        </ul>
+        </div>
     );
 }
 
@@ -345,6 +404,7 @@ function DesktopSortableQuestion({
             ref={setElement}
             className="desktop-dash-prescout-admin-infodisplay-question"
             data-shadow={isDragging || undefined}
+            data-question-id={id}
         >
             <div className="desktop-dashprescout-admin-infodisplay-managecontainer">
                 {isMoreFieldsNeeded(selectedType.id) && (
