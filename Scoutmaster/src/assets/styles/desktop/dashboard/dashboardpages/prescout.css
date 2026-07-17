@@ -192,6 +192,7 @@
     border-radius: 10px;
     padding: 5px;
     box-sizing: border-box;
+    background-color: var(--clr-surface-a0);
 }
 
 .desktop-dash-prescout-admin-infodisplay-question {
@@ -352,8 +353,8 @@
     align-items: center;
     width: 80%;
     box-sizing: border-box;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 
 .desktop-dash-prescout-admin-infodisplay-questioninputcontainer {
@@ -377,4 +378,26 @@
 
 .desktop-dash-prescout-admin-infodisplay-questioninputcontainer p {
     font-size: 0.75rem;
+}
+
+.desktop-dash-prescout-admin-infodisplay-sectionheader {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 30px;
+}
+
+.desktop-dash-prescout-admin-infodisplay-sectionheader-splitter {
+    position: absolute;
+    left: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    flex-direction: row;
+    gap: 30px;
 }

@@ -5,7 +5,7 @@ import {
     updateQuestion,
     useQuestions,
     useSections,
-    updateSectionOrder,
+    updateSection,
 } from "../../../scripts/localstorage";
 
 import { useState, useRef } from "react";
@@ -40,8 +40,7 @@ import { GiStarsStack } from "react-icons/gi";
 
 import type { Question, QuestionSection } from "../../../scripts/localstorage";
 
-import { DragDropProvider, useDroppable } from "@dnd-kit/react";
-import { useSortable } from "@dnd-kit/react/sortable";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 function DashboardPrescout() {
     const { t } = useTranslation();
@@ -185,83 +184,164 @@ function DashboardPrescout() {
                                     <p className="desktop-dash-comp-infodisplay-title">
                                         Questions:
                                     </p>
-                                    <DragDropProvider
-                                        onDragEnd={() => {
-                                            requestAnimationFrame(() => {
-                                                const sections = [
-                                                    ...(sortRef.current?.querySelectorAll(
-                                                        ":scope > [data-section-id]",
-                                                    ) ?? []),
-                                                ];
+                                    <DragDropContext
+                                        onDragEnd={(result) => {
+                                            const {
+                                                source,
+                                                destination,
+                                                type,
+                                            } = result;
 
-                                                const sectionOrder =
-                                                    sections.map((section) => {
-                                                        const questions = [
-                                                            ...section.querySelectorAll(
-                                                                ":scope > [data-question-id]",
-                                                            ),
-                                                        ]
-                                                            .filter(
-                                                                (element) => {
-                                                                    return (
-                                                                        !element.hasAttribute(
-                                                                            "data-dnd-placeholder",
-                                                                        ) &&
-                                                                        !element.hasAttribute(
-                                                                            "inert",
-                                                                        )
-                                                                    );
-                                                                },
-                                                            )
-                                                            .map(
-                                                                (element) =>
-                                                                    element.getAttribute(
-                                                                        "data-question-id",
-                                                                    )!,
-                                                            );
+                                            if (!destination) return;
 
-                                                        return {
-                                                            sectionId:
-                                                                section.getAttribute(
-                                                                    "data-section-id",
-                                                                )!,
-                                                            questions,
-                                                        };
-                                                    });
+                                            if (type === "SECTION") {
+                                                const sectionIds =
+                                                    Object.entries(sections)
+                                                        .sort(
+                                                            ([, a], [, b]) =>
+                                                                a.index -
+                                                                b.index,
+                                                        )
+                                                        .map(([id]) => id);
 
-                                                console.log(sectionOrder);
-                                                updateSectionOrder(
-                                                    sectionOrder,
+                                                const reordered =
+                                                    Array.from(sectionIds);
+
+                                                const [movedSection] =
+                                                    reordered.splice(
+                                                        source.index,
+                                                        1,
+                                                    );
+
+                                                reordered.splice(
+                                                    destination.index,
+                                                    0,
+                                                    movedSection,
                                                 );
-                                            });
+
+                                                reordered.forEach(
+                                                    (id, index) => {
+                                                        updateSection(
+                                                            id,
+                                                            {
+                                                                index,
+                                                            },
+                                                            false,
+                                                        );
+                                                    },
+                                                );
+
+                                                return;
+                                            }
+
+                                            const sourceSectionId =
+                                                source.droppableId.replace(
+                                                    "section-",
+                                                    "",
+                                                );
+
+                                            const destinationSectionId =
+                                                destination.droppableId.replace(
+                                                    "section-",
+                                                    "",
+                                                );
+
+                                            const currentSections =
+                                                useSections.getState().sections;
+
+                                            const sourceQuestions = [
+                                                ...currentSections[
+                                                    sourceSectionId
+                                                ].questions,
+                                            ];
+
+                                            const destinationQuestions =
+                                                sourceSectionId ===
+                                                destinationSectionId
+                                                    ? sourceQuestions
+                                                    : [
+                                                          ...currentSections[
+                                                              destinationSectionId
+                                                          ].questions,
+                                                      ];
+
+                                            const [movedQuestion] =
+                                                sourceQuestions.splice(
+                                                    source.index,
+                                                    1,
+                                                );
+
+                                            destinationQuestions.splice(
+                                                destination.index,
+                                                0,
+                                                movedQuestion,
+                                            );
+
+                                            updateSection(
+                                                sourceSectionId,
+                                                {
+                                                    questions: sourceQuestions,
+                                                },
+                                                false,
+                                            );
+
+                                            if (
+                                                sourceSectionId !==
+                                                destinationSectionId
+                                            ) {
+                                                updateSection(
+                                                    destinationSectionId,
+                                                    {
+                                                        questions:
+                                                            destinationQuestions,
+                                                    },
+                                                    false,
+                                                );
+                                            }
                                         }}
                                     >
-                                        <ul
-                                            className="desktop-dash-prescout-admin-infodisplay-questionlist"
-                                            ref={sortRef}
+                                        <Droppable
+                                            droppableId="sections"
+                                            type="SECTION"
                                         >
-                                            {Object.entries(sections)
-                                                .sort(
-                                                    (
-                                                        [, sectionA],
-                                                        [, sectionB],
-                                                    ) =>
-                                                        sectionA.index -
-                                                        sectionB.index,
-                                                )
-                                                .map(([id, section], index) => (
-                                                    <DesktopSection
-                                                        key={id}
-                                                        id={id}
-                                                        deletePrompt={
-                                                            promptDelete
-                                                        }
-                                                        section={section}
-                                                        index={index}
-                                                    />
-                                                ))}
-                                        </ul>
-                                    </DragDropProvider>
+                                            {(provided) => (
+                                                <ul
+                                                    ref={provided.innerRef}
+                                                    {...provided.droppableProps}
+                                                    className="desktop-dash-prescout-admin-infodisplay-questionlist"
+                                                >
+                                                    {Object.entries(sections)
+                                                        .sort(
+                                                            ([, a], [, b]) =>
+                                                                a.index -
+                                                                b.index,
+                                                        )
+                                                        .map(
+                                                            (
+                                                                [id, section],
+                                                                index,
+                                                            ) => (
+                                                                <DesktopSection
+                                                                    key={id}
+                                                                    id={id}
+                                                                    deletePrompt={
+                                                                        promptDelete
+                                                                    }
+                                                                    section={
+                                                                        section
+                                                                    }
+                                                                    index={
+                                                                        index
+                                                                    }
+                                                                />
+                                                            ),
+                                                        )}
+
+                                                    {provided.placeholder}
+                                                </ul>
+                                            )}
+                                        </Droppable>
+                                    </DragDropContext>
                                 </>
                             ) : (
                                 <p
@@ -319,12 +399,6 @@ function DesktopSection({
     section: QuestionSection;
     deletePrompt: (target: string) => void;
 }) {
-    const { isDropTarget, ref } = useDroppable({
-        id: `section-${id}`,
-    });
-
-    console.log(id, isDropTarget);
-
     const questions = useQuestions((state) => state.questions);
 
     const correctQuestions = section.questions.filter(
@@ -332,22 +406,76 @@ function DesktopSection({
     );
 
     return (
-        <div
-            className="desktop-dash-prescout-admin-infodisplay-questionlist"
-            style={{ overflowY: "unset", borderWidth: "2px" }}
-            data-section-id={id}
-            ref={ref}
-        >
-            {correctQuestions.map((questionId, index) => (
-                <DesktopSortableQuestion
-                    key={questionId}
-                    id={Number(questionId)}
-                    question={questions[questionId]}
-                    index={index}
-                    deletePrompt={deletePrompt}
-                />
-            ))}
-        </div>
+        <Draggable draggableId={`section-${id}`} index={index}>
+            {(provided, snapshot) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    data-shadow={snapshot.isDragging || undefined}
+                    style={{
+                        ...provided.draggableProps.style,
+                        width: snapshot.isDragging
+                            ? (
+                                  provided.draggableProps
+                                      .style as React.CSSProperties
+                              )?.width
+                            : "100%",
+                    }}
+                >
+                    <Droppable droppableId={`section-${id}`} type="QUESTION">
+                        {(dropProvided) => (
+                            <div
+                                className="desktop-dash-prescout-admin-infodisplay-questionlist"
+                                style={{
+                                    overflowY: "unset",
+                                    borderWidth: "2px",
+                                    height: "unset",
+                                }}
+                                ref={dropProvided.innerRef}
+                                {...dropProvided.droppableProps}
+                            >
+                                <div className="desktop-dash-prescout-admin-infodisplay-sectionheader">
+                                    <div className="desktop-dash-prescout-admin-infodisplay-sectionheader-splitter">
+                                        <FaPencilAlt className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton" />
+                                        <FaTrash className="desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton" />
+                                    </div>
+                                    {section.headersize === 1 ? (
+                                        <h1>{section.title}</h1>
+                                    ) : section.headersize === 2 ? (
+                                        <h2>{section.title}</h2>
+                                    ) : section.headersize === 3 ? (
+                                        <h3>{section.title}</h3>
+                                    ) : null}
+                                    <div
+                                        {...provided.dragHandleProps}
+                                        className="desktop-dash-prescout-admin-infodisplay-question-handle"
+                                        style={{
+                                            position: "absolute",
+                                            right: "30px",
+                                            height: "unset",
+                                        }}
+                                    >
+                                        <MdDragIndicator />
+                                    </div>
+                                </div>
+
+                                {correctQuestions.map((questionId, index) => (
+                                    <DesktopSortableQuestion
+                                        key={questionId}
+                                        id={Number(questionId)}
+                                        question={questions[questionId]}
+                                        index={index}
+                                        deletePrompt={deletePrompt}
+                                    />
+                                ))}
+
+                                {dropProvided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </div>
+            )}
+        </Draggable>
     );
 }
 
@@ -362,15 +490,6 @@ function DesktopSortableQuestion({
     index: number;
     deletePrompt: (target: string) => void;
 }) {
-    const [element, setElement] = useState<Element | null>(null);
-    const handleRef = useRef<HTMLButtonElement | null>(null);
-    const { isDragging } = useSortable({
-        id,
-        index,
-        element,
-        handle: handleRef,
-    });
-
     const questionTypes = [
         { id: "ln", name: "Long Note" },
         { id: "sn", name: "Short Note" },
@@ -400,89 +519,100 @@ function DesktopSortableQuestion({
     };
 
     return (
-        <div
-            ref={setElement}
-            className="desktop-dash-prescout-admin-infodisplay-question"
-            data-shadow={isDragging || undefined}
-            data-question-id={id}
-        >
-            <div className="desktop-dashprescout-admin-infodisplay-managecontainer">
-                {isMoreFieldsNeeded(selectedType.id) && (
-                    <FaPencilAlt className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton" />
-                )}
-                <FaTrash
-                    className="desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton"
-                    onClick={() => deletePrompt(String(id))}
-                />
-            </div>
-            <div className="desktop-dash-prescout-admin-infodisplay-questionlayoutcontainer1">
-                <QuestionIcon type={selectedType.id} />
-                <div className="desktop-dash-prescout-admin-infodisplay-dropdowncontainer">
-                    <Listbox
-                        value={selectedType}
-                        onChange={(type) => {
-                            setSelectedType(type);
-                            updateQuestion(
-                                id.toString(),
-                                { type: type.id },
-                                false,
-                            );
-                        }}
-                    >
-                        <ListboxButton className="desktop-dash-prescout-admin-infodisplay-dropdownbutton">
-                            {selectedType.name} ▼
-                        </ListboxButton>
-                        <ListboxOptions
-                            anchor="bottom"
-                            className="desktop-dash-prescout-admin-infodisplay-dropdownbody"
-                        >
-                            {questionTypes.map((question) => (
-                                <ListboxOption
-                                    key={question.id}
-                                    value={question}
-                                    className="desktop-dash-prescout-admin-infodisplay-dropdownoption"
+        <Draggable draggableId={id.toString()} index={index}>
+            {(provided, snapshot) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    className="desktop-dash-prescout-admin-infodisplay-question"
+                    data-shadow={snapshot.isDragging || undefined}
+                >
+                    <div className="desktop-dashprescout-admin-infodisplay-managecontainer">
+                        {isMoreFieldsNeeded(selectedType.id) && (
+                            <FaPencilAlt className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton" />
+                        )}
+                        <FaTrash
+                            className="desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton"
+                            onClick={() => deletePrompt(String(id))}
+                        />
+                    </div>
+
+                    <div className="desktop-dash-prescout-admin-infodisplay-questionlayoutcontainer1">
+                        <QuestionIcon type={selectedType.id} />
+
+                        <div className="desktop-dash-prescout-admin-infodisplay-dropdowncontainer">
+                            <Listbox
+                                value={selectedType}
+                                onChange={(type) => {
+                                    setSelectedType(type);
+                                    updateQuestion(
+                                        id.toString(),
+                                        { type: type.id },
+                                        false,
+                                    );
+                                }}
+                            >
+                                <ListboxButton className="desktop-dash-prescout-admin-infodisplay-dropdownbutton">
+                                    {selectedType.name} ▼
+                                </ListboxButton>
+
+                                <ListboxOptions
+                                    anchor="bottom"
+                                    className="desktop-dash-prescout-admin-infodisplay-dropdownbody"
                                 >
-                                    {question.name}
-                                </ListboxOption>
-                            ))}
-                        </ListboxOptions>
-                    </Listbox>
-                    {isMoreFieldsNeeded(selectedType.id) && (
-                        <p className="notetext">
-                            More fields required, press edit (pencil), to finish
-                        </p>
-                    )}
-                </div>
-                <div className="desktop-dash-prescout-admin-infodisplay-questioninputcontainer">
-                    <input
-                        value={titleInput}
-                        onChange={handleTitleInputChange}
-                        onBlur={handleTitleInputBlur}
-                        maxLength={100}
-                        className={
-                            titleInput.length === 100
-                                ? "desktop-popupinput-maxedinput"
-                                : undefined
-                        }
-                    />
-                    <p
-                        style={
-                            titleInput.length === 100
-                                ? { color: "red" }
-                                : undefined
-                        }
+                                    {questionTypes.map((question) => (
+                                        <ListboxOption
+                                            key={question.id}
+                                            value={question}
+                                            className="desktop-dash-prescout-admin-infodisplay-dropdownoption"
+                                        >
+                                            {question.name}
+                                        </ListboxOption>
+                                    ))}
+                                </ListboxOptions>
+                            </Listbox>
+
+                            {isMoreFieldsNeeded(selectedType.id) && (
+                                <p className="notetext">
+                                    More fields required, press edit (pencil),
+                                    to finish
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="desktop-dash-prescout-admin-infodisplay-questioninputcontainer">
+                            <input
+                                value={titleInput}
+                                onChange={handleTitleInputChange}
+                                onBlur={handleTitleInputBlur}
+                                maxLength={100}
+                                className={
+                                    titleInput.length === 100
+                                        ? "desktop-popupinput-maxedinput"
+                                        : undefined
+                                }
+                            />
+                            <p
+                                style={
+                                    titleInput.length === 100
+                                        ? { color: "red" }
+                                        : undefined
+                                }
+                            >
+                                {titleInput.length}/100
+                            </p>
+                        </div>
+                    </div>
+
+                    <button
+                        {...(provided.dragHandleProps ?? {})}
+                        className="desktop-dash-prescout-admin-infodisplay-question-handle"
                     >
-                        {titleInput.length}/100
-                    </p>
+                        <MdDragIndicator />
+                    </button>
                 </div>
-            </div>
-            <button
-                ref={handleRef}
-                className="desktop-dash-prescout-admin-infodisplay-question-handle"
-            >
-                <MdDragIndicator />
-            </button>
-        </div>
+            )}
+        </Draggable>
     );
 }
 
