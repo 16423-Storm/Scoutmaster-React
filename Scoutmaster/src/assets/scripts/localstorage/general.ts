@@ -40,19 +40,37 @@ export function resetAllStates() {
  * @param {boolean} force - Force overwrite of existing localstorage or not
  */
 export function createSkeleton(force: boolean) {
-    if (localStorage.length != 0) {
-        if (force) {
-            clearLocalStorage();
-        } else {
-            return;
-        }
+    const existing = localStorage.getItem("data");
+
+    if (existing && !force) {
+        return;
     }
+
+    let setPrescout = {
+        structure: {},
+        sections: {
+            "0": {
+                title: "Section 1",
+                headersize: 1,
+                questions: [],
+                index: 0,
+            },
+        },
+    };
+
+    if (existing) {
+        const parsed = JSON.parse(existing);
+
+        setPrescout.structure = parsed.prescout.structure;
+        setPrescout.sections = parsed.prescout.sections;
+    }
+
     const skeleton: LocalStorageData = {
         compkey: "",
         custom: false,
         prescout: {
-            structure: {},
-            sections: {},
+            structure: setPrescout.structure,
+            sections: setPrescout.sections,
             teams: {},
         },
         match: {},

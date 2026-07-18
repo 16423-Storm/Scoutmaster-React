@@ -21,13 +21,12 @@ import data from "./comps.json";
 import { FaRegSadTear, FaTrash } from "react-icons/fa";
 import { IoAddCircleOutline } from "react-icons/io5";
 
+import { WarningModal } from "../../components/popups";
+
 import {
-    WarningModal,
     AddTeamModal,
     AddMatchModal,
-} from "../../components/popups";
-
-import { CompetitionQuestion } from "./prescout/competitionquestion";
+} from "../../components/popups/CompetitionModals";
 
 function DashboardCompetition() {
     const { t } = useTranslation();

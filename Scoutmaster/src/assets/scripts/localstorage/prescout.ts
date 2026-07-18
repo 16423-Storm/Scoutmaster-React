@@ -38,7 +38,7 @@ export type Question =
 
 export type QuestionSection = {
     title: string;
-    headersize: 1 | 2 | 3;
+    headersize: number;
     questions: string[];
     index: number;
 };
@@ -59,16 +59,18 @@ export function getNumOfQuestions() {
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
         errorToast(i18n.t("dataloaderror"), 3000);
-        return {};
+        return 0;
     }
 
     try {
-        const questionsAmount = JSON.parse(data).prescout.structure.length;
+        const questionsAmount = Object.keys(
+            JSON.parse(data).prescout.structure,
+        ).length;
         return questionsAmount;
     } catch (e) {
         console.error(`ERROR: Could not get amount of questions: ` + e);
         errorToast(i18n.t("dataloaderror"), 3000);
-        return {};
+        return 0;
     }
 }
 
@@ -81,12 +83,11 @@ export function getSections() {
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
         errorToast(i18n.t("dataloaderror"), 3000);
-        return [];
+        return {};
     }
 
     try {
-        const sections = JSON.parse(data).prescout
-            .sections as QuestionSection[];
+        const sections = JSON.parse(data).prescout.sections as Sections;
         return sections;
     } catch (e) {
         console.error(`ERROR: Could not get sections: ` + e);
@@ -122,9 +123,12 @@ export function getQuestions() {
  * @param {Question} question - Question
  */
 export function addQuestion(
-    question: Question,
-    section: string,
-    custom: boolean,
+    custom?: boolean,
+    question: Question = {
+        type: "ln",
+        title: "New Question",
+    },
+    section: string = Object.keys(getSections())[0],
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -140,6 +144,11 @@ export function addQuestion(
         let id = 0;
         while (currentIds.includes(id)) {
             id++;
+        }
+
+        if (!parsed.prescout.sections[section]) {
+            console.error("ERROR: Section does not exist");
+            return;
         }
 
         parsed.prescout.structure[id.toString()] = question;
@@ -176,6 +185,7 @@ export function deleteQuestion(id: string, custom: boolean) {
         const parsed = JSON.parse(data);
         if (!parsed.prescout.structure[id]) {
             console.warn("WARNING: Question  does not exist");
+            return;
         }
         delete parsed.prescout.structure[id];
 
@@ -266,6 +276,17 @@ export function addSection(section: QuestionSection, custom: boolean) {
     try {
         const parsed = JSON.parse(data);
 
+        const currentIndexes = Object.values(
+            parsed.prescout.sections as Sections,
+        ).map((section: QuestionSection) => section.index);
+
+        let index = 0;
+        while (currentIndexes.includes(index)) {
+            index++;
+        }
+
+        section.index = index;
+
         const currentIds = Object.keys(parsed.prescout.sections).map(Number);
         let id = 0;
         while (currentIds.includes(id)) {
@@ -290,9 +311,14 @@ export function addSection(section: QuestionSection, custom: boolean) {
 /**
  * Delete section of choice
  * @param {string} id - Id of section to be deleted
+ * @param {boolean} deleteQuestions - Whether to delete questions in section, or assign them to section with previous index OR the next index if previous does not exist
  * @param {boolean} custom - whether to set competition to custom or not
  */
-export function deleteSection(id: string, custom: boolean) {
+export function deleteSection(
+    id: string,
+    deleteQuestions: boolean,
+    custom: boolean,
+) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -304,6 +330,47 @@ export function deleteSection(id: string, custom: boolean) {
         const parsed = JSON.parse(data);
         if (!parsed.prescout.sections[id]) {
             console.warn("WARNING: Section  does not exist");
+            return;
+        }
+        if (Object.keys(parsed.prescout.sections).length === 1) {
+            console.error("ERROR: At least one section MUST remain");
+            return;
+        }
+        if (deleteQuestions) {
+            parsed.prescout.sections[id].questions.forEach(
+                (question: string) => {
+                    delete parsed.prescout.structure[question];
+                },
+            );
+        } else {
+            const sectionIndex = parsed.prescout.sections[id].index;
+
+            const previousSection = Object.entries(
+                parsed.prescout.sections,
+            ).find(
+                ([sectionId, section]) =>
+                    sectionId !== id &&
+                    (section as QuestionSection).index === sectionIndex - 1,
+            )?.[0];
+
+            const nextSection = Object.entries(parsed.prescout.sections).find(
+                ([sectionId, section]) =>
+                    sectionId !== id &&
+                    (section as QuestionSection).index === sectionIndex + 1,
+            )?.[0];
+
+            if (previousSection) {
+                parsed.prescout.sections[previousSection].questions.push(
+                    ...parsed.prescout.sections[id].questions,
+                );
+            } else if (nextSection) {
+                parsed.prescout.sections[nextSection].questions.unshift(
+                    ...parsed.prescout.sections[id].questions,
+                );
+            } else {
+                console.error("ERROR: No section found to move questions to");
+                return;
+            }
         }
         delete parsed.prescout.sections[id];
         Object.entries(parsed.prescout.sections)

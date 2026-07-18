@@ -207,3 +207,10 @@ html {
     color: var(--clr-surface-a50);
     text-align: center;
 }
+
+.inactive {
+    transform: none;
+    pointer-events: none;
+    color: var(--clr-surface-a50);
+    opacity: 0.5;
+}

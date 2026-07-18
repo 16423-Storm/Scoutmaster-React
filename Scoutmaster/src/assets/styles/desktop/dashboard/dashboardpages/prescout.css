@@ -401,3 +401,41 @@
     flex-direction: row;
     gap: 30px;
 }
+
+.desktop-dash-comp-infodisplay-admin-controlbuttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 4px 10px;
+    box-sizing: border-box;
+}
+
+.desktop-dash-comp-infodisplay-admin-controlbuttons > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    background-color: var(--clr-surface-a10);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 3px;
+    width: 30%;
+    transition: transform 0.1s ease-in-out;
+}
+
+.desktop-dash-comp-infodisplay-admin-controlbuttons > button:hover {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+}
+
+.desktop-dash-comp-infodisplay-admin-controlbuttons > button:active {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+    transform: scale(0.95);
+}
+
+.desktop-dash-comp-infodisplay-admin-controlbuttons > p {
+    margin: 0;
+}

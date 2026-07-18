@@ -6,6 +6,8 @@ import {
     useQuestions,
     useSections,
     updateSection,
+    deleteSection,
+    addQuestion,
 } from "../../../scripts/localstorage";
 
 import { useState, useRef } from "react";
@@ -20,7 +22,7 @@ import {
     ListboxOption,
     ListboxOptions,
 } from "@headlessui/react";
-import { WarningModal } from "../../components/popups";
+import { WarningModal, WarningModal3Button } from "../../components/popups";
 
 import Flag from "../../components/flag";
 
@@ -41,6 +43,8 @@ import { GiStarsStack } from "react-icons/gi";
 import type { Question, QuestionSection } from "../../../scripts/localstorage";
 
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+
+import { AddSectionModal } from "../../components/popups/PrescoutModals";
 
 function DashboardPrescout() {
     const { t } = useTranslation();
@@ -84,7 +88,22 @@ function DashboardPrescout() {
         deleteQuestion(questionToDelete, false);
     }
 
-    const sortRef = useRef<HTMLUListElement>(null);
+    const [deleteSectionWarningVisible, setDeleteSectionWarningVisible] =
+        useState(false);
+
+    const [sectionToDelete, setSectionToDelete] = useState("");
+
+    function promptSectionDelete(target: string) {
+        setDeleteSectionWarningVisible(true);
+        setSectionToDelete(target);
+    }
+
+    function handleSectionDelete(deleteQuestions: boolean = false) {
+        setDeleteSectionWarningVisible(false);
+        deleteSection(sectionToDelete, deleteQuestions, false);
+    }
+
+    const [addSectionVisible, setAddSectionVisible] = useState(false);
 
     if (useScreenType() == "desktop") {
         return (
@@ -97,6 +116,24 @@ function DashboardPrescout() {
                         onContinue={handleDelete}
                     />
                 )}
+                {deleteSectionWarningVisible && (
+                    <WarningModal3Button
+                        title={t("warning!")}
+                        message={t("deletequestionwarning")}
+                        onMiddleMessage="Continue & Delete Questions"
+                        onCancel={() => setDeleteSectionWarningVisible(false)}
+                        onMiddle={() => handleSectionDelete(true)}
+                        onContinue={() => handleSectionDelete(false)}
+                    />
+                )}
+
+                {addSectionVisible && (
+                    <AddSectionModal
+                        onContinue={() => setAddSectionVisible(false)}
+                        onCancel={() => setAddSectionVisible(false)}
+                    />
+                )}
+
                 <div className="desktop-dash-maincontainer">
                     <div className="desktop-dash-prescout-divider">
                         <div className="desktop-dash-prescout-infodisplay">
@@ -181,9 +218,21 @@ function DashboardPrescout() {
                         >
                             {useIsAdmin() ? (
                                 <>
-                                    <p className="desktop-dash-comp-infodisplay-title">
-                                        Questions:
-                                    </p>
+                                    <div className="desktop-dash-comp-infodisplay-admin-controlbuttons">
+                                        <button
+                                            onClick={() =>
+                                                setAddSectionVisible(true)
+                                            }
+                                        >
+                                            + Add Section
+                                        </button>
+                                        <p className="desktop-dash-comp-infodisplay-title">
+                                            Questions:
+                                        </p>
+                                        <button onClick={() => addQuestion()}>
+                                            + Add Question
+                                        </button>
+                                    </div>
                                     <DragDropContext
                                         onDragEnd={(result) => {
                                             const {
@@ -333,6 +382,14 @@ function DashboardPrescout() {
                                                                     index={
                                                                         index
                                                                     }
+                                                                    sectionDeletePrompt={
+                                                                        promptSectionDelete
+                                                                    }
+                                                                    numOfSections={
+                                                                        Object.keys(
+                                                                            sections,
+                                                                        ).length
+                                                                    }
                                                                 />
                                                             ),
                                                         )}
@@ -393,11 +450,15 @@ function DesktopSection({
     index,
     section,
     deletePrompt,
+    sectionDeletePrompt,
+    numOfSections,
 }: {
     id: string;
     index: number;
     section: QuestionSection;
     deletePrompt: (target: string) => void;
+    sectionDeletePrompt: (target: string) => void;
+    numOfSections: number;
 }) {
     const questions = useQuestions((state) => state.questions);
 
@@ -437,7 +498,16 @@ function DesktopSection({
                                 <div className="desktop-dash-prescout-admin-infodisplay-sectionheader">
                                     <div className="desktop-dash-prescout-admin-infodisplay-sectionheader-splitter">
                                         <FaPencilAlt className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton" />
-                                        <FaTrash className="desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton" />
+                                        <FaTrash
+                                            className={
+                                                numOfSections > 1
+                                                    ? "desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton"
+                                                    : "desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton inactive"
+                                            }
+                                            onClick={() =>
+                                                sectionDeletePrompt(id)
+                                            }
+                                        />
                                     </div>
                                     {section.headersize === 1 ? (
                                         <h1>{section.title}</h1>
@@ -448,7 +518,11 @@ function DesktopSection({
                                     ) : null}
                                     <div
                                         {...provided.dragHandleProps}
-                                        className="desktop-dash-prescout-admin-infodisplay-question-handle"
+                                        className={
+                                            numOfSections > 1
+                                                ? "desktop-dash-prescout-admin-infodisplay-question-handle"
+                                                : "desktop-dash-prescout-admin-infodisplay-question-handle inactive"
+                                        }
                                         style={{
                                             position: "absolute",
                                             right: "30px",
