@@ -14,7 +14,11 @@ import {
     ListboxOptions,
 } from "@headlessui/react";
 
-import { addSection } from "../../../scripts/localstorage";
+import {
+    addSection,
+    updateSection,
+    getSection,
+} from "../../../scripts/localstorage";
 
 /**
  * @param onCancel - What occurs when user presses cancel
@@ -77,22 +81,22 @@ export function AddSectionModal({
                                 <input
                                     value={inputTitle}
                                     placeholder="Section Title:"
-                                    maxLength={90}
+                                    maxLength={50}
                                     onChange={handleTitleInputChange}
                                     className={
-                                        inputTitle.length === 90
+                                        inputTitle.length === 50
                                             ? "desktop-popupinput-maxedinput"
                                             : undefined
                                     }
                                 />
                                 <div
                                     style={
-                                        inputTitle.length === 90
+                                        inputTitle.length === 50
                                             ? { color: "red" }
                                             : undefined
                                     }
                                 >
-                                    {inputTitle.length}/90
+                                    {inputTitle.length}/50
                                 </div>
                             </div>
                             <div className="desktop-popupinput-childcontainer">
@@ -145,51 +149,132 @@ export function AddSectionModal({
             </>
         );
     } else {
+        return <></>;
+    }
+}
+
+/**
+ * @param onCancel - What occurs when user presses cancel
+ * @param onContinue - What occurs when user presses continue, NOTE: This function handles the logic to edit the section on its own, onContinue is just for UI purposes
+ * @returns The popup for editing a section
+ */
+export function EditSectionModal({
+    onCancel,
+    onContinue,
+    sectionId,
+}: {
+    sectionId: string;
+    onCancel: () => void;
+    onContinue: () => void;
+}) {
+    const section = getSection(sectionId);
+    const { t } = useTranslation();
+
+    const [inputTitle, setInputTitle] = useState(section.title);
+
+    const handleTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setInputTitle(value);
+    };
+
+    function handleContinue() {
+        updateSection(
+            sectionId,
+            {
+                title: inputTitle,
+                headersize: selectedHeaderSize.id,
+            },
+            false,
+        );
+        onContinue();
+    }
+
+    const headerSizes = [
+        { id: 1, name: "h1" },
+        { id: 2, name: "h2" },
+        { id: 3, name: "h3" },
+    ];
+
+    const [selectedHeaderSize, setSelectedHeaderSize] = useState(
+        headerSizes[section.headersize],
+    );
+
+    if (useScreenType() == "desktop") {
         return (
             <>
                 <Blocker499 />
                 <div
-                    className="phone-warningpopup"
+                    className="desktop-warningpopup"
                     id="avoidwarningpopupheight"
-                    style={{ height: useIsAkwardHeight() ? "40vh" : "30vh" }}
+                    style={{ height: useIsAkwardHeight() ? "40vh" : "25vh" }}
                 >
-                    <p className="phone-warningpopup-title">{t("addteam")}</p>
-                    <div className="phone-popupinput-highlightedbody">
-                        <div className="phone-popupinput-parentcontainer">
-                            <div className="phone-popupinput-childcontainer">
+                    <p className="desktop-warningpopup-title">Edit Section</p>
+                    <div className="desktop-popupinput-highlightedbody">
+                        <div className="desktop-popupinput-parentcontainer">
+                            <div className="desktop-popupinput-childcontainer">
                                 <p>Section Title:</p>
                                 <input
                                     value={inputTitle}
-                                    placeholder="Section Title"
-                                    maxLength={90}
+                                    placeholder="Section Title:"
+                                    maxLength={50}
                                     onChange={handleTitleInputChange}
                                     className={
-                                        inputTitle.length === 90
-                                            ? "phone-popupinput-maxedinput"
+                                        inputTitle.length === 50
+                                            ? "desktop-popupinput-maxedinput"
                                             : undefined
                                     }
                                 />
                                 <div
                                     style={
-                                        inputTitle.length === 90
+                                        inputTitle.length === 50
                                             ? { color: "red" }
                                             : undefined
                                     }
                                 >
-                                    {inputTitle.length}/90
+                                    {inputTitle.length}/50
                                 </div>
+                            </div>
+                            <div className="desktop-popupinput-childcontainer">
+                                <p>Header Size:</p>
+                                <Listbox
+                                    value={selectedHeaderSize}
+                                    onChange={setSelectedHeaderSize}
+                                >
+                                    <ListboxButton
+                                        className={
+                                            "desktop-popup-prescoutdropdownbutton"
+                                        }
+                                    >
+                                        {selectedHeaderSize.name} ▼
+                                    </ListboxButton>
+                                    <ListboxOptions
+                                        anchor="bottom"
+                                        className="desktop-popup-prescoutdropdown"
+                                    >
+                                        {headerSizes.map(
+                                            (selectedHeaderSize) => (
+                                                <ListboxOption
+                                                    key={selectedHeaderSize.id}
+                                                    value={selectedHeaderSize}
+                                                >
+                                                    {selectedHeaderSize.name}
+                                                </ListboxOption>
+                                            ),
+                                        )}
+                                    </ListboxOptions>
+                                </Listbox>
                             </div>
                         </div>
                     </div>
                     <div>
                         <button
-                            className="phone-warningpopup-cancel"
+                            className="desktop-warningpopup-cancel"
                             onClick={onCancel}
                         >
                             {t("cancel")}
                         </button>
                         <button
-                            className="phone-warningpopup-continue"
+                            className="desktop-warningpopup-continue"
                             onClick={handleContinue}
                         >
                             {t("continue")}
@@ -198,5 +283,7 @@ export function AddSectionModal({
                 </div>
             </>
         );
+    } else {
+        return <></>;
     }
 }

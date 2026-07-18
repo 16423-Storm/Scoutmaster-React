@@ -44,7 +44,10 @@ import type { Question, QuestionSection } from "../../../scripts/localstorage";
 
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
-import { AddSectionModal } from "../../components/popups/PrescoutModals";
+import {
+    AddSectionModal,
+    EditSectionModal,
+} from "../../components/popups/PrescoutModals";
 
 function DashboardPrescout() {
     const { t } = useTranslation();
@@ -94,8 +97,8 @@ function DashboardPrescout() {
     const [sectionToDelete, setSectionToDelete] = useState("");
 
     function promptSectionDelete(target: string) {
-        setDeleteSectionWarningVisible(true);
         setSectionToDelete(target);
+        setDeleteSectionWarningVisible(true);
     }
 
     function handleSectionDelete(deleteQuestions: boolean = false) {
@@ -104,6 +107,14 @@ function DashboardPrescout() {
     }
 
     const [addSectionVisible, setAddSectionVisible] = useState(false);
+
+    const [editSectionVisible, setEditSectionVisible] = useState(false);
+    const [sectionToEdit, setSectionToEdit] = useState("0");
+
+    function promptSectionEdit(target: string) {
+        setSectionToEdit(target);
+        setEditSectionVisible(true);
+    }
 
     if (useScreenType() == "desktop") {
         return (
@@ -116,6 +127,7 @@ function DashboardPrescout() {
                         onContinue={handleDelete}
                     />
                 )}
+
                 {deleteSectionWarningVisible && (
                     <WarningModal3Button
                         title={t("warning!")}
@@ -131,6 +143,14 @@ function DashboardPrescout() {
                     <AddSectionModal
                         onContinue={() => setAddSectionVisible(false)}
                         onCancel={() => setAddSectionVisible(false)}
+                    />
+                )}
+
+                {editSectionVisible && (
+                    <EditSectionModal
+                        onContinue={() => setEditSectionVisible(false)}
+                        onCancel={() => setEditSectionVisible(false)}
+                        sectionId={sectionToEdit}
                     />
                 )}
 
@@ -385,6 +405,9 @@ function DashboardPrescout() {
                                                                     sectionDeletePrompt={
                                                                         promptSectionDelete
                                                                     }
+                                                                    editPrompt={
+                                                                        promptSectionEdit
+                                                                    }
                                                                     numOfSections={
                                                                         Object.keys(
                                                                             sections,
@@ -451,6 +474,7 @@ function DesktopSection({
     section,
     deletePrompt,
     sectionDeletePrompt,
+    editPrompt,
     numOfSections,
 }: {
     id: string;
@@ -458,6 +482,7 @@ function DesktopSection({
     section: QuestionSection;
     deletePrompt: (target: string) => void;
     sectionDeletePrompt: (target: string) => void;
+    editPrompt: (target: string) => void;
     numOfSections: number;
 }) {
     const questions = useQuestions((state) => state.questions);
@@ -497,7 +522,10 @@ function DesktopSection({
                             >
                                 <div className="desktop-dash-prescout-admin-infodisplay-sectionheader">
                                     <div className="desktop-dash-prescout-admin-infodisplay-sectionheader-splitter">
-                                        <FaPencilAlt className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton" />
+                                        <FaPencilAlt
+                                            className="desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton"
+                                            onClick={() => editPrompt(id)}
+                                        />
                                         <FaTrash
                                             className={
                                                 numOfSections > 1

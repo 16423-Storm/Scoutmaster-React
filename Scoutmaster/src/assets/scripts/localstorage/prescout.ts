@@ -97,6 +97,30 @@ export function getSections() {
 }
 
 /**
+ * Returns data of specific section based on id
+ * @returns {QuestionSection} Section
+ */
+export function getSection(id: string) {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return {} as QuestionSection;
+    }
+
+    try {
+        const section = JSON.parse(data).prescout.sections[
+            id
+        ] as QuestionSection;
+        return section;
+    } catch (e) {
+        console.error(`ERROR: Could not get section: ` + e);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return {} as QuestionSection;
+    }
+}
+
+/**
  * Returns all current questions in prescouting data
  * @returns {Question[]} Sections
  */
