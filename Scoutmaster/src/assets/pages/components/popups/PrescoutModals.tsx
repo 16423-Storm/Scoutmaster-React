@@ -451,7 +451,7 @@ export function EditQuestionModal({
                 <div
                     className="desktop-warningpopup"
                     id="avoidwarningpopupheight"
-                    style={{ height: useIsAkwardHeight() ? "40vh" : "30vh" }}
+                    style={{ height: useIsAkwardHeight() ? "60vh" : "45vh" }}
                 >
                     <p className="desktop-warningpopup-title">Edit Question</p>
                     <div className="desktop-popupinput-highlightedbody">
