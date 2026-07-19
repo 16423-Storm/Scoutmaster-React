@@ -7,21 +7,15 @@ import {
     deleteSection,
     addQuestion,
 } from "../../../scripts/localstorage";
-
 import { useState } from "react";
-
 import { useTeams } from "../../../scripts/localstorage";
-
 import { Progress3 } from "../../components/progressbar";
 import { WarningModal, WarningModal3Button } from "../../components/popups";
-
 import Flag from "../../components/flag";
-
 import { getNumOfQuestions } from "../../../scripts/localstorage";
-
 import { FaGhost } from "react-icons/fa";
-
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import { Bounce, ToastContainer } from "react-toastify";
 
 import {
     AddSectionModal,
@@ -109,6 +103,19 @@ function DashboardPrescout() {
     if (useScreenType() == "desktop") {
         return (
             <>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                    transition={Bounce}
+                />
                 {deleteWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -122,7 +129,7 @@ function DashboardPrescout() {
                     <WarningModal3Button
                         title={t("warning!")}
                         message={t("deletequestionwarning")}
-                        onMiddleMessage="Continue & Delete Questions"
+                        onMiddleMessage={t("continue&deletequest")}
                         onCancel={() => setDeleteSectionWarningVisible(false)}
                         onMiddle={() => handleSectionDelete(true)}
                         onContinue={() => handleSectionDelete(false)}
@@ -157,7 +164,7 @@ function DashboardPrescout() {
                         <div className="desktop-dash-prescout-infodisplay">
                             <div className="desktop-dash-prescout-infodisplay-titlecontainer">
                                 <p>
-                                    Fully Scouted:{" "}
+                                    {t("fullyscouted")}{" "}
                                     <span
                                         style={{
                                             color: "rgba(99, 255, 107, 0.6)",
@@ -168,7 +175,7 @@ function DashboardPrescout() {
                                 </p>
 
                                 <p>
-                                    Partially Scouted:{" "}
+                                    {t("partiallyscouted")}{" "}
                                     <span
                                         style={{
                                             color: "rgba(255, 196, 0, 0.74)",
@@ -178,7 +185,7 @@ function DashboardPrescout() {
                                     </span>
                                 </p>
                                 <p>
-                                    Not Scouted:{" "}
+                                    {t("notscouted")}{" "}
                                     <span
                                         style={{
                                             color: "rgba(235, 54, 54, 0.6)",
@@ -242,13 +249,13 @@ function DashboardPrescout() {
                                                 setAddSectionVisible(true)
                                             }
                                         >
-                                            + Add Section
+                                            {t("+addsection")}
                                         </button>
                                         <p className="desktop-dash-comp-infodisplay-title">
-                                            Questions:
+                                            {t("questions")}
                                         </p>
                                         <button onClick={() => addQuestion()}>
-                                            + Add Question
+                                            {t("+addquestion")}
                                         </button>
                                     </div>
                                     <DragDropContext

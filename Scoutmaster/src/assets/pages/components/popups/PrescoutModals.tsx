@@ -81,14 +81,16 @@ export function AddSectionModal({
                     id="avoidwarningpopupheight"
                     style={{ height: useIsAkwardHeight() ? "40vh" : "25vh" }}
                 >
-                    <p className="desktop-warningpopup-title">Add Section</p>
+                    <p className="desktop-warningpopup-title">
+                        {t("addsection")}
+                    </p>
                     <div className="desktop-popupinput-highlightedbody">
                         <div className="desktop-popupinput-parentcontainer">
                             <div className="desktop-popupinput-childcontainer">
-                                <p>Section Title:</p>
+                                <p>{t("sectiontitle")}</p>
                                 <input
                                     value={inputTitle}
-                                    placeholder="Section Title:"
+                                    placeholder={t("sectiontitleplaceholder")}
                                     maxLength={50}
                                     onChange={handleTitleInputChange}
                                     className={
@@ -108,7 +110,7 @@ export function AddSectionModal({
                                 </div>
                             </div>
                             <div className="desktop-popupinput-childcontainer">
-                                <p>Header Size:</p>
+                                <p>{t("headersize")}</p>
                                 <Listbox
                                     value={selectedHeaderSize}
                                     onChange={setSelectedHeaderSize}
@@ -216,14 +218,16 @@ export function EditSectionModal({
                     id="avoidwarningpopupheight"
                     style={{ height: useIsAkwardHeight() ? "40vh" : "25vh" }}
                 >
-                    <p className="desktop-warningpopup-title">Edit Section</p>
+                    <p className="desktop-warningpopup-title">
+                        {t("editsection")}
+                    </p>
                     <div className="desktop-popupinput-highlightedbody">
                         <div className="desktop-popupinput-parentcontainer">
                             <div className="desktop-popupinput-childcontainer">
-                                <p>Section Title:</p>
+                                <p>{t("sectiontitle")}</p>
                                 <input
                                     value={inputTitle}
-                                    placeholder="Section Title:"
+                                    placeholder={t("sectiontitleplaceholder")}
                                     maxLength={50}
                                     onChange={handleTitleInputChange}
                                     className={
@@ -243,7 +247,7 @@ export function EditSectionModal({
                                 </div>
                             </div>
                             <div className="desktop-popupinput-childcontainer">
-                                <p>Header Size:</p>
+                                <p>{t("headersize")}</p>
                                 <Listbox
                                     value={selectedHeaderSize}
                                     onChange={setSelectedHeaderSize}
@@ -437,7 +441,7 @@ export function EditQuestionModal({
                     ...prevChoices,
                     {
                         id: String(nextId),
-                        title: `Choice ${nextId}`,
+                        title: t("newchoice", { num: String(nextId) }),
                     },
                 ];
             });
@@ -453,7 +457,9 @@ export function EditQuestionModal({
                     id="avoidwarningpopupheight"
                     style={{ height: useIsAkwardHeight() ? "60vh" : "45vh" }}
                 >
-                    <p className="desktop-warningpopup-title">Edit Question</p>
+                    <p className="desktop-warningpopup-title">
+                        {t("editquestion")}
+                    </p>
                     <div className="desktop-popupinput-highlightedbody">
                         <div
                             className="desktop-popupinput-parentcontainer"
@@ -475,7 +481,7 @@ export function EditQuestionModal({
                                         className="desktop-popupinput-addchoice"
                                         onClick={handleChoiceAdd}
                                     >
-                                        + Add Choice
+                                        {t("+addchoice")}
                                     </button>
                                     <div
                                         className="desktop-popupinput-childcontainer"
@@ -604,7 +610,7 @@ export function EditQuestionModal({
                                     className="desktop-popupinput-childcontainer"
                                     style={{ width: "80%" }}
                                 >
-                                    <p>Stars: {numOfStars}</p>
+                                    <p>{t("stars", { num: { numOfStars } })}</p>
                                     <input
                                         value={numOfStars}
                                         type="range"
@@ -630,7 +636,7 @@ export function EditQuestionModal({
                             ) : (
                                 <>
                                     <div className="desktop-popupinput-childcontainer">
-                                        <p>Min:</p>
+                                        <p>{t("min")}</p>
                                         <input
                                             type="number"
                                             min={-999999}
@@ -640,7 +646,7 @@ export function EditQuestionModal({
                                         />
                                     </div>
                                     <div className="desktop-popupinput-childcontainer">
-                                        <p>Max:</p>
+                                        <p>{t("max")}</p>
                                         <input
                                             type="number"
                                             min={-999999}

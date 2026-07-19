@@ -166,10 +166,12 @@ export function getQuestion(id: string) {
 
 /**
  * Add question to competition
+ * @param {boolean} show - Whether to show success toasts or not (Default false)
  * @param {Question} question - Question
+ * @param {string} section - Section Id (Default "0")
  */
 export function addQuestion(
-    custom?: boolean,
+    show: boolean = false,
     question: Question = {
         type: "ln",
         title: "New Question",
@@ -203,9 +205,8 @@ export function addQuestion(
         localStorage.setItem("data", JSON.stringify(parsed));
         useQuestions.getState().setQuestions(getQuestions());
         useSections.getState().setSections(getSections());
-        successToast(i18n.t("questionadded"), 2000);
-        if (custom) {
-            setCustom(true, false);
+        if (show) {
+            successToast(i18n.t("questionadded"), 2000);
         }
     } catch (e) {
         console.error("ERROR: Could not add question: " + e);
@@ -217,9 +218,9 @@ export function addQuestion(
 /**
  * Delete question of choice
  * @param {string} id - Id of question to be deleted
- * @param {boolean} custom - whether to set competition to custom or not
+ * @param {boolean} show - whether to show success toasts or not (Default false)
  */
-export function deleteQuestion(id: string, custom: boolean) {
+export function deleteQuestion(id: string, show: boolean = false) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -246,9 +247,8 @@ export function deleteQuestion(id: string, custom: boolean) {
         localStorage.setItem("data", JSON.stringify(parsed));
         useQuestions.getState().setQuestions(getQuestions());
         useSections.getState().setSections(getSections());
-        successToast(i18n.t("questiondeleted"), 2000);
-        if (custom) {
-            setCustom(true, false);
+        if (show) {
+            successToast(i18n.t("questiondeleted"), 2000);
         }
     } catch (e) {
         console.error("ERROR: Could not delete question: " + e);
@@ -257,10 +257,17 @@ export function deleteQuestion(id: string, custom: boolean) {
     }
 }
 
+/**
+ *
+ * @param {string} id - Question ID
+ * @param {Partial<Question>} changes - Changes to question
+ * @param {boolean} show - Whether to show success toasts or not (Default false)
+ * @returns
+ */
 export function updateQuestion(
     id: string,
     changes: Partial<Question>,
-    custom: boolean,
+    show: boolean = false,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -288,9 +295,8 @@ export function updateQuestion(
 
         useQuestions.getState().setQuestions(getQuestions());
 
-        successToast(i18n.t("questionupdated"), 2000);
-        if (custom) {
-            setCustom(true, false);
+        if (show) {
+            successToast(i18n.t("questionupdated"), 2000);
         }
     } catch (e) {
         console.error("ERROR: Could not edit question: " + e);
@@ -310,8 +316,9 @@ export const useQuestions = create<{
 /**
  * Add section to scouting
  * @param {QuestionSection} section - Section
+ * @param {boolean} show - Whether to show success toasts or not  (Default false)
  */
-export function addSection(section: QuestionSection, custom: boolean) {
+export function addSection(section: QuestionSection, show: boolean = false) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -343,12 +350,11 @@ export function addSection(section: QuestionSection, custom: boolean) {
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useSections.getState().setSections(getSections());
-        successToast(i18n.t("questionadded"), 2000);
-        if (custom) {
-            setCustom(true, false);
+        if (show) {
+            successToast(i18n.t("sectionadded"), 2000);
         }
     } catch (e) {
-        console.error("ERROR: Could not add question: " + e);
+        console.error("ERROR: Could not add section: " + e);
         errorToast(i18n.t("seterror"), 3000);
         return;
     }
@@ -358,12 +364,12 @@ export function addSection(section: QuestionSection, custom: boolean) {
  * Delete section of choice
  * @param {string} id - Id of section to be deleted
  * @param {boolean} deleteQuestions - Whether to delete questions in section, or assign them to section with previous index OR the next index if previous does not exist
- * @param {boolean} custom - whether to set competition to custom or not
+ * @param {boolean} show - whether to show success toasts or not  (Default false)
  */
 export function deleteSection(
     id: string,
     deleteQuestions: boolean,
-    custom: boolean,
+    show: boolean = false,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -429,21 +435,27 @@ export function deleteSection(
             });
         localStorage.setItem("data", JSON.stringify(parsed));
         useSections.getState().setSections(getSections());
-        successToast(i18n.t("questiondeleted"), 2000);
-        if (custom) {
-            setCustom(true, false);
+
+        if (show) {
+            successToast(i18n.t("sectiondeleted"), 2000);
         }
     } catch (e) {
-        console.error("ERROR: Could not delete question: " + e);
+        console.error("ERROR: Could not delete section: " + e);
         errorToast(i18n.t("seterror"), 3000);
         return;
     }
 }
 
+/**
+ * Function to update a section
+ * @param {string} id - Section ID
+ * @param {Partial<QuestionSection>} changes - Changes to section
+ * @param {boolean} show - Whether to show success toasts or not
+ */
 export function updateSection(
     id: string,
     changes: Partial<QuestionSection>,
-    custom: boolean,
+    show: boolean = false,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -471,12 +483,11 @@ export function updateSection(
 
         useSections.getState().setSections(getSections());
 
-        successToast(i18n.t("questionupdated"), 2000);
-        if (custom) {
-            setCustom(true, false);
+        if (show) {
+            successToast(i18n.t("sectionupdated"), 2000);
         }
     } catch (e) {
-        console.error("ERROR: Could not edit question: " + e);
+        console.error("ERROR: Could not edit section: " + e);
         errorToast(i18n.t("seterror"), 3000);
         return;
     }

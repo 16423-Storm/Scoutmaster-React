@@ -9,6 +9,7 @@ import { PiPath } from "react-icons/pi";
 import { Bs123 } from "react-icons/bs";
 import { RxSlider } from "react-icons/rx";
 import { GiStarsStack } from "react-icons/gi";
+import { useTranslation } from "react-i18next";
 
 import type {
     Question,
@@ -176,17 +177,19 @@ function DesktopSortableQuestion({
     deletePrompt: (target: string) => void;
     editPrompt: (target: string) => void;
 }) {
+    const { t } = useTranslation();
+
     const questionTypes = [
-        { id: "ln", name: "Long Note" },
-        { id: "sn", name: "Short Note" },
-        { id: "cb", name: "Checkbox" },
-        { id: "mc", name: "Multichoice" },
-        { id: "a", name: "Autonomous Path" },
-        { id: "img", name: "Image" },
-        { id: "n", name: "Number" },
-        { id: "r", name: "Slider" },
-        { id: "st", name: "Stars" },
-        { id: "sc", name: "Single Choice" },
+        { id: "ln", name: t("longnote") },
+        { id: "sn", name: t("shortnote") },
+        { id: "cb", name: t("checkbox") },
+        { id: "mc", name: t("multichoice") },
+        { id: "a", name: t("autonomouspath") },
+        { id: "img", name: t("image") },
+        { id: "n", name: t("number") },
+        { id: "r", name: t("slider") },
+        { id: "st", name: t("starsnocolon") },
+        { id: "sc", name: t("singlechoice") },
     ] as const;
 
     const [selectedType, setSelectedType] = useState(
