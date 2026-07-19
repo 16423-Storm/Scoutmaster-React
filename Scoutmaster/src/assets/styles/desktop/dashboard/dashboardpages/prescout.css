@@ -439,3 +439,96 @@
 .desktop-dash-comp-infodisplay-admin-controlbuttons > p {
     margin: 0;
 }
+
+.desktop-popupinput-starslider {
+    accent-color: var(--clr-surface-a50);
+}
+
+.desktop-popupinput-addchoice {
+    width: 50%;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    background-color: var(--clr-surface-a30);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    font-size: 1rem;
+    border-radius: 10px;
+    transition:
+        transform,
+        background-color 0.1s ease-in;
+}
+
+.desktop-popupinput-addchoice:hover {
+    cursor: pointer;
+    background-color: var(--clr-surface-a40);
+}
+
+.desktop-popupinput-addchoice:active {
+    cursor: pointer;
+    transform: scale(0.96);
+    background-color: var(--clr-surface-a40);
+}
+
+.desktop-popup-choice {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid var(--clr-surface-tonal-a20);
+    border-radius: 10px;
+    background-color: var(--clr-surface-a20);
+    flex-direction: row;
+}
+
+.desktop-popup-choice > p {
+    font-size: 1.5rem;
+    transition:
+        color,
+        transform 0.1s ease-in;
+    cursor: default;
+    user-select: none;
+}
+
+.desktop-popup-choice > p:hover {
+    cursor: pointer;
+    color: red;
+}
+
+.desktop-popup-choice > p:active {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+.desktop-popup-choice > div:not(.desktop-popup-draghandle) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.desktop-popup-draghandle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    height: 100%;
+    padding: 10px;
+    margin: 2px;
+    border-radius: 5px;
+    background-color: transparent;
+    border: none;
+    color: var(--clr-surface-a50);
+    font-size: 2rem;
+    padding: 10px 0px;
+}
+
+.desktop-popup-draghandle:hover,
+.desktop-popup-draghandle:active {
+    background-color: var(--clr-surface-a30);
+    cursor: grab;
+}
+
+.desktop-popup-draghandle:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0),
+        inset 0 0 0 2.5px #4c9ffe;
+}

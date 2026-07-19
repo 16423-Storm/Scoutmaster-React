@@ -8,7 +8,7 @@ a = auto [svg/image]
 img = image [image]
 
 n = number input [int]
-r = radio input [int]
+r = range input (slider) [int]
 st = stars (a property for how many stars is selectable from 1-10) [int]
 sc = single choice (up to 10) (each choice is a number, the int is the choice number) [int]
 

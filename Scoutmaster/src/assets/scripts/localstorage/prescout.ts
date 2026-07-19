@@ -28,7 +28,6 @@ export type Question =
           type: "r";
           title: string;
           minmax: [number, number];
-          jump: number;
       }
     | {
           type: "st";
@@ -122,7 +121,7 @@ export function getSection(id: string) {
 
 /**
  * Returns all current questions in prescouting data
- * @returns {Question[]} Sections
+ * @returns {Questions} Questions
  */
 export function getQuestions() {
     const data = localStorage.getItem("data");
@@ -139,6 +138,29 @@ export function getQuestions() {
         console.error(`ERROR: Could not get questions: ` + e);
         errorToast(i18n.t("dataloaderror"), 3000);
         return {};
+    }
+}
+
+/**
+ * Returns specific question based on id
+ * @param {string} id - QuestionId
+ * @returns {Question} Question
+ */
+export function getQuestion(id: string) {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return {} as Question;
+    }
+
+    try {
+        const question = JSON.parse(data).prescout.structure[id] as Question;
+        return question;
+    } catch (e) {
+        console.error(`ERROR: Could not get question: ` + e);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return {} as Question;
     }
 }
 
