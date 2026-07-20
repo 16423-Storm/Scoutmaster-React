@@ -1,0 +1,57 @@
+.desktop-dash-prescout-team-maincontainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    background-color: var(--clr-surface-a0);
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.desktop-dash-prescout-team-backbutton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    background-color: var(--clr-surface-a0);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    padding: 5px;
+    transition: transform 0.1s ease-in;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.desktop-dash-prescout-team-backbutton:hover {
+    cursor: pointer;
+    background-color: var(--clr-surface-a10);
+}
+
+.desktop-dash-prescout-team-backbutton:active {
+    transform: scale(0.9);
+}
+
+.desktop-dash-prescout-team-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    padding-bottom: 10px;
+    width: 60%;
+    text-align: center;
+    user-select: none;
+    border-bottom: 3px solid var(--black);
+}
+
+.desktop-dash-prescout-team-questioncontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    flex-direction: column;
+    text-align: center;
+}

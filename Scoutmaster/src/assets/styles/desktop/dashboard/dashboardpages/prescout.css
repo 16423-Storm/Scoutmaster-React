@@ -113,16 +113,16 @@
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 
-/* .desktop-dash-prescout-infodisplay-table div:hover {
-    background-color: var(--clr-surface-a10);
+.desktop-dash-prescout-infodisplay-table div:hover {
+    filter: brightness(1.4);
     cursor: pointer;
-    transition: background-color 0.15s;
+    transition: filter 0.15s;
 }
 
 .desktop-dash-prescout-infodisplay-table div:active {
-    background-color: var(--clr-surface-a20);
+    filter: brightness(1.8);
     cursor: pointer;
-} */
+}
 
 .desktop-dash-prescout-infodisplay-table-flag {
     width: 7%;

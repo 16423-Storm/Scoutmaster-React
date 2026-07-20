@@ -2,7 +2,6 @@ import type { Team } from "./teams";
 import { successToast, errorToast } from "../misc/toastmanager";
 import i18n from "../localization";
 import { create } from "zustand";
-import { setCustom } from "./competitions";
 
 export type PrescoutData = {
     structure: { [questionId: string]: Question };

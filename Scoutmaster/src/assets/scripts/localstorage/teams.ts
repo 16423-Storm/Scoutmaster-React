@@ -6,7 +6,15 @@ import { setCustom } from "./competitions";
 
 export type Team = {
     name: string;
-    data: (string | number | boolean | string[] | number[] | boolean[])[];
+    data: {
+        [key: string]:
+            | string
+            | number
+            | boolean
+            | string[]
+            | number[]
+            | boolean[];
+    };
     matchesIn: number[];
     code?: string;
 };
@@ -69,7 +77,7 @@ export function addTeam(
         const parsed = JSON.parse(data);
         parsed.prescout.teams[num.toString()] = {
             name: name,
-            data: [],
+            data: {},
             matchesIn: [],
             ...(code ? { code: code } : {}),
         };

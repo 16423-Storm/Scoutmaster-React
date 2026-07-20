@@ -185,7 +185,7 @@ function DesktopSortableQuestion({
         { id: "cb", name: t("checkbox") },
         { id: "mc", name: t("multichoice") },
         { id: "a", name: t("autonomouspath") },
-        { id: "img", name: t("image") },
+        // { id: "img", name: t("image") },
         { id: "n", name: t("number") },
         { id: "r", name: t("slider") },
         { id: "st", name: t("starsnocolon") },

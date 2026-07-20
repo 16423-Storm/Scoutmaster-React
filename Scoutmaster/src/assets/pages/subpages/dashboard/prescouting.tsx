@@ -24,6 +24,8 @@ import {
 import { StatusColor, DesktopSection } from "./prescouting/desktoputils";
 import { PhoneSection } from "./prescouting/phoneutils";
 
+import { TeamPage } from "./prescouting/teampage";
+
 function DashboardPrescout() {
     const { t } = useTranslation();
 
@@ -33,9 +35,9 @@ function DashboardPrescout() {
 
     Object.values(teams).forEach((team) => {
         const numOfQuestions = getNumOfQuestions();
-        if (team.data.length === numOfQuestions) {
+        if (Object.keys(team.data).length === numOfQuestions) {
             percentageCounts[2]++;
-        } else if (team.data.length > 0) {
+        } else if (Object.keys(team.data).length > 0) {
             percentageCounts[1]++;
         } else {
             percentageCounts[0]++;
@@ -115,6 +117,7 @@ function DashboardPrescout() {
                     theme="colored"
                     transition={Bounce}
                 />
+
                 {deleteWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -157,6 +160,8 @@ function DashboardPrescout() {
                         onCancel={() => setEditQuestionVisible(false)}
                     />
                 )}
+
+                <TeamPage />
 
                 <div className="desktop-dash-maincontainer">
                     <div className="desktop-dash-prescout-divider">
@@ -214,7 +219,8 @@ function DashboardPrescout() {
                                             <div key={teamNum}>
                                                 <StatusColor
                                                     numAnswered={
-                                                        team.data.length
+                                                        Object.keys(team.data)
+                                                            .length
                                                     }
                                                 />
                                                 {teamNum} - {team.name}{" "}
@@ -567,7 +573,8 @@ function DashboardPrescout() {
                                             <div key={teamNum}>
                                                 <StatusColor
                                                     numAnswered={
-                                                        team.data.length
+                                                        Object.keys(team.data)
+                                                            .length
                                                     }
                                                 />
                                                 {teamNum} - {team.name}{" "}
