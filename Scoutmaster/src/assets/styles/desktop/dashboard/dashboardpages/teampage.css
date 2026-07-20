@@ -65,16 +65,22 @@
     gap: 2px;
 }
 
+.desktop-dash-prescout-team-question p {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
 .desktop-dash-prescout-team-sectioncontainer {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 60%;
-    gap: 10px;
+    gap: 20px;
 }
 .desktop-dash-prescout-team-sectioncontainer hr {
     width: 100%;
+    margin-top: -10px;
 }
 
 .desktop-dash-prescout-team-lncontainer {
@@ -103,4 +109,50 @@
     background-color: var(--clr-surface-a10);
     width: 1.5rem;
     height: 1.5rem;
+}
+
+.desktop-dash-prescout-team-numinput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--clr-surface-a10);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+.desktop-dash-prescout-team-mccontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.2rem;
+    gap: 10px;
+}
+
+.desktop-dash-prescout-team-mccontainer div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.desktop-dash-prescout-team-mccontainer input {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--clr-surface-a10);
+}
+
+.desktop-dash-prescout-team-range {
+    padding: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 90%;
+    margin: 0px;
+    border-radius: 5px;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    background-color: var(--white);
+    accent-color: var(--clr-surface-a50);
 }

@@ -188,6 +188,11 @@ export function addQuestion(
     try {
         const parsed = JSON.parse(data);
 
+        if (Object.keys(parsed.prescout.structure).length >= 30) {
+            errorToast(i18n.t("maxquestions"), 3000);
+            return;
+        }
+
         const currentIds = Object.keys(parsed.prescout.structure).map(Number);
         let id = 0;
         while (currentIds.includes(id)) {
@@ -295,7 +300,13 @@ export function updateQuestion(
             ...changes,
         };
 
+        Object.values(parsed.prescout.teams as Teams).forEach((team) => {
+            delete team.data[id];
+        });
+
         localStorage.setItem("data", JSON.stringify(parsed));
+
+        useTeams.getState().setTeams(getTeams());
 
         useQuestions.getState().setQuestions(getQuestions());
 
@@ -332,6 +343,11 @@ export function addSection(section: QuestionSection, show: boolean = false) {
 
     try {
         const parsed = JSON.parse(data);
+
+        if (Object.keys(parsed.prescout.sections).length >= 10) {
+            errorToast(i18n.t("maxsections"), 3000);
+            return;
+        }
 
         const currentIndexes = Object.values(
             parsed.prescout.sections as Sections,

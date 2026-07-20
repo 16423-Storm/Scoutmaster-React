@@ -28,6 +28,8 @@ import { MdDragIndicator } from "react-icons/md";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import type { DropResult } from "@hello-pangea/dnd";
 
+import { errorToast } from "../../../scripts/misc/toastmanager";
+
 /**
  * @param onCancel - What occurs when user presses cancel
  * @param onContinue - What occurs when user presses continue, NOTE: This function handles the logic to add the section on its own, onContinue is just for UI purposes
@@ -613,6 +615,8 @@ export function EditQuestionModal({
                     },
                 ];
             });
+        } else {
+            errorToast(t("maxchoices"), 3000);
         }
     }
 
@@ -778,7 +782,7 @@ export function EditQuestionModal({
                                     className="desktop-popupinput-childcontainer"
                                     style={{ width: "80%" }}
                                 >
-                                    <p>{t("stars", { num: { numOfStars } })}</p>
+                                    <p>{t("stars", { num: numOfStars })}</p>
                                     <input
                                         value={numOfStars}
                                         type="range"
@@ -1017,7 +1021,7 @@ export function EditQuestionModal({
                                     className="phone-popupinput-childcontainer"
                                     style={{ width: "80%" }}
                                 >
-                                    <p>{t("stars", { num: { numOfStars } })}</p>
+                                    <p>{t("stars", { num: numOfStars })}</p>
                                     <input
                                         value={numOfStars}
                                         type="range"

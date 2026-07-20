@@ -124,5 +124,10 @@
     "notscouted": "Not Scouted:",
     "+addsection": "+ Add Section",
     "+addquestion": "+ Add Question",
-    "questions": "Questions:"
+    "questions": "Questions:",
+    "nooptions": "No options available",
+
+    "maxchoices": "Cannot have more than 10 choices",
+    "maxquestions": "Cannot have more than 30 questions",
+    "maxsections": "Cannot have more than 10 sections"
 }

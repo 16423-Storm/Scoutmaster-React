@@ -7,9 +7,11 @@ import {
     useQuestions,
     useTeams,
     updateTeamQuestion,
+    getQuestion,
 } from "../../../../scripts/localstorage";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
+import { IoMdStar } from "react-icons/io";
 
 export function TeamPage({
     onBack,
@@ -117,6 +119,7 @@ function RenderQuestion({
     questionId: string;
     data?: string | number | boolean | string[] | number[] | boolean[];
 }) {
+    const { t } = useTranslation();
     if (question.type == "ln") {
         const [area, setArea] = useState(typeof data === "string" ? data : "");
 
@@ -241,34 +244,173 @@ function RenderQuestion({
             />
         );
     } else if (question.type == "a") {
-        if (data !== undefined) {
-            return <></>;
-        }
         return <></>;
     } else if (question.type == "n") {
-        if (data !== undefined) {
-            return <></>;
-        }
-        return <></>;
+        const [input, setInput] = useState(
+            typeof data === "number" ? Number(data.toString().slice(0, 20)) : 0,
+        );
+        useEffect(() => {
+            if (data !== input) {
+                updateTeamQuestion(team, questionId, input);
+            }
+        }, [input]);
+        const handleNumChange = (event: ChangeEvent<HTMLInputElement>) => {
+            const { value } = event.target;
+            const num = Number(value.slice(0, 20));
+            if (!Number.isNaN(num)) {
+                setInput(num);
+                updateTeamQuestion(team, questionId, num);
+            }
+        };
+
+        return (
+            <input
+                className="desktop-dash-prescout-team-numinput"
+                value={input}
+                onChange={handleNumChange}
+            />
+        );
     } else if (question.type == "mc") {
-        if (data !== undefined) {
-            return <></>;
-        }
-        return <></>;
+        const [checked, setChecked] = useState<{ [key: string]: boolean }>(
+            Object.fromEntries(
+                Object.keys(question.opt).map((key) => [
+                    key,
+                    Array.isArray(data) &&
+                        data.every((item) => typeof item === "string") &&
+                        data.includes(key),
+                ]),
+            ),
+        );
+        useEffect(() => {
+            const selected = Object.keys(checked).filter((key) => checked[key]);
+            if (selected.length === 0) {
+                if (data !== undefined) {
+                    updateTeamQuestion(team, questionId, undefined);
+                }
+            } else {
+                updateTeamQuestion(team, questionId, selected);
+            }
+        }, [checked]);
+        const handleCheckChange = (key: string) => {
+            setChecked((prev) => ({
+                ...prev,
+                [key]: !prev[key],
+            }));
+        };
+
+        return (
+            <div className="desktop-dash-prescout-team-mccontainer">
+                {Object.entries(question.opt).length === 0 ? (
+                    <p className="notetext">{t("nooptions")}</p>
+                ) : (
+                    Object.entries(question.opt).map(([key, value]) => (
+                        <div key={key}>
+                            <input
+                                type="checkbox"
+                                checked={checked[key]}
+                                onChange={() => handleCheckChange(key)}
+                            />
+                            <label>{value}</label>
+                        </div>
+                    ))
+                )}
+            </div>
+        );
     } else if (question.type == "sc") {
-        if (data !== undefined) {
-            return <></>;
-        }
-        return <></>;
+        const [selected, setSelected] = useState<string | undefined>(
+            typeof data === "string" && Object.hasOwn(question.opt, data)
+                ? data
+                : undefined,
+        );
+        useEffect(() => {
+            if (selected !== undefined) {
+                updateTeamQuestion(team, questionId, selected);
+            } else if (data !== undefined) {
+                updateTeamQuestion(team, questionId, undefined);
+            }
+        }, [selected]);
+
+        const handleSelectChange = (key: string) => {
+            setSelected(key);
+        };
+
+        return (
+            <div className="desktop-dash-prescout-team-mccontainer">
+                {Object.entries(question.opt).length === 0 ? (
+                    <p className="notetext">{t("nooptions")}</p>
+                ) : (
+                    Object.entries(question.opt).map(([key, value]) => (
+                        <div key={key}>
+                            <input
+                                type="radio"
+                                name={questionId}
+                                checked={selected === key}
+                                onChange={() => handleSelectChange(key)}
+                            />
+                            <label>{value}</label>
+                        </div>
+                    ))
+                )}
+            </div>
+        );
     } else if (question.type == "r") {
-        if (data !== undefined) {
-            return <></>;
-        }
-        return <></>;
-    } else {
-        if (data !== undefined) {
-            return <></>;
-        }
-        return <></>;
+        const [value, setValue] = useState(typeof data === "number" ? data : 0);
+        useEffect(() => {
+            if (data !== value) {
+                updateTeamQuestion(team, questionId, value);
+            }
+        }, [value]);
+        const handleRangeChange = (event: ChangeEvent<HTMLInputElement>) => {
+            const newValue = Number(event.target.value);
+            setValue(newValue);
+            updateTeamQuestion(team, questionId, newValue);
+        };
+
+        return (
+            <div style={{ width: "80%" }}>
+                <input
+                    className="desktop-dash-prescout-team-range"
+                    type="range"
+                    value={value}
+                    min={question.minmax[0]}
+                    max={question.minmax[1]}
+                    onChange={handleRangeChange}
+                />
+                <p>{value}</p>
+            </div>
+        );
+    } else if (question.type == "st") {
+        const [selected, setSelected] = useState(
+            typeof data === "number" ? data : 0,
+        );
+
+        useEffect(() => {
+            if (data !== selected) {
+                updateTeamQuestion(team, questionId, selected);
+            }
+        }, [selected]);
+
+        return (
+            <div className="desktop-dash-prescout-team-starcontainer">
+                {Array.from({ length: question.stars }, (_, index) => {
+                    const star = index + 1;
+
+                    return (
+                        <IoMdStar
+                            key={star}
+                            size={30}
+                            onClick={() => {
+                                setSelected(star);
+                                updateTeamQuestion(team, questionId, star);
+                            }}
+                            style={{
+                                cursor: "pointer",
+                                color: star <= selected ? "#FFD700" : "#B0B0B0",
+                            }}
+                        />
+                    );
+                })}
+            </div>
+        );
     }
 }
