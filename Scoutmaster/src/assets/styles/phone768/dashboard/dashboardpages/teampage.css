@@ -74,6 +74,7 @@
     flex-direction: column;
     width: 95%;
     gap: 20px;
+    margin-bottom: 30px;
 }
 .phone-dash-prescout-team-sectioncontainer hr {
     width: 100%;
