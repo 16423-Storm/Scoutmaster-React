@@ -539,6 +539,13 @@ function DashboardPrescout() {
                     />
                 )}
 
+                {teamPageVisible && (
+                    <TeamPage
+                        teamNum={teamOfPage}
+                        onBack={() => setTeamPageVisible(false)}
+                    />
+                )}
+
                 <div className="phone-dash-maincontainer">
                     <div className="phone-dash-prescout-divider">
                         <div className="phone-dash-prescout-infodisplay">
@@ -593,7 +600,12 @@ function DashboardPrescout() {
                                 <div className="phone-dash-prescout-infodisplay-table">
                                     {Object.entries(teams).map(
                                         ([teamNum, team]) => (
-                                            <div key={teamNum}>
+                                            <div
+                                                key={teamNum}
+                                                onClick={() =>
+                                                    handleTeamPage(teamNum)
+                                                }
+                                            >
                                                 <StatusColor
                                                     numAnswered={
                                                         Object.keys(team.data)
