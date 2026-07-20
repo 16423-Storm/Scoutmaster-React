@@ -1,0 +1,536 @@
+.phone-dash-prescout-divider {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.phone-dash-prescout-infodisplay {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--clr-surface-a0);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    max-height: 98%;
+}
+
+.phone-dash-prescout-admin-infodisplay {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--clr-surface-a0);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    max-height: 98%;
+}
+
+.phone-dash-prescout-infodisplay-titlecontainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 95%;
+}
+
+.phone-dash-prescout-infodisplay-titlecontainer p {
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.phone-dash-prescout-infodisplay-bordercontainer {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    flex-direction: column;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.phone-dash-prescout-infodisplay-table {
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+    width: 100%;
+    overflow-x: hidden;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.phone-dash-prescout-infodisplay-table > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    background-color: var(--clr-surface-a0);
+    overflow: hidden;
+    padding: 3px 10px;
+    box-sizing: border-box;
+    transition: background-color 0.15s;
+    font-size: 1rem;
+}
+
+.phone-dash-prescout-infodisplay-table > div:nth-child(even) {
+    background-color: var(--clr-surface-a10);
+}
+
+.phone-dash-prescout-infodisplay-table p {
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.phone-dash-prescout-infodisplay-table > div:first-child {
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.phone-dash-prescout-infodisplay-table > div {
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+/* .phone-dash-prescout-infodisplay-table div:hover {
+    background-color: var(--clr-surface-a10);
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.phone-dash-prescout-infodisplay-table div:active {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+} */
+
+.phone-dash-prescout-infodisplay-table-flag {
+    width: 7%;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 1400px) {
+    .phone-dash-prescout-infodisplay-table-flag {
+        width: 9%;
+    }
+}
+
+.phone-dash-prescout-infodisplay-table-statusindicator-red,
+.phone-dash-prescout-infodisplay-table-statusindicator-yellow,
+.phone-dash-prescout-infodisplay-table-statusindicator-green {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+}
+
+.phone-dash-prescout-infodisplay-table-statusindicator-red {
+    background-color: rgb(146, 45, 45);
+    animation: phone-dash-prescout-blinking-red 3s linear infinite;
+}
+
+.phone-dash-prescout-infodisplay-table-statusindicator-yellow {
+    background-color: rgb(221, 169, 0);
+    animation: phone-dash-prescout-blinking-yellow 3s linear infinite;
+}
+
+.phone-dash-prescout-infodisplay-table-statusindicator-green {
+    background-color: rgb(45, 146, 50);
+    animation: phone-dash-prescout-blinking-green 3s linear infinite;
+}
+
+@keyframes phone-dash-prescout-blinking-red {
+    50% {
+        filter: brightness(1.5);
+        box-shadow: 0px 0px 105px 30px rgba(255, 99, 99, 0.9);
+    }
+}
+
+@keyframes phone-dash-prescout-blinking-yellow {
+    50% {
+        filter: brightness(1.5);
+        box-shadow: 0px 0px 105px 30px rgba(239, 255, 99, 0.9);
+    }
+}
+
+@keyframes phone-dash-prescout-blinking-green {
+    50% {
+        filter: brightness(1.5);
+        box-shadow: 0px 0px 105px 30px rgba(99, 255, 107, 0.9);
+    }
+}
+
+.phone-dash-prescout-admin-infodisplay-questionlist {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+    height: 80%;
+    overflow-y: scroll;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: var(--clr-surface-a0);
+}
+
+.phone-dash-prescout-admin-infodisplay-question {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 95%;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    background-color: var(--clr-surface-a0);
+}
+
+.phone-dash-prescout-admin-infodisplay-question[aria-grabbed="true"],
+.phone-dash-prescout-admin-infodisplay-question[data-shadow] {
+    transform: scale(1.03);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+        inset 0 0 1px rgba(0, 0, 0, 0.5),
+        -1px 0 15px 0 rgba(34, 33, 81, 0.01),
+        0px 15px 15px 0 rgba(34, 33, 81, 0.25);
+}
+
+.phone-dash-prescout-admin-infodisplay-question-handle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 100%;
+    padding: 10px;
+    margin: 2px;
+    border-radius: 5px;
+    background-color: transparent;
+    border: none;
+    color: var(--clr-surface-a50);
+    font-size: 3rem;
+    padding: 10px 0px;
+}
+
+.phone-dash-prescout-admin-infodisplay-question-handle:hover,
+.phone-dash-prescout-admin-infodisplay-question-handle:active {
+    background-color: var(--clr-surface-a10);
+    cursor: grab;
+}
+
+.phone-dash-prescout-admin-infodisplay-question-handle:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0),
+        inset 0 0 0 2.5px #4c9ffe;
+}
+
+.phone-dash-prescout-admin-infodisplay-dropdowncontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+}
+
+.phone-dash-prescout-admin-infodisplay-dropdownbutton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--clr-surface-a0);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    padding: 5px;
+    width: 100%;
+}
+
+.phone-dash-prescout-admin-infodisplay-dropdownbutton:hover {
+    cursor: pointer;
+    background-color: var(--clr-surface-a10);
+}
+
+.phone-dash-prescout-admin-infodisplay-dropdownbody {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--clr-surface-a0);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 300px;
+    box-sizing: border-box;
+    scrollbar-gutter: stable;
+}
+
+.phone-dash-prescout-admin-infodisplay-dropdownoption {
+    border: 1px solid var(--clr-surface-tonal-a10);
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.phone-dash-prescout-admin-infodisplay-dropdownoption:hover {
+    background-color: var(--clr-surface-a10);
+    cursor: pointer;
+}
+
+.phone-dash-prescout-admin-infodisplay-dropdownoption:active {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+}
+
+.phone-dashprescout-admin-infodisplay-managecontainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.phone-dash-prescout-admin-infodisplay-managecontainer-editbutton {
+    font-size: 1.5rem;
+    transition: transform 0.1s ease-in-out;
+}
+
+.phone-dash-prescout-admin-infodisplay-managecontainer-editbutton:hover {
+    cursor: pointer;
+    color: var(--clr-surface-a50);
+}
+
+.phone-dash-prescout-admin-infodisplay-managecontainer-editbutton:active {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+.phone-dash-prescout-admin-infodisplay-managecontainer-deletebutton {
+    font-size: 1.5rem;
+    transition: transform 0.1s ease-in-out;
+}
+
+.phone-dash-prescout-admin-infodisplay-managecontainer-deletebutton:hover {
+    cursor: pointer;
+    color: var(--clr-danger-a0);
+}
+
+.phone-dash-prescout-admin-infodisplay-managecontainer-deletebutton:active {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+.phone-dash-prescout-admin-infodisplay-questionicon {
+    font-size: 1.5rem;
+}
+
+.phone-dash-prescout-admin-infodisplay-questionlayoutcontainer1 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.phone-dash-prescout-admin-infodisplay-questioninputcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 80%;
+    gap: 4px;
+}
+
+.phone-dash-prescout-admin-infodisplay-questioninputcontainer input {
+    width: 100%;
+    font-size: 1.5rem;
+    background-color: var(--clr-surface-a10);
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+.phone-dash-prescout-admin-infodisplay-questioninputcontainer p {
+    font-size: 0.75rem;
+}
+
+.phone-dash-prescout-admin-infodisplay-sectionheader {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 3px 5px;
+    min-height: 50px;
+}
+
+.phone-dash-prescout-admin-infodisplay-sectionheader h1,
+.phone-dash-prescout-admin-infodisplay-sectionheader h2,
+.phone-dash-prescout-admin-infodisplay-sectionheader h3 {
+    font-size: unset;
+}
+
+.phone-dash-prescout-admin-infodisplay-sectionheader-splitter {
+    position: absolute;
+    left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.phone-dash-comp-infodisplay-admin-controlbuttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.phone-dash-comp-infodisplay-admin-controlbuttons > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    background-color: var(--clr-surface-a10);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 3px;
+    width: 95%;
+    transition: transform 0.1s ease-in-out;
+}
+
+.phone-dash-comp-infodisplay-admin-controlbuttons > button:hover {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+}
+
+.phone-dash-comp-infodisplay-admin-controlbuttons > button:active {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+    transform: scale(0.95);
+}
+
+.phone-dash-comp-infodisplay-admin-controlbuttons > p {
+    margin: 0;
+}
+
+.phone-popupinput-starslider {
+    accent-color: var(--clr-surface-a50);
+}
+
+.phone-popupinput-addchoice {
+    width: 50%;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    background-color: var(--clr-surface-a30);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    font-size: 1rem;
+    border-radius: 10px;
+    transition:
+        transform,
+        background-color 0.1s ease-in;
+}
+
+.phone-popupinput-addchoice:hover {
+    cursor: pointer;
+    background-color: var(--clr-surface-a40);
+}
+
+.phone-popupinput-addchoice:active {
+    cursor: pointer;
+    transform: scale(0.96);
+    background-color: var(--clr-surface-a40);
+}
+
+.phone-popup-choice {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid var(--clr-surface-tonal-a20);
+    border-radius: 10px;
+    background-color: var(--clr-surface-a20);
+    flex-direction: row;
+    width: 95%;
+}
+
+.phone-popup-choice > p {
+    font-size: 1.5rem;
+    transition:
+        color,
+        transform 0.1s ease-in;
+    cursor: default;
+    user-select: none;
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+.phone-popup-choice > p:hover {
+    cursor: pointer;
+    color: red;
+}
+
+.phone-popup-choice > p:active {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+.phone-popup-choice > div:not(.phone-popup-draghandle) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.phone-popup-draghandle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10% !important;
+    height: 100% !important;
+    border-radius: 5px;
+    background-color: transparent;
+    border: none;
+    margin: 2px;
+    color: var(--clr-surface-a50);
+    font-size: 3rem !important;
+}
+
+.phone-popup-draghandle:hover,
+.phone-popup-draghandle:active {
+    background-color: var(--clr-surface-a30);
+    cursor: grab;
+}
+
+.phone-popup-draghandle:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0),
+        inset 0 0 0 2.5px #4c9ffe;
+}

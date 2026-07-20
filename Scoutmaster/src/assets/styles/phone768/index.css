@@ -9,6 +9,8 @@
 /* Dashboard Pages */
 @import "./dashboard/dashboardpages/home.css";
 
+@import "./dashboard/dashboardpages/prescout.css";
+
 @import "./dashboard/dashboardpages/competition/sub1.css";
 @import "./dashboard/dashboardpages/competition/sub2.css";
 

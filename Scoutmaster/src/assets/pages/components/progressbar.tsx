@@ -47,6 +47,30 @@ export function Progress3({
             </div>
         );
     } else {
-        return <></>;
+        return (
+            <div className="progressbar-maincontainer">
+                <div
+                    className="progressbar-progress"
+                    style={{
+                        width: `${percents[0]}%`,
+                        backgroundColor: color1,
+                    }}
+                ></div>
+                <div
+                    className="progressbar-progress"
+                    style={{
+                        width: `${percents[1]}%`,
+                        backgroundColor: color2,
+                    }}
+                ></div>
+                <div
+                    className="progressbar-progress"
+                    style={{
+                        width: `${percents[2]}%`,
+                        backgroundColor: color3,
+                    }}
+                ></div>
+            </div>
+        );
     }
 }

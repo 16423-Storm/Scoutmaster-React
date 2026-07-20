@@ -142,12 +142,21 @@ export function WarningModal3Button({
                         <button
                             className="phone-warningpopup-cancel"
                             onClick={onCancel}
+                            style={{ fontSize: "unset", width: "30%" }}
                         >
                             {t("cancel")}
                         </button>
                         <button
                             className="phone-warningpopup-continue"
+                            onClick={onMiddle}
+                            style={{ fontSize: "unset", width: "30%" }}
+                        >
+                            {onMiddleMessage}
+                        </button>
+                        <button
+                            className="phone-warningpopup-continue"
                             onClick={onContinue}
+                            style={{ fontSize: "unset", width: "30%" }}
                         >
                             {t("continue")}
                         </button>

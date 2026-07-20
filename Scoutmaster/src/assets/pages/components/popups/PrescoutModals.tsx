@@ -159,7 +159,91 @@ export function AddSectionModal({
             </>
         );
     } else {
-        return <></>;
+        return (
+            <>
+                <Blocker499 />
+                <div
+                    className="desktop-warningpopup"
+                    id="avoidwarningpopupheight"
+                    style={{ height: useIsAkwardHeight() ? "40vh" : "25vh" }}
+                >
+                    <p className="phone-warningpopup-title">
+                        {t("addsection")}
+                    </p>
+                    <div className="phone-popupinput-highlightedbody">
+                        <div className="phone-popupinput-parentcontainer">
+                            <div className="phone-popupinput-childcontainer">
+                                <p>{t("sectiontitle")}</p>
+                                <input
+                                    value={inputTitle}
+                                    placeholder={t("sectiontitleplaceholder")}
+                                    maxLength={50}
+                                    onChange={handleTitleInputChange}
+                                    className={
+                                        inputTitle.length === 50
+                                            ? "phone-popupinput-maxedinput"
+                                            : undefined
+                                    }
+                                />
+                                <div
+                                    style={
+                                        inputTitle.length === 50
+                                            ? { color: "red" }
+                                            : undefined
+                                    }
+                                >
+                                    {inputTitle.length}/50
+                                </div>
+                            </div>
+                            <div className="phone-popupinput-childcontainer">
+                                <p>{t("headersize")}</p>
+                                <Listbox
+                                    value={selectedHeaderSize}
+                                    onChange={setSelectedHeaderSize}
+                                >
+                                    <ListboxButton
+                                        className={
+                                            "phone-popup-prescoutdropdownbutton"
+                                        }
+                                    >
+                                        {selectedHeaderSize.name} ▼
+                                    </ListboxButton>
+                                    <ListboxOptions
+                                        anchor="bottom"
+                                        className="phone-popup-prescoutdropdown"
+                                    >
+                                        {headerSizes.map(
+                                            (selectedHeaderSize) => (
+                                                <ListboxOption
+                                                    key={selectedHeaderSize.id}
+                                                    value={selectedHeaderSize}
+                                                >
+                                                    {selectedHeaderSize.name}
+                                                </ListboxOption>
+                                            ),
+                                        )}
+                                    </ListboxOptions>
+                                </Listbox>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button
+                            className="phone-warningpopup-cancel"
+                            onClick={onCancel}
+                        >
+                            {t("cancel")}
+                        </button>
+                        <button
+                            className="phone-warningpopup-continue"
+                            onClick={handleContinue}
+                        >
+                            {t("continue")}
+                        </button>
+                    </div>
+                </div>
+            </>
+        );
     }
 }
 
@@ -216,7 +300,7 @@ export function EditSectionModal({
                 <div
                     className="desktop-warningpopup"
                     id="avoidwarningpopupheight"
-                    style={{ height: useIsAkwardHeight() ? "40vh" : "25vh" }}
+                    style={{ height: useIsAkwardHeight() ? "40vh" : "30vh" }}
                 >
                     <p className="desktop-warningpopup-title">
                         {t("editsection")}
@@ -296,7 +380,91 @@ export function EditSectionModal({
             </>
         );
     } else {
-        return <></>;
+        return (
+            <>
+                <Blocker499 />
+                <div
+                    className="phone-warningpopup"
+                    id="avoidwarningpopupheight"
+                    style={{ height: useIsAkwardHeight() ? "40vh" : "25vh" }}
+                >
+                    <p className="phone-warningpopup-title">
+                        {t("editsection")}
+                    </p>
+                    <div className="phone-popupinput-highlightedbody">
+                        <div className="phone-popupinput-parentcontainer">
+                            <div className="phone-popupinput-childcontainer">
+                                <p>{t("sectiontitle")}</p>
+                                <input
+                                    value={inputTitle}
+                                    placeholder={t("sectiontitleplaceholder")}
+                                    maxLength={50}
+                                    onChange={handleTitleInputChange}
+                                    className={
+                                        inputTitle.length === 50
+                                            ? "phone-popupinput-maxedinput"
+                                            : undefined
+                                    }
+                                />
+                                <div
+                                    style={
+                                        inputTitle.length === 50
+                                            ? { color: "red" }
+                                            : undefined
+                                    }
+                                >
+                                    {inputTitle.length}/50
+                                </div>
+                            </div>
+                            <div className="phone-popupinput-childcontainer">
+                                <p>{t("headersize")}</p>
+                                <Listbox
+                                    value={selectedHeaderSize}
+                                    onChange={setSelectedHeaderSize}
+                                >
+                                    <ListboxButton
+                                        className={
+                                            "phone-popup-prescoutdropdownbutton"
+                                        }
+                                    >
+                                        {selectedHeaderSize.name} ▼
+                                    </ListboxButton>
+                                    <ListboxOptions
+                                        anchor="bottom"
+                                        className="phone-popup-prescoutdropdown"
+                                    >
+                                        {headerSizes.map(
+                                            (selectedHeaderSize) => (
+                                                <ListboxOption
+                                                    key={selectedHeaderSize.id}
+                                                    value={selectedHeaderSize}
+                                                >
+                                                    {selectedHeaderSize.name}
+                                                </ListboxOption>
+                                            ),
+                                        )}
+                                    </ListboxOptions>
+                                </Listbox>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button
+                            className="phone-warningpopup-cancel"
+                            onClick={onCancel}
+                        >
+                            {t("cancel")}
+                        </button>
+                        <button
+                            className="phone-warningpopup-continue"
+                            onClick={handleContinue}
+                        >
+                            {t("continue")}
+                        </button>
+                    </div>
+                </div>
+            </>
+        );
     }
 }
 
@@ -677,6 +845,243 @@ export function EditQuestionModal({
             </>
         );
     } else {
-        return <></>;
+        return (
+            <>
+                <Blocker499 />
+                <div
+                    className="phone-warningpopup"
+                    id="avoidwarningpopupheight"
+                    style={{ height: useIsAkwardHeight() ? "60vh" : "45vh" }}
+                >
+                    <p className="phone-warningpopup-title">
+                        {t("editquestion")}
+                    </p>
+                    <div className="phone-popupinput-highlightedbody">
+                        <div
+                            className="phone-popupinput-parentcontainer"
+                            style={{
+                                justifyContent: "center",
+                            }}
+                        >
+                            {question.type == "mc" || question.type == "sc" ? (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        width: "100%",
+                                        flexDirection: "column",
+                                    }}
+                                >
+                                    <button
+                                        className="phone-popupinput-addchoice"
+                                        onClick={handleChoiceAdd}
+                                    >
+                                        {t("+addchoice")}
+                                    </button>
+                                    <div
+                                        className="phone-popupinput-childcontainer"
+                                        style={{
+                                            width: "90%",
+                                            maxHeight: "200px",
+                                            overflowY: "scroll",
+                                            border: "1px solid var(--clr-surface-tonal-a20)",
+                                            borderRadius: "10px",
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <DragDropContext
+                                            onDragEnd={handleDragEnd}
+                                        >
+                                            <Droppable droppableId="list">
+                                                {(provided) => (
+                                                    <div
+                                                        ref={provided.innerRef}
+                                                        {...provided.droppableProps}
+                                                        style={{
+                                                            display: "flex",
+                                                            justifyContent:
+                                                                "center",
+                                                            alignItems:
+                                                                "center",
+                                                            flexDirection:
+                                                                "column",
+                                                            gap: "15px",
+                                                            padding: "10px",
+                                                        }}
+                                                    >
+                                                        {choices.map(
+                                                            (choice, index) => (
+                                                                <Draggable
+                                                                    key={
+                                                                        choice.id
+                                                                    }
+                                                                    draggableId={
+                                                                        choice.id
+                                                                    }
+                                                                    index={
+                                                                        index
+                                                                    }
+                                                                >
+                                                                    {(
+                                                                        provided,
+                                                                        snapshot,
+                                                                    ) => (
+                                                                        <div
+                                                                            ref={
+                                                                                provided.innerRef
+                                                                            }
+                                                                            {...provided.draggableProps}
+                                                                            className="phone-popup-choice"
+                                                                            data-shadow={
+                                                                                snapshot.isDragging ||
+                                                                                undefined
+                                                                            }
+                                                                        >
+                                                                            <p
+                                                                                onClick={() =>
+                                                                                    handleChoiceDelete(
+                                                                                        choice.id,
+                                                                                    )
+                                                                                }
+                                                                            >
+                                                                                X
+                                                                            </p>
+                                                                            <div>
+                                                                                <input
+                                                                                    value={
+                                                                                        choice.title
+                                                                                    }
+                                                                                    onChange={(
+                                                                                        event,
+                                                                                    ) =>
+                                                                                        handleChoiceChange(
+                                                                                            choice.id,
+                                                                                            event,
+                                                                                        )
+                                                                                    }
+                                                                                    maxLength={
+                                                                                        50
+                                                                                    }
+                                                                                    className={
+                                                                                        choice
+                                                                                            .title
+                                                                                            .length ===
+                                                                                        50
+                                                                                            ? "phone-popupinput-maxedinput"
+                                                                                            : undefined
+                                                                                    }
+                                                                                />
+                                                                                <div
+                                                                                    style={
+                                                                                        choice
+                                                                                            .title
+                                                                                            .length ===
+                                                                                        50
+                                                                                            ? {
+                                                                                                  color: "red",
+                                                                                              }
+                                                                                            : undefined
+                                                                                    }
+                                                                                >
+                                                                                    {
+                                                                                        choice
+                                                                                            .title
+                                                                                            .length
+                                                                                    }
+                                                                                    /50
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                {...provided.dragHandleProps}
+                                                                                className="phone-popup-draghandle"
+                                                                            >
+                                                                                <MdDragIndicator />
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                </Draggable>
+                                                            ),
+                                                        )}
+                                                        {provided.placeholder}
+                                                    </div>
+                                                )}
+                                            </Droppable>
+                                        </DragDropContext>
+                                    </div>
+                                </div>
+                            ) : question.type == "st" ? (
+                                <div
+                                    className="phone-popupinput-childcontainer"
+                                    style={{ width: "80%" }}
+                                >
+                                    <p>{t("stars", { num: { numOfStars } })}</p>
+                                    <input
+                                        value={numOfStars}
+                                        type="range"
+                                        min={1}
+                                        max={10}
+                                        onChange={handleStarsChange}
+                                        className="phone-popupinput-starslider"
+                                    />
+                                    <div
+                                        style={{
+                                            fontSize: "1.2rem",
+                                            justifyContent: "center",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {Array.from({ length: numOfStars }).map(
+                                            (_, index) => (
+                                                <IoMdStar key={index} />
+                                            ),
+                                        )}
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="phone-popupinput-childcontainer">
+                                        <p>{t("min")}</p>
+                                        <input
+                                            type="number"
+                                            min={-999999}
+                                            max={99999}
+                                            value={min}
+                                            onChange={handleMinChange}
+                                        />
+                                    </div>
+                                    <div className="phone-popupinput-childcontainer">
+                                        <p>{t("max")}</p>
+                                        <input
+                                            type="number"
+                                            min={-999999}
+                                            max={99999}
+                                            value={max}
+                                            onChange={handleMaxChange}
+                                        />
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                    <div>
+                        <button
+                            className="phone-warningpopup-cancel"
+                            onClick={onCancel}
+                        >
+                            {t("cancel")}
+                        </button>
+                        <button
+                            className="phone-warningpopup-continue"
+                            onClick={handleContinue}
+                        >
+                            {t("continue")}
+                        </button>
+                    </div>
+                </div>
+            </>
+        );
     }
 }
