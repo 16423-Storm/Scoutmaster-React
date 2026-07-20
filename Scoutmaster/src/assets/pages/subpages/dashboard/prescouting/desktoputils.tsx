@@ -33,7 +33,7 @@ import { Droppable, Draggable } from "@hello-pangea/dnd";
 
 export function StatusColor({ numAnswered }: { numAnswered: number }) {
     const numOfQuestions = getNumOfQuestions();
-    if (numOfQuestions == numAnswered) {
+    if (numOfQuestions == numAnswered && numOfQuestions > 0) {
         return (
             <div className="desktop-dash-prescout-infodisplay-table-statusindicator-green"></div>
         );

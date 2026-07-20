@@ -6,6 +6,7 @@ import {
     updateSection,
     deleteSection,
     addQuestion,
+    getTeams,
 } from "../../../scripts/localstorage";
 import { useState } from "react";
 import { useTeams } from "../../../scripts/localstorage";
@@ -23,26 +24,31 @@ import {
 } from "../../components/popups/PrescoutModals";
 import { StatusColor, DesktopSection } from "./prescouting/desktoputils";
 import { PhoneSection } from "./prescouting/phoneutils";
-
 import { TeamPage } from "./prescouting/teampage";
+import type { Team } from "../../../scripts/localstorage";
 
 function DashboardPrescout() {
     const { t } = useTranslation();
 
     const teams = useTeams((state) => state.teams);
+    const numOfQuestions = getNumOfQuestions();
 
-    const percentageCounts = [0, 0, 0];
+    const percentageCounts = Object.values(teams).reduce(
+        (counts, team) => {
+            const answered = Object.keys(team.data).length;
 
-    Object.values(teams).forEach((team) => {
-        const numOfQuestions = getNumOfQuestions();
-        if (Object.keys(team.data).length === numOfQuestions) {
-            percentageCounts[2]++;
-        } else if (Object.keys(team.data).length > 0) {
-            percentageCounts[1]++;
-        } else {
-            percentageCounts[0]++;
-        }
-    });
+            if (answered === numOfQuestions && numOfQuestions > 0) {
+                counts[2]++;
+            } else if (answered > 0) {
+                counts[1]++;
+            } else {
+                counts[0]++;
+            }
+
+            return counts;
+        },
+        [0, 0, 0],
+    );
 
     const percentageTotal =
         percentageCounts[0] + percentageCounts[1] + percentageCounts[2];
@@ -100,6 +106,13 @@ function DashboardPrescout() {
         setQuestionToEdit(target);
         setEditQuestionVisible(true);
     }
+
+    function handleTeamPage(target: string) {
+        setTeamOfPage(target);
+        setTeamPageVisible(true);
+    }
+    const [teamPageVisible, setTeamPageVisible] = useState(false);
+    const [teamOfPage, setTeamOfPage] = useState("");
 
     if (useScreenType() == "desktop") {
         return (
@@ -161,7 +174,12 @@ function DashboardPrescout() {
                     />
                 )}
 
-                <TeamPage />
+                {teamPageVisible && (
+                    <TeamPage
+                        teamNum={teamOfPage}
+                        onBack={() => setTeamPageVisible(false)}
+                    />
+                )}
 
                 <div className="desktop-dash-maincontainer">
                     <div className="desktop-dash-prescout-divider">
@@ -216,7 +234,12 @@ function DashboardPrescout() {
                                 <div className="desktop-dash-prescout-infodisplay-table">
                                     {Object.entries(teams).map(
                                         ([teamNum, team]) => (
-                                            <div key={teamNum}>
+                                            <div
+                                                key={teamNum}
+                                                onClick={() =>
+                                                    handleTeamPage(teamNum)
+                                                }
+                                            >
                                                 <StatusColor
                                                     numAnswered={
                                                         Object.keys(team.data)

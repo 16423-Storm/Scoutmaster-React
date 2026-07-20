@@ -19,7 +19,7 @@ export type Team = {
     code?: string;
 };
 
-type Teams = {
+export type Teams = {
     [teamId: string]: Team;
 };
 
@@ -128,3 +128,53 @@ export const useTeams = create<{
     teams: getTeams(),
     setTeams: (value) => set({ teams: value }),
 }));
+
+/**
+ * Update a team's answer for a specific question.
+ * @param {string} teamId - Team ID
+ * @param {string} questionId - Question ID
+ * @param {string | number | boolean | string[] | number[] | boolean[] | undefined} value - Answer value
+ * @param {boolean} show - Whether to show success toasts or not (Default false)
+ */
+export function updateTeamQuestion(
+    teamId: string,
+    questionId: string,
+    value:
+        | string
+        | number
+        | boolean
+        | string[]
+        | number[]
+        | boolean[]
+        | undefined,
+    show: boolean = false,
+) {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+        const team = parsed.prescout.teams[teamId];
+        if (!team) {
+            console.error("ERROR: Team does not exist");
+            return;
+        }
+        if (value === undefined) {
+            delete team.data[questionId];
+        } else {
+            team.data[questionId] = value;
+        }
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useTeams.getState().setTeams(getTeams());
+        if (show) {
+            successToast(i18n.t("teamupdated"), 2000);
+        }
+    } catch (e) {
+        console.error("ERROR: Could not update team question: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+    }
+}

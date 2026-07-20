@@ -55,3 +55,52 @@
     flex-direction: column;
     text-align: center;
 }
+
+.desktop-dash-prescout-team-question {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 2px;
+}
+
+.desktop-dash-prescout-team-sectioncontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 60%;
+    gap: 10px;
+}
+.desktop-dash-prescout-team-sectioncontainer hr {
+    width: 100%;
+}
+
+.desktop-dash-prescout-team-lncontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.desktop-dash-prescout-team-lncontainer textarea,
+.desktop-dash-prescout-team-lncontainer input {
+    background-color: var(--clr-surface-a10);
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    width: 80%;
+    font-size: 1rem;
+    resize: none;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.desktop-dash-prescout-team-checkbox {
+    accent-color: var(--clr-surface-a10);
+    background-color: var(--clr-surface-a10);
+    width: 1.5rem;
+    height: 1.5rem;
+}

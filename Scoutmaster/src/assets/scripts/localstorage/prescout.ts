@@ -1,4 +1,4 @@
-import type { Team } from "./teams";
+import type { Team, Teams } from "./teams";
 import { successToast, errorToast } from "../misc/toastmanager";
 import i18n from "../localization";
 import { create } from "zustand";
@@ -10,6 +10,7 @@ export type PrescoutData = {
         [teamId: string]: Team;
     };
 };
+import { useTeams, getTeams } from "./teams";
 
 export type Question =
     | {
@@ -235,6 +236,10 @@ export function deleteQuestion(id: string, show: boolean = false) {
         }
         delete parsed.prescout.structure[id];
 
+        Object.values(parsed.prescout.teams as Teams).forEach((team) => {
+            delete team.data[id];
+        });
+
         Object.values(parsed.prescout.sections as Sections).forEach(
             (section: QuestionSection) => {
                 section.questions = section.questions.filter(
@@ -246,6 +251,7 @@ export function deleteQuestion(id: string, show: boolean = false) {
         localStorage.setItem("data", JSON.stringify(parsed));
         useQuestions.getState().setQuestions(getQuestions());
         useSections.getState().setSections(getSections());
+        useTeams.getState().setTeams(getTeams());
         if (show) {
             successToast(i18n.t("questiondeleted"), 2000);
         }
@@ -257,7 +263,6 @@ export function deleteQuestion(id: string, show: boolean = false) {
 }
 
 /**
- *
  * @param {string} id - Question ID
  * @param {Partial<Question>} changes - Changes to question
  * @param {boolean} show - Whether to show success toasts or not (Default false)
