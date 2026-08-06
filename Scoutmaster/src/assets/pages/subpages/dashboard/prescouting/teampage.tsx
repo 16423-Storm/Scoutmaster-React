@@ -106,7 +106,10 @@ export function TeamPage({
     } else {
         return (
             <>
-                <div className="phone-dash-prescout-team-maincontainer">
+                <div
+                    className="phone-dash-prescout-team-maincontainer"
+                    style={{ overflowY: "scroll" }}
+                >
                     <button
                         className="phone-dash-prescout-team-backbutton"
                         onClick={onBack}
