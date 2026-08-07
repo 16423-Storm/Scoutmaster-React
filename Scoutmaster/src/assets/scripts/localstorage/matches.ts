@@ -11,15 +11,17 @@ export type MatchData = {
         red2: number;
         blue1: number;
         blue2: number;
+        scores: number[][];
     };
 };
 
-type Match = {
+export type Match = {
     teams: number[];
     red1: number;
     red2: number;
     blue1: number;
     blue2: number;
+    scores: number[][];
 };
 
 type Matches = {
@@ -111,6 +113,7 @@ export function addMatch(
             red2,
             blue1,
             blue2,
+            scores: [[], [], [], []],
         };
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());

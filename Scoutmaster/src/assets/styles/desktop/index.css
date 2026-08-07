@@ -12,6 +12,7 @@
 
 @import "./dashboard/dashboardpages/prescout.css";
 @import "./dashboard/dashboardpages/teampage.css";
+@import "./dashboard/dashboardpages/matchscout.css";
 
 @import "./dashboard/dashboardpages/competition/sub1.css";
 @import "./dashboard/dashboardpages/competition/sub2.css";
