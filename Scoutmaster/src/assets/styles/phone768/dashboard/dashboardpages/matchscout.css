@@ -31,7 +31,7 @@
     align-items: center;
     height: 100%;
     width: 20%;
-    font-size: 1.5rem;
+    font-size: 1rem;
     background-color: var(--clr-surface-a10);
     border: 1px solid var(--clr-surface-tonal-a10);
 }
@@ -57,7 +57,7 @@
     align-items: center;
     height: 100%;
     width: 40%;
-    font-size: 1.5rem;
+    font-size: 1rem;
     border: 1px solid var(--clr-surface-tonal-a10);
     transition: 0.1s filter ease;
 }

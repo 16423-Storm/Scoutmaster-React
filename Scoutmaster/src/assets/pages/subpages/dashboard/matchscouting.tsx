@@ -11,14 +11,7 @@ function DashboardMatchScouting() {
     const { t } = useTranslation();
     const matches = useMatches((state) => state.matches);
 
-    const [selectedMatch, setSelectedMatch] = useState<Match>({
-        teams: [],
-        red1: NaN,
-        red2: NaN,
-        blue1: NaN,
-        blue2: NaN,
-        scores: [[], [], [], []],
-    });
+    const [selectedMatch, setSelectedMatch] = useState("0");
     const [isMatchPageOpen, setIsMatchPageOpen] = useState(false);
 
     if (useScreenType() == "desktop") {
@@ -62,7 +55,7 @@ function DashboardMatchScouting() {
                                 className="desktop-dash-comp-infodisplay-matchtable-row"
                                 key={matchNum}
                                 onClick={() => {
-                                    setSelectedMatch(match);
+                                    setSelectedMatch(matchNum);
                                     setIsMatchPageOpen(true);
                                 }}
                             >
@@ -127,6 +120,10 @@ function DashboardMatchScouting() {
                             <div
                                 className="phone-dash-comp-infodisplay-matchtable-row"
                                 key={matchNum}
+                                onClick={() => {
+                                    setSelectedMatch(matchNum);
+                                    setIsMatchPageOpen(true);
+                                }}
                             >
                                 <div className="phone-dash-comp-infodisplay-matchtable-column1">
                                     Q{matchNum}

@@ -15,6 +15,17 @@ export type MatchData = {
     };
 };
 
+// Scores will use the following index:
+// - Auto classified
+// - Auto overflow
+// - Auto pattern
+// - Auto leave
+
+// - Teleop classified
+// - Teleop overflow
+// - Teleop pattern
+// - Teleop base
+
 export type Match = {
     teams: number[];
     red1: number;
@@ -113,7 +124,12 @@ export function addMatch(
             red2,
             blue1,
             blue2,
-            scores: [[], [], [], []],
+            scores: [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+            ],
         };
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
@@ -125,6 +141,36 @@ export function addMatch(
         console.error("ERROR: Could not add match: " + e);
         errorToast(i18n.t("seterror"), 3000);
         return;
+    }
+}
+
+export function updateScore(
+    matchId: string,
+    allianceIndex: number,
+    questionIndex: number,
+    value: number,
+) {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+        const score =
+            parsed.match[matchId].scores[allianceIndex][questionIndex];
+        if (score === undefined) {
+            console.error("ERROR: Score does not exist");
+            return;
+        }
+        parsed.match[matchId].scores[allianceIndex][questionIndex] = value;
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useMatches.getState().setMatches(getMatches());
+    } catch (e) {
+        console.error("ERROR: Could not update score: " + e);
+        errorToast(i18n.t("seterror"), 3000);
     }
 }
 
