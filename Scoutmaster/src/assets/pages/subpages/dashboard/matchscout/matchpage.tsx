@@ -60,6 +60,11 @@ function DashboardMatchPage({
                                                         );
                                                     }
                                                 }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][0] == 0
+                                                }
                                             >
                                                 -
                                             </button>
@@ -108,6 +113,11 @@ function DashboardMatchPage({
                                                         );
                                                     }
                                                 }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][2] == 0
+                                                }
                                             >
                                                 -
                                             </button>
@@ -158,6 +168,11 @@ function DashboardMatchPage({
                                                         );
                                                     }
                                                 }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][1] == 0
+                                                }
                                             >
                                                 -
                                             </button>
@@ -181,6 +196,45 @@ function DashboardMatchPage({
                                                 }
                                             >
                                                 +
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="desktop-dash-match-scorecontainer-labelcontainer">
+                                        <p>Leave:</p>
+                                        <div className="desktop-dash-match-scorecontainer-checkinput-container">
+                                            <button
+                                                onClick={() => {
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        3,
+                                                        0,
+                                                    );
+                                                }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][3] == 0
+                                                }
+                                            >
+                                                ✕
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        3,
+                                                        1,
+                                                    )
+                                                }
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][3] == 1
+                                                }
+                                            >
+                                                ✓
                                             </button>
                                         </div>
                                     </div>
@@ -211,6 +265,11 @@ function DashboardMatchPage({
                                                         );
                                                     }
                                                 }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][4] == 0
+                                                }
                                             >
                                                 -
                                             </button>
@@ -259,6 +318,11 @@ function DashboardMatchPage({
                                                         );
                                                     }
                                                 }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][6] == 0
+                                                }
                                             >
                                                 -
                                             </button>
@@ -309,6 +373,11 @@ function DashboardMatchPage({
                                                         );
                                                     }
                                                 }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][5] == 0
+                                                }
                                             >
                                                 -
                                             </button>

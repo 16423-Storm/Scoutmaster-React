@@ -48,6 +48,11 @@
     background-color: var(--clr-danger-a0);
     font-weight: 900;
     font-size: 1.5rem;
+    transition: 0.1s filter ease;
+}
+
+.desktop-dash-match-scorecontainer-numinput-container > :first-child:disabled {
+    filter: brightness(0.5);
 }
 
 .desktop-dash-match-scorecontainer-numinput-container > div {
@@ -67,4 +72,64 @@
     background-color: var(--clr-success-a0);
     font-weight: 900;
     font-size: 1.5rem;
+    transition: 0.1s filter ease;
+}
+
+.desktop-dash-match-scorecontainer-numinput-container
+    > :first-child:hover:not(:disabled),
+.desktop-dash-match-scorecontainer-numinput-container > :last-child:hover {
+    cursor: pointer;
+    filter: brightness(1.1);
+}
+
+.desktop-dash-match-scorecontainer-numinput-container
+    > :first-child:active:not(:disabled),
+.desktop-dash-match-scorecontainer-numinput-container > :last-child:active {
+    filter: brightness(1.2);
+}
+
+.desktop-dash-match-scorecontainer-checkinput-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 50%;
+    height: 40%;
+    border-radius: 10px;
+    overflow-x: hidden;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    box-sizing: border-box;
+}
+
+.desktop-dash-match-scorecontainer-checkinput-container > button {
+    width: 50%;
+    height: 100%;
+    border: none;
+    font-size: 2rem;
+    background-color: var(--clr-surface-a0);
+}
+
+.desktop-dash-match-scorecontainer-checkinput-container
+    > button:hover:not(:disabled) {
+    cursor: pointer;
+}
+
+.desktop-dash-match-scorecontainer-checkinput-container > button:first-child {
+    border-radius: 10px 0px 0px 10px;
+    border-right: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-match-scorecontainer-checkinput-container > button:last-child {
+    border-radius: 0px 10px 10px 0px;
+    border-left: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-match-scorecontainer-checkinput-container
+    > button:first-child:disabled {
+    background-color: var(--clr-danger-a0);
+}
+
+.desktop-dash-match-scorecontainer-checkinput-container
+    > button:last-child:disabled {
+    background-color: var(--clr-success-a0);
 }
