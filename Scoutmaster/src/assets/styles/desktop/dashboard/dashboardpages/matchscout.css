@@ -4,7 +4,7 @@
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 80%;
+    height: 90%;
 }
 
 .desktop-dash-matchscout-selectioncontainer {
@@ -13,7 +13,7 @@
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 20%;
+    height: 10%;
 }
 
 .desktop-dash-matchscout-selectioncontainer-row {
@@ -31,8 +31,27 @@
     align-items: center;
     height: 100%;
     width: 20%;
-    /* This is just a placeholder color */
-    background-color: greenyellow;
+    font-size: 1.5rem;
+    background-color: var(--clr-surface-a10);
+    border: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-matchscout-selectioncontainer-row-modebutton:not(
+        :disabled
+    ):hover {
+    background-color: var(--clr-surface-a20);
+    cursor: pointer;
+}
+
+.desktop-dash-matchscout-selectioncontainer-row-modebutton:not(
+        :disabled
+    ):active {
+    background-color: var(--clr-surface-a30);
+}
+
+.desktop-dash-matchscout-selectioncontainer-row-modebutton:disabled {
+    background-color: var(--clr-surface-a0);
+    font-weight: 900;
 }
 
 .desktop-dash-matchscout-selectioncontainer-row-teambutton-red,
@@ -42,12 +61,46 @@
     align-items: center;
     height: 100%;
     width: 40%;
+    font-size: 1.5rem;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    transition: 0.1s filter ease;
 }
 
 .desktop-dash-matchscout-selectioncontainer-row-teambutton-red {
+    background-color: var(--clr-red-alliance);
+}
+
+.desktop-dash-matchscout-selectioncontainer-row-teambutton-red:disabled {
     background-color: red;
+    color: white;
+    font-weight: 900;
 }
 
 .desktop-dash-matchscout-selectioncontainer-row-teambutton-blue {
+    background-color: var(--clr-blue-alliance);
+}
+
+.desktop-dash-matchscout-selectioncontainer-row-teambutton-blue:disabled {
     background-color: blue;
+    color: white;
+    font-weight: 900;
+}
+
+.desktop-dash-matchscout-selectioncontainer-row-teambutton-red:not(
+        :disabled
+    ):hover,
+.desktop-dash-matchscout-selectioncontainer-row-teambutton-blue:not(
+        :disabled
+    ):hover {
+    cursor: pointer;
+    filter: brightness(0.9);
+}
+
+.desktop-dash-matchscout-selectioncontainer-row-teambutton-red:not(
+        :disabled
+    ):active,
+.desktop-dash-matchscout-selectioncontainer-row-teambutton-blue:not(
+        :disabled
+    ):active {
+    filter: brightness(0.8);
 }

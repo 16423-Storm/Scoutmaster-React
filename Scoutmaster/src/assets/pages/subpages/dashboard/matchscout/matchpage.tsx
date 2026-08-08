@@ -4,7 +4,13 @@ import { useTranslation } from "react-i18next";
 
 import type { Match } from "../../../../scripts/localstorage";
 
-function DashboardMatchPage({ match }: { match: Match }) {
+function DashboardMatchPage({
+    match,
+    onBack,
+}: {
+    onBack: () => void;
+    match: Match;
+}) {
     const { t } = useTranslation();
 
     /**0 = Red 1,
@@ -19,28 +25,58 @@ function DashboardMatchPage({ match }: { match: Match }) {
         return (
             <>
                 <div className="desktop-dash-prescout-team-maincontainer">
+                    <button
+                        className="desktop-dash-prescout-team-backbutton"
+                        onClick={onBack}
+                    >
+                        &lt; Back
+                    </button>
                     <div className="desktop-dash-matchscout-scorecontainer"></div>
                     <div className="desktop-dash-matchscout-selectioncontainer">
                         <div className="desktop-dash-matchscout-selectioncontainer-row">
-                            <button className="desktop-dash-matchscout-selectioncontainer-row-modebutton">
+                            <button
+                                className="desktop-dash-matchscout-selectioncontainer-row-modebutton"
+                                disabled={isAuto}
+                                onClick={() => setIsAuto(true)}
+                            >
                                 Auto
                             </button>
-                            <button className="desktop-dash-matchscout-selectioncontainer-row-teambutton-red">
-                                1
+                            <button
+                                className="desktop-dash-matchscout-selectioncontainer-row-teambutton-red"
+                                disabled={currentStation == 0}
+                                onClick={() => setCurrentStation(0)}
+                            >
+                                {match.red1}
                             </button>
-                            <button className="desktop-dash-matchscout-selectioncontainer-row-teambutton-red">
-                                2
+                            <button
+                                className="desktop-dash-matchscout-selectioncontainer-row-teambutton-red"
+                                disabled={currentStation == 1}
+                                onClick={() => setCurrentStation(1)}
+                            >
+                                {match.red2}
                             </button>
                         </div>
                         <div className="desktop-dash-matchscout-selectioncontainer-row">
-                            <button className="desktop-dash-matchscout-selectioncontainer-row-modebutton">
+                            <button
+                                className="desktop-dash-matchscout-selectioncontainer-row-modebutton"
+                                disabled={!isAuto}
+                                onClick={() => setIsAuto(false)}
+                            >
                                 TeleOp
                             </button>
-                            <button className="desktop-dash-matchscout-selectioncontainer-row-teambutton-blue">
-                                3
+                            <button
+                                className="desktop-dash-matchscout-selectioncontainer-row-teambutton-blue"
+                                disabled={currentStation == 2}
+                                onClick={() => setCurrentStation(2)}
+                            >
+                                {match.blue1}
                             </button>
-                            <button className="desktop-dash-matchscout-selectioncontainer-row-teambutton-blue">
-                                4
+                            <button
+                                className="desktop-dash-matchscout-selectioncontainer-row-teambutton-blue"
+                                disabled={currentStation == 3}
+                                onClick={() => setCurrentStation(3)}
+                            >
+                                {match.blue2}
                             </button>
                         </div>
                     </div>

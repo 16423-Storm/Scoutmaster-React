@@ -25,7 +25,10 @@ function DashboardMatchScouting() {
         return (
             <>
                 {isMatchPageOpen && (
-                    <DashboardMatchPage match={selectedMatch} />
+                    <DashboardMatchPage
+                        match={selectedMatch}
+                        onBack={() => setIsMatchPageOpen(false)}
+                    />
                 )}
                 <div
                     className="desktop-dash-comp-infodisplay"
