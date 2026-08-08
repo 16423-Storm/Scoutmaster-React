@@ -404,6 +404,62 @@ function DashboardMatchPage({
                                             </button>
                                         </div>
                                     </div>
+                                    <div className="desktop-dash-match-scorecontainer-labelcontainer">
+                                        <p>Base:</p>
+                                        <div className="desktop-dash-match-scorecontainer-baseinput-container">
+                                            <button
+                                                onClick={() => {
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        7,
+                                                        0,
+                                                    );
+                                                }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][7] == 0
+                                                }
+                                            >
+                                                None
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        7,
+                                                        1,
+                                                    )
+                                                }
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][7] == 1
+                                                }
+                                            >
+                                                Partial
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        7,
+                                                        2,
+                                                    )
+                                                }
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][7] == 2
+                                                }
+                                            >
+                                                Full
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </>
                         )}

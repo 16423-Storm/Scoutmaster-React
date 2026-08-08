@@ -133,3 +133,61 @@
     > button:last-child:disabled {
     background-color: var(--clr-success-a0);
 }
+
+.desktop-dash-match-scorecontainer-baseinput-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 75%;
+    height: 40%;
+    border-radius: 10px;
+    overflow-x: hidden;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    box-sizing: border-box;
+}
+
+.desktop-dash-match-scorecontainer-baseinput-container > button {
+    height: 100%;
+    border: none;
+    font-size: 2rem;
+    background-color: var(--clr-surface-a0);
+}
+
+.desktop-dash-match-scorecontainer-baseinput-container
+    > button:hover:not(:disabled) {
+    cursor: pointer;
+}
+
+.desktop-dash-match-scorecontainer-baseinput-container > button:first-child {
+    width: 33.5%;
+    border-radius: 10px 0px 0px 10px;
+    border-right: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-match-scorecontainer-baseinput-container > button:nth-child(2) {
+    width: 33%;
+    border-right: 1px solid var(--clr-surface-tonal-a10);
+    border-left: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-match-scorecontainer-baseinput-container > button:last-child {
+    width: 33.5%;
+    border-radius: 0px 10px 10px 0px;
+    border-left: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.desktop-dash-match-scorecontainer-baseinput-container
+    > button:first-child:disabled {
+    background-color: var(--clr-danger-a0);
+}
+
+.desktop-dash-match-scorecontainer-baseinput-container
+    > button:nth-child(2):disabled {
+    background-color: var(--clr-warning-a0);
+}
+
+.desktop-dash-match-scorecontainer-baseinput-container
+    > button:last-child:disabled {
+    background-color: var(--clr-success-a0);
+}
