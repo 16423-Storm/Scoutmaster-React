@@ -84,7 +84,67 @@ function DashboardMatchPage({
             </>
         );
     } else {
-        return <></>;
+        return (
+            <>
+                <div className="phone-dash-prescout-team-maincontainer">
+                    <button
+                        className="phone-dash-prescout-team-backbutton"
+                        onClick={onBack}
+                    >
+                        &lt; Back
+                    </button>
+                    <div className="phone-dash-matchscout-scorecontainer"></div>
+                    <div className="phone-dash-matchscout-selectioncontainer">
+                        <div className="phone-dash-matchscout-selectioncontainer-row">
+                            <button
+                                className="phone-dash-matchscout-selectioncontainer-row-modebutton"
+                                disabled={isAuto}
+                                onClick={() => setIsAuto(true)}
+                            >
+                                Auto
+                            </button>
+                            <button
+                                className="phone-dash-matchscout-selectioncontainer-row-teambutton-red"
+                                disabled={currentStation == 0}
+                                onClick={() => setCurrentStation(0)}
+                            >
+                                {match.red1}
+                            </button>
+                            <button
+                                className="phone-dash-matchscout-selectioncontainer-row-teambutton-red"
+                                disabled={currentStation == 1}
+                                onClick={() => setCurrentStation(1)}
+                            >
+                                {match.red2}
+                            </button>
+                        </div>
+                        <div className="phone-dash-matchscout-selectioncontainer-row">
+                            <button
+                                className="phone-dash-matchscout-selectioncontainer-row-modebutton"
+                                disabled={!isAuto}
+                                onClick={() => setIsAuto(false)}
+                            >
+                                TeleOp
+                            </button>
+                            <button
+                                className="phone-dash-matchscout-selectioncontainer-row-teambutton-blue"
+                                disabled={currentStation == 2}
+                                onClick={() => setCurrentStation(2)}
+                            >
+                                {match.blue1}
+                            </button>
+                            <button
+                                className="phone-dash-matchscout-selectioncontainer-row-teambutton-blue"
+                                disabled={currentStation == 3}
+                                onClick={() => setCurrentStation(3)}
+                            >
+                                {match.blue2}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
     }
 }
 

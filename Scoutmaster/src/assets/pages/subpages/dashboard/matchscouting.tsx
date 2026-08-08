@@ -89,57 +89,65 @@ function DashboardMatchScouting() {
         );
     } else {
         return (
-            <div
-                className="phone-dash-comp-infodisplay"
-                style={{ padding: "10px 2px", maxHeight: "95%" }}
-            >
-                <p className="phone-dash-comp-infodisplay-title">
-                    {t("totalmatches", {
-                        num: Object.keys(matches ?? {}).length,
-                    })}
-                </p>
-                <div className="phone-dash-comp-infodisplay-matchtable">
-                    <div className="phone-dash-comp-infodisplay-matchtable-row">
-                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
-                            {t("match")}
+            <>
+                {isMatchPageOpen && (
+                    <DashboardMatchPage
+                        match={selectedMatch}
+                        onBack={() => setIsMatchPageOpen(false)}
+                    />
+                )}
+                <div
+                    className="phone-dash-comp-infodisplay"
+                    style={{ padding: "10px 2px", maxHeight: "95%" }}
+                >
+                    <p className="phone-dash-comp-infodisplay-title">
+                        {t("totalmatches", {
+                            num: Object.keys(matches ?? {}).length,
+                        })}
+                    </p>
+                    <div className="phone-dash-comp-infodisplay-matchtable">
+                        <div className="phone-dash-comp-infodisplay-matchtable-row">
+                            <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                {t("match")}
+                            </div>
+                            <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                {t("red1")}
+                            </div>
+                            <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                {t("red2")}
+                            </div>
+                            <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                {t("blue1")}
+                            </div>
+                            <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
+                                {t("blue2")}
+                            </div>
                         </div>
-                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
-                            {t("red1")}
-                        </div>
-                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
-                            {t("red2")}
-                        </div>
-                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
-                            {t("blue1")}
-                        </div>
-                        <div className="phone-dash-comp-infodisplay-matchtable-column2345header">
-                            {t("blue2")}
-                        </div>
+                        {Object.entries(matches).map(([matchNum, match]) => (
+                            <div
+                                className="phone-dash-comp-infodisplay-matchtable-row"
+                                key={matchNum}
+                            >
+                                <div className="phone-dash-comp-infodisplay-matchtable-column1">
+                                    Q{matchNum}
+                                </div>
+                                <div className="phone-dash-comp-infodisplay-matchtable-column23">
+                                    {match.red1}
+                                </div>
+                                <div className="phone-dash-comp-infodisplay-matchtable-column23">
+                                    {match.red2}
+                                </div>
+                                <div className="phone-dash-comp-infodisplay-matchtable-column45">
+                                    {match.blue1}
+                                </div>
+                                <div className="phone-dash-comp-infodisplay-matchtable-column45">
+                                    {match.blue2}
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                    {Object.entries(matches).map(([matchNum, match]) => (
-                        <div
-                            className="phone-dash-comp-infodisplay-matchtable-row"
-                            key={matchNum}
-                        >
-                            <div className="phone-dash-comp-infodisplay-matchtable-column1">
-                                Q{matchNum}
-                            </div>
-                            <div className="phone-dash-comp-infodisplay-matchtable-column23">
-                                {match.red1}
-                            </div>
-                            <div className="phone-dash-comp-infodisplay-matchtable-column23">
-                                {match.red2}
-                            </div>
-                            <div className="phone-dash-comp-infodisplay-matchtable-column45">
-                                {match.blue1}
-                            </div>
-                            <div className="phone-dash-comp-infodisplay-matchtable-column45">
-                                {match.blue2}
-                            </div>
-                        </div>
-                    ))}
                 </div>
-            </div>
+            </>
         );
     }
 }
