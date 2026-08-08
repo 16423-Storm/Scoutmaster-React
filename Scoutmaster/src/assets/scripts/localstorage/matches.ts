@@ -15,7 +15,7 @@ export type MatchData = {
     };
 };
 
-// Scores will use the following index:
+// Scores will use the following index: !!! NOTE, THESE ARE FOR DECODE, NOT BIOBUZZ, WILL BE UPDATED WHEN SEASON STARTS !!!
 // - Auto classified
 // - Auto overflow
 // - Auto pattern

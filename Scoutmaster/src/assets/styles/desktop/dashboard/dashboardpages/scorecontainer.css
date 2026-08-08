@@ -1,22 +1,31 @@
-.phone-dash-match-scorecontainer-labelcontainer {
+.desktop-dash-match-scorecontainer-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    height: 50%;
+    width: 100%;
+}
+
+.desktop-dash-match-scorecontainer-labelcontainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 90%;
+    width: 30%;
     height: 40%;
     flex-direction: column;
     gap: 10px;
     box-sizing: border-box;
 }
 
-.phone-dash-match-scorecontainer-labelcontainer > p {
+.desktop-dash-match-scorecontainer-labelcontainer > p {
     height: 20%;
     font-size: 2rem;
     font-weight: 200;
     color: var(--black);
 }
 
-.phone-dash-match-scorecontainer-numinput-container {
+.desktop-dash-match-scorecontainer-numinput-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,11 +38,11 @@
     box-sizing: border-box;
 }
 
-.phone-dash-match-scorecontainer-numinput-container * {
+.desktop-dash-match-scorecontainer-numinput-container * {
     border: none;
 }
 
-.phone-dash-match-scorecontainer-numinput-container > :first-child {
+.desktop-dash-match-scorecontainer-numinput-container > :first-child {
     width: 15%;
     height: 100%;
     background-color: var(--clr-danger-a0);
@@ -42,11 +51,11 @@
     transition: 0.1s filter ease;
 }
 
-.phone-dash-match-scorecontainer-numinput-container > :first-child:disabled {
+.desktop-dash-match-scorecontainer-numinput-container > :first-child:disabled {
     filter: brightness(0.5);
 }
 
-.phone-dash-match-scorecontainer-numinput-container > div {
+.desktop-dash-match-scorecontainer-numinput-container > div {
     width: 70%;
     display: flex;
     justify-content: center;
@@ -57,7 +66,7 @@
     box-sizing: border-box;
 }
 
-.phone-dash-match-scorecontainer-numinput-container > :last-child {
+.desktop-dash-match-scorecontainer-numinput-container > :last-child {
     width: 15%;
     height: 100%;
     background-color: var(--clr-success-a0);
@@ -66,20 +75,20 @@
     transition: 0.1s filter ease;
 }
 
-.phone-dash-match-scorecontainer-numinput-container
+.desktop-dash-match-scorecontainer-numinput-container
     > :first-child:hover:not(:disabled),
-.phone-dash-match-scorecontainer-numinput-container > :last-child:hover {
+.desktop-dash-match-scorecontainer-numinput-container > :last-child:hover {
     cursor: pointer;
     filter: brightness(1.1);
 }
 
-.phone-dash-match-scorecontainer-numinput-container
+.desktop-dash-match-scorecontainer-numinput-container
     > :first-child:active:not(:disabled),
-.phone-dash-match-scorecontainer-numinput-container > :last-child:active {
+.desktop-dash-match-scorecontainer-numinput-container > :last-child:active {
     filter: brightness(1.2);
 }
 
-.phone-dash-match-scorecontainer-checkinput-container {
+.desktop-dash-match-scorecontainer-checkinput-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,7 +101,7 @@
     box-sizing: border-box;
 }
 
-.phone-dash-match-scorecontainer-checkinput-container > button {
+.desktop-dash-match-scorecontainer-checkinput-container > button {
     width: 50%;
     height: 100%;
     border: none;
@@ -100,37 +109,37 @@
     background-color: var(--clr-surface-a0);
 }
 
-.phone-dash-match-scorecontainer-checkinput-container
+.desktop-dash-match-scorecontainer-checkinput-container
     > button:hover:not(:disabled) {
     cursor: pointer;
 }
 
-.phone-dash-match-scorecontainer-checkinput-container > button:first-child {
+.desktop-dash-match-scorecontainer-checkinput-container > button:first-child {
     border-radius: 10px 0px 0px 10px;
     border-right: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.phone-dash-match-scorecontainer-checkinput-container > button:last-child {
+.desktop-dash-match-scorecontainer-checkinput-container > button:last-child {
     border-radius: 0px 10px 10px 0px;
     border-left: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.phone-dash-match-scorecontainer-checkinput-container
+.desktop-dash-match-scorecontainer-checkinput-container
     > button:first-child:disabled {
     background-color: var(--clr-danger-a0);
 }
 
-.phone-dash-match-scorecontainer-checkinput-container
+.desktop-dash-match-scorecontainer-checkinput-container
     > button:last-child:disabled {
     background-color: var(--clr-success-a0);
 }
 
-.phone-dash-match-scorecontainer-baseinput-container {
+.desktop-dash-match-scorecontainer-baseinput-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 100%;
+    width: 75%;
     height: 40%;
     border-radius: 10px;
     overflow-x: hidden;
@@ -138,47 +147,47 @@
     box-sizing: border-box;
 }
 
-.phone-dash-match-scorecontainer-baseinput-container > button {
+.desktop-dash-match-scorecontainer-baseinput-container > button {
     height: 100%;
     border: none;
     font-size: 2rem;
     background-color: var(--clr-surface-a0);
 }
 
-.phone-dash-match-scorecontainer-baseinput-container
+.desktop-dash-match-scorecontainer-baseinput-container
     > button:hover:not(:disabled) {
     cursor: pointer;
 }
 
-.phone-dash-match-scorecontainer-baseinput-container > button:first-child {
+.desktop-dash-match-scorecontainer-baseinput-container > button:first-child {
     width: 33.5%;
     border-radius: 10px 0px 0px 10px;
     border-right: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.phone-dash-match-scorecontainer-baseinput-container > button:nth-child(2) {
+.desktop-dash-match-scorecontainer-baseinput-container > button:nth-child(2) {
     width: 33%;
     border-right: 1px solid var(--clr-surface-tonal-a10);
     border-left: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.phone-dash-match-scorecontainer-baseinput-container > button:last-child {
+.desktop-dash-match-scorecontainer-baseinput-container > button:last-child {
     width: 33.5%;
     border-radius: 0px 10px 10px 0px;
     border-left: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.phone-dash-match-scorecontainer-baseinput-container
+.desktop-dash-match-scorecontainer-baseinput-container
     > button:first-child:disabled {
     background-color: var(--clr-danger-a0);
 }
 
-.phone-dash-match-scorecontainer-baseinput-container
+.desktop-dash-match-scorecontainer-baseinput-container
     > button:nth-child(2):disabled {
     background-color: var(--clr-warning-a0);
 }
 
-.phone-dash-match-scorecontainer-baseinput-container
+.desktop-dash-match-scorecontainer-baseinput-container
     > button:last-child:disabled {
     background-color: var(--clr-success-a0);
 }
