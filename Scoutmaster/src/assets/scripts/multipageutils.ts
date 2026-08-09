@@ -120,6 +120,7 @@ export function useStartTheme() {
         rootStyle.setProperty("--clr-info-a20", "#96d5ff");
         rootStyle.setProperty("--clr-red-alliance", "#f7bcb7");
         rootStyle.setProperty("--clr-blue-alliance", "#b7dcfa");
+        rootStyle.setProperty("--color-scheme", "light");
     } else {
         rootStyle.setProperty("--black", "#ffffff");
         rootStyle.setProperty("--white", "#000000");
@@ -160,6 +161,7 @@ export function useStartTheme() {
         // rootStyle.setProperty("--clr-blue-alliance", "#425666");
         rootStyle.setProperty("--clr-red-alliance", "#542d2d");
         rootStyle.setProperty("--clr-blue-alliance", "#28374e");
+        rootStyle.setProperty("--color-scheme", "dark");
     }
 }
 
@@ -205,6 +207,7 @@ export function useFlipTheme() {
         rootStyle.setProperty("--clr-info-a20", "#96d5ff");
         rootStyle.setProperty("--clr-red-alliance", "#f7bcb7");
         rootStyle.setProperty("--clr-blue-alliance", "#b7dcfa");
+        rootStyle.setProperty("--color-scheme", "light");
     } else {
         rootStyle.setProperty("--black", "#ffffff");
         rootStyle.setProperty("--white", "#000000");
@@ -245,6 +248,7 @@ export function useFlipTheme() {
         // rootStyle.setProperty("--clr-blue-alliance", "#425666");
         rootStyle.setProperty("--clr-red-alliance", "#542d2d");
         rootStyle.setProperty("--clr-blue-alliance", "#28374e");
+        rootStyle.setProperty("--color-scheme", "dark");
     }
     return useSettings((state) => state.flipTheme);
 }

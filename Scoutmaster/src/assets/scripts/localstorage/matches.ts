@@ -144,6 +144,13 @@ export function addMatch(
     }
 }
 
+/**
+ * Updates a score in a match
+ * @param {string} matchId - The ID of the match
+ * @param {number} allianceIndex - The alliance station (0 = Red1, 1 = Red2, 2 = Blue1, 3 = Blue2)
+ * @param {number} questionIndex - The index of the question
+ * @param {number} value - The new score to set
+ */
 export function updateScore(
     matchId: string,
     allianceIndex: number,

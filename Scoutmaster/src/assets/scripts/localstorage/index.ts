@@ -3,3 +3,4 @@ export * from "./general";
 export * from "./matches";
 export * from "./teams";
 export * from "./prescout";
+export * from "./summary";

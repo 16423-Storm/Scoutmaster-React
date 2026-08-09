@@ -65,6 +65,8 @@
     /** FTC related colors*/
     --clr-red-alliance: #f7bcb7;
     --clr-blue-alliance: #b7dcfa;
+
+    --color-scheme: light;
 }
 
 body,

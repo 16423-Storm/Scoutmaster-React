@@ -6,7 +6,6 @@ import {
     updateSection,
     deleteSection,
     addQuestion,
-    getTeams,
 } from "../../../scripts/localstorage";
 import { useState } from "react";
 import { useTeams } from "../../../scripts/localstorage";
@@ -25,7 +24,6 @@ import {
 import { StatusColor, DesktopSection } from "./prescouting/desktoputils";
 import { PhoneSection } from "./prescouting/phoneutils";
 import { TeamPage } from "./prescouting/teampage";
-import type { Team } from "../../../scripts/localstorage";
 
 function DashboardPrescout() {
     const { t } = useTranslation();

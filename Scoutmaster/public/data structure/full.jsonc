@@ -1,6 +1,7 @@
 {
     "compkey": "CAONBOQ",
     "custom": false,
+    "currentTeam": "16423",
     "prescout": {
         "structure": [
             {
@@ -56,5 +57,11 @@
             "blue1": 555,
             "blue2": 1,
         },
+    },
+    "summary": {
+        "picks": [],
+        "accept": [],
+        "reject": [],
+        "currentPos": 1,
     },
 }

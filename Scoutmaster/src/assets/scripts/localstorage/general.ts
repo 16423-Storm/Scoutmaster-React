@@ -1,5 +1,6 @@
 import type { MatchData } from "./matches";
 import type { PrescoutData } from "./prescout";
+import type { SummaryData } from "./summary";
 import { useCustom } from "./competitions";
 import { useTeams } from "./teams";
 import { useMatches } from "./matches";
@@ -7,8 +8,10 @@ import { useMatches } from "./matches";
 export type LocalStorageData = {
     compkey: string;
     custom: boolean;
+    team: string;
     prescout: PrescoutData;
     match: MatchData;
+    summary: SummaryData;
 };
 
 /**
@@ -58,8 +61,12 @@ export function createSkeleton(force: boolean) {
         },
     };
 
+    let currentTeam = "0";
+
     if (existing) {
         const parsed = JSON.parse(existing);
+
+        currentTeam = parsed.team;
 
         setPrescout.structure = parsed.prescout.structure;
         setPrescout.sections = parsed.prescout.sections;
@@ -68,12 +75,19 @@ export function createSkeleton(force: boolean) {
     const skeleton: LocalStorageData = {
         compkey: "",
         custom: false,
+        team: currentTeam,
         prescout: {
             structure: setPrescout.structure,
             sections: setPrescout.sections,
             teams: {},
         },
         match: {},
+        summary: {
+            picks: [],
+            accept: [],
+            reject: [],
+            pos: 1,
+        },
     };
 
     localStorage.setItem("data", JSON.stringify(skeleton));
