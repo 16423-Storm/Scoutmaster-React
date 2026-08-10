@@ -83,7 +83,9 @@ export function addMatch(
     if (key != null) {
         if (Object.hasOwn(matches, key)) {
             console.error("ERROR: Attempted to add duplicate match");
-            errorToast("Match already added", 3000);
+            if (custom) {
+                errorToast("Match already added", 3000);
+            }
             return;
         }
     } else {
@@ -133,8 +135,8 @@ export function addMatch(
         };
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
-        successToast(i18n.t("matchadded"), 2000);
         if (custom) {
+            successToast(i18n.t("matchadded"), 2000);
             setCustom(true, false);
         }
     } catch (e) {
@@ -215,3 +217,91 @@ export const useMatches = create<{
     matches: getMatches(),
     setMatches: (value) => set({ matches: value }),
 }));
+
+export async function initMatchesAPI(eventCode: string) {
+    const query = `
+        query ExampleQuery($season: Int!, $code: String!) {
+            eventByCode(season: $season, code: $code) {
+                    matches {
+                        matchNum
+                        tournamentLevel
+                            teams {
+                                teamNumber
+                                station
+                                alliance
+                            }
+                        }
+                }
+            }
+    `;
+
+    const variables = {
+        season: 2025,
+        code: eventCode,
+    };
+
+    try {
+        const response = await fetch("https://api.ftcscout.org/graphql", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+                query,
+                variables,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (result.errors) {
+            console.error("GraphQL errors:", result.errors);
+            errorToast(i18n.t("dataloaderror"), 3000);
+            return;
+        }
+
+        const matches = result.data?.eventByCode?.matches;
+
+        if (!matches) {
+            console.error("ERROR: No matches returned from GraphQL");
+            errorToast(i18n.t("dataloaderror"), 3000);
+            return;
+        }
+
+        for (const entry of matches) {
+            if (entry?.tournamentLevel == "Quals") {
+                const teams = Object.fromEntries(
+                    entry.teams.map(
+                        (team: {
+                            teamNumber: number;
+                            station: string;
+                            alliance: string;
+                        }) => [
+                            `${team.alliance}${team.station}`,
+                            team.teamNumber,
+                        ],
+                    ),
+                );
+
+                const redOne = teams.RedOne;
+                const redTwo = teams.RedTwo;
+                const blueOne = teams.BlueOne;
+                const blueTwo = teams.BlueTwo;
+
+                addMatch(
+                    redOne,
+                    redTwo,
+                    blueOne,
+                    blueTwo,
+                    false,
+                    entry.matchNum,
+                );
+            }
+        }
+    } catch (error) {
+        console.error("ERROR: Could not load teams: ", error);
+        errorToast(i18n.t("dataloaderror"), 3000);
+    }
+}

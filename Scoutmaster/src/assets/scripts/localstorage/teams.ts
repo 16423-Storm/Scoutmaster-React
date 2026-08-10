@@ -4,6 +4,8 @@ import { create } from "zustand";
 
 import { setCustom } from "./competitions";
 
+import { getCountryCode } from "countries-list";
+
 export type Team = {
     name: string;
     data: {
@@ -15,7 +17,6 @@ export type Team = {
             | number[]
             | boolean[];
     };
-    matchesIn: number[];
     code?: string;
 };
 
@@ -78,13 +79,12 @@ export function addTeam(
         parsed.prescout.teams[num.toString()] = {
             name: name,
             data: {},
-            matchesIn: [],
             ...(code ? { code: code } : {}),
         };
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());
-        successToast(i18n.t("teamadded"), 2000);
         if (custom) {
+            successToast(i18n.t("teamadded"), 2000);
             setCustom(true, false);
         }
     } catch (e) {
@@ -176,5 +176,75 @@ export function updateTeamQuestion(
     } catch (e) {
         console.error("ERROR: Could not update team question: " + e);
         errorToast(i18n.t("seterror"), 3000);
+    }
+}
+
+export async function initTeamsAPI(eventCode: string) {
+    const query = `
+        query ExampleQuery($season: Int!, $code: String!) {
+            eventByCode(season: $season, code: $code) {
+                teams {
+                    team {
+                        number
+                        name
+                        location {
+                            country
+                        }
+                    }
+                }
+            }
+        }
+    `;
+
+    const variables = {
+        season: 2025,
+        code: eventCode,
+    };
+
+    try {
+        const response = await fetch("https://api.ftcscout.org/graphql", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+                query,
+                variables,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (result.errors) {
+            console.error("GraphQL errors:", result.errors);
+            errorToast(i18n.t("dataloaderror"), 3000);
+            return;
+        }
+
+        const teams = result.data?.eventByCode?.teams;
+
+        if (!teams) {
+            console.error("ERROR: No teams returned from GraphQL");
+            errorToast(i18n.t("dataloaderror"), 3000);
+            return;
+        }
+
+        for (const entry of teams) {
+            const team = entry.team;
+
+            if (!team) continue;
+
+            addTeam(
+                team.number,
+                team.name,
+                false,
+                getCountryCode(team.location?.country) || undefined,
+            );
+        }
+    } catch (error) {
+        console.error("ERROR: Could not load teams: ", error);
+        errorToast(i18n.t("dataloaderror"), 3000);
     }
 }

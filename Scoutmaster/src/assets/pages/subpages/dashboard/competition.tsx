@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import {
-    getCompKey,
     setCustom,
     setCompKey,
     useCustom,
@@ -13,13 +12,14 @@ import {
     deleteTeam,
     useMatches,
     deleteMatch,
+    initMatchesAPI,
 } from "../../../scripts/localstorage";
 import { Bounce, ToastContainer } from "react-toastify";
 
 import data from "./comps.json";
 
 import { FaRegSadTear, FaTrash } from "react-icons/fa";
-import { IoAddCircleOutline } from "react-icons/io5";
+import { IoAddCircleOutline, IoReload } from "react-icons/io5";
 
 import { WarningModal } from "../../components/popups";
 
@@ -341,12 +341,32 @@ function DashboardCompetition() {
                                     ),
                                 )}
                             </div>
-                            <button
-                                className="desktop-dash-comp-infodisplay-greenbutton"
-                                onClick={() => setAddMatchVisible(true)}
+                            <div
+                                style={{
+                                    width: "100%",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    flexDirection: "row",
+                                }}
                             >
-                                <IoAddCircleOutline /> {t("addmatch")}
-                            </button>
+                                <button
+                                    className="desktop-dash-comp-infodisplay-greenbutton"
+                                    onClick={() => setAddMatchVisible(true)}
+                                >
+                                    <IoAddCircleOutline /> {t("addmatch")}
+                                </button>
+                                {!isCustom && (
+                                    <button
+                                        className="desktop-dash-comp-infodisplay-greenbutton"
+                                        onClick={() =>
+                                            initMatchesAPI(currentKey)
+                                        }
+                                    >
+                                        <IoReload /> {"Reload Matches"}
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

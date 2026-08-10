@@ -2,6 +2,9 @@ import i18n from "../localization";
 import { successToast, errorToast } from "../misc/toastmanager";
 import { create } from "zustand";
 
+import { initTeamsAPI } from "./teams";
+import { initMatchesAPI } from "./matches";
+
 import { createSkeleton } from "./general";
 
 /**
@@ -43,6 +46,8 @@ export function setCompKey(compkey: string) {
         parsed.compkey = compkey;
         localStorage.setItem("data", JSON.stringify(parsed));
         useCompKey.getState().setCompKey(compkey);
+        initTeamsAPI(compkey);
+        initMatchesAPI(compkey);
         successToast(i18n.t("compsuccess"), 2000);
     } catch (e) {
         console.error("ERROR: Failed to set competition: " + e);
