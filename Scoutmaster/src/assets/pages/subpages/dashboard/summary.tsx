@@ -3,23 +3,17 @@ import { useState } from "react";
 import { useScreenType } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 
-import {
-    useMatches,
-    useTeams,
-    updateSummary,
-    getNumOfTeams,
-} from "../../../scripts/localstorage";
+import { updateSummary, getNumOfTeams } from "../../../scripts/localstorage";
 
 import { FaRegStar, FaMountain } from "react-icons/fa";
 import { BsAlignMiddle } from "react-icons/bs";
 
 import type { ChangeEvent } from "react";
 
+import AllTeams from "./summary/allteams";
+
 function DashboardSummary() {
     const { t } = useTranslation();
-
-    const teams = useTeams((state) => state.teams);
-    const matches = useMatches((state) => state.matches);
 
     const [position, setPosition] = useState(1);
 
@@ -27,6 +21,12 @@ function DashboardSummary() {
         const { value } = event.target;
         updateSummary({ pos: Number(value) });
     };
+
+    const [highAverage, setHighAverage] = useState("");
+    const [highMedian, setHighMedian] = useState("");
+    const [highPeak, setHighPeak] = useState("");
+
+    const [currentTab, setCurrentTab] = useState(0);
 
     if (useScreenType() == "desktop") {
         return (
@@ -45,7 +45,7 @@ function DashboardSummary() {
                                 <FaRegStar style={{ color: "#4F81A8" }} />
                             </div>
                             <div className="desktop-dash-summary-topbar-item-text">
-                                <p>12345</p>
+                                <p>{highAverage}</p>
                                 <p>Highest Average</p>
                             </div>
                         </div>
@@ -54,7 +54,7 @@ function DashboardSummary() {
                                 <BsAlignMiddle style={{ color: "#4F9A91" }} />
                             </div>
                             <div className="desktop-dash-summary-topbar-item-text">
-                                <p>12345</p>
+                                <p>{highMedian}</p>
                                 <p>Highest Median</p>
                             </div>
                         </div>
@@ -63,7 +63,7 @@ function DashboardSummary() {
                                 <FaMountain style={{ color: "#C28A4A" }} />
                             </div>
                             <div className="desktop-dash-summary-topbar-item-text">
-                                <p>12345</p>
+                                <p>{highPeak}</p>
                                 <p>Highest Peak</p>
                             </div>
                         </div>
@@ -98,8 +98,17 @@ function DashboardSummary() {
                             </div>
                         </div>
                         <div className="desktop-dash-summary-tablecontainer">
-                            <div className="desktop-dash-summary-header-row"></div>
-                            <div className="desktop-dash-summary-table"></div>
+                            {currentTab == 0 ? (
+                                <AllTeams
+                                    setHighAverage={setHighAverage}
+                                    setHighMedian={setHighMedian}
+                                    setHighPeak={setHighPeak}
+                                />
+                            ) : currentTab == 1 ? (
+                                <></>
+                            ) : (
+                                <></>
+                            )}
                         </div>
                     </div>
                 </div>

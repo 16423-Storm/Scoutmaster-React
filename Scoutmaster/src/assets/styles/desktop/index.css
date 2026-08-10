@@ -17,6 +17,7 @@
 @import "./dashboard/dashboardpages/scorecontainer.css";
 
 @import "./dashboard/dashboardpages/summary.css";
+@import "./dashboard/dashboardpages/summary/allteams.css";
 
 @import "./dashboard/dashboardpages/competition/sub1.css";
 @import "./dashboard/dashboardpages/competition/sub2.css";
