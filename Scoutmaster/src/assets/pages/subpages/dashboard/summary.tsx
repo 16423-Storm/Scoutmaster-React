@@ -28,7 +28,7 @@ import {
     Label,
 } from "@headlessui/react";
 
-import { Tab1, Tab2 } from "./summary/headers";
+import { Tab1, Tab2, Tab3 } from "./summary/headers";
 
 function DashboardSummary() {
     const { t } = useTranslation();
@@ -403,7 +403,7 @@ function DashboardSummary() {
                             ) : currentTab == 1 ? (
                                 <Tab2 teamsBelow={teamsBelow} />
                             ) : (
-                                <></>
+                                <Tab3 teamsAbove={teamsAbove} />
                             )}
                         </div>
                     </div>

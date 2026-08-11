@@ -333,11 +333,126 @@ export function Tab2({
     }
 }
 
-export function Tab3() {
+export function Tab3({
+    teamsAbove,
+}: {
+    teamsAbove: { number: string; name: string }[];
+}) {
     const { t } = useTranslation();
 
+    const summary = useSummary((state) => state.summary);
+
     if (useScreenType() == "desktop") {
-        return <></>;
+        return (
+            <>
+                <div className="desktop-dash-summary-table">
+                    <div
+                        className="desktop-dash-summary-row"
+                        style={{ position: "sticky", top: 0 }}
+                    >
+                        <div
+                            className="desktop-dash-summary-cell"
+                            style={{ width: "10%" }}
+                        >
+                            Accept
+                        </div>
+                        <div
+                            className="desktop-dash-summary-cell"
+                            style={{ width: "10%" }}
+                        >
+                            Reject
+                        </div>
+                        <div
+                            className="desktop-dash-summary-cell"
+                            style={{ width: "80%" }}
+                        >
+                            Team
+                        </div>
+                    </div>
+
+                    {teamsAbove.map((team, index) => {
+                        const accept = summary.accept.includes(team.number);
+                        const reject = summary.reject.includes(team.number);
+
+                        const handleAccept = () => {
+                            if (accept) {
+                                updateSummary({
+                                    accept: summary.accept.filter(
+                                        (number) => number !== team.number,
+                                    ),
+                                });
+                            } else {
+                                updateSummary({
+                                    accept: [...summary.accept, team.number],
+                                    reject: summary.reject.filter(
+                                        (number) => number !== team.number,
+                                    ),
+                                });
+                            }
+                        };
+
+                        const handleReject = () => {
+                            if (reject) {
+                                updateSummary({
+                                    reject: summary.reject.filter(
+                                        (number) => number !== team.number,
+                                    ),
+                                });
+                            } else {
+                                updateSummary({
+                                    reject: [...summary.reject, team.number],
+                                    accept: summary.accept.filter(
+                                        (number) => number !== team.number,
+                                    ),
+                                });
+                            }
+                        };
+
+                        return (
+                            <div
+                                className={`desktop-dash-summary-row ${
+                                    accept
+                                        ? "summary-accept"
+                                        : reject
+                                          ? "summary-reject"
+                                          : ""
+                                }`}
+                                key={team.number}
+                            >
+                                <div
+                                    className="desktop-dash-summary-cell"
+                                    style={{ width: "10%" }}
+                                >
+                                    <input
+                                        type="checkbox"
+                                        checked={accept}
+                                        onChange={handleAccept}
+                                        className="desktop-dash-prescout-team-checkbox"
+                                    />
+                                </div>
+                                <div
+                                    className="desktop-dash-summary-cell"
+                                    style={{ width: "10%" }}
+                                >
+                                    <input
+                                        type="checkbox"
+                                        checked={reject}
+                                        onChange={handleReject}
+                                        className="desktop-dash-prescout-team-checkbox"
+                                    />
+                                </div>
+                                <div
+                                    className="desktop-dash-summary-cell"
+                                    style={{ width: "80%" }}
+                                >
+                                    {team.number} - {team.name}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </>
+        );
     } else {
         return <></>;
     }

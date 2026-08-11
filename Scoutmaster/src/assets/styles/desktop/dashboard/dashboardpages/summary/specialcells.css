@@ -10,6 +10,20 @@
     font-weight: 600;
 }
 
+.summary-accept > * {
+    background-color: color-mix(
+        in srgb,
+        var(--clr-success-a0) 50%,
+        transparent
+    );
+    font-weight: 900;
+}
+
+.summary-reject > * {
+    background-color: color-mix(in srgb, var(--clr-danger-a0) 50%, transparent);
+    font-weight: 900;
+}
+
 .summary-reorder {
     display: flex;
     justify-content: center;
