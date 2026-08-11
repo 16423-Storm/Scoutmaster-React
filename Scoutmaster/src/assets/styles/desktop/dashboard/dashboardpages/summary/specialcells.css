@@ -1,0 +1,32 @@
+.unranked-team * {
+    color: grey !important;
+    font-style: italic;
+    text-decoration: line-through;
+}
+
+.selected-team > * {
+    background-color: var(--clr-warning-a20);
+    color: black;
+    font-weight: 600;
+}
+
+.summary-reorder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.summary-reorder *:not(#disabled) {
+    transition: transform 0.1s ease;
+}
+
+.summary-reorder *:not(#disabled):hover {
+    color: var(--clr-surface-a50);
+    cursor: pointer;
+}
+
+.summary-reorder *:not(#disabled):active {
+    transform: scale(0.9);
+}

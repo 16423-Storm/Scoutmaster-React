@@ -1,229 +1,53 @@
-import { useState, useEffect } from "react";
+//!
+//!
+//!
+//!
+//!
+// THIS IS NOT GOOD PRACTICE, BUT FOR SIMPLICITY, "SORTED" IS BEING TYPED AS ANY, THIS WILL BE FIXED LATER
+//!
+//!
+//!
+//!
+//!
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect } from "react";
 
 import { useScreenType } from "../../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 
 import {
-    useTeams,
-    useMatches,
-    useCompKey,
     useCustom,
+    useSummary,
+    updateSummary,
+    movePicks,
 } from "../../../../scripts/localstorage";
 
-import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
+import {
+    FaSort,
+    FaSortUp,
+    FaSortDown,
+    FaArrowUp,
+    FaArrowDown,
+} from "react-icons/fa";
 
-function AllTeams({
-    setHighAverage,
-    setHighMedian,
-    setHighPeak,
+export function Tab1({
+    sorted,
+    sortBy,
+    setSortBy,
+    sortDown,
+    setSortDown,
+    selected,
 }: {
-    setHighAverage: React.Dispatch<React.SetStateAction<string>>;
-    setHighMedian: React.Dispatch<React.SetStateAction<string>>;
-    setHighPeak: React.Dispatch<React.SetStateAction<string>>;
+    sorted: any;
+    sortBy: number;
+    setSortBy: Dispatch<SetStateAction<number>>;
+    sortDown: boolean;
+    setSortDown: Dispatch<SetStateAction<boolean>>;
+    selected: { id: number; name: string } | null;
 }) {
     const { t } = useTranslation();
 
-    const currentKey = useCompKey((state) => state.compKey);
     const isCustom = useCustom((state) => state.isCustom);
-
-    const [sortBy, setSortBy] = useState(0);
-    const [sortDown, setSortDown] = useState(true);
-
-    const teams = useTeams((state) => state.teams);
-    const matches = useMatches((state) => state.matches);
-
-    const [ranks, setRanks] = useState<Record<number, number>>({});
-
-    useEffect(() => {
-        if (isCustom) {
-            setRanks({});
-            return;
-        }
-
-        getRanks(currentKey).then((result) => {
-            setRanks(result);
-        });
-    }, [currentKey, isCustom]);
-
-    const stats = Object.entries(teams).map(([teamId, team]) => {
-        const teamNumber = Number(teamId);
-        const matchScores = [];
-
-        for (const match of Object.values(matches)) {
-            const teamIndex = match.teams.indexOf(teamNumber);
-            if (teamIndex === -1) {
-                continue;
-            }
-
-            const score =
-                match.scores[teamIndex][0] * 3 +
-                match.scores[teamIndex][1] +
-                match.scores[teamIndex][2] * 2 +
-                match.scores[teamIndex][3] * 3 +
-                match.scores[teamIndex][4] * 3 +
-                match.scores[teamIndex][5] * 1 +
-                match.scores[teamIndex][6] * 2 +
-                match.scores[teamIndex][7] * 5;
-
-            matchScores.push(score);
-        }
-
-        const sortedScores = [...matchScores].sort((a, b) => a - b);
-
-        const average =
-            matchScores.length > 0
-                ? matchScores.reduce((sum, score) => sum + score, 0) /
-                  matchScores.length
-                : 0;
-
-        const median =
-            sortedScores.length === 0
-                ? 0
-                : sortedScores.length % 2 === 0
-                  ? (sortedScores[sortedScores.length / 2 - 1] +
-                        sortedScores[sortedScores.length / 2]) /
-                    2
-                  : sortedScores[Math.floor(sortedScores.length / 2)];
-
-        const peak = matchScores.length > 0 ? Math.max(...matchScores) : 0;
-
-        return {
-            teamId,
-            rank: isCustom ? undefined : ranks[teamNumber],
-            team,
-            average,
-            median,
-            peak,
-        };
-    });
-
-    const highestAverage = stats.reduce(
-        (max, team) => (team.average > max.average ? team : max),
-        stats[0],
-    );
-
-    const highestMedian = stats.reduce(
-        (max, team) => (team.median > max.median ? team : max),
-        stats[0],
-    );
-
-    const highestPeak = stats.reduce(
-        (max, team) => (team.peak > max.peak ? team : max),
-        stats[0],
-    );
-
-    setHighAverage(
-        `${highestAverage.teamId} - ${highestAverage.average.toFixed(1)}`,
-    );
-
-    setHighMedian(
-        `${highestMedian.teamId} - ${highestMedian.median.toFixed(1)}`,
-    );
-
-    setHighPeak(`${highestPeak.teamId} - ${highestPeak.peak}`);
-
-    const sorted = [...stats].sort((a, b) => {
-        if (!isCustom) {
-            if (a.rank === undefined && b.rank !== undefined) return 1;
-            if (a.rank !== undefined && b.rank === undefined) return -1;
-            if (a.rank === undefined && b.rank === undefined) return 0;
-        }
-
-        let aValue: number;
-        let bValue: number;
-
-        switch (sortBy) {
-            case 0:
-                if (!isCustom && a.rank !== undefined && b.rank !== undefined) {
-                    aValue = a.rank;
-                    bValue = b.rank;
-                } else {
-                    aValue = a.average;
-                    bValue = b.average;
-                }
-                break;
-
-            case 1:
-                aValue = a.average;
-                bValue = b.average;
-                break;
-
-            case 2:
-                aValue = a.median;
-                bValue = b.median;
-                break;
-
-            case 3:
-                aValue = a.peak;
-                bValue = b.peak;
-                break;
-
-            default:
-                aValue = 0;
-                bValue = 0;
-        }
-
-        const primary = sortDown ? bValue - aValue : aValue - bValue;
-
-        if (primary !== 0) {
-            return primary;
-        }
-
-        if (!isCustom) {
-            if (a.rank !== undefined && b.rank !== undefined) {
-                return a.rank - b.rank;
-            }
-        }
-
-        return 0;
-    });
-
-    async function getRanks(
-        eventCode: string,
-    ): Promise<Record<number, number>> {
-        const query = `
-        query ExampleQuery($season: Int!, $code: String!) {
-            eventByCode(season: $season, code: $code) {
-                teams {
-                    stats {
-                        ... on TeamEventStats2025 {
-                            rank
-                        }
-                    }
-                    team {
-                        number
-                    }
-                }
-            }
-        }
-    `;
-
-        const response = await fetch("https://api.ftcscout.org/graphql", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                query,
-                variables: {
-                    season: 2025,
-                    code: eventCode,
-                },
-            }),
-        });
-
-        const result = await response.json();
-
-        const ranks: Record<number, number> = {};
-
-        for (const entry of result.data.eventByCode.teams) {
-            if (entry.stats) {
-                ranks[entry.team.number] = entry.stats.rank;
-            }
-        }
-
-        return ranks;
-    }
 
     if (useScreenType() == "desktop") {
         return (
@@ -353,11 +177,15 @@ function AllTeams({
                         </div>
                     </div>
 
-                    {sorted.map((team) => (
+                    {sorted.map((team: any) => (
                         <div
                             className={`desktop-dash-summary-row ${
                                 team.rank === undefined && !isCustom
                                     ? "unranked-team"
+                                    : ""
+                            } ${
+                                selected?.name.startsWith(`${team.teamId} -`)
+                                    ? "selected-team"
                                     : ""
                             }`}
                             key={team.teamId}
@@ -408,4 +236,109 @@ function AllTeams({
     }
 }
 
-export default AllTeams;
+export function Tab2({
+    teamsBelow,
+}: {
+    teamsBelow: { number: string; name: string }[];
+}) {
+    const { t } = useTranslation();
+
+    const summary = useSummary((state) => state.summary);
+
+    useEffect(() => {
+        if (summary.picks.length == 0 && teamsBelow.length > 0) {
+            updateSummary({
+                picks: teamsBelow.map((team) => team.number),
+            });
+        }
+    }, []);
+
+    const belowPicks = summary.picks.filter((pick) =>
+        teamsBelow.some((team) => team.number === pick),
+    );
+
+    if (useScreenType() == "desktop") {
+        return (
+            <>
+                <div className="desktop-dash-summary-table">
+                    <div
+                        className="desktop-dash-summary-row"
+                        style={{ position: "sticky", top: 0 }}
+                    >
+                        <div
+                            className="desktop-dash-summary-cell"
+                            style={{ width: "20%" }}
+                        >
+                            Order
+                        </div>
+                        <div
+                            className="desktop-dash-summary-cell"
+                            style={{ width: "80%" }}
+                        >
+                            Team
+                        </div>
+                    </div>
+
+                    {belowPicks.map((teamNumber, index) => {
+                        const team = teamsBelow.find(
+                            (team) => team.number === teamNumber,
+                        );
+
+                        if (!team) return null;
+
+                        return (
+                            <div
+                                className="desktop-dash-summary-row"
+                                key={team.number}
+                            >
+                                <div
+                                    className="desktop-dash-summary-cell"
+                                    style={{
+                                        width: "20%",
+                                    }}
+                                >
+                                    <div className="summary-reorder">
+                                        {index !== 0 && (
+                                            <FaArrowUp
+                                                onClick={() =>
+                                                    movePicks(index, -1)
+                                                }
+                                            />
+                                        )}
+                                        {index !== belowPicks.length - 1 && (
+                                            <FaArrowDown
+                                                onClick={() =>
+                                                    movePicks(index, 1)
+                                                }
+                                            />
+                                        )}
+                                    </div>
+                                    {index + 1}
+                                </div>
+
+                                <div
+                                    className="desktop-dash-summary-cell"
+                                    style={{ width: "80%" }}
+                                >
+                                    {team.number} - {team.name}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </>
+        );
+    } else {
+        return <></>;
+    }
+}
+
+export function Tab3() {
+    const { t } = useTranslation();
+
+    if (useScreenType() == "desktop") {
+        return <></>;
+    } else {
+        return <></>;
+    }
+}

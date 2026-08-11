@@ -57,6 +57,41 @@ export function updateSummary(changes: Partial<SummaryData>) {
     }
 }
 
+/**
+ * Reorders scouting picks
+ * @param {number} index - The current index of the item to move
+ * @param {-1 | 1} dir - The direction to move
+ */
+export function movePicks(index: number, dir: -1 | 1) {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+
+        const targetIndex = index + dir;
+        if (targetIndex < 0 || targetIndex >= parsed.summary.picks.length)
+            return;
+
+        [parsed.summary.picks[index], parsed.summary.picks[targetIndex]] = [
+            parsed.summary.picks[targetIndex],
+            parsed.summary.picks[index],
+        ];
+
+        localStorage.setItem("data", JSON.stringify(parsed));
+
+        useSummary.getState().setSummary(getSummary());
+    } catch (e) {
+        console.error("ERROR: Could not edit summary: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+}
+
 export const useSummary = create<{
     summary: SummaryData;
     setSummary: (value: SummaryData) => void;
