@@ -246,12 +246,15 @@ export function Tab2({
     const summary = useSummary((state) => state.summary);
 
     useEffect(() => {
-        if (summary.picks.length == 0 && teamsBelow.length > 0) {
-            updateSummary({
-                picks: teamsBelow.map((team) => team.number),
-            });
-        }
-    }, []);
+        const below = teamsBelow.map((team) => team.number);
+
+        updateSummary({
+            picks: [
+                ...summary.picks.filter((pick) => below.includes(pick)),
+                ...below.filter((team) => !summary.picks.includes(team)),
+            ],
+        });
+    }, [teamsBelow]);
 
     const belowPicks = summary.picks.filter((pick) =>
         teamsBelow.some((team) => team.number === pick),
