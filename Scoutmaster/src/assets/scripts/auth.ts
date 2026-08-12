@@ -1,3 +1,11 @@
+import { createClient } from "@supabase/supabase-js";
+import { connectToSession } from "./serverutils/realtime";
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
+
 export type UserData = {
     email: string;
     password: string;
@@ -16,8 +24,22 @@ export type SignUpFocus = {
  * - "Success" when the signup succeeds
  * - "Error: message" when the signup fails
  */
-export function signUp(data: UserData) {
-    console.log(data);
+export async function signUp(
+    data: UserData,
+): Promise<"Success" | `Error: ${string}`> {
+    const { error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+            emailRedirectTo: `http://localhost:5173/dashboard`,
+        },
+    });
+
+    if (error) {
+        return `Error: ${error.message}`;
+    }
+
+    return "Success";
 }
 
 /**
@@ -26,15 +48,32 @@ export function signUp(data: UserData) {
  * @param {UserData} data - Login credentials for the user.
  * @returns {Promise<"Success" | string>} Resolves to "Success" or an error message in the format "Error: message".
  */
-export function signIn(data: UserData) {
-    console.log(data);
+export async function signIn(
+    data: UserData,
+): Promise<"Success" | `Error: ${string}`> {
+    const { error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+    });
+
+    if (error) {
+        return `Error: ${error.message}`;
+    }
+
+    await connectToSession();
+
+    return "Success";
 }
 
 /**
  * @returns {boolean} Whether the user is signed in.
  */
-export function isUserSignedIn() {
-    return true;
+export async function isUserSignedIn(): Promise<boolean> {
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    return user !== null;
 }
 
 /**

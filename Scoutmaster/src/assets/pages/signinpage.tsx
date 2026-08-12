@@ -36,7 +36,6 @@ function SignInPage() {
             upper: /[A-Z]/.test(p),
             lower: /[a-z]/.test(p),
             number: /\d/.test(p),
-            symbol: /[^A-Za-z0-9]/.test(p),
         };
     }, [form.password]);
 
@@ -52,15 +51,24 @@ function SignInPage() {
 
     const inputClass = (valid: boolean) => (valid ? "valid" : "invalid");
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         if (!canSubmit) return;
-        signIn(form);
+
+        const result = await signIn(form);
+
+        if (result === "Success") {
+            goToDash();
+        } else {
+            console.error(result);
+        }
     };
 
     const canSubmit = emailValid && passwordValid;
 
     const goToSignUp = useGoToPage("/signup");
+    const goToDash = useGoToPage("/dashboard");
     const [showPassword, setShowPassword] = useState(false);
 
     if (screenType === "phone" || screenType === "tablet") {
