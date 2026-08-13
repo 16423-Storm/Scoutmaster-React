@@ -44,6 +44,18 @@ function LandingPage() {
     const goToSignUp = useGoToPage("/signup");
     const goToSignIn = useGoToPage("/signin");
 
+    const [signedIn, setSignedIn] = useState(false);
+
+    useEffect(() => {
+        useSignedIn()
+            .then((result) => {
+                setSignedIn(result);
+            })
+            .catch(() => {
+                setSignedIn(false);
+            });
+    }, []);
+
     const screenType = useScreenType();
     if (screenType === "phone") {
         return (
@@ -61,9 +73,9 @@ function LandingPage() {
                         <button>{t("about")}</button>
                         <button
                             className="phone-landing-signinbutton"
-                            onClick={useSignedIn() ? goToSignIn : goToSignUp}
+                            onClick={signedIn ? goToSignIn : goToSignUp}
                         >
-                            {useSignedIn() ? t("signin") : t("signup")}
+                            {signedIn ? t("signin") : t("signup")}
                         </button>
                     </div>
                     <p className="phone-landing-herotitle">Scoutmaster</p>
@@ -105,9 +117,9 @@ function LandingPage() {
                         <button>{t("about")}</button>
                         <button
                             className="desktop-landing-signinbutton"
-                            onClick={useSignedIn() ? goToSignIn : goToSignUp}
+                            onClick={signedIn ? goToSignIn : goToSignUp}
                         >
-                            {useSignedIn() ? t("signin") : t("signup")}
+                            {signedIn ? t("signin") : t("signup")}
                         </button>
                     </div>
                 </div>

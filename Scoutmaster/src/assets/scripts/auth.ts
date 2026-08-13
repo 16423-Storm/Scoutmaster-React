@@ -76,6 +76,10 @@ export async function isUserSignedIn(): Promise<boolean> {
     return user !== null;
 }
 
+// export async function isUserAdmin(): Promise<boolean> {
+
+// }
+
 /**
  * Returns the number of members in user's group
  * @returns {number} Number of Members

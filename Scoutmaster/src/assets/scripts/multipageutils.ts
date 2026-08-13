@@ -38,9 +38,9 @@ export function useIsAkwardHeight(): true | false {
 /**
  * Returns whether the user is currently signed in or not.
  *
- * @returns true | false
+ * @returns {Promise<boolean>}
  */
-export function useSignedIn(): true | false {
+export async function useSignedIn(): Promise<boolean> {
     return isUserSignedIn();
 }
 
