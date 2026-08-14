@@ -15,6 +15,7 @@ supabase = create_client(
 app = FastAPI()
 
 groups: dict[int, set[WebSocket]] = {}
+groupData: dict[int, dict] = {}
 
 
 @app.get("/")
@@ -67,6 +68,18 @@ async def getUserGroup(user_id: str):
         "member": member,
     }
 
+async def getGroup(groupId: int):
+    result = (
+        supabase
+        .table("group")
+        .select("*")
+        .eq("id", groupId)
+        .single()
+        .execute()
+    )
+
+    return result.data
+
 
 @app.websocket("/ws")
 async def websocketConnect(websocket: WebSocket):
@@ -91,13 +104,18 @@ async def websocketConnect(websocket: WebSocket):
         await websocket.close(code=1008)
         return
 
-    group = await getUserGroup(userId)
+    userGroup = await getUserGroup(userId)
 
-    if not group:
+    if not userGroup:
         await websocket.close(code=1008)
         return
 
-    groupId = group["group_id"]
+    groupId = userGroup["group_id"]
+
+    if groupId not in groupData:
+        groupData[groupId] = await getGroup(groupId)
+
+    group = groupData[groupId]
 
     await websocket.accept()
 
@@ -107,6 +125,11 @@ async def websocketConnect(websocket: WebSocket):
     )
 
     groups.setdefault(groupId, set()).add(websocket)
+
+    await websocket.send_json({
+        "type": "groupHydration",
+        "data": group
+    })
 
     print(
         f"User {userId} connected to group {groupId}"
@@ -129,7 +152,8 @@ async def websocketConnect(websocket: WebSocket):
                 userId,
                 message,
                 supabase,
-                groupId
+                groupId,
+                groupData
             )
 
             await websocket.send_text(

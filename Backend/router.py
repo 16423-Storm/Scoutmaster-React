@@ -5,7 +5,8 @@ async def routeMessage(
     id: str,
     message: dict,
     supabase,
-    group: int
+    group: int,
+    groupData
 ):
     messageType = message.get("type")
 
@@ -23,5 +24,6 @@ async def routeMessage(
         id,
         message,
         supabase,
-        group
+        group,
+        groupData
     )

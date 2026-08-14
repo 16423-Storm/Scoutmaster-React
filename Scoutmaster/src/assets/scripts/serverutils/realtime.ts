@@ -32,6 +32,25 @@ export async function connectToSession() {
         socket = null;
     };
 
+    socket.onmessage = (event) => {
+        if (typeof event.data !== "string") {
+            console.log("WebSocket non-text message:", event.data);
+            return;
+        }
+
+        try {
+            const message = JSON.parse(event.data);
+
+            console.log("WebSocket JSON message:", message);
+
+            if (message?.type === "groupHydration") {
+                console.log("Group hydrated:", message);
+            }
+        } catch {
+            console.log("WebSocket text message:", event.data);
+        }
+    };
+
     return socket;
 }
 

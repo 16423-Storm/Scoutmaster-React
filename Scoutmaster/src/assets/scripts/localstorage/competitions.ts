@@ -110,6 +110,14 @@ export function setCustom(custom: boolean, toast = true) {
     try {
         const parsed = JSON.parse(data);
         parsed.custom = custom;
+
+        // Using uppercase/lowercase True/False because the backend is python
+        if (custom == true) {
+            sendMessage({ type: "custom", content: "True" });
+        } else {
+            sendMessage({ type: "custom", content: "False" });
+        }
+
         localStorage.setItem("data", JSON.stringify(parsed));
         useCustom.getState().setCustom(custom);
         if (toast) {
