@@ -1,4 +1,4 @@
-from handlers.prescout import *
+from handlers.handlers.competition import *
 
 handlers = {
     "compCodeChange": handleCompCodeChange,

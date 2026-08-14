@@ -3,4 +3,4 @@ async def handleCompCodeChange(
     id: str,
     message: dict,
 ):
-    print("compcodechange")
+    print("compcodechange"+message.get("content"))

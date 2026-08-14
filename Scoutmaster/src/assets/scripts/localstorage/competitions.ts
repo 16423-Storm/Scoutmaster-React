@@ -7,6 +7,8 @@ import { initMatchesAPI } from "./matches";
 
 import { createSkeleton } from "./general";
 
+import { sendMessage } from "../serverutils/realtime";
+
 /**
  * Returns the current competition key from localstorage if available, "NONE" if not
  * @returns {string} competition key or "NONE"
@@ -44,6 +46,9 @@ export function setCompKey(compkey: string) {
     try {
         const parsed = JSON.parse(data);
         parsed.compkey = compkey;
+
+        sendMessage({ type: "compCodeChange", content: compkey });
+
         localStorage.setItem("data", JSON.stringify(parsed));
         useCompKey.getState().setCompKey(compkey);
         initTeamsAPI(compkey);

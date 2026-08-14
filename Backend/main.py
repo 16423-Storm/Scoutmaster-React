@@ -3,6 +3,8 @@ from supabase import create_client
 import os
 from dotenv import load_dotenv
 
+from router import routeMessage
+
 load_dotenv()
 
 supabase = create_client(
@@ -117,12 +119,19 @@ async def websocketConnect(websocket: WebSocket):
 
     try:
         while True:
-            message = await websocket.receive_text()
+            message = await websocket.receive_json()
 
             print(f"{userId}: {message}")
 
+
+            await routeMessage(
+                websocket,
+                userId,
+                message,
+            )
+
             await websocket.send_text(
-                f"Server received: {message}"
+                f"Server received message"
             )
 
     except WebSocketDisconnect:

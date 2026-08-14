@@ -1,13 +1,13 @@
-from handlers.handlers import handlers
+from handlers.handlerList import handlers
 
 async def routeMessage(
     websocket: WebSocket,
     id: str,
     message: dict,
 ):
-    type = message.get("type")
+    messageType = message.get("type")
 
-    handler = handlers.get(type)
+    handler = handlers.get(messageType)
 
     if handler is None:
         await websocket.send_json({
