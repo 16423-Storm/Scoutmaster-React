@@ -4,6 +4,8 @@ async def routeMessage(
     websocket: WebSocket,
     id: str,
     message: dict,
+    supabase,
+    group: int
 ):
     messageType = message.get("type")
 
@@ -20,4 +22,6 @@ async def routeMessage(
         websocket,
         id,
         message,
+        supabase,
+        group
     )

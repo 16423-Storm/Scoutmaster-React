@@ -128,6 +128,8 @@ async def websocketConnect(websocket: WebSocket):
                 websocket,
                 userId,
                 message,
+                supabase,
+                groupId
             )
 
             await websocket.send_text(
