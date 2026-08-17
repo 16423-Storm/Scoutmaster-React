@@ -169,6 +169,7 @@ export function getQuestion(id: string) {
  * @param {boolean} show - Whether to show success toasts or not (Default false)
  * @param {Question} question - Question
  * @param {string} section - Section Id (Default "0")
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
 export function addQuestion(
     show: boolean = false,
@@ -177,6 +178,7 @@ export function addQuestion(
         title: "New Question",
     },
     section: string = Object.keys(getSections())[0],
+    sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -210,8 +212,13 @@ export function addQuestion(
         localStorage.setItem("data", JSON.stringify(parsed));
         useQuestions.getState().setQuestions(getQuestions());
         useSections.getState().setSections(getSections());
+
         if (show) {
             successToast(i18n.t("questionadded"), 2000);
+        }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not add question: " + e);
@@ -224,8 +231,13 @@ export function addQuestion(
  * Delete question of choice
  * @param {string} id - Id of question to be deleted
  * @param {boolean} show - whether to show success toasts or not (Default false)
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function deleteQuestion(id: string, show: boolean = false) {
+export function deleteQuestion(
+    id: string,
+    show: boolean = false,
+    sendServer: boolean = true,
+) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -257,8 +269,13 @@ export function deleteQuestion(id: string, show: boolean = false) {
         useQuestions.getState().setQuestions(getQuestions());
         useSections.getState().setSections(getSections());
         useTeams.getState().setTeams(getTeams());
+
         if (show) {
             successToast(i18n.t("questiondeleted"), 2000);
+        }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not delete question: " + e);
@@ -271,12 +288,13 @@ export function deleteQuestion(id: string, show: boolean = false) {
  * @param {string} id - Question ID
  * @param {Partial<Question>} changes - Changes to question
  * @param {boolean} show - Whether to show success toasts or not (Default false)
- * @returns
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
 export function updateQuestion(
     id: string,
     changes: Partial<Question>,
     show: boolean = false,
+    sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -313,6 +331,10 @@ export function updateQuestion(
         if (show) {
             successToast(i18n.t("questionupdated"), 2000);
         }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
+        }
     } catch (e) {
         console.error("ERROR: Could not edit question: " + e);
         errorToast(i18n.t("seterror"), 3000);
@@ -332,8 +354,13 @@ export const useQuestions = create<{
  * Add section to scouting
  * @param {QuestionSection} section - Section
  * @param {boolean} show - Whether to show success toasts or not  (Default false)
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function addSection(section: QuestionSection, show: boolean = false) {
+export function addSection(
+    section: QuestionSection,
+    show: boolean = false,
+    sendServer: boolean = true,
+) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -370,8 +397,13 @@ export function addSection(section: QuestionSection, show: boolean = false) {
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useSections.getState().setSections(getSections());
+
         if (show) {
             successToast(i18n.t("sectionadded"), 2000);
+        }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not add section: " + e);
@@ -384,12 +416,14 @@ export function addSection(section: QuestionSection, show: boolean = false) {
  * Delete section of choice
  * @param {string} id - Id of section to be deleted
  * @param {boolean} deleteQuestions - Whether to delete questions in section, or assign them to section with previous index OR the next index if previous does not exist
- * @param {boolean} show - whether to show success toasts or not  (Default false)
+ * @param {boolean} show - Whether to show success toasts or not  (Default false)
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
 export function deleteSection(
     id: string,
     deleteQuestions: boolean,
     show: boolean = false,
+    sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -459,6 +493,10 @@ export function deleteSection(
         if (show) {
             successToast(i18n.t("sectiondeleted"), 2000);
         }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
+        }
     } catch (e) {
         console.error("ERROR: Could not delete section: " + e);
         errorToast(i18n.t("seterror"), 3000);
@@ -471,11 +509,13 @@ export function deleteSection(
  * @param {string} id - Section ID
  * @param {Partial<QuestionSection>} changes - Changes to section
  * @param {boolean} show - Whether to show success toasts or not
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
 export function updateSection(
     id: string,
     changes: Partial<QuestionSection>,
     show: boolean = false,
+    sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -505,6 +545,10 @@ export function updateSection(
 
         if (show) {
             successToast(i18n.t("sectionupdated"), 2000);
+        }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not edit section: " + e);

@@ -70,6 +70,7 @@ export function getMatches() {
  * @param {number} red2 - Team for red 2
  * @param {number} blue1 - Team for blue 1
  * @param {number} blue2 - Team for blue 2
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
 export function addMatch(
     red1: number,
@@ -77,6 +78,7 @@ export function addMatch(
     blue1: number,
     blue2: number,
     custom: boolean = false,
+    sendServer: boolean = true,
     key: number | null = null,
 ) {
     const matches = getMatches();
@@ -139,6 +141,10 @@ export function addMatch(
             successToast(i18n.t("matchadded"), 2000);
             setCustom(true, false);
         }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
+        }
     } catch (e) {
         console.error("ERROR: Could not add match: " + e);
         errorToast(i18n.t("seterror"), 3000);
@@ -152,12 +158,14 @@ export function addMatch(
  * @param {number} allianceIndex - The alliance station (0 = Red1, 1 = Red2, 2 = Blue1, 3 = Blue2)
  * @param {number} questionIndex - The index of the question
  * @param {number} value - The new score to set
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
 export function updateScore(
     matchId: string,
     allianceIndex: number,
     questionIndex: number,
     value: number,
+    sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -177,13 +185,26 @@ export function updateScore(
         parsed.match[matchId].scores[allianceIndex][questionIndex] = value;
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
+        if (sendServer) {
+            console.log("SEND TO SERVER");
+        }
     } catch (e) {
         console.error("ERROR: Could not update score: " + e);
         errorToast(i18n.t("seterror"), 3000);
     }
 }
 
-export function deleteMatch(num: string, custom: boolean) {
+/**
+ *
+ * @param {number} num - Target match number to delete
+ * @param {boolean} custom - Whether to set competition to custom or not
+ * @param {boolean} sendServer - Send data to server for update, true by default
+ */
+export function deleteMatch(
+    num: string,
+    custom: boolean,
+    sendServer: boolean = true,
+) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -193,15 +214,22 @@ export function deleteMatch(num: string, custom: boolean) {
 
     try {
         const parsed = JSON.parse(data);
+
         if (!parsed.match[num]) {
             console.warn("WARNING: Match does not exist");
         }
+
         delete parsed.match[num];
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
         successToast(i18n.t("matchdeleted"), 2000);
+
         if (custom) {
             setCustom(true, false);
+        }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not delete team: " + e);

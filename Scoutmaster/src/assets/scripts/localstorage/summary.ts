@@ -29,7 +29,10 @@ export function getSummary() {
     }
 }
 
-export function updateSummary(changes: Partial<SummaryData>) {
+export function updateSummary(
+    changes: Partial<SummaryData>,
+    sendServer: boolean = true,
+) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -50,6 +53,10 @@ export function updateSummary(changes: Partial<SummaryData>) {
         localStorage.setItem("data", JSON.stringify(parsed));
 
         useSummary.getState().setSummary(getSummary());
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
+        }
     } catch (e) {
         console.error("ERROR: Could not edit summary: " + e);
         errorToast(i18n.t("seterror"), 3000);
@@ -61,8 +68,13 @@ export function updateSummary(changes: Partial<SummaryData>) {
  * Reorders scouting picks
  * @param {number} index - The current index of the item to move
  * @param {-1 | 1} dir - The direction to move
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function movePicks(index: number, dir: -1 | 1) {
+export function movePicks(
+    index: number,
+    dir: -1 | 1,
+    sendServer: boolean = true,
+) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -85,6 +97,10 @@ export function movePicks(index: number, dir: -1 | 1) {
         localStorage.setItem("data", JSON.stringify(parsed));
 
         useSummary.getState().setSummary(getSummary());
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
+        }
     } catch (e) {
         console.error("ERROR: Could not edit summary: " + e);
         errorToast(i18n.t("seterror"), 3000);
@@ -118,7 +134,7 @@ export function getGroupTeam() {
     }
 }
 
-export function updateGroupTeam(team: string) {
+export function updateGroupTeam(team: string, sendServer: boolean = true) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -134,6 +150,10 @@ export function updateGroupTeam(team: string) {
         localStorage.setItem("data", JSON.stringify(parsed));
 
         useGroupTeam.getState().setGroupTeam(getGroupTeam());
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
+        }
     } catch (e) {
         console.error("ERROR: Could not edit group team: " + e);
         errorToast(i18n.t("seterror"), 3000);

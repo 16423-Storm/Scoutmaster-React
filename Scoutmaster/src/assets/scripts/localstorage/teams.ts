@@ -54,11 +54,13 @@ export function getTeams() {
  * @param {string} name - Team name
  * @param {string} code - Team country code (optional)
  * @param {boolean} [custom = false] - Whether to set competition to custom or not, false by default
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
 export function addTeam(
     num: number,
     name: string,
     custom = false,
+    sendServer: boolean = true,
     code?: string,
 ) {
     if (Object.hasOwn(getTeams(), num.toString())) {
@@ -83,9 +85,14 @@ export function addTeam(
         };
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());
+
         if (custom) {
             successToast(i18n.t("teamadded"), 2000);
             setCustom(true, false);
+        }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not add team: " + e);
@@ -94,7 +101,11 @@ export function addTeam(
     }
 }
 
-export function deleteTeam(num: string, custom: boolean) {
+export function deleteTeam(
+    num: string,
+    custom: boolean,
+    sendServer: boolean = true,
+) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -111,8 +122,13 @@ export function deleteTeam(num: string, custom: boolean) {
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());
         successToast(i18n.t("teamdeleted"), 2000);
+
         if (custom) {
             setCustom(true, false);
+        }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not delete team: " + e);
@@ -135,6 +151,7 @@ export const useTeams = create<{
  * @param {string} questionId - Question ID
  * @param {string | number | boolean | string[] | number[] | boolean[] | undefined} value - Answer value
  * @param {boolean} show - Whether to show success toasts or not (Default false)
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
 export function updateTeamQuestion(
     teamId: string,
@@ -148,6 +165,7 @@ export function updateTeamQuestion(
         | boolean[]
         | undefined,
     show: boolean = false,
+    sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -170,8 +188,13 @@ export function updateTeamQuestion(
         }
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());
+
         if (show) {
             successToast(i18n.t("teamupdated"), 2000);
+        }
+
+        if (sendServer) {
+            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not update team question: " + e);
@@ -179,7 +202,10 @@ export function updateTeamQuestion(
     }
 }
 
-export async function initTeamsAPI(eventCode: string) {
+export async function initTeamsAPI(
+    eventCode: string,
+    sendServer: boolean = true,
+) {
     const query = `
         query ExampleQuery($season: Int!, $code: String!) {
             eventByCode(season: $season, code: $code) {
@@ -240,6 +266,7 @@ export async function initTeamsAPI(eventCode: string) {
                 team.number,
                 team.name,
                 false,
+                sendServer,
                 getCountryCode(team.location?.country) || undefined,
             );
         }
