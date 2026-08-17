@@ -33,8 +33,9 @@ export function getCompKey() {
 /**
  * Overwrites competition key
  * @param {string} compkey - Competition Key
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function setCompKey(compkey: string) {
+export function setCompKey(compkey: string, sendServer: boolean = true) {
     createSkeleton(true);
     const data = localStorage.getItem("data");
     if (!data) {
@@ -47,7 +48,9 @@ export function setCompKey(compkey: string) {
         const parsed = JSON.parse(data);
         parsed.compkey = compkey;
 
-        sendMessage({ type: "compCodeChange", content: compkey });
+        if (sendServer) {
+            sendMessage({ type: "compCodeChange", content: compkey });
+        }
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useCompKey.getState().setCompKey(compkey);
@@ -96,8 +99,13 @@ export function getCustom() {
  *
  * @param {boolean} custom - What to set custom to
  * @param {boolean} [toast = true] - Whether or not success/error toasts will be shown, true by default
+ * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function setCustom(custom: boolean, toast = true) {
+export function setCustom(
+    custom: boolean,
+    toast = true,
+    sendServer: boolean = true,
+) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -111,15 +119,18 @@ export function setCustom(custom: boolean, toast = true) {
         const parsed = JSON.parse(data);
         parsed.custom = custom;
 
-        // Using uppercase/lowercase True/False because the backend is python
-        if (custom == true) {
-            sendMessage({ type: "custom", content: "True" });
-        } else {
-            sendMessage({ type: "custom", content: "False" });
+        if (sendServer) {
+            // Using uppercase/lowercase True/False because the backend is python
+            if (custom == true) {
+                sendMessage({ type: "custom", content: "True" });
+            } else {
+                sendMessage({ type: "custom", content: "False" });
+            }
         }
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useCustom.getState().setCustom(custom);
+
         if (toast) {
             successToast(i18n.t("customsuccess"), 2000);
         }
