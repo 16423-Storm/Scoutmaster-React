@@ -1,9 +1,10 @@
 import type { MatchData } from "./matches";
 import type { PrescoutData } from "./prescout";
 import type { SummaryData } from "./summary";
-import { useCustom } from "./competitions";
-import { useTeams } from "./teams";
-import { useMatches } from "./matches";
+import { useCustom, getCustom } from "./competitions";
+import { useTeams, getTeams } from "./teams";
+import { useMatches, getMatches } from "./matches";
+import { useGroupTeam, useSummary, getGroupTeam, getSummary } from "./summary";
 
 export type LocalStorageData = {
     compkey: string;
@@ -35,6 +36,20 @@ export function resetAllStates() {
     useCustom.getState().setCustom(false);
     useTeams.getState().setTeams({});
     useMatches.getState().setMatches({});
+    useSummary
+        .getState()
+        .setSummary({ picks: [], accept: [], reject: [], pos: 0 });
+}
+
+/**
+ * Refreshes states (sets all states to their getState() instead of just setting to default)
+ */
+export function refreshAllStates() {
+    useCustom.getState().setCustom(getCustom());
+    useTeams.getState().setTeams(getTeams());
+    useMatches.getState().setMatches(getMatches());
+    useSummary.getState().setSummary(getSummary());
+    useGroupTeam.getState().setGroupTeam(getGroupTeam());
 }
 
 /**
@@ -97,4 +112,36 @@ export function createSkeleton(force: boolean) {
 /**
  * Hydrates local storage with data from database
  */
-export function hydrate() {}
+export function hydrate(
+    compkey: string,
+    custom: boolean,
+    team: string,
+    prescout: PrescoutData | null,
+    match: MatchData | null,
+    summary: SummaryData | null,
+) {
+    const skeleton: LocalStorageData = {
+        compkey: compkey ?? "",
+        custom: custom ?? false,
+        team: team ?? "0",
+
+        prescout: prescout ?? {
+            structure: {},
+            sections: {},
+            teams: {},
+        },
+
+        match: match ?? {},
+
+        summary: summary ?? {
+            picks: [],
+            accept: [],
+            reject: [],
+            pos: 0,
+        },
+    };
+
+    localStorage.setItem("data", JSON.stringify(skeleton));
+
+    refreshAllStates();
+}

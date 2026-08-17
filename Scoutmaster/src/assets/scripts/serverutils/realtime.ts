@@ -1,5 +1,7 @@
 import { supabase } from "../auth";
 
+import { hydrate } from "../localstorage";
+
 let socket: WebSocket | null = null;
 
 export async function connectToSession() {
@@ -44,7 +46,14 @@ export async function connectToSession() {
             console.log("WebSocket JSON message:", message);
 
             if (message?.type === "groupHydration") {
-                console.log("Group hydrated:", message);
+                hydrate(
+                    message.data.compkey,
+                    message.data.custom,
+                    message.data.currentTeam,
+                    message.data.prescout,
+                    message.data.matchscout,
+                    message.data.summary,
+                );
             }
         } catch {
             console.log("WebSocket text message:", event.data);
