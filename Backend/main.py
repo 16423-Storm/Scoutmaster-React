@@ -153,7 +153,8 @@ async def websocketConnect(websocket: WebSocket):
                 message,
                 supabase,
                 groupId,
-                groupData
+                groupData,
+                groups
             )
 
             await websocket.send_text(

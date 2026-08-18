@@ -1,7 +1,7 @@
 import type { MatchData } from "./matches";
 import type { PrescoutData } from "./prescout";
 import type { SummaryData } from "./summary";
-import { useCustom, getCustom } from "./competitions";
+import { useCustom, getCustom, useCompKey, getCompKey } from "./competitions";
 import { useTeams, getTeams } from "./teams";
 import { useMatches, getMatches } from "./matches";
 import { useGroupTeam, useSummary, getGroupTeam, getSummary } from "./summary";
@@ -50,6 +50,7 @@ export function refreshAllStates() {
     useMatches.getState().setMatches(getMatches());
     useSummary.getState().setSummary(getSummary());
     useGroupTeam.getState().setGroupTeam(getGroupTeam());
+    useCompKey.getState().setCompKey(getCompKey());
 }
 
 /**

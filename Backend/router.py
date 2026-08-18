@@ -1,4 +1,5 @@
 from handlers.handlerList import handlers
+from fastapi import WebSocket
 
 async def routeMessage(
     websocket: WebSocket,
@@ -6,7 +7,8 @@ async def routeMessage(
     message: dict,
     supabase,
     group: int,
-    groupData
+    groupData,
+    groups
 ):
     messageType = message.get("type")
 
@@ -15,7 +17,7 @@ async def routeMessage(
     if handler is None:
         await websocket.send_json({
             "type": "error",
-            "message": f"Unknown request type: {type}",
+            "message": f"Unknown request type: {messageType}",
         })
         return
 
@@ -25,5 +27,6 @@ async def routeMessage(
         message,
         supabase,
         group,
-        groupData
+        groupData,
+        groups
     )

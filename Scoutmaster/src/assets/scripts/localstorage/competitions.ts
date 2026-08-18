@@ -1,6 +1,7 @@
 import i18n from "../localization";
 import { successToast, errorToast } from "../misc/toastmanager";
 import { create } from "zustand";
+import { nanoid } from "nanoid";
 
 import { initTeamsAPI } from "./teams";
 import { initMatchesAPI } from "./matches";
@@ -35,7 +36,7 @@ export function getCompKey() {
  * @param {string} compkey - Competition Key
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function setCompKey(compkey: string, sendServer: boolean = true) {
+export async function setCompKey(compkey: string, sendServer: boolean = true) {
     createSkeleton(true);
     const data = localStorage.getItem("data");
     if (!data) {
@@ -49,7 +50,18 @@ export function setCompKey(compkey: string, sendServer: boolean = true) {
         parsed.compkey = compkey;
 
         if (sendServer) {
-            sendMessage({ type: "compCodeChange", content: compkey });
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "compCodeChange",
+                content: compkey,
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
         }
 
         localStorage.setItem("data", JSON.stringify(parsed));
@@ -101,7 +113,7 @@ export function getCustom() {
  * @param {boolean} [toast = true] - Whether or not success/error toasts will be shown, true by default
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function setCustom(
+export async function setCustom(
     custom: boolean,
     toast = true,
     sendServer: boolean = true,
@@ -120,11 +132,20 @@ export function setCustom(
         parsed.custom = custom;
 
         if (sendServer) {
-            // Using uppercase/lowercase True/False because the backend is python
-            if (custom == true) {
-                sendMessage({ type: "custom", content: "True" });
-            } else {
-                sendMessage({ type: "custom", content: "False" });
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "custom",
+                content: custom,
+                requestId,
+            });
+
+            if (!confirmed) {
+                if (toast) {
+                    errorToast(i18n.t("seterror"), 3000);
+                }
+
+                return;
             }
         }
 

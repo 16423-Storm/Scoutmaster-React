@@ -4,6 +4,15 @@ import { hydrate } from "../localstorage";
 
 let socket: WebSocket | null = null;
 
+const pendingRequests = new Map<
+    string,
+    {
+        resolve: (value: boolean) => void;
+        reject: (reason?: unknown) => void;
+        timeout: ReturnType<typeof setTimeout>;
+    }
+>();
+
 export async function connectToSession() {
     if (socket?.readyState === WebSocket.OPEN) {
         return socket;
@@ -45,6 +54,29 @@ export async function connectToSession() {
 
             console.log("WebSocket JSON message:", message);
 
+            if (message?.type === "confirm") {
+                const requestId = message.requestId;
+
+                if (!requestId) {
+                    console.error("Confirmation missing requestId");
+                    return;
+                }
+
+                const pending = pendingRequests.get(requestId);
+
+                if (!pending) {
+                    console.warn(`No pending request found for ${requestId}`);
+                    return;
+                }
+
+                clearTimeout(pending.timeout);
+                pendingRequests.delete(requestId);
+
+                pending.resolve(message.content);
+
+                return;
+            }
+
             if (message?.type === "groupHydration") {
                 hydrate(
                     message.data.compkey,
@@ -63,10 +95,28 @@ export async function connectToSession() {
     return socket;
 }
 
-export function sendMessage(message: object) {
+export function sendMessage(message: {
+    type: string;
+    content: string | boolean;
+    requestId: string;
+}): Promise<boolean> {
     if (!socket || socket.readyState !== WebSocket.OPEN) {
         throw new Error("WebSocket is not connected");
     }
 
-    socket.send(JSON.stringify(message));
+    return new Promise<boolean>((resolve, reject) => {
+        const timeout = setTimeout(() => {
+            pendingRequests.delete(message.requestId);
+
+            reject(new Error(`Request ${message.requestId} timed out`));
+        }, 5000);
+
+        pendingRequests.set(message.requestId, {
+            resolve,
+            reject,
+            timeout,
+        });
+
+        socket!.send(JSON.stringify(message));
+    });
 }
