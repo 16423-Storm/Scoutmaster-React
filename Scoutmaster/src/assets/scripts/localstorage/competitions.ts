@@ -66,7 +66,9 @@ export async function setCompKey(compkey: string, sendServer: boolean = true) {
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useCompKey.getState().setCompKey(compkey);
-        initTeamsAPI(compkey, sendServer);
+        if (sendServer) {
+            initTeamsAPI(compkey, sendServer);
+        }
         initMatchesAPI(compkey);
         successToast(i18n.t("compsuccess"), 2000);
     } catch (e) {

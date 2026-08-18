@@ -7,6 +7,7 @@ import {
     useCompKey,
     setCustom,
     setCompKey,
+    getCompKey,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -114,8 +115,7 @@ export async function connectToSession() {
             }
 
             if (message?.type === "addTeams") {
-                const currentKey = useCompKey((state) => state.compKey);
-                initTeamsAPI(currentKey, false);
+                initTeamsAPI(getCompKey(), false);
             }
         } catch {
             console.log("WebSocket text message:", event.data);
