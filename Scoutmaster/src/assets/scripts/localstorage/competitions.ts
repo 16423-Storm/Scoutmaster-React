@@ -37,7 +37,6 @@ export function getCompKey() {
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
 export async function setCompKey(compkey: string, sendServer: boolean = true) {
-    createSkeleton(true);
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -46,9 +45,6 @@ export async function setCompKey(compkey: string, sendServer: boolean = true) {
     }
 
     try {
-        const parsed = JSON.parse(data);
-        parsed.compkey = compkey;
-
         if (sendServer) {
             const requestId = nanoid(10);
 
@@ -63,6 +59,10 @@ export async function setCompKey(compkey: string, sendServer: boolean = true) {
                 return;
             }
         }
+
+        createSkeleton(true);
+        const parsed = JSON.parse(data);
+        parsed.compkey = compkey;
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useCompKey.getState().setCompKey(compkey);

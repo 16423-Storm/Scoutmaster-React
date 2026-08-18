@@ -44,18 +44,44 @@ async def handleCompCodeChange(
         )
         return
 
+    setPrescout = {
+        "teams": {},
+        "structure": {},
+        "sections": {
+            "0": {
+                "title": "Section 1",
+                "headersize": 1,
+                "questions": [],
+                "index": 0,
+            },
+        },
+    }
+
+    setPrescout["sections"] = groupData[group]["prescout"]["sections"]
+    setPrescout["structure"] = groupData[group]["prescout"]["structure"]
+
     try:
         updateResult = (
             supabase
                 .table("group")
                 .update({
-                    "compkey": message.get("content")
+                    "compkey": message.get("content"),
+                    "custom": False,
+                    "prescout": setPrescout,
+                    "currentTeam": groupData[group]["currentTeam"],
+                    "matchscout": {},
+                    "summary": {
+                        "picks": [],
+                        "accept": [],
+                        "reject": [],
+                        "currentPos": 0
+                    }
                 })
                 .eq("id", group)
                 .execute()
         )
-    except:
-        print("Error sending to supabase")
+    except Exception as e:
+        print("Error sending to supabase:",repr(e))
         await sendToUser(
             websocket,
             {

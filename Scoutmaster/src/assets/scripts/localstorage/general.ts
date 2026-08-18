@@ -66,6 +66,7 @@ export function createSkeleton(force: boolean) {
     }
 
     let setPrescout = {
+        teams: {},
         structure: {},
         sections: {
             "0": {
