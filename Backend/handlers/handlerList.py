@@ -1,6 +1,10 @@
 from handlers.handlers.competition import *
+from handlers.handlers.teams import *
 
 handlers = {
     "compCodeChange": handleCompCodeChange,
-    "custom": handleCustom
+    "custom": handleCustom,
+
+    "addTeam": handleAddTeam,
+    "addTeams": handleAddTeams
 }

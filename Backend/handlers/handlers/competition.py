@@ -9,6 +9,12 @@ async def handleCompCodeChange(
     groupData,
     groups
 ):
+    print("=== handleCompCodeChange ===")
+    print("group:", group)
+    print("old compkey:", groupData[group].get("compkey"))
+    print("new compkey:", message.get("content"))
+    print("old prescout teams:", groupData[group].get("prescout", {}).get("teams"))
+
     members = groupData[group]["members"] or []
     member = next(
         (
@@ -102,6 +108,17 @@ async def handleCompCodeChange(
     )
 
     groupData[group]["compkey"] = message.get("content")
+    groupData[group]["prescout"] = setPrescout
+
+    await sendToGroup(
+        groups,
+        group,
+        {
+            "type": "compCodeChange",
+            "content": message.get("content")
+        },
+        exclude=websocket
+    )
     
 
 async def handleCustom(
@@ -187,5 +204,6 @@ async def handleCustom(
         {
             "type": "custom",
             "content": message.get("content")
-        }
+        },
+        exclude=websocket
     )

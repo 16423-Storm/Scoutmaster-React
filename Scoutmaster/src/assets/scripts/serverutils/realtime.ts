@@ -1,6 +1,13 @@
 import { supabase } from "../auth";
 
-import { hydrate } from "../localstorage";
+import {
+    hydrate,
+    addTeam,
+    initTeamsAPI,
+    useCompKey,
+    setCustom,
+    setCompKey,
+} from "../localstorage";
 
 let socket: WebSocket | null = null;
 
@@ -77,6 +84,14 @@ export async function connectToSession() {
                 return;
             }
 
+            if (message?.type === "custom") {
+                setCustom(message.content, false, false);
+            }
+
+            if (message?.type === "compCodeChange") {
+                setCompKey(message.content, false);
+            }
+
             if (message?.type === "groupHydration") {
                 hydrate(
                     message.data.compkey,
@@ -86,6 +101,21 @@ export async function connectToSession() {
                     message.data.matchscout,
                     message.data.summary,
                 );
+            }
+
+            if (message?.type === "addTeam") {
+                addTeam(
+                    message.content.num,
+                    message.content.name,
+                    true,
+                    false,
+                    message.content.code,
+                );
+            }
+
+            if (message?.type === "addTeams") {
+                const currentKey = useCompKey((state) => state.compKey);
+                initTeamsAPI(currentKey, false);
             }
         } catch {
             console.log("WebSocket text message:", event.data);
@@ -97,7 +127,7 @@ export async function connectToSession() {
 
 export function sendMessage(message: {
     type: string;
-    content: string | boolean;
+    content: any;
     requestId: string;
 }): Promise<boolean> {
     if (!socket || socket.readyState !== WebSocket.OPEN) {

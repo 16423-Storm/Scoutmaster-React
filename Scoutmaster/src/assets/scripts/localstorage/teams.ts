@@ -1,10 +1,13 @@
 import i18n from "../localization";
 import { successToast, errorToast } from "../misc/toastmanager";
 import { create } from "zustand";
+import { nanoid } from "nanoid";
 
 import { setCustom } from "./competitions";
 
 import { getCountryCode } from "countries-list";
+
+import { sendMessage } from "../serverutils/realtime";
 
 export type Team = {
     name: string;
@@ -56,10 +59,10 @@ export function getTeams() {
  * @param {boolean} [custom = false] - Whether to set competition to custom or not, false by default
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function addTeam(
+export async function addTeam(
     num: number,
     name: string,
-    custom = false,
+    custom = true,
     sendServer: boolean = true,
     code?: string,
 ) {
@@ -81,8 +84,28 @@ export function addTeam(
         parsed.prescout.teams[num.toString()] = {
             name: name,
             data: {},
-            ...(code ? { code: code } : {}),
+            code: code ?? null,
         };
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "addTeam",
+                content: {
+                    num: num,
+                    name: name,
+                    code: code ?? null,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());
 
@@ -90,14 +113,59 @@ export function addTeam(
             successToast(i18n.t("teamadded"), 2000);
             setCustom(true, false);
         }
-
-        if (sendServer) {
-            console.log("SEND TO SERVER");
-        }
     } catch (e) {
         console.error("ERROR: Could not add team: " + e);
         errorToast(i18n.t("seterror"), 3000);
         return;
+    }
+}
+
+export async function addTeams(
+    teams: {
+        num: number;
+        name: string;
+        code?: string;
+    }[],
+    sendServer: boolean = true,
+) {
+    const data = localStorage.getItem("data");
+
+    if (!data) {
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+
+        for (const team of teams) {
+            parsed.prescout.teams[team.num.toString()] = {
+                name: team.name,
+                data: {},
+                code: team.code ?? null,
+            };
+        }
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "addTeams",
+                content: teams,
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useTeams.getState().setTeams(getTeams());
+    } catch (e) {
+        console.error("ERROR: Could not add teams:", e);
+        errorToast(i18n.t("seterror"), 3000);
     }
 }
 
@@ -251,25 +319,21 @@ export async function initTeamsAPI(
 
         const teams = result.data?.eventByCode?.teams;
 
-        if (!teams) {
-            console.error("ERROR: No teams returned from GraphQL");
-            errorToast(i18n.t("dataloaderror"), 3000);
-            return;
-        }
+        const modifiedTeams = [];
 
         for (const entry of teams) {
             const team = entry.team;
 
             if (!team) continue;
 
-            addTeam(
-                team.number,
-                team.name,
-                false,
-                sendServer,
-                getCountryCode(team.location?.country) || undefined,
-            );
+            modifiedTeams.push({
+                num: team.number,
+                name: team.name,
+                code: getCountryCode(team.location?.country) || undefined,
+            });
         }
+
+        await addTeams(modifiedTeams, sendServer);
     } catch (error) {
         console.error("ERROR: Could not load teams: ", error);
         errorToast(i18n.t("dataloaderror"), 3000);
