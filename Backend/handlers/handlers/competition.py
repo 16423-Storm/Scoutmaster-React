@@ -9,12 +9,6 @@ async def handleCompCodeChange(
     groupData,
     groups
 ):
-    print("=== handleCompCodeChange ===")
-    print("group:", group)
-    print("old compkey:", groupData[group].get("compkey"))
-    print("new compkey:", message.get("content"))
-    print("old prescout teams:", groupData[group].get("prescout", {}).get("teams"))
-
     members = groupData[group]["members"] or []
     member = next(
         (

@@ -4,6 +4,7 @@ import {
     hydrate,
     addTeam,
     initTeamsAPI,
+    initMatchesAPI,
     useCompKey,
     setCustom,
     setCompKey,
@@ -116,6 +117,10 @@ export async function connectToSession() {
 
             if (message?.type === "addTeams") {
                 initTeamsAPI(getCompKey(), false);
+            }
+
+            if (message?.type === "addMatches") {
+                initMatchesAPI(getCompKey(), false);
             }
         } catch {
             console.log("WebSocket text message:", event.data);

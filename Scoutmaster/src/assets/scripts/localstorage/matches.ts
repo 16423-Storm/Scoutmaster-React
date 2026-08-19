@@ -1,8 +1,10 @@
 import i18n from "../localization";
 import { successToast, errorToast } from "../misc/toastmanager";
 import { create } from "zustand";
+import { nanoid } from "nanoid";
 
 import { setCustom } from "./competitions";
+import { sendMessage } from "../serverutils/realtime";
 
 export type MatchData = {
     [matchNum: string]: {
@@ -72,7 +74,7 @@ export function getMatches() {
  * @param {number} blue2 - Team for blue 2
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function addMatch(
+export async function addMatch(
     red1: number,
     red2: number,
     blue1: number,
@@ -135,6 +137,28 @@ export function addMatch(
                 [0, 0, 0, 0, 0, 0, 0, 0],
             ],
         };
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "addMatch",
+                content: {
+                    red1: red1,
+                    red2: red2,
+                    blue1: blue1,
+                    blue2: blue2,
+                    key: key,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
         if (custom) {
@@ -149,6 +173,67 @@ export function addMatch(
         console.error("ERROR: Could not add match: " + e);
         errorToast(i18n.t("seterror"), 3000);
         return;
+    }
+}
+
+export async function addMatches(
+    matches: {
+        red1: number;
+        red2: number;
+        blue1: number;
+        blue2: number;
+        key: number;
+    }[],
+    sendServer: boolean = true,
+) {
+    const data = localStorage.getItem("data");
+
+    if (!data) {
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+
+        for (const match of matches) {
+            const teams = [match.red1, match.red2, match.blue1, match.blue2];
+
+            parsed.match[match.key.toString()] = {
+                teams,
+                red1: match.red1,
+                red2: match.red2,
+                blue1: match.blue1,
+                blue2: match.blue2,
+                scores: [
+                    [0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0],
+                ],
+            };
+        }
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "addMatches",
+                content: matches,
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useMatches.getState().setMatches(getMatches());
+    } catch (e) {
+        console.error("ERROR: Could not add teams:", e);
+        errorToast(i18n.t("seterror"), 3000);
     }
 }
 
@@ -246,7 +331,7 @@ export const useMatches = create<{
     setMatches: (value) => set({ matches: value }),
 }));
 
-export async function initMatchesAPI(eventCode: string) {
+export async function initMatchesAPI(eventCode: string, sendServer: boolean) {
     const query = `
         query ExampleQuery($season: Int!, $code: String!) {
             eventByCode(season: $season, code: $code) {
@@ -298,6 +383,8 @@ export async function initMatchesAPI(eventCode: string) {
             return;
         }
 
+        const modifiedMatches = [];
+
         for (const entry of matches) {
             if (entry?.tournamentLevel == "Quals") {
                 const teams = Object.fromEntries(
@@ -313,21 +400,17 @@ export async function initMatchesAPI(eventCode: string) {
                     ),
                 );
 
-                const redOne = teams.RedOne;
-                const redTwo = teams.RedTwo;
-                const blueOne = teams.BlueOne;
-                const blueTwo = teams.BlueTwo;
-
-                addMatch(
-                    redOne,
-                    redTwo,
-                    blueOne,
-                    blueTwo,
-                    false,
-                    entry.matchNum,
-                );
+                modifiedMatches.push({
+                    red1: teams.RedOne,
+                    red2: teams.RedTwo,
+                    blue1: teams.BlueOne,
+                    blue2: teams.BlueTwo,
+                    key: entry.matchNum,
+                });
             }
         }
+
+        await addMatches(modifiedMatches, sendServer);
     } catch (error) {
         console.error("ERROR: Could not load teams: ", error);
         errorToast(i18n.t("dataloaderror"), 3000);

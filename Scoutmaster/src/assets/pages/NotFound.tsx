@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { useScreenType } from "../scripts/multipageutils.js";
+import { useGoToPage } from "../scripts/multipageutils";
 
 import SVG404 from "./../../assets/images/branding/404.svg?react";
 
 function NotFound() {
     const { t } = useTranslation();
-    const screenType = useScreenType();
+
+    const goHome = useGoToPage("/");
 
     return (
         <div className="error404-main">
@@ -14,7 +15,7 @@ function NotFound() {
             <p>
                 The page you are looking for is not available or does not exist.
             </p>
-            <button>Go back to home</button>
+            <button onClick={goHome}>Go back to home</button>
         </div>
     );
 }

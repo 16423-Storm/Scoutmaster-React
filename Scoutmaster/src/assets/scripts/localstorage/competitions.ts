@@ -68,8 +68,8 @@ export async function setCompKey(compkey: string, sendServer: boolean = true) {
         useCompKey.getState().setCompKey(compkey);
         if (sendServer) {
             initTeamsAPI(compkey, sendServer);
+            initMatchesAPI(compkey, sendServer);
         }
-        initMatchesAPI(compkey);
         successToast(i18n.t("compsuccess"), 2000);
     } catch (e) {
         console.error("ERROR: Failed to set competition: " + e);
