@@ -10,5 +10,6 @@ handlers = {
     "addTeams": handleAddTeams,
 
     "addMatch": handleAddMatch,
-    "addMatches": handleAddMatches
+    "addMatches": handleAddMatches,
+    "updateScore": handleUpdateScore
 }

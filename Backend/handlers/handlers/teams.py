@@ -1,4 +1,5 @@
 from messageRouting import *
+import asyncio
 
 async def handleAddTeam(
     websocket: WebSocket,
@@ -167,14 +168,17 @@ async def handleAddTeams(
     }
 
     try:
-        updateResult = (
-            supabase
-                .table("group")
-                .update({
-                    "prescout": prescout
-                })
-                .eq("id", group)
-                .execute()
+        result = await asyncio.to_thread(
+            lambda: supabase.rpc(
+                "update_match_score",
+                {
+                    "p_group_id": group,
+                    "p_match_key": str(content["k"]),
+                    "p_alliance": content["a"],
+                    "p_question": content["q"],
+                    "p_value": content["v"]
+                }
+            ).execute()
         )
     except Exception as e:
         print("Error sending to supabase:", repr(e))

@@ -1,4 +1,5 @@
 from messageRouting import *
+import asyncio
 
 async def handleAddMatch(
     websocket: WebSocket,
@@ -226,6 +227,106 @@ async def handleAddMatches(
         },
         exclude=websocket
     )
+
+    await sendToUser(
+        websocket,
+        {
+            "type": "confirm",
+            "requestId": message.get("requestId"),
+            "content": True
+        }
+    )
+
+async def handleUpdateScore(
+    websocket: WebSocket,
+    id: str,
+    message: dict,
+    supabase,
+    group: int,
+    groupData,
+    groups
+):
+    members = groupData[group]["members"] or []
+
+    member = next(
+        (
+            member
+            for member in members
+            if member.get("id") == id
+        ),
+        None
+    )
+
+    if not member:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    content = message.get("content")
+
+    if not content:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    print(group)
+
+    try:
+        result = await asyncio.to_thread(
+            lambda: supabase.rpc(
+                "update_match_score",
+                {
+                    "p_group_id": group,
+                    "p_match_key": str(content["k"]),
+                    "p_alliance": content["a"],
+                    "p_question": content["q"],
+                    "p_value": content["v"],
+                    "p_counter": content["c"],
+                }
+            ).execute()
+        )
+
+        score = result.data
+
+        groupData[group]["matchscout"][str(content["k"])]["scores"][content["a"]][content["q"]] = score
+
+        await sendToGroup(
+            groups,
+            group,
+            {
+                "type": "updateScore",
+                "content": {
+                    "k": content["k"],
+                    "a": content["a"],
+                    "q": content["q"],
+                    "v": score,
+                }
+            },
+            exclude=websocket
+        )
+
+    except Exception as e:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
 
     await sendToUser(
         websocket,

@@ -243,13 +243,15 @@ export async function addMatches(
  * @param {number} allianceIndex - The alliance station (0 = Red1, 1 = Red2, 2 = Blue1, 3 = Blue2)
  * @param {number} questionIndex - The index of the question
  * @param {number} value - The new score to set
+ * @param {boolean} counter - Whether this is a counter or an exact number
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function updateScore(
+export async function updateScore(
     matchId: string,
     allianceIndex: number,
     questionIndex: number,
     value: number,
+    counter: boolean,
     sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
@@ -261,17 +263,57 @@ export function updateScore(
 
     try {
         const parsed = JSON.parse(data);
+        const originalParsed = JSON.parse(data);
         const score =
             parsed.match[matchId].scores[allianceIndex][questionIndex];
         if (score === undefined) {
             console.error("ERROR: Score does not exist");
             return;
         }
-        parsed.match[matchId].scores[allianceIndex][questionIndex] = value;
+
+        if (counter) {
+            if (value == 1) {
+                parsed.match[matchId].scores[allianceIndex][questionIndex] += 1;
+            } else {
+                if (
+                    parsed.match[matchId].scores[allianceIndex][questionIndex] >
+                    0
+                ) {
+                    parsed.match[matchId].scores[allianceIndex][
+                        questionIndex
+                    ] -= 1;
+                }
+            }
+        } else {
+            parsed.match[matchId].scores[allianceIndex][questionIndex] = value;
+        }
+
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
+
         if (sendServer) {
-            console.log("SEND TO SERVER");
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "updateScore",
+                // k = key, a = alliance index, a = alliance, q = question index, v = value, c = counter
+                // this is only because updateScore will be called so often that I need to lower the data sent back and forth as much as possible
+                content: {
+                    k: matchId,
+                    a: allianceIndex,
+                    q: questionIndex,
+                    v: value,
+                    c: counter,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                localStorage.setItem("data", JSON.stringify(originalParsed));
+                useMatches.getState().setMatches(getMatches());
+                return;
+            }
         }
     } catch (e) {
         console.error("ERROR: Could not update score: " + e);

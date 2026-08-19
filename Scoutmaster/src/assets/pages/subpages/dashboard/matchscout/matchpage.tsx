@@ -53,9 +53,8 @@ function DashboardMatchPage({
                                                             match,
                                                             currentStation,
                                                             0,
-                                                            target.scores[
-                                                                currentStation
-                                                            ][0] - 1,
+                                                            -1,
+                                                            true,
                                                         );
                                                     }
                                                 }}
@@ -80,9 +79,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         0,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][0] + 1,
+                                                        1,
+                                                        true,
                                                     )
                                                 }
                                             >
@@ -106,9 +104,8 @@ function DashboardMatchPage({
                                                             match,
                                                             currentStation,
                                                             2,
-                                                            target.scores[
-                                                                currentStation
-                                                            ][2] - 1,
+                                                            -1,
+                                                            true,
                                                         );
                                                     }
                                                 }}
@@ -133,9 +130,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         2,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][2] + 1,
+                                                        1,
+                                                        true,
                                                     )
                                                 }
                                             >
@@ -161,9 +157,8 @@ function DashboardMatchPage({
                                                             match,
                                                             currentStation,
                                                             1,
-                                                            target.scores[
-                                                                currentStation
-                                                            ][1] - 1,
+                                                            -1,
+                                                            true,
                                                         );
                                                     }
                                                 }}
@@ -188,9 +183,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         1,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][1] + 1,
+                                                        1,
+                                                        true,
                                                     )
                                                 }
                                             >
@@ -208,6 +202,7 @@ function DashboardMatchPage({
                                                         currentStation,
                                                         3,
                                                         0,
+                                                        false,
                                                     );
                                                 }}
                                                 disabled={
@@ -225,6 +220,7 @@ function DashboardMatchPage({
                                                         currentStation,
                                                         3,
                                                         1,
+                                                        false,
                                                     )
                                                 }
                                                 disabled={
@@ -258,9 +254,8 @@ function DashboardMatchPage({
                                                             match,
                                                             currentStation,
                                                             4,
-                                                            target.scores[
-                                                                currentStation
-                                                            ][4] - 1,
+                                                            -1,
+                                                            true,
                                                         );
                                                     }
                                                 }}
@@ -285,9 +280,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         4,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][4] + 1,
+                                                        1,
+                                                        true,
                                                     )
                                                 }
                                             >
@@ -311,9 +305,8 @@ function DashboardMatchPage({
                                                             match,
                                                             currentStation,
                                                             6,
-                                                            target.scores[
-                                                                currentStation
-                                                            ][6] - 1,
+                                                            -1,
+                                                            true,
                                                         );
                                                     }
                                                 }}
@@ -338,9 +331,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         6,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][6] + 1,
+                                                        1,
+                                                        true,
                                                     )
                                                 }
                                             >
@@ -366,9 +358,8 @@ function DashboardMatchPage({
                                                             match,
                                                             currentStation,
                                                             5,
-                                                            target.scores[
-                                                                currentStation
-                                                            ][5] - 1,
+                                                            -1,
+                                                            true,
                                                         );
                                                     }
                                                 }}
@@ -393,9 +384,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         5,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][5] + 1,
+                                                        1,
+                                                        true,
                                                     )
                                                 }
                                             >
@@ -413,6 +403,7 @@ function DashboardMatchPage({
                                                         currentStation,
                                                         7,
                                                         0,
+                                                        false,
                                                     );
                                                 }}
                                                 disabled={
@@ -430,6 +421,7 @@ function DashboardMatchPage({
                                                         currentStation,
                                                         7,
                                                         1,
+                                                        false,
                                                     )
                                                 }
                                                 disabled={
@@ -447,6 +439,7 @@ function DashboardMatchPage({
                                                         currentStation,
                                                         7,
                                                         2,
+                                                        false,
                                                     )
                                                 }
                                                 disabled={
@@ -543,9 +536,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         0,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][0] - 1,
+                                                        -1,
+                                                        true,
                                                     );
                                                 }
                                             }}
@@ -566,9 +558,8 @@ function DashboardMatchPage({
                                                     match,
                                                     currentStation,
                                                     0,
-                                                    target.scores[
-                                                        currentStation
-                                                    ][0] + 1,
+                                                    1,
+                                                    true,
                                                 )
                                             }
                                         >
@@ -592,9 +583,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         2,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][2] - 1,
+                                                        -1,
+                                                        true,
                                                     );
                                                 }
                                             }}
@@ -615,9 +605,8 @@ function DashboardMatchPage({
                                                     match,
                                                     currentStation,
                                                     2,
-                                                    target.scores[
-                                                        currentStation
-                                                    ][2] + 1,
+                                                    1,
+                                                    true,
                                                 )
                                             }
                                         >
@@ -641,9 +630,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         1,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][1] - 1,
+                                                        -1,
+                                                        true,
                                                     );
                                                 }
                                             }}
@@ -664,9 +652,8 @@ function DashboardMatchPage({
                                                     match,
                                                     currentStation,
                                                     1,
-                                                    target.scores[
-                                                        currentStation
-                                                    ][1] + 1,
+                                                    1,
+                                                    true,
                                                 )
                                             }
                                         >
@@ -684,6 +671,7 @@ function DashboardMatchPage({
                                                     currentStation,
                                                     3,
                                                     0,
+                                                    false,
                                                 );
                                             }}
                                             disabled={
@@ -701,6 +689,7 @@ function DashboardMatchPage({
                                                     currentStation,
                                                     3,
                                                     1,
+                                                    false,
                                                 )
                                             }
                                             disabled={
@@ -732,9 +721,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         4,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][4] - 1,
+                                                        -1,
+                                                        true,
                                                     );
                                                 }
                                             }}
@@ -755,9 +743,8 @@ function DashboardMatchPage({
                                                     match,
                                                     currentStation,
                                                     4,
-                                                    target.scores[
-                                                        currentStation
-                                                    ][4] + 1,
+                                                    1,
+                                                    true,
                                                 )
                                             }
                                         >
@@ -781,9 +768,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         6,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][6] - 1,
+                                                        -1,
+                                                        true,
                                                     );
                                                 }
                                             }}
@@ -804,9 +790,8 @@ function DashboardMatchPage({
                                                     match,
                                                     currentStation,
                                                     6,
-                                                    target.scores[
-                                                        currentStation
-                                                    ][6] + 1,
+                                                    1,
+                                                    true,
                                                 )
                                             }
                                         >
@@ -830,9 +815,8 @@ function DashboardMatchPage({
                                                         match,
                                                         currentStation,
                                                         5,
-                                                        target.scores[
-                                                            currentStation
-                                                        ][5] - 1,
+                                                        -1,
+                                                        true,
                                                     );
                                                 }
                                             }}
@@ -853,9 +837,8 @@ function DashboardMatchPage({
                                                     match,
                                                     currentStation,
                                                     5,
-                                                    target.scores[
-                                                        currentStation
-                                                    ][5] + 1,
+                                                    1,
+                                                    true,
                                                 )
                                             }
                                         >
@@ -873,6 +856,7 @@ function DashboardMatchPage({
                                                     currentStation,
                                                     7,
                                                     0,
+                                                    false,
                                                 );
                                             }}
                                             disabled={
@@ -890,6 +874,7 @@ function DashboardMatchPage({
                                                     currentStation,
                                                     7,
                                                     1,
+                                                    false,
                                                 )
                                             }
                                             disabled={
@@ -907,6 +892,7 @@ function DashboardMatchPage({
                                                     currentStation,
                                                     7,
                                                     2,
+                                                    false,
                                                 )
                                             }
                                             disabled={

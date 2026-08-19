@@ -9,6 +9,7 @@ import {
     setCustom,
     setCompKey,
     getCompKey,
+    updateScore,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -121,6 +122,17 @@ export async function connectToSession() {
 
             if (message?.type === "addMatches") {
                 initMatchesAPI(getCompKey(), false);
+            }
+
+            if (message?.type === "updateScore") {
+                updateScore(
+                    message.content.k,
+                    message.content.a,
+                    message.content.q,
+                    message.content.v,
+                    false,
+                    false,
+                );
             }
         } catch {
             console.log("WebSocket text message:", event.data);
