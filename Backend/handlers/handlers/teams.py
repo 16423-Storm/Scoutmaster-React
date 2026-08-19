@@ -11,6 +11,7 @@ async def handleAddTeam(
     groups
 ):
     members = groupData[group]["members"] or []
+
     member = next(
         (
             member
@@ -30,11 +31,10 @@ async def handleAddTeam(
             }
         )
         return
-    
+
     isAdmin = member.get("isAdmin", False)
 
     if not isAdmin:
-        print(f"User {id} is not an admin")
         await sendToUser(
             websocket,
             {
@@ -47,25 +47,7 @@ async def handleAddTeam(
 
     content = message.get("content")
 
-    prescout = groupData[group]["prescout"]
-    prescout["teams"][content["num"]] = {
-        "name": content["name"],
-        "code": content["code"]
-    }
-
-    try:
-        updateResult = (
-            supabase
-                .table("group")
-                .update({
-                    "prescout": prescout,
-                    "custom": True
-                })
-                .eq("id", group)
-                .execute()
-        )
-    except:
-        print("Error sending to supabase")
+    if not content:
         await sendToUser(
             websocket,
             {
@@ -76,6 +58,38 @@ async def handleAddTeam(
         )
         return
 
+    try:
+        supabase.rpc(
+            "add_team",
+            {
+                "p_group_id": group,
+                "p_team_num": content["num"],
+                "p_team_name": content["name"],
+                "p_team_code": content["code"],
+            }
+        ).execute()
+
+    except Exception:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    prescout = groupData[group]["prescout"] or {}
+    teams = prescout.get("teams", [])
+
+    teams[content["num"]] = {
+        "name": content["name"],
+        "code": content["code"]
+    }
+
+    prescout["teams"] = teams
+    groupData[group]["prescout"] = prescout
     groupData[group]["custom"] = True
 
     await sendToGroup(
@@ -87,8 +101,6 @@ async def handleAddTeam(
         },
         exclude=websocket
     )
-
-    groupData[group]["prescout"] = prescout
 
     await sendToGroup(
         groups,

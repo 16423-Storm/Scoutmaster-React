@@ -35,7 +35,6 @@ async def handleAddMatch(
     isAdmin = member.get("isAdmin", False)
 
     if not isAdmin:
-        print(f"User {id} is not an admin")
         await sendToUser(
             websocket,
             {
@@ -80,17 +79,17 @@ async def handleAddMatch(
         ],
     }
 
-    matchscout = groupData[group]["matchscout"] or {}
-    matchscout[key] = match
-
     try:
-        supabase.table("group").update({
-            "matchscout": matchscout
-        }).eq("id", group).execute()
+        supabase.rpc(
+            "add_match",
+            {
+                "p_group_id": group,
+                "p_match_key": key,
+                "p_match": match,
+            }
+        ).execute()
 
-    except Exception as e:
-        print("Error sending to supabase:", repr(e))
-
+    except Exception:
         await sendToUser(
             websocket,
             {
@@ -101,6 +100,8 @@ async def handleAddMatch(
         )
         return
 
+    matchscout = groupData[group]["matchscout"] or {}
+    matchscout[key] = match
     groupData[group]["matchscout"] = matchscout
 
     await sendToGroup(
@@ -121,7 +122,7 @@ async def handleAddMatch(
             "content": True
         }
     )
-
+    
 async def handleAddMatches(
     websocket: WebSocket,
     id: str,
