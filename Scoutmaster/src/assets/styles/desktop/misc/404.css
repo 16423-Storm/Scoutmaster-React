@@ -1,0 +1,41 @@
+.error404-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.error404-main > * {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.error404-main > p {
+    font-size: 1rem;
+    text-align: center;
+    padding: 5px;
+}
+
+.error404-main > button {
+    margin-top: 5px;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    background-color: var(--clr-surface-a10);
+    padding: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.1s transform ease;
+}
+
+.error404-main > button:hover {
+    cursor: pointer;
+    background-color: var(--clr-surface-a20);
+}
+
+.error404-main > button:active {
+    background-color: var(--clr-surface-a30);
+    transform: scale(0.9);
+}

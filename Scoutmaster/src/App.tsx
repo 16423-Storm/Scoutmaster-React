@@ -3,6 +3,7 @@ import LandingPage from "./assets/pages/landingpage";
 import SignUpPage from "./assets/pages/signuppage";
 import SignInPage from "./assets/pages/signinpage";
 import Dashboard from "./assets/pages/dashboard";
+import NotFound from "./assets/pages/NotFound";
 
 import { useStartTheme } from "./assets/scripts/multipageutils";
 
@@ -14,6 +15,7 @@ function App() {
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
 }

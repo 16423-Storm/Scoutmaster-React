@@ -3,6 +3,7 @@
 @import "./misc/signin.css";
 @import "./misc/popup.css";
 @import "./misc/progressbar.css";
+@import "./misc/404.css";
 
 /* Dashboard */
 @import "./dashboard/dashboard.css";
