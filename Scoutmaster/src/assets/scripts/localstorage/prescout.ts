@@ -377,8 +377,6 @@ export async function addSection(
             return;
         }
 
-        // parsed.prescout.sections[id.toString()] = section;
-
         if (sendServer) {
             const requestId = nanoid(10);
 
@@ -446,13 +444,13 @@ export async function addSectionToStorage(
 }
 
 /**
- * Delete section of choice
+ * Send signal to server to delete section, this does NOT delete section on its own
  * @param {string} id - Id of section to be deleted
  * @param {boolean} deleteQuestions - Whether to delete questions in section, or assign them to section with previous index OR the next index if previous does not exist
  * @param {boolean} show - Whether to show success toasts or not  (Default false)
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function deleteSection(
+export async function deleteSection(
     id: string,
     deleteQuestions: boolean,
     show: boolean = false,
@@ -467,14 +465,36 @@ export function deleteSection(
 
     try {
         const parsed = JSON.parse(data);
+
         if (!parsed.prescout.sections[id]) {
             console.warn("WARNING: Section  does not exist");
             return;
         }
+
         if (Object.keys(parsed.prescout.sections).length === 1) {
             console.error("ERROR: At least one section MUST remain");
             return;
         }
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "deleteSection",
+                // dq = deleteQuestions
+                content: {
+                    id: id,
+                    dq: deleteQuestions,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
         if (deleteQuestions) {
             parsed.prescout.sections[id].questions.forEach(
                 (question: string) => {
@@ -529,6 +549,74 @@ export function deleteSection(
 
         if (sendServer) {
             console.log("SEND TO SERVER");
+        }
+    } catch (e) {
+        console.error("ERROR: Could not delete section: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+}
+
+/**
+ * Delete section from localstorage
+ * @param {string} id - Id of section to be deleted
+ * @param {boolean} deleteQuestions - Whether to delete questions in section, or assign them to section with previous index OR the next index if previous does not exist
+ * @param {string | null} target - Target section to send questions to if questions are not deleted
+ * @param {boolean} before - Whether to send questions to the section before (above when true), or after (below when false)
+ * @param {boolean} show - Whether to show success toasts or not  (Default false)
+ */
+export async function deleteSectionFromStorage(
+    id: string,
+    deleteQuestions: boolean,
+    indexes: { [sectionId: string]: number },
+    target: string | null,
+    before: boolean,
+    show: boolean = false,
+) {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+
+        if (deleteQuestions) {
+            parsed.prescout.sections[id].questions.forEach(
+                (question: string) => {
+                    delete parsed.prescout.structure[question];
+                },
+            );
+        }
+
+        if (!deleteQuestions && target) {
+            const targetSection = parsed.prescout.sections[target];
+
+            if (before) {
+                targetSection.questions = [
+                    ...parsed.prescout.sections[id].questions,
+                    ...targetSection.questions,
+                ];
+            } else {
+                targetSection.questions.push(
+                    ...parsed.prescout.sections[id].questions,
+                );
+            }
+        }
+
+        for (const [sectionId, index] of Object.entries(indexes)) {
+            parsed.prescout.sections[sectionId].index = index;
+        }
+
+        delete parsed.prescout.sections[id];
+
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useSections.getState().setSections(getSections());
+
+        if (show) {
+            successToast(i18n.t("sectiondeleted"), 2000);
         }
     } catch (e) {
         console.error("ERROR: Could not delete section: " + e);

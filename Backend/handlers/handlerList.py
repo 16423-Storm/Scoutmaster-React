@@ -16,5 +16,6 @@ handlers = {
     "updateScore": handleUpdateScore,
     "deleteMatch": handleDeleteMatch,
 
-    "addSection": handleAddSection
+    "addSection": handleAddSection,
+    "deleteSection": handleDeleteSection
 }

@@ -14,6 +14,7 @@ import {
     deleteTeam,
     addSection,
     addSectionToStorage,
+    deleteSectionFromStorage,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -157,6 +158,17 @@ export async function connectToSession() {
                     },
                     false,
                     message.content.id,
+                );
+            }
+
+            if (message?.type === "deleteSection") {
+                deleteSectionFromStorage(
+                    message.content.del,
+                    message.content.dq,
+                    message.content.indexes,
+                    message.content.target,
+                    message.content.before,
+                    true,
                 );
             }
         } catch {
