@@ -111,7 +111,7 @@ export async function addTeam(
 
         if (custom) {
             successToast(i18n.t("teamadded"), 2000);
-            setCustom(true, false);
+            setCustom(true, false, sendServer);
         }
     } catch (e) {
         console.error("ERROR: Could not add team: " + e);
@@ -192,7 +192,7 @@ export function deleteTeam(
         successToast(i18n.t("teamdeleted"), 2000);
 
         if (custom) {
-            setCustom(true, false);
+            setCustom(true, false, sendServer);
         }
 
         if (sendServer) {

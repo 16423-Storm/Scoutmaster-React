@@ -163,7 +163,7 @@ export async function addMatch(
         useMatches.getState().setMatches(getMatches());
         if (custom) {
             successToast(i18n.t("matchadded"), 2000);
-            setCustom(true, false);
+            setCustom(true, false, sendServer);
         }
 
         if (sendServer) {
@@ -327,7 +327,7 @@ export async function updateScore(
  * @param {boolean} custom - Whether to set competition to custom or not
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function deleteMatch(
+export async function deleteMatch(
     num: string,
     custom: boolean,
     sendServer: boolean = true,
@@ -346,17 +346,30 @@ export function deleteMatch(
             console.warn("WARNING: Match does not exist");
         }
 
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "deleteMatch",
+                content: {
+                    key: num,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
         delete parsed.match[num];
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
         successToast(i18n.t("matchdeleted"), 2000);
 
         if (custom) {
-            setCustom(true, false);
-        }
-
-        if (sendServer) {
-            console.log("SEND TO SERVER");
+            setCustom(true, false, sendServer);
         }
     } catch (e) {
         console.error("ERROR: Could not delete team: " + e);

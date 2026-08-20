@@ -360,7 +360,7 @@ function DashboardCompetition() {
                                     <button
                                         className="desktop-dash-comp-infodisplay-greenbutton"
                                         onClick={() =>
-                                            initMatchesAPI(currentKey)
+                                            initMatchesAPI(currentKey, true)
                                         }
                                     >
                                         <IoReload /> {"Reload Matches"}

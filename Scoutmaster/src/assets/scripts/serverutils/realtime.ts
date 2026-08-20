@@ -10,6 +10,7 @@ import {
     setCompKey,
     getCompKey,
     updateScore,
+    deleteMatch,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -133,6 +134,10 @@ export async function connectToSession() {
                     false,
                     false,
                 );
+            }
+
+            if (message?.type === "deleteMatch") {
+                deleteMatch(message.content.key, true, false);
             }
         } catch {
             console.log("WebSocket text message:", event.data);

@@ -96,16 +96,6 @@ async def handleAddTeam(
         groups,
         group,
         {
-            "type": "custom",
-            "content": True
-        },
-        exclude=websocket
-    )
-
-    await sendToGroup(
-        groups,
-        group,
-        {
             "type": "addTeam",
             "content": content
         },

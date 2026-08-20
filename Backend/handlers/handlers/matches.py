@@ -337,3 +337,105 @@ async def handleUpdateScore(
             "content": True
         }
     )
+
+async def handleDeleteMatch(
+    websocket: WebSocket,
+    id: str,
+    message: dict,
+    supabase,
+    group: int,
+    groupData,
+    groups
+):
+    members = groupData[group]["members"] or []
+
+    member = next(
+        (
+            member
+            for member in members
+            if member.get("id") == id
+        ),
+        None
+    )
+
+    if not member:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    isAdmin = member.get("isAdmin", False)
+
+    if not isAdmin:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    content = message.get("content")
+
+    if not content:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    key = str(content["key"])
+
+    try:
+        supabase.rpc(
+            "delete_match",
+            {
+                "p_group_id": group,
+                "p_match_key": key,
+            }
+        ).execute()
+
+    except Exception:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    print("The key is:", groupData[group]["matchscout"][str(key)])
+    groupData[group]["matchscout"].pop(str(key), None)
+
+    await sendToGroup(
+        groups,
+        group,
+        {
+            "type": "deleteMatch",
+            "content": content
+        },
+        exclude=websocket
+    )
+
+    await sendToUser(
+        websocket,
+        {
+            "type": "confirm",
+            "requestId": message.get("requestId"),
+            "content": True
+        }
+    )
+   

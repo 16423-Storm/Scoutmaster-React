@@ -11,5 +11,6 @@ handlers = {
 
     "addMatch": handleAddMatch,
     "addMatches": handleAddMatches,
-    "updateScore": handleUpdateScore
+    "updateScore": handleUpdateScore,
+    "deleteMatch": handleDeleteMatch
 }
