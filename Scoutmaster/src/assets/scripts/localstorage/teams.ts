@@ -169,7 +169,7 @@ export async function addTeams(
     }
 }
 
-export function deleteTeam(
+export async function deleteTeam(
     num: string,
     custom: boolean,
     sendServer: boolean = true,
@@ -187,16 +187,30 @@ export function deleteTeam(
             console.warn("WARNING: Team does not exist");
         }
         delete parsed.prescout.teams[num];
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "deleteTeam",
+                content: {
+                    num: num,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());
         successToast(i18n.t("teamdeleted"), 2000);
 
         if (custom) {
             setCustom(true, false, sendServer);
-        }
-
-        if (sendServer) {
-            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not delete team: " + e);

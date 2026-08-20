@@ -11,6 +11,7 @@ import {
     getCompKey,
     updateScore,
     deleteMatch,
+    deleteTeam,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -119,6 +120,10 @@ export async function connectToSession() {
 
             if (message?.type === "addTeams") {
                 initTeamsAPI(getCompKey(), false);
+            }
+
+            if (message?.type === "deleteTeam") {
+                deleteTeam(message.content.num, true, false);
             }
 
             if (message?.type === "addMatches") {

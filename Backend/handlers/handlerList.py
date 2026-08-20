@@ -8,6 +8,7 @@ handlers = {
 
     "addTeam": handleAddTeam,
     "addTeams": handleAddTeams,
+    "deleteTeam": handleDeleteTeam,
 
     "addMatch": handleAddMatch,
     "addMatches": handleAddMatches,
