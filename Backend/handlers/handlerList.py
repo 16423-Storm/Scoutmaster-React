@@ -1,6 +1,7 @@
 from handlers.handlers.competition import *
 from handlers.handlers.teams import *
 from handlers.handlers.matches import *
+from handlers.handlers.prescout import *
 
 handlers = {
     "compCodeChange": handleCompCodeChange,
@@ -13,5 +14,7 @@ handlers = {
     "addMatch": handleAddMatch,
     "addMatches": handleAddMatches,
     "updateScore": handleUpdateScore,
-    "deleteMatch": handleDeleteMatch
+    "deleteMatch": handleDeleteMatch,
+
+    "addSection": handleAddSection
 }

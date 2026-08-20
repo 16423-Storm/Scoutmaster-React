@@ -12,6 +12,8 @@ import {
     updateScore,
     deleteMatch,
     deleteTeam,
+    addSection,
+    addSectionToStorage,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -143,6 +145,19 @@ export async function connectToSession() {
 
             if (message?.type === "deleteMatch") {
                 deleteMatch(message.content.key, true, false);
+            }
+
+            if (message?.type === "addSection") {
+                addSectionToStorage(
+                    {
+                        title: message.content.title,
+                        headersize: message.content.hs,
+                        questions: [],
+                        index: message.content.index,
+                    },
+                    false,
+                    message.content.id,
+                );
             }
         } catch {
             console.log("WebSocket text message:", event.data);

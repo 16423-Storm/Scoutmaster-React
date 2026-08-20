@@ -2,6 +2,9 @@ import type { Team, Teams } from "./teams";
 import { successToast, errorToast } from "../misc/toastmanager";
 import i18n from "../localization";
 import { create } from "zustand";
+import { nanoid } from "nanoid";
+
+import { sendMessage } from "../serverutils/realtime";
 
 export type PrescoutData = {
     structure: { [questionId: string]: Question };
@@ -351,14 +354,12 @@ export const useQuestions = create<{
 }));
 
 /**
- * Add section to scouting
+ * Send request to server to add section, this does NOT actually add it to localstorage though
  * @param {QuestionSection} section - Section
- * @param {boolean} show - Whether to show success toasts or not  (Default false)
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function addSection(
+export async function addSection(
     section: QuestionSection,
-    show: boolean = false,
     sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
@@ -376,34 +377,66 @@ export function addSection(
             return;
         }
 
-        const currentIndexes = Object.values(
-            parsed.prescout.sections as Sections,
-        ).map((section: QuestionSection) => section.index);
+        // parsed.prescout.sections[id.toString()] = section;
 
-        let index = 0;
-        while (currentIndexes.includes(index)) {
-            index++;
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "addSection",
+                // hs = headerSize
+                content: {
+                    title: section.title,
+                    hs: section.headersize,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+    } catch (e) {
+        console.error("ERROR: Could not add section: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+}
+
+/**
+ * Save section to localStorage
+ * @param {QuestionSection} section - Section
+ * @param {boolean} show - Whether to show success toasts or not
+ * @param {string} id - The ID of the section
+ */
+export async function addSectionToStorage(
+    section: QuestionSection,
+    show: boolean,
+    id: string,
+) {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+
+        if (Object.keys(parsed.prescout.sections).length >= 10) {
+            errorToast(i18n.t("maxsections"), 3000);
+            return;
         }
 
-        section.index = index;
-
-        const currentIds = Object.keys(parsed.prescout.sections).map(Number);
-        let id = 0;
-        while (currentIds.includes(id)) {
-            id++;
-        }
-
-        parsed.prescout.sections[id.toString()] = section;
+        parsed.prescout.sections[id] = section;
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useSections.getState().setSections(getSections());
 
         if (show) {
             successToast(i18n.t("sectionadded"), 2000);
-        }
-
-        if (sendServer) {
-            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not add section: " + e);
@@ -564,24 +597,3 @@ export const useSections = create<{
     sections: getSections(),
     setSections: (value) => set({ sections: value }),
 }));
-
-/**
- * Returns an array of all teams being prescouted
- * @returns
- */
-export function loadPrescoutTeams() {}
-
-/**
- * Returns that team's prescouting data
- * @param {string} team - The specific team number to load data from
- * @returns e
- */
-export function loadTeamData(team: string) {
-    if (!/^\d+$/.test(team)) {
-        console.error("ERROR: Team must be a numeric string");
-    }
-}
-
-export function addDataToTeam() {}
-
-export function resetTeam() {}

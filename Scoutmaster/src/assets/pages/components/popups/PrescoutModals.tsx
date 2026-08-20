@@ -52,15 +52,12 @@ export function AddSectionModal({
     };
 
     function handleContinue() {
-        addSection(
-            {
-                title: inputTitle,
-                headersize: selectedHeaderSize.id,
-                questions: [],
-                index: 0,
-            },
-            false,
-        );
+        addSection({
+            title: inputTitle,
+            headersize: selectedHeaderSize.id,
+            questions: [],
+            index: 0,
+        });
         onContinue();
     }
 
