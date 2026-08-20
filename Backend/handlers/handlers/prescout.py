@@ -253,3 +253,120 @@ async def handleDeleteSection(
             "content": True
         }
     )
+
+async def handleUpdateSection(
+    websocket: WebSocket,
+    id: str,
+    message: dict,
+    supabase,
+    group: int,
+    groupData,
+    groups
+):
+    members = groupData[group]["members"] or []
+
+    member = next(
+        (
+            member
+            for member in members
+            if member.get("id") == id
+        ),
+        None
+    )
+
+    if not member:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    isAdmin = member.get("isAdmin", False)
+
+    if not isAdmin:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    content = message.get("content")
+
+    if not content:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    if content.get("title") is not None and content.get("hs") is None:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    try:
+        supabase.rpc(
+            "update_section",
+            {
+                "p_group_id": group,
+                "p_section_id": str(content.get("id")),
+                "p_title": content.get("title"),
+                "p_headersize": content.get("hs")
+            }
+        ).execute()
+
+    except Exception as e:
+        print(f"updateSection failed: {e}")
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    groupData[group]["prescout"]["sections"][str(content.get("id"))]["title"] = content["title"]
+    groupData[group]["prescout"]["sections"][str(content.get("id"))]["headersize"] = content["hs"]
+
+    await sendToGroup(
+        groups,
+        group,
+        {
+            "type": "updateSection",
+            "content": {
+                "id": str(content.get("id")),
+                "title": content.get("title"),
+                "hs": content.get("hs")
+            }
+        },
+        exclude=websocket
+    )
+
+    await sendToUser(
+        websocket,
+        {
+            "type": "confirm",
+            "requestId": message.get("requestId"),
+            "content": True
+        }
+    )

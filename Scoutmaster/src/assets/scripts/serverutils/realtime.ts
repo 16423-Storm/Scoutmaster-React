@@ -15,6 +15,7 @@ import {
     addSection,
     addSectionToStorage,
     deleteSectionFromStorage,
+    updateSection,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -169,6 +170,18 @@ export async function connectToSession() {
                     message.content.target,
                     message.content.before,
                     true,
+                );
+            }
+
+            if (message?.type === "updateSection") {
+                updateSection(
+                    message.content.id,
+                    {
+                        title: message.content.title,
+                        headersize: message.content.hs,
+                    },
+                    true,
+                    false,
                 );
             }
         } catch {

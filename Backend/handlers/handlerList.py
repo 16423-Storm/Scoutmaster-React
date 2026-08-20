@@ -17,5 +17,6 @@ handlers = {
     "deleteMatch": handleDeleteMatch,
 
     "addSection": handleAddSection,
-    "deleteSection": handleDeleteSection
+    "deleteSection": handleDeleteSection,
+    "updateSection": handleUpdateSection
 }

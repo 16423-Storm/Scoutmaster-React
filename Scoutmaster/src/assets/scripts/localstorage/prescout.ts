@@ -632,9 +632,12 @@ export async function deleteSectionFromStorage(
  * @param {boolean} show - Whether to show success toasts or not
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function updateSection(
+export async function updateSection(
     id: string,
-    changes: Partial<QuestionSection>,
+    changes: Partial<QuestionSection> & {
+        title: string;
+        headersize: number;
+    },
     show: boolean = false,
     sendServer: boolean = true,
 ) {
@@ -660,16 +663,31 @@ export function updateSection(
             ...changes,
         };
 
-        localStorage.setItem("data", JSON.stringify(parsed));
+        if (sendServer) {
+            const requestId = nanoid(10);
 
+            const confirmed = await sendMessage({
+                type: "updateSection",
+                // hs = headerSize
+                content: {
+                    id: id,
+                    hs: changes.headersize,
+                    title: changes.title,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
+        localStorage.setItem("data", JSON.stringify(parsed));
         useSections.getState().setSections(getSections());
 
         if (show) {
             successToast(i18n.t("sectionupdated"), 2000);
-        }
-
-        if (sendServer) {
-            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not edit section: " + e);
