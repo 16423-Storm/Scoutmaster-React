@@ -20,13 +20,14 @@
                 },
             },
         ],
-        "sections": [
-            {
+        "sections": {
+            "0": {
                 "title": "Big Section",
                 "headersize": 1, // can be 1, 2, or 3
                 "questions": ["1", "5"],
+                "index": 0,
             },
-        ],
+        },
         "teams": {
             "1": {
                 "name": "TEAM1",

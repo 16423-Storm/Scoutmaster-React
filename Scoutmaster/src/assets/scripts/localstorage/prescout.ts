@@ -168,20 +168,46 @@ export function getQuestion(id: string) {
 }
 
 /**
- * Add question to competition
- * @param {boolean} show - Whether to show success toasts or not (Default false)
- * @param {Question} question - Question
- * @param {string} section - Section Id (Default "0")
- * @param {boolean} sendServer - Send data to server for update, true by default
+ * Sends request to server to add a question to competition, does NOT save to storage on its own
  */
-export function addQuestion(
+export async function addQuestion() {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const requestId = nanoid(10);
+
+        const confirmed = await sendMessage({
+            type: "addQuestion",
+            content: {},
+            requestId,
+        });
+
+        if (!confirmed) {
+            errorToast(i18n.t("seterror"), 3000);
+            return;
+        }
+    } catch (e) {
+        console.error("ERROR: Could not add question: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+}
+
+/**
+ * Save added question to localstorage
+ * @param {boolean} show - Whether to show success toasts or not (Default false)
+ * @param {string} questionId - Question ID
+ * @param {string} sectionId - Parent section ID of question
+ */
+export async function addQuestionToStorage(
     show: boolean = false,
-    question: Question = {
-        type: "ln",
-        title: "New Question",
-    },
-    section: string = Object.keys(getSections())[0],
-    sendServer: boolean = true,
+    questionId: string,
+    sectionId: string,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -198,30 +224,23 @@ export function addQuestion(
             return;
         }
 
-        const currentIds = Object.keys(parsed.prescout.structure).map(Number);
-        let id = 0;
-        while (currentIds.includes(id)) {
-            id++;
-        }
-
-        if (!parsed.prescout.sections[section]) {
+        if (!parsed.prescout.sections[sectionId]) {
             console.error("ERROR: Section does not exist");
             return;
         }
 
-        parsed.prescout.structure[id.toString()] = question;
-        parsed.prescout.sections[section].questions.push(id.toString());
+        parsed.prescout.structure[questionId] = {
+            type: "sn",
+            title: "New Question",
+        };
+        parsed.prescout.sections[sectionId].questions.push(questionId);
 
         localStorage.setItem("data", JSON.stringify(parsed));
+
         useQuestions.getState().setQuestions(getQuestions());
         useSections.getState().setSections(getSections());
-
         if (show) {
             successToast(i18n.t("questionadded"), 2000);
-        }
-
-        if (sendServer) {
-            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not add question: " + e);
@@ -236,7 +255,7 @@ export function addQuestion(
  * @param {boolean} show - whether to show success toasts or not (Default false)
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function deleteQuestion(
+export async function deleteQuestion(
     id: string,
     show: boolean = false,
     sendServer: boolean = true,
@@ -250,6 +269,8 @@ export function deleteQuestion(
 
     try {
         const parsed = JSON.parse(data);
+        const originalParsed = JSON.parse(data);
+
         if (!parsed.prescout.structure[id]) {
             console.warn("WARNING: Question  does not exist");
             return;
@@ -273,12 +294,30 @@ export function deleteQuestion(
         useSections.getState().setSections(getSections());
         useTeams.getState().setTeams(getTeams());
 
-        if (show) {
+        if (!sendServer && show) {
             successToast(i18n.t("questiondeleted"), 2000);
         }
 
         if (sendServer) {
-            console.log("SEND TO SERVER");
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "deleteQuestion",
+                content: {
+                    id: id,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                localStorage.setItem("data", JSON.stringify(originalParsed));
+                useQuestions.getState().setQuestions(getQuestions());
+                useSections.getState().setSections(getSections());
+                return;
+            } else {
+                successToast(i18n.t("questiondeleted"), 2000);
+            }
         }
     } catch (e) {
         console.error("ERROR: Could not delete question: " + e);

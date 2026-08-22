@@ -4,7 +4,12 @@ import { connectToSession } from "./serverutils/realtime";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient(supabaseUrl, supabaseKey, {
+    auth: {
+        flowType: "pkce",
+        lock: (name, acquireTimeout, fn) => fn(),
+    },
+});
 
 export type UserData = {
     email: string;
