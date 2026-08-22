@@ -332,7 +332,7 @@ export async function deleteQuestion(
  * @param {boolean} show - Whether to show success toasts or not (Default false)
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function updateQuestion(
+export async function updateQuestion(
     id: string,
     changes: Partial<Question>,
     show: boolean = false,
@@ -355,27 +355,54 @@ export function updateQuestion(
             return;
         }
 
-        parsed.prescout.structure[id] = {
+        const updatedQuestion = (parsed.prescout.structure[id] = {
             ...questionToEdit,
             ...changes,
-        };
+        });
+
+        if (updatedQuestion.type !== "r") {
+            delete updatedQuestion.minmax;
+        }
+
+        if (updatedQuestion.type !== "st") {
+            delete updatedQuestion.stars;
+        }
+
+        if (updatedQuestion.type !== "mc" && updatedQuestion.type !== "sc") {
+            delete updatedQuestion.opt;
+        }
+
+        parsed.prescout.structure[id] = updatedQuestion;
 
         Object.values(parsed.prescout.teams as Teams).forEach((team) => {
             delete team.data[id];
         });
 
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "updateQuestion",
+                content: {
+                    id: id,
+                    changes: changes,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
         localStorage.setItem("data", JSON.stringify(parsed));
 
         useTeams.getState().setTeams(getTeams());
-
         useQuestions.getState().setQuestions(getQuestions());
 
         if (show) {
             successToast(i18n.t("questionupdated"), 2000);
-        }
-
-        if (sendServer) {
-            console.log("SEND TO SERVER");
         }
     } catch (e) {
         console.error("ERROR: Could not edit question: " + e);

@@ -18,6 +18,7 @@ import {
     updateSection,
     addQuestionToStorage,
     deleteQuestion,
+    updateQuestion,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -197,6 +198,15 @@ export async function connectToSession() {
 
             if (message?.type === "deleteQuestion") {
                 deleteQuestion(message.content.id, true, false);
+            }
+
+            if (message?.type === "updateQuestion") {
+                updateQuestion(
+                    message.content.id,
+                    message.content.changes,
+                    true,
+                    false,
+                );
             }
         } catch {
             console.log("WebSocket text message:", event.data);

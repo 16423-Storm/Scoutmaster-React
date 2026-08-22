@@ -156,7 +156,7 @@ async def handleAddTeams(
         )
         return
 
-    content = message.get("content", [])
+    content = message.get("content")
 
     prescout = groupData[group]["prescout"]
 
@@ -170,18 +170,13 @@ async def handleAddTeams(
     }
 
     try:
-        result = await asyncio.to_thread(
-            lambda: supabase.rpc(
-                "update_match_score",
-                {
-                    "p_group_id": group,
-                    "p_match_key": str(content["k"]),
-                    "p_alliance": content["a"],
-                    "p_question": content["q"],
-                    "p_value": content["v"]
-                }
-            ).execute()
-        )
+        supabase.rpc(
+            "add_teams",
+            {
+                "p_group_id": group,
+                "p_teams": prescout["teams"]
+            }
+        ).execute()
     except Exception as e:
         print("Error sending to supabase:", repr(e))
 

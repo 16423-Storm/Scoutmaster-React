@@ -209,3 +209,118 @@ async def handleDeleteQuestion(
             "content": True
         }
     )
+
+async def handleUpdateQuestion(
+    websocket: WebSocket,
+    id: str,
+    message: dict,
+    supabase,
+    group: int,
+    groupData,
+    groups
+):
+    members = groupData[group]["members"] or []
+
+    member = next(
+        (
+            member
+            for member in members
+            if member.get("id") == id
+        ),
+        None
+    )
+
+    if not member:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    isAdmin = member.get("isAdmin", False)
+
+    if not isAdmin:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    content = message.get("content") or {}
+
+    if not content.get("id") or not content.get("changes"):
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    try:
+        supabase.rpc(
+            "update_question",
+            {
+                "p_group_id": group,
+                "p_question_id": content.get("id"),
+                "p_changes": content.get("changes")
+            }
+        ).execute()
+
+    except Exception as e:
+        print(f"updateQuestion failed: {e}")
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    questionData = groupData[group]["prescout"]["structure"].get(content.get("id"))
+
+    if questionData:
+        questionData.update(content.get("changes"))
+
+        if questionData.get("type") != "r":
+            questionData.pop("minmax", None)
+
+        if questionData.get("type") != "st":
+            questionData.pop("stars", None)
+
+        if questionData.get("type") not in ("mc", "sc"):
+            questionData.pop("opt", None)
+
+    for team in groupData[group]["prescout"].get("teams", {}).values():
+        team.get("data", {}).pop(content.get("id"), None)
+
+    await sendToGroup(
+        groups,
+        group,
+        {
+            "type": "updateQuestion",
+            "content": content
+        },
+        exclude=websocket
+    )
+
+    await sendToUser(
+        websocket,
+        {
+            "type": "confirm",
+            "requestId": message.get("requestId"),
+            "content": True
+        }
+    )

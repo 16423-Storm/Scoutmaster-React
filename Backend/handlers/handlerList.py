@@ -22,5 +22,6 @@ handlers = {
     "updateSection": handleUpdateSection,
 
     "addQuestion": handleAddQuestion,
-    "deleteQuestion": handleDeleteQuestion
+    "deleteQuestion": handleDeleteQuestion,
+    "updateQuestion": handleUpdateQuestion
 }
