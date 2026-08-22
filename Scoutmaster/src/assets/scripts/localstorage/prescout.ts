@@ -411,6 +411,58 @@ export async function updateQuestion(
     }
 }
 
+export async function moveQuestion(
+    sectionId: string,
+    targetSectionId: string,
+    sourceQuestions: string[],
+    targetQuestions: string[],
+    show: boolean = false,
+    sendServer: boolean = true,
+) {
+    try {
+        const parsed = JSON.parse(localStorage.getItem("data") ?? "{}");
+
+        parsed.prescout.sections[sectionId].questions = sourceQuestions;
+
+        if (sectionId === targetSectionId) {
+            parsed.prescout.sections[sectionId].questions = targetQuestions;
+        } else {
+            parsed.prescout.sections[targetSectionId].questions =
+                targetQuestions;
+        }
+
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useSections.getState().setSections(getSections());
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "moveQuestion",
+                content: [
+                    sectionId,
+                    targetSectionId,
+                    sourceQuestions,
+                    targetQuestions,
+                ],
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
+        if (show) {
+            successToast(i18n.t("questionmoved"), 2000);
+        }
+    } catch (e) {
+        console.error("ERROR: Could not move question: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+    }
+}
+
 export const useQuestions = create<{
     questions: Questions;
     setQuestions: (value: Questions) => void;
@@ -700,10 +752,7 @@ export async function deleteSectionFromStorage(
  */
 export async function updateSection(
     id: string,
-    changes: Partial<QuestionSection> & {
-        title: string;
-        headersize: number;
-    },
+    changes: Partial<QuestionSection>,
     show: boolean = false,
     sendServer: boolean = true,
 ) {
@@ -734,11 +783,9 @@ export async function updateSection(
 
             const confirmed = await sendMessage({
                 type: "updateSection",
-                // hs = headerSize
                 content: {
                     id: id,
-                    hs: changes.headersize,
-                    title: changes.title,
+                    changes: changes,
                 },
                 requestId,
             });
@@ -757,6 +804,58 @@ export async function updateSection(
         }
     } catch (e) {
         console.error("ERROR: Could not edit section: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+}
+
+export async function updateSectionIndexes(
+    indexes: Record<string, number>,
+    show: boolean = false,
+    sendServer: boolean = true,
+) {
+    const data = localStorage.getItem("data");
+
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+
+        Object.entries(indexes).forEach(([id, index]) => {
+            if (parsed.prescout.sections[id]) {
+                parsed.prescout.sections[id].index = index;
+            }
+        });
+
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useSections.getState().setSections(getSections());
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "updateSectionIndexes",
+                content: {
+                    indexes,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
+        if (show) {
+            successToast(i18n.t("sectionupdated"), 2000);
+        }
+    } catch (e) {
+        console.error("ERROR: Could not update section indexes: " + e);
         errorToast(i18n.t("seterror"), 3000);
         return;
     }

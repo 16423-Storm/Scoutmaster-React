@@ -6,6 +6,8 @@ import {
     updateSection,
     deleteSection,
     addQuestion,
+    updateSectionIndexes,
+    moveQuestion,
 } from "../../../scripts/localstorage";
 import { useState } from "react";
 import { useTeams } from "../../../scripts/localstorage";
@@ -319,17 +321,17 @@ function DashboardPrescout() {
                                                     movedSection,
                                                 );
 
+                                                const indexes: {
+                                                    [key: string]: number;
+                                                } = {};
+
                                                 reordered.forEach(
                                                     (id, index) => {
-                                                        updateSection(
-                                                            id,
-                                                            {
-                                                                index,
-                                                            },
-                                                            false,
-                                                        );
+                                                        indexes[id] = index;
                                                     },
                                                 );
+
+                                                updateSectionIndexes(indexes);
 
                                                 return;
                                             }
@@ -340,7 +342,7 @@ function DashboardPrescout() {
                                                     "",
                                                 );
 
-                                            const destinationSectionId =
+                                            const targetSectionId =
                                                 destination.droppableId.replace(
                                                     "section-",
                                                     "",
@@ -354,48 +356,50 @@ function DashboardPrescout() {
                                                     sourceSectionId
                                                 ].questions,
                                             ];
-
-                                            const destinationQuestions =
+                                            const targetQuestions =
                                                 sourceSectionId ===
-                                                destinationSectionId
+                                                targetSectionId
                                                     ? sourceQuestions
                                                     : [
                                                           ...currentSections[
-                                                              destinationSectionId
+                                                              targetSectionId
                                                           ].questions,
                                                       ];
 
-                                            const [movedQuestion] =
+                                            const [questionId] =
                                                 sourceQuestions.splice(
                                                     source.index,
                                                     1,
                                                 );
 
-                                            destinationQuestions.splice(
-                                                destination.index,
-                                                0,
-                                                movedQuestion,
-                                            );
-
-                                            updateSection(
-                                                sourceSectionId,
-                                                {
-                                                    questions: sourceQuestions,
-                                                },
-                                                false,
-                                            );
-
                                             if (
-                                                sourceSectionId !==
-                                                destinationSectionId
+                                                sourceSectionId ===
+                                                targetSectionId
                                             ) {
-                                                updateSection(
-                                                    destinationSectionId,
-                                                    {
-                                                        questions:
-                                                            destinationQuestions,
-                                                    },
-                                                    false,
+                                                sourceQuestions.splice(
+                                                    destination.index,
+                                                    0,
+                                                    questionId,
+                                                );
+
+                                                moveQuestion(
+                                                    sourceSectionId,
+                                                    targetSectionId,
+                                                    sourceQuestions,
+                                                    sourceQuestions,
+                                                );
+                                            } else {
+                                                targetQuestions.splice(
+                                                    destination.index,
+                                                    0,
+                                                    questionId,
+                                                );
+
+                                                moveQuestion(
+                                                    sourceSectionId,
+                                                    targetSectionId,
+                                                    sourceQuestions,
+                                                    targetQuestions,
                                                 );
                                             }
                                         }}
@@ -685,17 +689,17 @@ function DashboardPrescout() {
                                                     movedSection,
                                                 );
 
+                                                const indexes: {
+                                                    [key: string]: number;
+                                                } = {};
+
                                                 reordered.forEach(
                                                     (id, index) => {
-                                                        updateSection(
-                                                            id,
-                                                            {
-                                                                index,
-                                                            },
-                                                            false,
-                                                        );
+                                                        indexes[id] = index;
                                                     },
                                                 );
+
+                                                updateSectionIndexes(indexes);
 
                                                 return;
                                             }
@@ -706,7 +710,7 @@ function DashboardPrescout() {
                                                     "",
                                                 );
 
-                                            const destinationSectionId =
+                                            const targetSectionId =
                                                 destination.droppableId.replace(
                                                     "section-",
                                                     "",
@@ -720,48 +724,50 @@ function DashboardPrescout() {
                                                     sourceSectionId
                                                 ].questions,
                                             ];
-
-                                            const destinationQuestions =
+                                            const targetQuestions =
                                                 sourceSectionId ===
-                                                destinationSectionId
+                                                targetSectionId
                                                     ? sourceQuestions
                                                     : [
                                                           ...currentSections[
-                                                              destinationSectionId
+                                                              targetSectionId
                                                           ].questions,
                                                       ];
 
-                                            const [movedQuestion] =
+                                            const [questionId] =
                                                 sourceQuestions.splice(
                                                     source.index,
                                                     1,
                                                 );
 
-                                            destinationQuestions.splice(
-                                                destination.index,
-                                                0,
-                                                movedQuestion,
-                                            );
-
-                                            updateSection(
-                                                sourceSectionId,
-                                                {
-                                                    questions: sourceQuestions,
-                                                },
-                                                false,
-                                            );
-
                                             if (
-                                                sourceSectionId !==
-                                                destinationSectionId
+                                                sourceSectionId ===
+                                                targetSectionId
                                             ) {
-                                                updateSection(
-                                                    destinationSectionId,
-                                                    {
-                                                        questions:
-                                                            destinationQuestions,
-                                                    },
-                                                    false,
+                                                sourceQuestions.splice(
+                                                    destination.index,
+                                                    0,
+                                                    questionId,
+                                                );
+
+                                                moveQuestion(
+                                                    sourceSectionId,
+                                                    targetSectionId,
+                                                    sourceQuestions,
+                                                    sourceQuestions,
+                                                );
+                                            } else {
+                                                targetQuestions.splice(
+                                                    destination.index,
+                                                    0,
+                                                    questionId,
+                                                );
+
+                                                moveQuestion(
+                                                    sourceSectionId,
+                                                    targetSectionId,
+                                                    sourceQuestions,
+                                                    targetQuestions,
                                                 );
                                             }
                                         }}

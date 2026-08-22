@@ -19,6 +19,8 @@ import {
     addQuestionToStorage,
     deleteQuestion,
     updateQuestion,
+    updateSectionIndexes,
+    moveQuestion,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -179,13 +181,14 @@ export async function connectToSession() {
             if (message?.type === "updateSection") {
                 updateSection(
                     message.content.id,
-                    {
-                        title: message.content.title,
-                        headersize: message.content.hs,
-                    },
+                    message.content.changes,
                     true,
                     false,
                 );
+            }
+
+            if (message?.type === "updateSectionIndexes") {
+                updateSectionIndexes(message.content.indexes, false, false);
             }
 
             if (message?.type === "addQuestion") {
@@ -205,6 +208,17 @@ export async function connectToSession() {
                     message.content.id,
                     message.content.changes,
                     true,
+                    false,
+                );
+            }
+
+            if (message?.type === "moveQuestion") {
+                moveQuestion(
+                    message.content[0],
+                    message.content[1],
+                    message.content[2],
+                    message.content[3],
+                    false,
                     false,
                 );
             }

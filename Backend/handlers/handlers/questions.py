@@ -324,3 +324,100 @@ async def handleUpdateQuestion(
             "content": True
         }
     )
+
+async def handleMoveQuestion(
+    websocket: WebSocket,
+    id: str,
+    message: dict,
+    supabase,
+    group: int,
+    groupData,
+    groups
+):
+    members = groupData[group]["members"] or []
+
+    member = next(
+        (
+            member
+            for member in members
+            if member.get("id") == id
+        ),
+        None
+    )
+
+    if not member or not member.get("isAdmin", False):
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    content = message.get("content")
+
+    if not content or len(content) != 4:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    sectionId, targetSectionId, sourceQuestions, targetQuestions = content
+
+    try:
+        supabase.rpc(
+            "move_question",
+            {
+                "p_group_id": group,
+                "p_section_id": str(sectionId),
+                "p_target_section_id": str(targetSectionId),
+                "p_source_questions": sourceQuestions,
+                "p_target_questions": targetQuestions
+            }
+        ).execute()
+
+    except Exception as e:
+        print(f"moveQuestion failed: {e}")
+
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    sections = groupData[group]["prescout"]["sections"]
+
+    sections[str(sectionId)]["questions"] = sourceQuestions
+
+    if str(sectionId) != str(targetSectionId):
+        sections[str(targetSectionId)]["questions"] = targetQuestions
+
+    await sendToGroup(
+        groups,
+        group,
+        {
+            "type": "moveQuestion",
+            "content": content
+        },
+        exclude=websocket
+    )
+
+    await sendToUser(
+        websocket,
+        {
+            "type": "confirm",
+            "requestId": message.get("requestId"),
+            "content": True
+        }
+    )

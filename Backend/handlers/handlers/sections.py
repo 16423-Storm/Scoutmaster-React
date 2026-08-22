@@ -311,7 +311,7 @@ async def handleUpdateSection(
         )
         return
 
-    if content.get("title") is not None and content.get("hs") is None:
+    if not content.get("changes"):
         await sendToUser(
             websocket,
             {
@@ -327,9 +327,8 @@ async def handleUpdateSection(
             "update_section",
             {
                 "p_group_id": group,
-                "p_section_id": str(content.get("id")),
-                "p_title": content.get("title"),
-                "p_headersize": content.get("hs")
+                "p_section_id": content.get("id"),
+                "p_changes": content.get("changes")
             }
         ).execute()
 
@@ -345,18 +344,120 @@ async def handleUpdateSection(
         )
         return
 
-    groupData[group]["prescout"]["sections"][str(content.get("id"))]["title"] = content["title"]
-    groupData[group]["prescout"]["sections"][str(content.get("id"))]["headersize"] = content["hs"]
+    section = groupData[group]["prescout"]["sections"][content.get("id")]
+
+    section.update(content.get("changes"))
 
     await sendToGroup(
         groups,
         group,
         {
             "type": "updateSection",
+            "content": content
+        },
+        exclude=websocket
+    )
+
+    await sendToUser(
+        websocket,
+        {
+            "type": "confirm",
+            "requestId": message.get("requestId"),
+            "content": True
+        }
+    )
+
+async def handleUpdateSectionIndexes(
+    websocket: WebSocket,
+    id: str,
+    message: dict,
+    supabase,
+    group: int,
+    groupData,
+    groups
+):
+    members = groupData[group]["members"] or []
+
+    member = next(
+        (
+            member
+            for member in members
+            if member.get("id") == id
+        ),
+        None
+    )
+
+    if not member:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    isAdmin = member.get("isAdmin", False)
+
+    if not isAdmin:
+        print(f"User {id} is not an admin")
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    content = message.get("content")
+
+    if not content or not content.get("indexes"):
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    try:
+        supabase.rpc(
+            "update_section_indexes",
+            {
+                "p_group_id": group,
+                "p_indexes": content.get("indexes")
+            }
+        ).execute()
+
+    except Exception as e:
+        print(f"updateSectionIndexes failed: {e}")
+
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    for section, index in content.get("indexes").items():
+        if section in groupData[group]["prescout"]["sections"]:
+            groupData[group]["prescout"]["sections"][section]["index"] = index
+
+    await sendToGroup(
+        groups,
+        group,
+        {
+            "type": "updateSectionIndexes",
             "content": {
-                "id": str(content.get("id")),
-                "title": content.get("title"),
-                "hs": content.get("hs")
+                "indexes": content.get("indexes")
             }
         },
         exclude=websocket

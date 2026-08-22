@@ -20,8 +20,10 @@ handlers = {
     "addSection": handleAddSection,
     "deleteSection": handleDeleteSection,
     "updateSection": handleUpdateSection,
+    "updateSectionIndexes": handleUpdateSectionIndexes,
 
     "addQuestion": handleAddQuestion,
     "deleteQuestion": handleDeleteQuestion,
-    "updateQuestion": handleUpdateQuestion
+    "updateQuestion": handleUpdateQuestion,
+    "moveQuestion": handleMoveQuestion
 }
