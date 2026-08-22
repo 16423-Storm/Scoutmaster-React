@@ -58,7 +58,7 @@ function DashboardCompetition() {
     }
 
     function handleDeleteTeam(team: string) {
-        deleteTeam(team, true);
+        deleteTeam(team, true, true);
         setDeleteTeamWarningVisible(false);
     }
 

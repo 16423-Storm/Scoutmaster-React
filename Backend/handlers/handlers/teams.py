@@ -85,7 +85,8 @@ async def handleAddTeam(
 
     teams[content["num"]] = {
         "name": content["name"],
-        "code": content["code"]
+        "code": content["code"],
+        "data": {}
     }
 
     prescout["teams"] = teams

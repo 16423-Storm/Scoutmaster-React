@@ -155,7 +155,7 @@ export async function addMatch(
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
         if (custom) {
-            setCustom(true, false, sendServer);
+            setCustom(true, false, sendServer, infoShow);
         }
 
         if (show) {
@@ -321,12 +321,16 @@ export async function updateScore(
  *
  * @param {number} num - Target match number to delete
  * @param {boolean} custom - Whether to set competition to custom or not
+ * @param {boolean} show - Show success toasts or not, true by default
  * @param {boolean} sendServer - Send data to server for update, true by default
+ * @param {boolean} infoShow - Show message saying someone else deleted match, false by default
  */
 export async function deleteMatch(
     num: string,
     custom: boolean,
+    show: boolean = true,
     sendServer: boolean = true,
+    infoShow: boolean = false,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -362,10 +366,17 @@ export async function deleteMatch(
         delete parsed.match[num];
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
-        successToast(i18n.t("matchdeleted"), 2000);
 
         if (custom) {
             setCustom(true, false, sendServer);
+        }
+
+        if (show) {
+            successToast(i18n.t("matchdeleted"), 2000);
+        }
+
+        if (infoShow) {
+            infoToast(i18n.t("matchaddedinfo"), 2000);
         }
     } catch (e) {
         console.error("ERROR: Could not delete team: " + e);

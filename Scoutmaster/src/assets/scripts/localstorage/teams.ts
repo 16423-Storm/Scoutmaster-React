@@ -1,5 +1,5 @@
 import i18n from "../localization";
-import { successToast, errorToast } from "../misc/toastmanager";
+import { successToast, errorToast, infoToast } from "../misc/toastmanager";
 import { create } from "zustand";
 import { nanoid } from "nanoid";
 
@@ -58,13 +58,16 @@ export function getTeams() {
  * @param {string} code - Team country code (optional)
  * @param {boolean} [custom = false] - Whether to set competition to custom or not, false by default
  * @param {boolean} sendServer - Send data to server for update, true by default
+ * @param {boolean} infoShow - Show info popup when someone else makes a change, false by default
  */
 export async function addTeam(
     num: number,
     name: string,
     custom = true,
+    show = true,
     sendServer: boolean = true,
     code?: string,
+    infoShow = false,
 ) {
     if (Object.hasOwn(getTeams(), num.toString())) {
         console.error("ERROR: Attempted to add duplicate team");
@@ -81,6 +84,7 @@ export async function addTeam(
 
     try {
         const parsed = JSON.parse(data);
+
         parsed.prescout.teams[num.toString()] = {
             name: name,
             data: {},
@@ -110,8 +114,15 @@ export async function addTeam(
         useTeams.getState().setTeams(getTeams());
 
         if (custom) {
+            setCustom(true, false, sendServer, infoShow);
+        }
+
+        if (show) {
             successToast(i18n.t("teamadded"), 2000);
-            setCustom(true, false, sendServer);
+        }
+
+        if (infoShow) {
+            infoToast(i18n.t("teamaddedinfoshow"), 2000);
         }
     } catch (e) {
         console.error("ERROR: Could not add team: " + e);
@@ -172,7 +183,9 @@ export async function addTeams(
 export async function deleteTeam(
     num: string,
     custom: boolean,
+    show: boolean = true,
     sendServer: boolean = true,
+    infoShow: boolean = false,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
@@ -207,10 +220,17 @@ export async function deleteTeam(
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());
-        successToast(i18n.t("teamdeleted"), 2000);
 
         if (custom) {
-            setCustom(true, false, sendServer);
+            setCustom(true, false, sendServer, infoShow);
+        }
+
+        if (show) {
+            successToast(i18n.t("teamdeleted"), 2000);
+        }
+
+        if (infoShow) {
+            infoToast(i18n.t("teamdeletedinfoshow"), 2000);
         }
     } catch (e) {
         console.error("ERROR: Could not delete team: " + e);

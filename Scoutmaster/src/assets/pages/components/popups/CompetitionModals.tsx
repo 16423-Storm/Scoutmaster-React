@@ -47,9 +47,9 @@ export function AddTeamModal({
     function handleContinue() {
         onContinue();
         if (specifyCustomCountry) {
-            addTeam(inputNumber, inputTeam, true, inputCode);
+            addTeam(inputNumber, inputTeam, true, true, true, inputCode);
         } else {
-            addTeam(inputNumber, inputTeam, true);
+            addTeam(inputNumber, inputTeam, true, true, true);
         }
     }
 

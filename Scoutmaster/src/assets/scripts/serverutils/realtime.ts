@@ -124,7 +124,9 @@ export async function connectToSession() {
                     message.content.name,
                     true,
                     false,
+                    false,
                     message.content.code,
+                    true,
                 );
             }
 
@@ -133,7 +135,7 @@ export async function connectToSession() {
             }
 
             if (message?.type === "deleteTeam") {
-                deleteTeam(message.content.num, true, false);
+                deleteTeam(message.content.num, true, false, false, true);
             }
 
             if (message?.type === "addMatches") {
