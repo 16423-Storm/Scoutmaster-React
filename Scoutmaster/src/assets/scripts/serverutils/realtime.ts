@@ -21,6 +21,7 @@ import {
     updateQuestion,
     updateSectionIndexes,
     moveQuestion,
+    addMatch,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -99,11 +100,11 @@ export async function connectToSession() {
             }
 
             if (message?.type === "custom") {
-                setCustom(message.content, false, false);
+                setCustom(message.content, false, false, true);
             }
 
             if (message?.type === "compCodeChange") {
-                setCompKey(message.content, false);
+                setCompKey(message.content, false, false, true);
             }
 
             if (message?.type === "groupHydration") {
@@ -147,6 +148,19 @@ export async function connectToSession() {
                     message.content.v,
                     false,
                     false,
+                );
+            }
+
+            if (message?.type === "addMatch") {
+                addMatch(
+                    message.content.red1,
+                    message.content.red2,
+                    message.content.blue1,
+                    message.content.blue2,
+                    true,
+                    false,
+                    false,
+                    true,
                 );
             }
 

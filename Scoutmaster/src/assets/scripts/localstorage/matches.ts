@@ -1,5 +1,5 @@
 import i18n from "../localization";
-import { successToast, errorToast } from "../misc/toastmanager";
+import { successToast, errorToast, infoToast } from "../misc/toastmanager";
 import { create } from "zustand";
 import { nanoid } from "nanoid";
 
@@ -72,7 +72,9 @@ export function getMatches() {
  * @param {number} red2 - Team for red 2
  * @param {number} blue1 - Team for blue 1
  * @param {number} blue2 - Team for blue 2
+ * @param {boolean} [show = true] - Whether or not success/error toasts will be shown, true by default
  * @param {boolean} sendServer - Send data to server for update, true by default
+ * @param {boolean} infoShow - Show info popup when someone else makes a change, false by default
  */
 export async function addMatch(
     red1: number,
@@ -80,23 +82,14 @@ export async function addMatch(
     blue1: number,
     blue2: number,
     custom: boolean = false,
+    show: boolean = true,
     sendServer: boolean = true,
-    key: number | null = null,
+    infoShow: boolean = false,
 ) {
     const matches = getMatches();
-    if (key != null) {
-        if (Object.hasOwn(matches, key)) {
-            console.error("ERROR: Attempted to add duplicate match");
-            if (custom) {
-                errorToast("Match already added", 3000);
-            }
-            return;
-        }
-    } else {
-        key = 1;
-        while (Object.hasOwn(matches, key)) {
-            key++;
-        }
+    let key = 1;
+    while (Object.hasOwn(matches, key)) {
+        key++;
     }
 
     const teams = [red1, red2, blue1, blue2];
@@ -162,12 +155,15 @@ export async function addMatch(
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
         if (custom) {
-            successToast(i18n.t("matchadded"), 2000);
             setCustom(true, false, sendServer);
         }
 
-        if (sendServer) {
-            console.log("SEND TO SERVER");
+        if (show) {
+            successToast(i18n.t("matchadded"), 2000);
+        }
+
+        if (infoShow) {
+            infoToast(i18n.t("matchaddedinfo"), 2000);
         }
     } catch (e) {
         console.error("ERROR: Could not add match: " + e);

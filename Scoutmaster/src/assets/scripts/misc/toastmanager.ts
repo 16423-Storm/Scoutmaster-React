@@ -41,3 +41,17 @@ export function warnToast(message: string, time: number) {
         transition: Bounce,
     });
 }
+
+export function infoToast(message: string, time: number) {
+    toast.info(message, {
+        position: "bottom-right",
+        autoClose: time,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+    });
+}

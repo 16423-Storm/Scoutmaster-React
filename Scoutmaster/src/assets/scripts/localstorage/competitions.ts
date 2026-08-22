@@ -1,5 +1,5 @@
 import i18n from "../localization";
-import { successToast, errorToast } from "../misc/toastmanager";
+import { successToast, errorToast, infoToast } from "../misc/toastmanager";
 import { create } from "zustand";
 import { nanoid } from "nanoid";
 
@@ -34,9 +34,16 @@ export function getCompKey() {
 /**
  * Overwrites competition key
  * @param {string} compkey - Competition Key
+ * @param {boolean} [show = true] - Whether or not success/error toasts will be shown, true by default
  * @param {boolean} sendServer - Send data to server for update, true by default
+ * @param {boolean} infoShow - Show info popup when someone else makes a change, false by default
  */
-export async function setCompKey(compkey: string, sendServer: boolean = true) {
+export async function setCompKey(
+    compkey: string,
+    show = true,
+    sendServer: boolean = true,
+    infoShow = false,
+) {
     try {
         if (sendServer) {
             const requestId = nanoid(10);
@@ -66,11 +73,19 @@ export async function setCompKey(compkey: string, sendServer: boolean = true) {
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useCompKey.getState().setCompKey(compkey);
+
         if (sendServer) {
             initTeamsAPI(compkey, sendServer);
             initMatchesAPI(compkey, sendServer);
         }
-        successToast(i18n.t("compsuccess"), 2000);
+
+        if (show) {
+            successToast(i18n.t("compsuccess"), 2000);
+        }
+
+        if (infoShow) {
+            infoToast(i18n.t("compinfoshow"), 2000);
+        }
     } catch (e) {
         console.error("ERROR: Failed to set competition: " + e);
         errorToast(i18n.t("seterror"), 3000);
@@ -112,18 +127,20 @@ export function getCustom() {
  * Sets status of competition being custom
  *
  * @param {boolean} custom - What to set custom to
- * @param {boolean} [toast = true] - Whether or not success/error toasts will be shown, true by default
+ * @param {boolean} [show = true] - Whether or not success/error toasts will be shown, true by default
  * @param {boolean} sendServer - Send data to server for update, true by default
+ * @param {boolean} infoShow - Show info popup when someone else makes a change, false by default
  */
 export async function setCustom(
     custom: boolean,
-    toast = true,
+    show = true,
     sendServer: boolean = true,
+    infoShow = false,
 ) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        if (toast) {
+        if (show) {
             errorToast(i18n.t("dataloaderror"), 3000);
         }
         return;
@@ -131,6 +148,7 @@ export async function setCustom(
 
     try {
         const parsed = JSON.parse(data);
+        const oldCustom = JSON.parse(data).custom;
         parsed.custom = custom;
 
         if (sendServer) {
@@ -143,7 +161,7 @@ export async function setCustom(
             });
 
             if (!confirmed) {
-                if (toast) {
+                if (show) {
                     errorToast(i18n.t("seterror"), 3000);
                 }
 
@@ -154,12 +172,16 @@ export async function setCustom(
         localStorage.setItem("data", JSON.stringify(parsed));
         useCustom.getState().setCustom(custom);
 
-        if (toast) {
+        if (show) {
             successToast(i18n.t("customsuccess"), 2000);
+        }
+
+        if (infoShow && oldCustom != custom) {
+            infoToast(i18n.t("custominfoshow"), 2000);
         }
     } catch (e) {
         console.error("ERROR: Could not set competition to custom: " + e);
-        if (toast) {
+        if (show) {
             errorToast(i18n.t("seterror"), 3000);
         }
         return;
