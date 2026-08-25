@@ -44,6 +44,7 @@ function DashboardSummary() {
 
     const teams = useTeams((state) => state.teams);
     const matches = useMatches((state) => state.matches);
+    const summary = useSummary((state) => state.summary);
 
     const comboBoxTeams = Object.entries(teams).map(
         ([number, team], index) => ({

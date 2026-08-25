@@ -1,14 +1,3 @@
-//!
-//!
-//!
-//!
-//!
-// THIS IS NOT GOOD PRACTICE, BUT FOR SIMPLICITY, "SORTED" IS BEING TYPED AS ANY, THIS WILL BE FIXED LATER
-//!
-//!
-//!
-//!
-//!
 import type { Dispatch, SetStateAction } from "react";
 import { useEffect } from "react";
 
@@ -30,6 +19,17 @@ import {
     FaArrowDown,
 } from "react-icons/fa";
 
+//!
+//!
+//!
+//!
+//!
+// THIS IS NOT GOOD PRACTICE, BUT FOR SIMPLICITY, "SORTED" IS BEING TYPED AS ANY, THIS WILL BE FIXED LATER
+//!
+//!
+//!
+//!
+//!
 export function Tab1({
     sorted,
     sortBy,
@@ -245,20 +245,12 @@ export function Tab2({
 
     const summary = useSummary((state) => state.summary);
 
-    useEffect(() => {
-        const below = teamsBelow.map((team) => team.number);
-
-        updateSummary({
-            picks: [
-                ...summary.picks.filter((pick) => below.includes(pick)),
-                ...below.filter((team) => !summary.picks.includes(team)),
-            ],
-        });
-    }, [teamsBelow]);
-
-    const belowPicks = summary.picks.filter((pick) =>
-        teamsBelow.some((team) => team.number === pick),
-    );
+    const belowPicks =
+        summary.picks.length > 0
+            ? summary.picks.filter((pick) =>
+                  teamsBelow.some((team) => team.number === pick),
+              )
+            : teamsBelow.map((team) => team.number);
 
     if (useScreenType() == "desktop") {
         return (

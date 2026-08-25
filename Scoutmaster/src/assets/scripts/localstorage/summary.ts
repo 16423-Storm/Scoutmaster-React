@@ -1,6 +1,8 @@
 import i18n from "../localization";
 import { successToast, errorToast } from "../misc/toastmanager";
 import { create } from "zustand";
+import { nanoid } from "nanoid";
+import { sendMessage } from "../serverutils/realtime";
 
 import { getTeams } from "./teams";
 
@@ -29,7 +31,7 @@ export function getSummary() {
     }
 }
 
-export function updateSummary(
+export async function updateSummary(
     changes: Partial<SummaryData>,
     sendServer: boolean = true,
 ) {
@@ -50,13 +52,25 @@ export function updateSummary(
             ...changes,
         };
 
-        localStorage.setItem("data", JSON.stringify(parsed));
-
-        useSummary.getState().setSummary(getSummary());
-
         if (sendServer) {
-            console.log("SEND TO SERVER");
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "updateSummary",
+                content: {
+                    changes,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
         }
+
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useSummary.getState().setSummary(getSummary());
     } catch (e) {
         console.error("ERROR: Could not edit summary: " + e);
         errorToast(i18n.t("seterror"), 3000);
@@ -70,12 +84,13 @@ export function updateSummary(
  * @param {-1 | 1} dir - The direction to move
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function movePicks(
+export async function movePicks(
     index: number,
     dir: -1 | 1,
     sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
+
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
         errorToast(i18n.t("dataloaderror"), 3000);
@@ -86,21 +101,21 @@ export function movePicks(
         const parsed = JSON.parse(data);
 
         const targetIndex = index + dir;
-        if (targetIndex < 0 || targetIndex >= parsed.summary.picks.length)
+
+        if (targetIndex < 0 || targetIndex >= parsed.summary.picks.length) {
             return;
-
-        [parsed.summary.picks[index], parsed.summary.picks[targetIndex]] = [
-            parsed.summary.picks[targetIndex],
-            parsed.summary.picks[index],
-        ];
-
-        localStorage.setItem("data", JSON.stringify(parsed));
-
-        useSummary.getState().setSummary(getSummary());
-
-        if (sendServer) {
-            console.log("SEND TO SERVER");
         }
+
+        const picks = [...parsed.summary.picks];
+
+        [picks[index], picks[targetIndex]] = [picks[targetIndex], picks[index]];
+
+        await updateSummary(
+            {
+                picks,
+            },
+            sendServer,
+        );
     } catch (e) {
         console.error("ERROR: Could not edit summary: " + e);
         errorToast(i18n.t("seterror"), 3000);

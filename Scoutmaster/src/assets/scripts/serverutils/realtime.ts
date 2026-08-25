@@ -22,6 +22,7 @@ import {
     updateSectionIndexes,
     moveQuestion,
     addMatch,
+    updateSummary,
 } from "../localstorage";
 
 let socket: WebSocket | null = null;
@@ -237,6 +238,10 @@ export async function connectToSession() {
                     false,
                     false,
                 );
+            }
+
+            if (message?.tyoe === "updateSummary") {
+                updateSummary(message.content.changes, false);
             }
         } catch {
             console.log("WebSocket text message:", event.data);
