@@ -103,6 +103,7 @@ async def handleCompCodeChange(
 
     groupData[group]["compkey"] = message.get("content")
     groupData[group]["prescout"] = setPrescout
+    groupData[group]["custom"] = False
 
     await sendToGroup(
         groups,

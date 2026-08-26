@@ -10,7 +10,7 @@
 .phone-dash-dashcontainer {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: 90%;
     height: 100%;
 }

@@ -155,36 +155,48 @@ function DashboardSummary() {
     );
 
     const highAverage = highestAverage
-        ? `${highestAverage.teamId} - ${highestAverage.average.toFixed(1)}`
+        ? `${highestAverage.teamId} - ${highestAverage.average.toFixed(1)} ${t("pointsshortform")}`
         : "";
 
     const highMedian = highestMedian
-        ? `${highestMedian.teamId} - ${highestMedian.median.toFixed(1)}`
+        ? `${highestMedian.teamId} - ${highestMedian.median.toFixed(1)} ${t("pointsshortform")}`
         : "";
 
     const highPeak = highestPeak
-        ? `${highestPeak.teamId} - ${highestPeak.peak}`
+        ? `${highestPeak.teamId} - ${highestPeak.peak} ${t("pointsshortform")}`
         : "";
 
     const currentTeamRank = ranks[Number(selected?.name.split(" - ")[0])];
 
-    const teamsBelow = stats
-        .filter(
-            (team) => team.rank !== undefined && team.rank > currentTeamRank,
-        )
-        .map((team) => ({
-            number: team.teamId,
-            name: team.team.name,
-        }));
+    const teamsBelow = isCustom
+        ? stats.map((team) => ({
+              number: team.teamId,
+              name: team.team.name,
+          }))
+        : stats
+              .filter(
+                  (team) =>
+                      team.rank !== undefined && team.rank > currentTeamRank,
+              )
+              .map((team) => ({
+                  number: team.teamId,
+                  name: team.team.name,
+              }));
 
-    const teamsAbove = stats
-        .filter(
-            (team) => team.rank !== undefined && team.rank < currentTeamRank,
-        )
-        .map((team) => ({
-            number: team.teamId,
-            name: team.team.name,
-        }));
+    const teamsAbove = isCustom
+        ? stats.map((team) => ({
+              number: team.teamId,
+              name: team.team.name,
+          }))
+        : stats
+              .filter(
+                  (team) =>
+                      team.rank !== undefined && team.rank < currentTeamRank,
+              )
+              .map((team) => ({
+                  number: team.teamId,
+                  name: team.team.name,
+              }));
 
     const sorted = [...stats].sort((a, b) => {
         if (!isCustom) {
@@ -307,7 +319,7 @@ function DashboardSummary() {
                             </div>
                             <div className="desktop-dash-summary-topbar-item-text">
                                 <p>{highAverage}</p>
-                                <p>Highest Average</p>
+                                <p>{t("highestaverage")}</p>
                             </div>
                         </div>
                         <div className="desktop-dash-summary-topbar-item">
@@ -316,7 +328,7 @@ function DashboardSummary() {
                             </div>
                             <div className="desktop-dash-summary-topbar-item-text">
                                 <p>{highMedian}</p>
-                                <p>Highest Median</p>
+                                <p>{t("highestmedian")}</p>
                             </div>
                         </div>
                         <div className="desktop-dash-summary-topbar-item">
@@ -325,7 +337,7 @@ function DashboardSummary() {
                             </div>
                             <div className="desktop-dash-summary-topbar-item-text">
                                 <p>{highPeak}</p>
-                                <p>Highest Peak</p>
+                                <p>{t("highestpeak")}</p>
                             </div>
                         </div>
                     </div>
@@ -336,25 +348,25 @@ function DashboardSummary() {
                                     className="desktop-dash-summary-infocontainer-tab-left"
                                     onClick={() => setCurrentTab(0)}
                                 >
-                                    All Teams
+                                    {t("allteams")}
                                 </div>
                                 <div
                                     className="desktop-dash-summary-infocontainer-tab-left"
                                     onClick={() => setCurrentTab(1)}
                                 >
-                                    Top Picks
+                                    {t("toppicks")}
                                 </div>
                                 <div
                                     className="desktop-dash-summary-infocontainer-tab-left"
                                     onClick={() => setCurrentTab(2)}
                                 >
-                                    Accept/Reject
+                                    {t("acceptreject")}
                                 </div>
                             </div>
                             <div className="desktop-dash-summary-infocontainer-tabgroup">
                                 <div className="desktop-dash-summary-infocontainer-tab">
                                     <Field>
-                                        <Label>Your Team:</Label>
+                                        <Label>{t("yourteam")}</Label>
                                         <Combobox
                                             value={selected}
                                             onChange={setSelected}
@@ -412,7 +424,123 @@ function DashboardSummary() {
             </>
         );
     } else {
-        return <></>;
+        return (
+            <>
+                <div
+                    className="phone-dash-comp-overflowhandler"
+                    style={{ overflowX: "hidden" }}
+                >
+                    <div className="phone-dash-summary-topbar">
+                        <div className="phone-dash-summary-topbar-item">
+                            <div className="phone-dash-summary-topbar-item-icon">
+                                <FaRegStar style={{ color: "#4F81A8" }} />
+                            </div>
+                            <div className="phone-dash-summary-topbar-item-text">
+                                <p>{highAverage}</p>
+                                <p>{t("highestaverage")}</p>
+                            </div>
+                        </div>
+                        <div className="phone-dash-summary-topbar-item">
+                            <div className="phone-dash-summary-topbar-item-icon">
+                                <BsAlignMiddle style={{ color: "#4F9A91" }} />
+                            </div>
+                            <div className="phone-dash-summary-topbar-item-text">
+                                <p>{highMedian}</p>
+                                <p>{t("highestmedian")}</p>
+                            </div>
+                        </div>
+                        <div className="phone-dash-summary-topbar-item">
+                            <div className="phone-dash-summary-topbar-item-icon">
+                                <FaMountain style={{ color: "#C28A4A" }} />
+                            </div>
+                            <div className="phone-dash-summary-topbar-item-text">
+                                <p>{highPeak}</p>
+                                <p>{t("highestpeak")}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="phone-dash-summary-infocontainer">
+                        <div className="phone-dash-summary-infocontainer-tabcontainer">
+                            <div className="phone-dash-summary-infocontainer-tabgroup">
+                                <div
+                                    className="phone-dash-summary-infocontainer-tab-left"
+                                    onClick={() => setCurrentTab(0)}
+                                >
+                                    {t("allteams")}
+                                </div>
+                                <div
+                                    className="phone-dash-summary-infocontainer-tab-left"
+                                    onClick={() => setCurrentTab(1)}
+                                >
+                                    {t("toppicks")}
+                                </div>
+                                <div
+                                    className="phone-dash-summary-infocontainer-tab-left"
+                                    onClick={() => setCurrentTab(2)}
+                                >
+                                    {t("acceptreject")}
+                                </div>
+                            </div>
+                            <div className="phone-dash-summary-infocontainer-tabgroup">
+                                <div className="phone-dash-summary-infocontainer-tab">
+                                    <Field>
+                                        <Label>{t("yourteam")}</Label>
+                                        <Combobox
+                                            value={selected}
+                                            onChange={setSelected}
+                                            onClose={() => setQuery("")}
+                                        >
+                                            <ComboboxInput
+                                                aria-label="Assignee"
+                                                displayValue={(
+                                                    team: {
+                                                        id: number;
+                                                        name: string;
+                                                    } | null,
+                                                ) => team?.name ?? ""}
+                                                onChange={(event) =>
+                                                    setQuery(event.target.value)
+                                                }
+                                            />
+                                            <ComboboxOptions
+                                                anchor="bottom"
+                                                className="phone-dash-summary-infocontainer-tab-combooptions border empty:invisible"
+                                            >
+                                                {filteredTeams.map((team) => (
+                                                    <ComboboxOption
+                                                        key={team.id}
+                                                        value={team}
+                                                        className="data-focus:bg-blue-100"
+                                                    >
+                                                        {team.name}
+                                                    </ComboboxOption>
+                                                ))}
+                                            </ComboboxOptions>
+                                        </Combobox>
+                                    </Field>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="phone-dash-summary-tablecontainer">
+                            {currentTab == 0 ? (
+                                <Tab1
+                                    sorted={sorted}
+                                    sortBy={sortBy}
+                                    setSortBy={setSortBy}
+                                    setSortDown={setSortDown}
+                                    sortDown={sortDown}
+                                    selected={selected}
+                                />
+                            ) : currentTab == 1 ? (
+                                <Tab2 teamsBelow={teamsBelow} />
+                            ) : (
+                                <Tab3 teamsAbove={teamsAbove} />
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
     }
 }
 

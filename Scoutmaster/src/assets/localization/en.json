@@ -135,5 +135,24 @@
 
     "maxchoices": "Cannot have more than 10 choices",
     "maxquestions": "Cannot have more than 30 questions",
-    "maxsections": "Cannot have more than 10 sections"
+    "maxsections": "Cannot have more than 10 sections",
+
+    "highestaverage": "Highest Average",
+    "highestmedian": "Highest Median",
+    "highestpeak": "Highest Peak",
+    "allteams": "All Teams",
+    "toppicks": "Top Picks",
+    "acceptreject": "Accept/Reject",
+    "yourteam": "Your Team:",
+    "pointsshortform": "pts",
+    "rank": "Rank",
+    "team": "Team",
+    "averagepoints": "Average Points",
+    "medianpoints": "Median Points",
+    "peak": "Peak",
+    "order": "Order",
+    "accept": "Accept",
+    "reject": "Reject",
+    "firstplacenoaccepts": "🥳 No teams available because you are in first place 🤩",
+    "lastplacenopicks": "😢 No teams below to pick..."
 }
