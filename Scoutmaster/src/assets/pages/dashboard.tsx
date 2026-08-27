@@ -39,21 +39,21 @@ function Dashboard() {
     const { t } = useTranslation();
 
     type Page =
-        | "home"
+        // | "home"
         | "prescouting"
         | "matchscouting"
         | "summary"
         | "competition"
         | "settings";
 
-    const [currentPage, setCurrentPage] = useState<Page>("home");
+    const [currentPage, setCurrentPage] = useState<Page>("competition");
     const [navbarVisible, setNavbarVisible] = useState(true);
     const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
     function renderCurrentPage() {
         switch (currentPage) {
-            case "home":
-                return <DashboardHome />;
+            // case "home":
+            //     return <DashboardHome />;
             case "prescouting":
                 return <DashboardPrescout />;
             case "matchscouting":
@@ -111,7 +111,7 @@ function Dashboard() {
                                 <IconLogo className="desktop-dash-sidebar-logo" />
                             </div>
                             <div className="desktop-dash-sidebar-half">
-                                <div
+                                {/* <div
                                     className={
                                         currentPage == "home"
                                             ? "desktop-dash-sidebar-mainbutton-active"
@@ -126,7 +126,7 @@ function Dashboard() {
                                     <FaHome />
                                     {""}
                                     {t("home")}
-                                </div>
+                                </div> */}
                                 <div
                                     className={
                                         currentPage == "prescouting"
@@ -245,7 +245,7 @@ function Dashboard() {
                                 <IconLogo className="desktop-dash-sidebar-logo" />
                             </div>
                             <div className="desktop-dash-sidebar-half">
-                                <div
+                                {/* <div
                                     className={
                                         currentPage == "home"
                                             ? "desktop-dash-sidebar-mainbutton-active"
@@ -259,7 +259,7 @@ function Dashboard() {
                                     style={{ justifyContent: "center" }}
                                 >
                                     <FaHome />
-                                </div>
+                                </div> */}
                                 <div
                                     className={
                                         currentPage == "prescouting"
@@ -395,7 +395,7 @@ function Dashboard() {
                                         </div>
                                     </div>
                                     <div className="phone-dash-sidebar-half">
-                                        <div
+                                        {/* <div
                                             className={
                                                 currentPage == "home"
                                                     ? "phone-dash-sidebar-mainbutton-active"
@@ -411,7 +411,7 @@ function Dashboard() {
                                             <FaHome />
                                             {""}
                                             {t("home")}
-                                        </div>
+                                        </div> */}
                                         <div
                                             className={
                                                 currentPage == "prescouting"
@@ -546,7 +546,7 @@ function Dashboard() {
                                         </div>
                                     </div>
                                     <div className="phone-dash-sidebar-half">
-                                        <div
+                                        {/* <div
                                             className={
                                                 currentPage == "home"
                                                     ? "phone-dash-sidebar-mainbutton-active"
@@ -563,7 +563,7 @@ function Dashboard() {
                                             }
                                         >
                                             <FaHome />
-                                        </div>
+                                        </div> */}
                                         <div
                                             className={
                                                 currentPage == "prescouting"
