@@ -18,6 +18,7 @@ import {
     FaArrowUp,
     FaArrowDown,
 } from "react-icons/fa";
+import Flag from "../../../components/flag";
 
 //!
 //!
@@ -215,6 +216,10 @@ export function Tab1({
                                 }
                             >
                                 {team.teamId} - {team.team.name}
+                                <Flag
+                                    code={team.team.code}
+                                    imageClass="desktop-dash-prescout-infodisplay-table-flag"
+                                />
                             </div>
                             <div
                                 className="desktop-dash-summary-cell"
@@ -401,6 +406,10 @@ export function Tab1({
                                 }
                             >
                                 {team.teamId} - {team.team.name}
+                                <Flag
+                                    code={team.team.code}
+                                    imageClass="phone-dash-prescout-infodisplay-table-flag"
+                                />
                             </div>
                             <div
                                 className="phone-dash-summary-cell"
@@ -431,7 +440,7 @@ export function Tab1({
 export function Tab2({
     teamsBelow,
 }: {
-    teamsBelow: { number: string; name: string }[];
+    teamsBelow: { number: string; name: string; code: string | undefined }[];
 }) {
     const { t } = useTranslation();
 
@@ -547,6 +556,10 @@ export function Tab2({
                                         style={{ width: "80%" }}
                                     >
                                         {team.number} - {team.name}
+                                        <Flag
+                                            code={team.code}
+                                            imageClass="desktop-dash-prescout-infodisplay-table-flag"
+                                        />
                                     </div>
                                 </div>
                             );
@@ -629,6 +642,10 @@ export function Tab2({
                                     style={{ width: "70%" }}
                                 >
                                     {team.number} - {team.name}
+                                    <Flag
+                                        code={team.code}
+                                        imageClass="phone-dash-prescout-infodisplay-table-flag"
+                                    />
                                 </div>
                             </div>
                         );
@@ -642,7 +659,7 @@ export function Tab2({
 export function Tab3({
     teamsAbove,
 }: {
-    teamsAbove: { number: string; name: string }[];
+    teamsAbove: { number: string; name: string; code: string | undefined }[];
 }) {
     const { t } = useTranslation();
 
@@ -768,6 +785,10 @@ export function Tab3({
                                         style={{ width: "80%" }}
                                     >
                                         {team.number} - {team.name}
+                                        <Flag
+                                            code={team.code}
+                                            imageClass="desktop-dash-prescout-infodisplay-table-flag"
+                                        />
                                     </div>
                                 </div>
                             );
@@ -899,6 +920,10 @@ export function Tab3({
                                         style={{ width: "70%" }}
                                     >
                                         {team.number} - {team.name}
+                                        <Flag
+                                            code={team.code}
+                                            imageClass="phone-dash-prescout-infodisplay-table-flag"
+                                        />
                                     </div>
                                 </div>
                             );

@@ -173,6 +173,7 @@ function DashboardSummary() {
         ? stats.map((team) => ({
               number: team.teamId,
               name: team.team.name,
+              code: team.team.code,
           }))
         : stats
               .filter(
@@ -182,12 +183,14 @@ function DashboardSummary() {
               .map((team) => ({
                   number: team.teamId,
                   name: team.team.name,
+                  code: team.team.code,
               }));
 
     const teamsAbove = isCustom
         ? stats.map((team) => ({
               number: team.teamId,
               name: team.team.name,
+              code: team.team.code,
           }))
         : stats
               .filter(
@@ -197,6 +200,7 @@ function DashboardSummary() {
               .map((team) => ({
                   number: team.teamId,
                   name: team.team.name,
+                  code: team.team.code,
               }));
 
     const sorted = [...stats].sort((a, b) => {

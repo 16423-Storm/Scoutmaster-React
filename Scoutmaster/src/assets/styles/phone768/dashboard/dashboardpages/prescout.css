@@ -117,6 +117,9 @@
 .phone-dash-prescout-infodisplay-table-flag {
     width: 7%;
     border-radius: 5px;
+    max-height: 90%;
+    object-fit: cover;
+    display: block;
 }
 
 @media screen and (max-width: 1400px) {

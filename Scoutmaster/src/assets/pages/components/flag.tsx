@@ -2,16 +2,20 @@ function Flag({
     code,
     imageClass = "",
 }: {
-    code: string;
+    code: string | undefined;
     imageClass?: string;
 }) {
-    return (
-        <img
-            src={`/flags/${code}.svg`}
-            className={imageClass}
-            alt={`${code} - flag`}
-        />
-    );
+    if (code) {
+        return (
+            <img
+                src={`/flags/${code}.svg`}
+                className={imageClass}
+                alt={`${code} - flag`}
+            />
+        );
+    } else {
+        return <></>;
+    }
 }
 
 export default Flag;

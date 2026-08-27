@@ -614,7 +614,11 @@ function DashboardPrescout() {
                                                             .length
                                                     }
                                                 />
-                                                {teamNum} - {team.name}{" "}
+                                                <div
+                                                    style={{ maxWidth: "75%" }}
+                                                >
+                                                    {teamNum} - {team.name}{" "}
+                                                </div>
                                                 {team.code ? (
                                                     <Flag
                                                         code={team.code}
