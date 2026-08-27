@@ -363,7 +363,7 @@ function DashboardCompetition() {
                                             initMatchesAPI(currentKey, true)
                                         }
                                     >
-                                        <IoReload /> {"Reload Matches"}
+                                        <IoReload /> {t("reloadmatches")}
                                     </button>
                                 )}
                             </div>
@@ -603,6 +603,16 @@ function DashboardCompetition() {
                                 >
                                     <IoAddCircleOutline /> {t("addmatch")}
                                 </button>
+                                {!isCustom && (
+                                    <button
+                                        className="phone-dash-comp-infodisplay-greenbutton"
+                                        onClick={() =>
+                                            initMatchesAPI(currentKey, true)
+                                        }
+                                    >
+                                        <IoReload /> {t("reloadmatches")}
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
