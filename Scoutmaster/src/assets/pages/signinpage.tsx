@@ -97,11 +97,7 @@ function SignInPage() {
                         </p>
                         <div className="phone-signup-password-input-wrapper">
                             <input
-                                className={`phone-signup-input ${
-                                    form.password.length > 0 && !passwordValid
-                                        ? "invalid"
-                                        : ""
-                                }`}
+                                className={"phone-signup-input"}
                                 type={showPassword ? "text" : "password"}
                                 value={form.password}
                                 name="password"
@@ -123,11 +119,7 @@ function SignInPage() {
                                 )}
                             </button>
                         </div>
-                        <button
-                            type="submit"
-                            className="phone-signup-button"
-                            disabled={!canSubmit}
-                        >
+                        <button type="submit" className="phone-signup-button">
                             {t("signin")}
                         </button>
 
@@ -178,11 +170,7 @@ function SignInPage() {
                     </p>
                     <div className="desktop-signup-password-input-wrapper">
                         <input
-                            className={`desktop-signup-input ${
-                                form.password.length > 0 && !passwordValid
-                                    ? "invalid"
-                                    : ""
-                            }`}
+                            className={"desktop-signup-input"}
                             type={showPassword ? "text" : "password"}
                             value={form.password}
                             name="password"
@@ -204,11 +192,7 @@ function SignInPage() {
                             )}
                         </button>
                     </div>
-                    <button
-                        type="submit"
-                        className="desktop-signup-button"
-                        disabled={!canSubmit}
-                    >
+                    <button type="submit" className="desktop-signup-button">
                         {t("signin")}
                     </button>
 

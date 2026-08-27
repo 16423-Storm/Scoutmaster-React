@@ -37,7 +37,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    color: var(--text-color-light);
+    color: #e3e3e3;
     flex-direction: column;
 }
 
@@ -67,6 +67,7 @@
     font-weight: 600;
     display: flex;
     align-items: center;
+    color: white;
 }
 
 .phone-signup-text-hidden {
@@ -107,6 +108,7 @@
     box-sizing: border-box;
     margin-bottom: 10px;
     z-index: 1;
+    color: #070700;
 }
 
 .phone-signup-input.invalid {
@@ -196,7 +198,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-color-dark);
+    color: #070700;
     margin-bottom: 10px;
     z-index: 2;
 }
@@ -265,6 +267,7 @@
     box-sizing: border-box;
     background-color: #fff;
     font-weight: 600;
+    color: #070700;
     transition:
         transform 120ms ease,
         box-shadow 120ms ease,
@@ -287,7 +290,7 @@
     font-size: 1rem;
     width: 100%;
     text-align: center;
-    color: var(--text-color-light);
+    color: #e3e3e3;
     transition: text-shadow 0.1s ease;
     text-decoration: underline;
 }
