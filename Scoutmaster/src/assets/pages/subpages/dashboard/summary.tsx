@@ -29,6 +29,7 @@ import {
 } from "@headlessui/react";
 
 import { Tab1, Tab2, Tab3 } from "./summary/headers";
+import { SummaryTeamPage } from "./summary/summaryteampage";
 
 function DashboardSummary() {
     const { t } = useTranslation();
@@ -301,9 +302,26 @@ function DashboardSummary() {
         return ranks;
     }
 
+    const [currentTargetTeam, setCurrentTargetTeam] = useState("0");
+    const [summaryPageVisible, setSummaryPageVisible] = useState(false);
+
+    const targetTeamStats = stats.find(
+        (team) => Number(team.teamId) === Number(currentTargetTeam),
+    );
+
     if (useScreenType() == "desktop") {
         return (
             <>
+                {summaryPageVisible && (
+                    <SummaryTeamPage
+                        teamNum={currentTargetTeam}
+                        onBack={() => setSummaryPageVisible(false)}
+                        average={targetTeamStats!.average}
+                        median={targetTeamStats!.median}
+                        peak={targetTeamStats!.peak}
+                    />
+                )}
+
                 <div
                     className="desktop-dash-maincontainer"
                     style={{
@@ -412,6 +430,10 @@ function DashboardSummary() {
                                     setSortDown={setSortDown}
                                     sortDown={sortDown}
                                     selected={selected}
+                                    setSummaryPageVisible={
+                                        setSummaryPageVisible
+                                    }
+                                    setTargetTeam={setCurrentTargetTeam}
                                 />
                             ) : currentTab == 1 ? (
                                 <Tab2 teamsBelow={teamsBelow} />
@@ -426,6 +448,16 @@ function DashboardSummary() {
     } else {
         return (
             <>
+                {summaryPageVisible && (
+                    <SummaryTeamPage
+                        teamNum={currentTargetTeam}
+                        onBack={() => setSummaryPageVisible(false)}
+                        average={targetTeamStats!.average}
+                        median={targetTeamStats!.median}
+                        peak={targetTeamStats!.peak}
+                    />
+                )}
+
                 <div
                     className="phone-dash-comp-overflowhandler"
                     style={{ overflowX: "hidden" }}
@@ -530,6 +562,10 @@ function DashboardSummary() {
                                     setSortDown={setSortDown}
                                     sortDown={sortDown}
                                     selected={selected}
+                                    setSummaryPageVisible={
+                                        setSummaryPageVisible
+                                    }
+                                    setTargetTeam={setCurrentTargetTeam}
                                 />
                             ) : currentTab == 1 ? (
                                 <Tab2 teamsBelow={teamsBelow} />

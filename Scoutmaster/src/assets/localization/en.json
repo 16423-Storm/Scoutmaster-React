@@ -154,5 +154,7 @@
     "accept": "Accept",
     "reject": "Reject",
     "firstplacenoaccepts": "🥳 No teams available because you are in first place 🤩",
-    "lastplacenopicks": "😢 No teams below to pick..."
+    "lastplacenopicks": "😢 No teams below to pick...",
+    "back": "Back",
+    "noanswer": "Question not answered yet"
 }

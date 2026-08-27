@@ -85,7 +85,7 @@
 .phone-dash-summary-infocontainer-tabcontainer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     height: 10vh;
     width: 100%;
     box-sizing: border-box;
@@ -274,4 +274,12 @@
 .phone-dash-summary-infocontainer-tab-combooptions > *:hover {
     cursor: pointer;
     background-color: var(--clr-surface-a20);
+}
+
+.phone-dash-summary-teampage-rowdiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
 }

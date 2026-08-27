@@ -37,6 +37,8 @@ export function Tab1({
     sortDown,
     setSortDown,
     selected,
+    setTargetTeam,
+    setSummaryPageVisible,
 }: {
     sorted: any;
     sortBy: number;
@@ -44,6 +46,8 @@ export function Tab1({
     sortDown: boolean;
     setSortDown: Dispatch<SetStateAction<boolean>>;
     selected: { id: number; name: string } | null;
+    setTargetTeam: Dispatch<SetStateAction<string>>;
+    setSummaryPageVisible: Dispatch<SetStateAction<boolean>>;
 }) {
     const { t } = useTranslation();
 
@@ -189,6 +193,10 @@ export function Tab1({
                                     : ""
                             }`}
                             key={team.teamId}
+                            onClick={() => {
+                                setTargetTeam(team.teamId);
+                                setSummaryPageVisible(true);
+                            }}
                         >
                             {!isCustom && (
                                 <div
@@ -371,6 +379,10 @@ export function Tab1({
                                     : ""
                             }`}
                             key={team.teamId}
+                            onClick={() => {
+                                setTargetTeam(team.teamId);
+                                setSummaryPageVisible(true);
+                            }}
                         >
                             {!isCustom && (
                                 <div

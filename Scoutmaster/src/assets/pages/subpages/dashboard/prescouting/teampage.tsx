@@ -35,7 +35,7 @@ export function TeamPage({
                         className="desktop-dash-prescout-team-backbutton"
                         onClick={onBack}
                     >
-                        &lt; Back
+                        &lt; {t("back")}
                     </button>
                     <p className="desktop-dash-prescout-team-title">
                         {teamNum} - {teams[teamNum].name}
@@ -314,11 +314,13 @@ function RenderQuestion({
             const [check, setCheck] = useState(
                 typeof data === "boolean" ? data : false,
             );
+
             useEffect(() => {
-                if (data !== check) {
-                    updateTeamQuestion(team, questionId, check);
+                if (data === undefined) {
+                    updateTeamQuestion(team, questionId, false);
                 }
             }, []);
+
             const handleCheckChange = (
                 event: ChangeEvent<HTMLInputElement>,
             ) => {
@@ -375,18 +377,14 @@ function RenderQuestion({
                     ]),
                 ),
             );
+
             useEffect(() => {
                 const selected = Object.keys(checked).filter(
                     (key) => checked[key],
                 );
-                if (selected.length === 0) {
-                    if (data !== undefined) {
-                        updateTeamQuestion(team, questionId, undefined);
-                    }
-                } else {
-                    updateTeamQuestion(team, questionId, selected);
-                }
+                updateTeamQuestion(team, questionId, selected);
             }, [checked]);
+
             const handleCheckChange = (key: string) => {
                 setChecked((prev) => ({
                     ...prev,
@@ -453,11 +451,19 @@ function RenderQuestion({
             const [value, setValue] = useState(
                 typeof data === "number" ? data : 0,
             );
+
+            useEffect(() => {
+                if (data === undefined) {
+                    updateTeamQuestion(team, questionId, question.minmax[0]);
+                }
+            }, []);
+
             useEffect(() => {
                 if (data !== value) {
                     updateTeamQuestion(team, questionId, value);
                 }
             }, [value]);
+
             const handleRangeChange = (
                 event: ChangeEvent<HTMLInputElement>,
             ) => {
@@ -483,6 +489,12 @@ function RenderQuestion({
             const [selected, setSelected] = useState(
                 typeof data === "number" ? data : 0,
             );
+
+            useEffect(() => {
+                if (data === undefined) {
+                    updateTeamQuestion(team, questionId, 0);
+                }
+            }, []);
 
             useEffect(() => {
                 if (data !== selected) {
@@ -634,8 +646,8 @@ function RenderQuestion({
                 typeof data === "boolean" ? data : false,
             );
             useEffect(() => {
-                if (data !== check) {
-                    updateTeamQuestion(team, questionId, check);
+                if (data === undefined) {
+                    updateTeamQuestion(team, questionId, false);
                 }
             }, []);
             const handleCheckChange = (
@@ -772,6 +784,13 @@ function RenderQuestion({
             const [value, setValue] = useState(
                 typeof data === "number" ? data : 0,
             );
+
+            useEffect(() => {
+                if (data === undefined) {
+                    updateTeamQuestion(team, questionId, question.minmax[0]);
+                }
+            }, []);
+
             useEffect(() => {
                 if (data !== value) {
                     updateTeamQuestion(team, questionId, value);
@@ -802,6 +821,12 @@ function RenderQuestion({
             const [selected, setSelected] = useState(
                 typeof data === "number" ? data : 0,
             );
+
+            useEffect(() => {
+                if (data === undefined) {
+                    updateTeamQuestion(team, questionId, 0);
+                }
+            }, []);
 
             useEffect(() => {
                 if (data !== selected) {

@@ -186,10 +186,20 @@
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
     flex-shrink: 0;
     background-color: var(--clr-surface-a0);
+    transition: filter 0.1s ease;
 }
 
 .desktop-dash-summary-row:nth-child(even) {
     background-color: var(--clr-surface-a10);
+}
+
+.desktop-dash-summary-row:not(:first-child):hover {
+    filter: brightness(0.9);
+    cursor: pointer;
+}
+
+.desktop-dash-summary-row:not(:first-child):active {
+    filter: brightness(0.85);
 }
 
 .desktop-dash-summary-table {
@@ -267,4 +277,14 @@
 .desktop-dash-summary-infocontainer-tab-combooptions > *:hover {
     cursor: pointer;
     background-color: var(--clr-surface-a20);
+}
+
+.desktop-dash-summary-teampage-rowdiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
