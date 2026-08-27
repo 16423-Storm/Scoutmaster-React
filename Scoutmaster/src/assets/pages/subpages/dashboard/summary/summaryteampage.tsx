@@ -130,7 +130,7 @@ export function SummaryTeamPage({
         labels: matchScores.map((match) => match.match),
         datasets: [
             {
-                label: "Total Points",
+                label: t("totalpoints"),
                 data: matchScores.map((match) =>
                     match.scores.reduce((sum, score) => sum + score, 0),
                 ),
@@ -142,7 +142,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "Autonomous Points",
+                label: t("autonomouspoints"),
                 data: matchScores.map((match) =>
                     match.scores
                         .slice(0, 4)
@@ -156,7 +156,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "TeleOp Points",
+                label: t("teleoppoints"),
                 data: matchScores.map((match) =>
                     match.scores
                         .slice(4, 8)
@@ -176,7 +176,7 @@ export function SummaryTeamPage({
         labels: matchScores.map((match) => match.match),
         datasets: [
             {
-                label: "Total Autonomous Points",
+                label: t("autonomouspoints"),
                 data: matchScores.map((match) =>
                     match.scores
                         .slice(0, 4)
@@ -190,7 +190,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "Classified",
+                label: t("classified"),
                 data: matchScores.map((match) => match.scores[0]),
                 borderColor: "#EC4899",
                 backgroundColor: "#EC4899",
@@ -200,7 +200,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "Overflow",
+                label: t("overflow"),
                 data: matchScores.map((match) => match.scores[1]),
                 borderColor: "#F97316",
                 backgroundColor: "#F97316",
@@ -210,7 +210,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "Pattern",
+                label: t("pattern"),
                 data: matchScores.map((match) => match.scores[2]),
                 borderColor: "#22C55E",
                 backgroundColor: "#22C55E",
@@ -220,7 +220,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "Leave",
+                label: t("leave"),
                 data: matchScores.map((match) => match.scores[3]),
                 borderColor: "#6366F1",
                 backgroundColor: "#6366F1",
@@ -236,7 +236,7 @@ export function SummaryTeamPage({
         labels: matchScores.map((match) => match.match),
         datasets: [
             {
-                label: "Total TeleOp Points",
+                label: t("teleoppoints"),
                 data: matchScores.map((match) =>
                     match.scores
                         .slice(4, 8)
@@ -250,7 +250,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "Classified",
+                label: t("classified"),
                 data: matchScores.map((match) => match.scores[4]),
                 borderColor: "#EC4899",
                 backgroundColor: "#EC4899",
@@ -260,7 +260,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "Overflow",
+                label: t("overflow"),
                 data: matchScores.map((match) => match.scores[5]),
                 borderColor: "#F97316",
                 backgroundColor: "#F97316",
@@ -270,7 +270,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "Pattern",
+                label: t("pattern"),
                 data: matchScores.map((match) => match.scores[6]),
                 borderColor: "#22C55E",
                 backgroundColor: "#22C55E",
@@ -280,7 +280,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: "Base",
+                label: t("base"),
                 data: matchScores.map((match) => match.scores[7]),
                 borderColor: "#EAB308",
                 backgroundColor: "#EAB308",

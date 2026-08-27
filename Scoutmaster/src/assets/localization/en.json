@@ -156,5 +156,14 @@
     "firstplacenoaccepts": "🥳 No teams available because you are in first place 🤩",
     "lastplacenopicks": "😢 No teams below to pick...",
     "back": "Back",
-    "noanswer": "Question not answered yet"
+    "noanswer": "Question not answered yet",
+
+    "totalpoints": "Total Points",
+    "autonomouspoints": "Autonomous Points",
+    "teleoppoints": "TeleOp Points",
+    "classified": "Classified",
+    "overflow": "Overflow",
+    "pattern": "Pattern",
+    "leave": "Leave",
+    "base": "Base"
 }
