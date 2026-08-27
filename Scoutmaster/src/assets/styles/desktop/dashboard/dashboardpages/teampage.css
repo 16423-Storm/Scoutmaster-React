@@ -20,7 +20,7 @@
     border: 1px solid var(--clr-surface-tonal-a10);
     border-radius: 10px;
     padding: 5px;
-    transition: transform 0.1s ease-in;
+    transition: transform 0.1s ease;
     position: absolute;
     top: 20px;
     left: 20px;

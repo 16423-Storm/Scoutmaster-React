@@ -108,7 +108,7 @@
     background-color: var(--clr-success-a0);
     transition:
         background-color,
-        transform 0.1s ease-in-out;
+        transform 0.1s ease;
 }
 
 .desktop-dash-comp-infodisplay-greenbutton:hover {

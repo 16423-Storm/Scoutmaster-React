@@ -43,33 +43,33 @@
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
     transition:
         background-color,
-        transform 0.1s ease-in-out;
+        transform 0.1s ease;
 }
 
 .desktop-warningpopup-cancel {
     background-color: var(--clr-danger-a0);
     transition:
         background-color,
-        transform 0.1s ease-in-out;
+        transform 0.1s ease;
 }
 
 .desktop-warningpopup-continue {
     background-color: var(--clr-success-a0);
     transition:
         background-color,
-        transform 0.1s ease-in-out;
+        transform 0.1s ease;
 }
 
 .desktop-warningpopup-cancel:hover {
     background-color: var(--clr-danger-a10);
     cursor: pointer;
-    transition: background-color 0.1s ease-in-out;
+    transition: background-color 0.1s ease;
 }
 
 .desktop-warningpopup-continue:hover {
     background-color: var(--clr-success-a10);
     cursor: pointer;
-    transition: background-color 0.1s ease-in-out;
+    transition: background-color 0.1s ease;
 }
 
 .desktop-warningpopup-cancel:active {
@@ -169,7 +169,7 @@
     padding: 5px;
     box-sizing: border-box;
     margin: 0px;
-    transition: transform 0.1s ease-in-out;
+    transition: transform 0.1s ease;
 }
 
 .desktop-popup-prescoutdropdownbutton:hover {

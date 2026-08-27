@@ -318,7 +318,7 @@
 
 .desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton {
     font-size: 1.5rem;
-    transition: transform 0.1s ease-in-out;
+    transition: transform 0.1s ease;
 }
 
 .desktop-dash-prescout-admin-infodisplay-managecontainer-editbutton:hover {
@@ -333,7 +333,7 @@
 
 .desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton {
     font-size: 1.5rem;
-    transition: transform 0.1s ease-in-out;
+    transition: transform 0.1s ease;
 }
 
 .desktop-dash-prescout-admin-infodisplay-managecontainer-deletebutton:hover {
@@ -425,7 +425,7 @@
     box-sizing: border-box;
     padding: 3px;
     width: 30%;
-    transition: transform 0.1s ease-in-out;
+    transition: transform 0.1s ease;
 }
 
 .desktop-dash-comp-infodisplay-admin-controlbuttons > button:hover {
@@ -457,7 +457,7 @@
     border-radius: 10px;
     transition:
         transform,
-        background-color 0.1s ease-in;
+        background-color 0.1s ease;
 }
 
 .desktop-popupinput-addchoice:hover {
@@ -485,7 +485,7 @@
     font-size: 1.5rem;
     transition:
         color,
-        transform 0.1s ease-in;
+        transform 0.1s ease;
     cursor: default;
     user-select: none;
 }
