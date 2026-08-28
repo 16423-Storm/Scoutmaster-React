@@ -39,7 +39,7 @@ export async function signUp(data: UserData): Promise<"Success" | `Error`> {
     });
 
     if (error) {
-        return `Error: ${error.message}`;
+        return `Error`;
     }
 
     return "Success";
