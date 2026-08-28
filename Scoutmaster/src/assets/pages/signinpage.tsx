@@ -133,7 +133,7 @@ function SignInPage() {
 
     return (
         <div className="desktop-signup-maincontainer">
-            <img className="image5" src={logobanner} />
+            <img className="image35" src={logobanner} />
             <div className="desktop-signup-infocontainer">
                 <p className="desktop-signup-title">{t("signin")}</p>
 

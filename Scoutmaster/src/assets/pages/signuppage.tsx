@@ -3,6 +3,7 @@ import { useScreenType } from "../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 import { signUp } from "../scripts/auth.js";
 import { MdOutlineEmail, MdOutlineLock } from "react-icons/md";
+import { BsEnvelopeCheck } from "react-icons/bs";
 
 import type { UserData, SignUpFocus } from "../scripts/auth.js";
 import { useGoToPage } from "../scripts/multipageutils";
@@ -84,7 +85,17 @@ function SignUpPage() {
             <div className="phone-signup-maincontainer">
                 <img className="image85" src={logobanner} />
                 {successSignUp ? (
-                    <></>
+                    <div className="phone-signup-infocontainer">
+                        <div className="phone-signup-title">
+                            Successfully signed up!
+                        </div>
+                        <BsEnvelopeCheck
+                            style={{ fontSize: "10rem", color: "white" }}
+                        />
+                        <p style={{ padding: "20px" }}>
+                            Check your email for a link to verify your account.
+                        </p>
+                    </div>
                 ) : (
                     <div className="phone-signup-infocontainer">
                         <p className="phone-signup-title">{t("signup")}</p>
@@ -192,7 +203,17 @@ function SignUpPage() {
         <div className="desktop-signup-maincontainer">
             <img className="image35" src={logobanner} />
             {successSignUp ? (
-                <div className="desktop-signup-infocontainer">Success</div>
+                <div className="desktop-signup-infocontainer">
+                    <div className="desktop-signup-title">
+                        Successfully signed up!
+                    </div>
+                    <BsEnvelopeCheck
+                        style={{ fontSize: "10rem", color: "white" }}
+                    />
+                    <p style={{ padding: "20px" }}>
+                        Check your email for a link to verify your account.
+                    </p>
+                </div>
             ) : (
                 <div className="desktop-signup-infocontainer">
                     <p className="desktop-signup-title">{t("signup")}</p>
