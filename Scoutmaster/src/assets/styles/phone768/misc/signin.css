@@ -258,6 +258,10 @@
 }
 
 .phone-signup-button {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
     width: 90%;
     border: none;
     border-radius: 10px;

@@ -10,6 +10,8 @@ import { useGoToPage } from "../scripts/multipageutils.js";
 
 import logobanner from "../images/branding/logowhitebanner.png";
 
+import { MoonLoader } from "react-spinners";
+
 function SignInPage() {
     const { t } = useTranslation();
     const screenType = useScreenType();
@@ -32,17 +34,22 @@ function SignInPage() {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        setSpinner(true);
+
         const result = await signIn(form);
 
         if (result === "Success") {
             setCurrentError("");
+            setSpinner(false);
             goToDash();
         } else {
             console.error(result);
+            setSpinner(false);
             setCurrentError(result);
         }
     };
 
+    const [spinner, setSpinner] = useState(false);
     const [currentError, setCurrentError] = useState("");
 
     const goToSignUp = useGoToPage("/signup");
@@ -99,7 +106,7 @@ function SignInPage() {
                         </div>
                         {currentError !== "" && <p>{t(currentError)}</p>}
                         <button type="submit" className="phone-signup-button">
-                            {t("signin")}
+                            {spinner ? <MoonLoader size={30} /> : t("signin")}
                         </button>
 
                         <a className="phone-signup-bottomtext">
@@ -173,7 +180,7 @@ function SignInPage() {
                     </div>
                     {currentError !== "" && <p>{t(currentError)}</p>}
                     <button type="submit" className="desktop-signup-button">
-                        {t("signin")}
+                        {spinner ? <MoonLoader size={30} /> : t("signin")}
                     </button>
 
                     <a className="desktop-signup-bottomtext">

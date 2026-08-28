@@ -31,6 +31,9 @@
     "other_error": "You have hit an unknown error",
     "supabase_down_error": "We're having trouble connecting you right now, please try again in a few moments.",
 
+    "createnewgroup": "Create New Group",
+    "joinexistinggroup": "Join Existing Group",
+
     "home": "Home",
     "prescouting": "Prescout",
     "matchscouting": "Match Scout",

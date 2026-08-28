@@ -6,6 +6,7 @@ import Dashboard from "./assets/pages/dashboard";
 import NotFound from "./assets/pages/NotFound";
 
 import { useStartTheme } from "./assets/scripts/multipageutils";
+import Choice from "./assets/pages/choice";
 
 function App() {
     useStartTheme();
@@ -15,6 +16,7 @@ function App() {
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/choice" element={<Choice />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

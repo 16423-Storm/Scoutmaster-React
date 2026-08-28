@@ -29,9 +29,7 @@ export type SignUpFocus = {
  * - "Success" when the signup succeeds
  * - "Error: message" when the signup fails
  */
-export async function signUp(
-    data: UserData,
-): Promise<"Success" | `Error: ${string}`> {
+export async function signUp(data: UserData): Promise<"Success" | `Error`> {
     const { error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
