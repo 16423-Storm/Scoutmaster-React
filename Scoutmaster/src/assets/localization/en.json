@@ -25,6 +25,12 @@
     "privacypolicylowercase": "privacy policy",
     "donthaveaccount": "Don't have an account?",
 
+    "invalid_credentials": "Invalid username and/or password",
+    "email_not_confirmed": "Please verify email first before logging in",
+    "over_request_rate_limit": "You have made too many requests, please wait a few moments before trying again",
+    "other_error": "You have hit an unknown error",
+    "supabase_down_error": "We're having trouble connecting you right now, please try again in a few moments.",
+
     "home": "Home",
     "prescouting": "Prescout",
     "matchscouting": "Match Scout",

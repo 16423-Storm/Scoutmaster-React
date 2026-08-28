@@ -29,43 +29,21 @@ function SignInPage() {
             setForm((prev) => ({ ...prev, [field]: e.target.value }));
         };
 
-    const hasRules = useMemo(() => {
-        const p = form.password;
-        return {
-            length: p.length >= 8,
-            upper: /[A-Z]/.test(p),
-            lower: /[a-z]/.test(p),
-            number: /\d/.test(p),
-        };
-    }, [form.password]);
-
-    const emailValid = useMemo(() => {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
-    }, [form.email]);
-
-    const passwordValid = useMemo(() => {
-        return Object.values(hasRules).every(Boolean);
-    }, [hasRules]);
-
-    const showPasswordRules = focus.password || form.password.length > 0;
-
-    const inputClass = (valid: boolean) => (valid ? "valid" : "invalid");
-
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        if (!canSubmit) return;
 
         const result = await signIn(form);
 
         if (result === "Success") {
+            setCurrentError("");
             goToDash();
         } else {
             console.error(result);
+            setCurrentError(result);
         }
     };
 
-    const canSubmit = emailValid && passwordValid;
+    const [currentError, setCurrentError] = useState("");
 
     const goToSignUp = useGoToPage("/signup");
     const goToDash = useGoToPage("/dashboard");
@@ -84,7 +62,7 @@ function SignInPage() {
                             {t("emailwithcolon")}
                         </p>
                         <input
-                            className={`phone-signup-input ${form.email.length > 0 && !emailValid ? "invalid" : ""}`}
+                            className={"phone-signup-input"}
                             value={form.email}
                             name="email"
                             onChange={updateField("email")}
@@ -119,6 +97,7 @@ function SignInPage() {
                                 )}
                             </button>
                         </div>
+                        {currentError !== "" && <p>{t(currentError)}</p>}
                         <button type="submit" className="phone-signup-button">
                             {t("signin")}
                         </button>
@@ -157,7 +136,7 @@ function SignInPage() {
                         {t("emailwithcolon")}
                     </p>
                     <input
-                        className={`desktop-signup-input ${form.email.length > 0 && !emailValid ? "invalid" : ""}`}
+                        className={"desktop-signup-input"}
                         value={form.email}
                         name="email"
                         onChange={updateField("email")}
@@ -192,6 +171,7 @@ function SignInPage() {
                             )}
                         </button>
                     </div>
+                    {currentError !== "" && <p>{t(currentError)}</p>}
                     <button type="submit" className="desktop-signup-button">
                         {t("signin")}
                     </button>

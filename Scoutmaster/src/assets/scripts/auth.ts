@@ -53,16 +53,29 @@ export async function signUp(
  * @param {UserData} data - Login credentials for the user.
  * @returns {Promise<"Success" | string>} Resolves to "Success" or an error message in the format "Error: message".
  */
-export async function signIn(
-    data: UserData,
-): Promise<"Success" | `Error: ${string}`> {
+export async function signIn(data: UserData): Promise<"Success" | string> {
     const { error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
     });
 
     if (error) {
-        return `Error: ${error.message}`;
+        if (error.status && error.status >= 500) {
+            return "supabase_down_error";
+        }
+        switch (error.code) {
+            case "invalid_credentials":
+                return error.code;
+
+            case "email_not_confirmed":
+                return error.code;
+
+            case "over_request_rate_limit":
+                return error.code;
+
+            default:
+                return "other_error";
+        }
     }
 
     await connectToSession();
