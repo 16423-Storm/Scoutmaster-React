@@ -12,6 +12,7 @@ import { useCustom, getCustom, useCompKey, getCompKey } from "./competitions";
 import { useTeams, getTeams } from "./teams";
 import { useMatches, getMatches } from "./matches";
 import { useGroupTeam, useSummary, getGroupTeam, getSummary } from "./summary";
+import { getInvited, getMembers, useInvited, useMembers } from "./group";
 
 export type LocalStorageData = {
     compkey: string;
@@ -60,6 +61,8 @@ export function refreshAllStates() {
     useCompKey.getState().setCompKey(getCompKey());
     useQuestions.getState().setQuestions(getQuestions());
     useSections.getState().setSections(getSections());
+    useMembers.getState().setMembers(getMembers());
+    useInvited.getState().setInvited(getInvited());
 }
 
 /**
@@ -130,6 +133,8 @@ export function hydrate(
     prescout: PrescoutData | null,
     match: MatchData | null,
     summary: SummaryData | null,
+    members: string[],
+    invited: string[],
 ) {
     const skeleton: LocalStorageData = {
         compkey: compkey ?? "",
@@ -153,6 +158,13 @@ export function hydrate(
     };
 
     localStorage.setItem("data", JSON.stringify(skeleton));
+    localStorage.setItem(
+        "group",
+        JSON.stringify({
+            members: members,
+            invited: invited,
+        }),
+    );
 
     refreshAllStates();
 }

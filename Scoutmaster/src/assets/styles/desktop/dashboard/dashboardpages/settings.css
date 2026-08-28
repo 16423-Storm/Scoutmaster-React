@@ -19,7 +19,7 @@
     overflow: hidden;
 }
 
-.desktop-dash-settings-navcontainer button {
+.desktop-dash-settings-navcontainer > button {
     width: 100%;
     border: none;
     box-sizing: border-box;
@@ -29,30 +29,31 @@
 }
 
 .desktop-dash-settings-navcontainer
-    button:not(.desktop-dash-settings-navcontainer-activebutton) {
+    > button:not(.desktop-dash-settings-navcontainer-activebutton) {
     background-color: transparent;
 }
 
-.desktop-dash-settings-navcontainer button:first-child {
+.desktop-dash-settings-navcontainer > button:first-child {
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.desktop-dash-settings-navcontainer button:last-child {
+.desktop-dash-settings-navcontainer > button:last-child {
     border-top: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.desktop-dash-settings-navcontainer button:not(:last-child):not(:first-child) {
+.desktop-dash-settings-navcontainer
+    > button:not(:last-child):not(:first-child) {
     border-top: 1px solid var(--clr-surface-tonal-a10);
     border-bottom: 1px solid var(--clr-surface-tonal-a10);
 }
 
-.desktop-dash-settings-navcontainer button:hover {
+.desktop-dash-settings-navcontainer > button:hover {
     background-color: var(--clr-surface-a10);
     cursor: pointer;
     transition: background-color 0.15s;
 }
 
-.desktop-dash-settings-navcontainer button:active {
+.desktop-dash-settings-navcontainer > button:active {
     background-color: var(--clr-surface-a20);
     cursor: pointer;
 }
@@ -102,7 +103,7 @@
     font-size: 1.2rem;
 }
 
-.desktop-dash-settings-infocontainer-setting button {
+.desktop-dash-settings-infocontainer-setting > button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,13 +115,13 @@
     transition: background-color 0.15s;
 }
 
-.desktop-dash-settings-infocontainer-setting button:hover {
+.desktop-dash-settings-infocontainer-setting > button:hover {
     background-color: var(--clr-surface-a10);
     cursor: pointer;
     transition: background-color 0.15s;
 }
 
-.desktop-dash-settings-infocontainer-setting button:active {
+.desktop-dash-settings-infocontainer-setting > button:active {
     background-color: var(--clr-surface-a20);
     cursor: pointer;
 }
@@ -142,4 +143,62 @@
 
 .desktop-dash-settings-infocontainer-setting:only-child {
     border: none;
+}
+
+.desktop-dash-settings-infocontainer-setting > div:not(.nav-language-dropdown) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+}
+
+.dash-settings-membertable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    border-radius: 10px;
+    width: 80%;
+    overflow: hidden;
+}
+
+.dash-settings-membertable > div:not(.nav-language-dropdown):first-child {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.dash-settings-membertable > div:not(.nav-language-dropdown):last-child {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.dash-settings-membertable
+    > div:not(.nav-language-dropdown):not(:last-child):not(:first-child) {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-top: 1px solid var(--clr-surface-tonal-a10);
+    border-bottom: 1px solid var(--clr-surface-tonal-a10);
+}
+
+.dash-settings-membertable > div:not(.nav-language-dropdown) > * {
+    transition: transform 0.1s ease;
+}
+
+.dash-settings-membertable > div:not(.nav-language-dropdown) > *:hover {
+    color: var(--clr-danger-a0);
+    cursor: pointer;
+}
+
+.dash-settings-membertable > div:not(.nav-language-dropdown) > *:active {
+    transform: scale(0.8);
 }

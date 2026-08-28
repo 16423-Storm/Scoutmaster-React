@@ -11,19 +11,26 @@ import { useTranslation } from "react-i18next";
 import { useState, useRef, useEffect } from "react";
 import i18n from "i18next";
 
+import {
+    deleteMember,
+    useInvited,
+    useMembers,
+} from "../../../scripts/localstorage/group";
+
 // Icon Imports
-import { FaSun, FaMoon } from "react-icons/fa";
+import { FaSun, FaMoon, FaTrash } from "react-icons/fa";
 
 // Component Imports
 import { LanguageDropdown } from "../../components/languagedropdown";
 
 // Script Imports
 import { languages } from "../../../scripts/localization";
+import { WarningModal } from "../../components/popups";
 
 function DashboardSettings() {
     const { t } = useTranslation();
 
-    type SettingsPage = "general" | "account" | "groupmanagement" | "process";
+    type SettingsPage = "general" | "account" | "groupmanagement";
 
     const [currentPage, setCurrentPage] = useState<SettingsPage>("general");
 
@@ -35,8 +42,6 @@ function DashboardSettings() {
                 return <AccountPage />;
             case "groupmanagement":
                 return <GroupPage />;
-            case "process":
-                return <ProcessPage />;
         }
     }
 
@@ -80,16 +85,6 @@ function DashboardSettings() {
                                 }
                             >
                                 {t("groupmanagement")}
-                            </button>
-                            <button
-                                className={
-                                    currentPage === "process"
-                                        ? "desktop-dash-settings-navcontainer-activebutton"
-                                        : ""
-                                }
-                                onClick={() => setCurrentPage("process")}
-                            >
-                                {t("process")}
                             </button>
                         </div>
                         <div className="desktop-dash-settings-infocontainer">
@@ -139,16 +134,6 @@ function DashboardSettings() {
                                 }
                             >
                                 {t("groupmanagement")}
-                            </button>
-                            <button
-                                className={
-                                    currentPage === "process"
-                                        ? "phone-dash-settings-navcontainer-activebutton"
-                                        : ""
-                                }
-                                onClick={() => setCurrentPage("process")}
-                            >
-                                {t("process")}
                             </button>
                         </div>
                         <div className="phone-dash-settings-infocontainer">
@@ -213,14 +198,67 @@ function AccountPage() {
 }
 
 function GroupPage() {
-    return <></>;
-}
-
-function ProcessPage() {
     const { t } = useTranslation();
+    const members = useMembers((state) => state.members);
+    const invited = useInvited((state) => state.invited);
+
+    const [deleteMemberWarningVisible, setDeleteMemberWarningVisible] =
+        useState(false);
+
+    const [targetEmail, setTargetEmail] = useState("");
 
     return (
         <>
+            {deleteMemberWarningVisible && (
+                <WarningModal
+                    title={t("warning!")}
+                    message={t("kickwarning", { email: targetEmail })}
+                    onCancel={() => setDeleteMemberWarningVisible(false)}
+                    onContinue={() => deleteMember(targetEmail, true, true)}
+                />
+            )}
+            <div className="desktop-dash-settings-infocontainer-setting">
+                <p>{t("groupidcolon")}</p>
+                <p>2</p>
+            </div>
+            <div
+                className="desktop-dash-settings-infocontainer-setting"
+                style={{ justifyContent: "center" }}
+            >
+                <div>
+                    <p>Members:</p>
+                    <div className="dash-settings-membertable">
+                        {Object.entries(members).map(([memberNum, member]) => (
+                            <div key={memberNum}>
+                                {member.email}
+                                <FaTrash
+                                    onClick={() => {
+                                        setTargetEmail(member.email);
+                                        setDeleteMemberWarningVisible(true);
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <p style={{ paddingTop: "30px" }}>Invited:</p>
+                    <div className="dash-settings-membertable">
+                        {invited.length > 0 ? (
+                            invited.map((email) => (
+                                <div key={email}>{email}</div>
+                            ))
+                        ) : (
+                            <p>Nobody is invited</p>
+                        )}
+                    </div>
+
+                    <button
+                        className="desktop-dash-comp-infodisplay-button"
+                        style={{ width: "30%", marginTop: "10px" }}
+                    >
+                        Invite Member
+                    </button>
+                </div>
+            </div>
             <div className="desktop-dash-settings-infocontainer-setting">
                 <p>{t("customteamcountry")}</p>
                 <input

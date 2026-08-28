@@ -33,6 +33,9 @@
 
     "createnewgroup": "Create New Group",
     "joinexistinggroup": "Join Existing Group",
+    "joingroup": "Join Group",
+    "groupid": "Group ID",
+    "groupidfindhelp": "Ask your group's admin for this ID, it can be found in the group management tab inside of settings",
 
     "home": "Home",
     "prescouting": "Prescout",
@@ -44,10 +47,11 @@
     "general": "General",
     "account": "Account",
     "groupmanagement": "Group Management",
-    "process": "Process",
+    "groupidcolon": "Group ID:",
     "darklightmode": "Dark/Light Mode:",
     "language": "Language:",
     "customteamcountry": "Specify Custom Team Country:",
+    "kickwarning": "Continuing will kick out {{email}} from your group, are you sure you want to continue?",
 
     "warning!": "Warning!",
     "customwarning": "If you switch this competition to custom, it will keep all existing data, but it will no longer get new info from the FTC API, this CANNOT be reverted.",

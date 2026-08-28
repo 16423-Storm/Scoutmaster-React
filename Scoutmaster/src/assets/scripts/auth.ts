@@ -34,7 +34,7 @@ export async function signUp(data: UserData): Promise<"Success" | `Error`> {
         email: data.email,
         password: data.password,
         options: {
-            emailRedirectTo: `http://localhost:5173/dashboard`,
+            emailRedirectTo: `http://localhost:5173/choice`,
         },
     });
 

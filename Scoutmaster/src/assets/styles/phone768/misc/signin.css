@@ -41,6 +41,10 @@
     flex-direction: column;
 }
 
+.phone-signup-infocontainer p {
+    color: white !important;
+}
+
 .phone-signup-form {
     width: 100%;
     display: flex;
@@ -55,6 +59,7 @@
     font-weight: 600;
     font-size: 2rem;
     text-align: center;
+    color: white;
 }
 
 .phone-signup-text {
@@ -308,6 +313,7 @@
     text-align: center;
     max-width: 90%;
     padding: 10px;
+    color: white;
 }
 
 @-webkit-keyframes phone-input-dash {

@@ -35,7 +35,7 @@ export function LanguageDropdown({
                 onClick={() => setLanguageMenuOpen((prev: boolean) => !prev)}
                 className="localization-menuopenbutton"
                 style={{
-                    color: color ? "#000000" : "#ffffff",
+                    color: color ? "var(--black)" : "#ffffff",
                 }}
             >
                 <Flag

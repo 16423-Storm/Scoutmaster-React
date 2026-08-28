@@ -116,6 +116,8 @@ export async function connectToSession() {
                     message.data.prescout,
                     message.data.matchscout,
                     message.data.summary,
+                    message.data.members,
+                    message.data.invited,
                 );
             }
 
