@@ -1,5 +1,5 @@
 // Script Imports
-import { useScreenType } from "../../../scripts/multipageutils";
+import { useIsAdmin, useScreenType } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
@@ -266,9 +266,15 @@ function DashboardCompetition() {
                                         ),
                                     )}
                                 </div>
-                                <button onClick={() => setAddTeamVisible(true)}>
-                                    <IoAddCircleOutline /> {t("addteam")}
-                                </button>
+                                {useIsAdmin() ? (
+                                    <button
+                                        onClick={() => setAddTeamVisible(true)}
+                                    >
+                                        <IoAddCircleOutline /> {t("addteam")}
+                                    </button>
+                                ) : (
+                                    <></>
+                                )}
                             </div>
                         </div>
                         <div
@@ -335,22 +341,30 @@ function DashboardCompetition() {
                                     flexDirection: "row",
                                 }}
                             >
-                                <button
-                                    className="desktop-dash-comp-infodisplay-greenbutton"
-                                    onClick={() => setAddMatchVisible(true)}
-                                >
-                                    <IoAddCircleOutline /> {t("addmatch")}
-                                </button>
-                                {!isCustom && (
+                                {useIsAdmin() ? (
                                     <button
                                         className="desktop-dash-comp-infodisplay-greenbutton"
-                                        onClick={() =>
-                                            initMatchesAPI(currentKey, true)
-                                        }
+                                        onClick={() => setAddMatchVisible(true)}
                                     >
-                                        <IoReload /> {t("reloadmatches")}
+                                        <IoAddCircleOutline /> {t("addmatch")}
                                     </button>
+                                ) : (
+                                    <></>
                                 )}
+
+                                {!isCustom &&
+                                    (useIsAdmin() ? (
+                                        <button
+                                            className="desktop-dash-comp-infodisplay-greenbutton"
+                                            onClick={() =>
+                                                initMatchesAPI(currentKey, true)
+                                            }
+                                        >
+                                            <IoReload /> {t("reloadmatches")}
+                                        </button>
+                                    ) : (
+                                        <></>
+                                    ))}
                             </div>
                         </div>
                     </div>
@@ -509,11 +523,18 @@ function DashboardCompetition() {
                                             ),
                                         )}
                                     </div>
-                                    <button
-                                        onClick={() => setAddTeamVisible(true)}
-                                    >
-                                        <IoAddCircleOutline /> {t("addteam")}
-                                    </button>
+                                    {useIsAdmin() ? (
+                                        <button
+                                            onClick={() =>
+                                                setAddTeamVisible(true)
+                                            }
+                                        >
+                                            <IoAddCircleOutline />{" "}
+                                            {t("addteam")}
+                                        </button>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
                             </div>
                             <div className="phone-dash-comp-infodisplay">
@@ -568,22 +589,30 @@ function DashboardCompetition() {
                                         ),
                                     )}
                                 </div>
-                                <button
-                                    className="phone-dash-comp-infodisplay-greenbutton"
-                                    onClick={() => setAddMatchVisible(true)}
-                                >
-                                    <IoAddCircleOutline /> {t("addmatch")}
-                                </button>
-                                {!isCustom && (
+                                {useIsAdmin() ? (
                                     <button
                                         className="phone-dash-comp-infodisplay-greenbutton"
-                                        onClick={() =>
-                                            initMatchesAPI(currentKey, true)
-                                        }
+                                        onClick={() => setAddMatchVisible(true)}
                                     >
-                                        <IoReload /> {t("reloadmatches")}
+                                        <IoAddCircleOutline /> {t("addmatch")}
                                     </button>
+                                ) : (
+                                    <></>
                                 )}
+
+                                {!isCustom &&
+                                    (useIsAdmin() ? (
+                                        <button
+                                            className="phone-dash-comp-infodisplay-greenbutton"
+                                            onClick={() =>
+                                                initMatchesAPI(currentKey, true)
+                                            }
+                                        >
+                                            <IoReload /> {t("reloadmatches")}
+                                        </button>
+                                    ) : (
+                                        <></>
+                                    ))}
                             </div>
                         </div>
                     </div>

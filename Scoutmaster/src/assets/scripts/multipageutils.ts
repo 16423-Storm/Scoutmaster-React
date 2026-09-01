@@ -50,7 +50,41 @@ export async function useSignedIn(): Promise<boolean> {
  * @returns true | false
  */
 export function useIsAdmin(): true | false {
-    return true;
+    const sessionData = localStorage.getItem(
+        "sb-tgptsuzheleshmtesbcx-auth-token",
+    );
+    const group = localStorage.getItem("group");
+
+    if (!sessionData || !group) {
+        console.error(`ERROR: Missing sessionData or group in localStorage`);
+        return false;
+    }
+
+    try {
+        const parsedSd = JSON.parse(sessionData);
+        const userEmail =
+            typeof parsedSd === "object"
+                ? parsedSd?.user?.email
+                : parsedSd?.email;
+
+        if (!userEmail) return false;
+
+        const parsed = JSON.parse(group);
+        const members: Array<{
+            email: string;
+            role?: string;
+            isAdmin?: boolean;
+        }> = parsed?.members || [];
+
+        const member = members.find(
+            (m) => m.email?.toLowerCase() === userEmail.toLowerCase(),
+        );
+
+        return member?.role === "admin" || member?.isAdmin === true;
+    } catch (e) {
+        console.error(`ERROR checking admin status: `, e);
+        return false;
+    }
 }
 
 /**

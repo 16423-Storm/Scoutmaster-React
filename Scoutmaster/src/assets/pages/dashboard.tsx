@@ -35,6 +35,13 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { MdOutlineCancel } from "react-icons/md";
 
 import IconLogo from "../images/branding/iconlogo.svg?react";
+import {
+    connectToSession,
+    disconnectFromSession,
+    registerHydrationListener,
+    resetHydrationState,
+} from "../scripts/serverutils/realtime.ts";
+import { MoonLoader } from "react-spinners";
 
 function Dashboard() {
     const { t } = useTranslation();
@@ -50,6 +57,22 @@ function Dashboard() {
     const [currentPage, setCurrentPage] = useState<Page>("competition");
     const [navbarVisible, setNavbarVisible] = useState(true);
     const [sidebarExpanded, setSidebarExpanded] = useState(false);
+
+    const [isHydrating, setIsHydrating] = useState(true);
+
+    useEffect(() => {
+        resetHydrationState();
+        setIsHydrating(true);
+        registerHydrationListener(() => {
+            setIsHydrating(false);
+        });
+
+        connectToSession();
+
+        return () => {
+            disconnectFromSession();
+        };
+    }, []);
 
     function renderCurrentPage() {
         switch (currentPage) {
@@ -99,6 +122,37 @@ function Dashboard() {
     if (screenType == "desktop") {
         return (
             <>
+                {isHydrating && (
+                    <>
+                        <Blocker499 />
+                        <div
+                            style={{
+                                position: "fixed",
+                                top: 0,
+                                left: 0,
+                                width: "100vw",
+                                height: "100vh",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                zIndex: 500,
+                                gap: "1rem",
+                            }}
+                        >
+                            <MoonLoader size={50} color="var(--black)" />
+                            <p
+                                style={{
+                                    fontSize: "1.2rem",
+                                    margin: 0,
+                                }}
+                            >
+                                {t("loadinggroupdata")}
+                            </p>
+                        </div>
+                    </>
+                )}
+
                 {navbarVisible &&
                     (sidebarExpanded ? (
                         <div
@@ -380,6 +434,37 @@ function Dashboard() {
     } else {
         return (
             <>
+                {isHydrating && (
+                    <>
+                        <Blocker499 />
+                        <div
+                            style={{
+                                position: "fixed",
+                                top: 0,
+                                left: 0,
+                                width: "100vw",
+                                height: "100vh",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                zIndex: 500,
+                                gap: "1rem",
+                            }}
+                        >
+                            <MoonLoader size={50} color="var(--black)" />
+                            <p
+                                style={{
+                                    fontSize: "1.2rem",
+                                    margin: 0,
+                                }}
+                            >
+                                {t("loadinggroupdata")}
+                            </p>
+                        </div>
+                    </>
+                )}
+
                 {navbarVisible && (
                     <>
                         {sidebarExpanded && <Blocker499 />}

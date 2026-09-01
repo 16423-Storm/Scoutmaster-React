@@ -32,5 +32,6 @@ handlers = {
     "updateSummary": handleUpdateSummary,
 
     "addInvite": handleAddInvite,
-    "deleteInvite": handleDeleteInvite
+    "deleteInvite": handleDeleteInvite,
+    "deleteMember": handleDeleteMember
 }

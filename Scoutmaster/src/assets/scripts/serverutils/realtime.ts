@@ -24,9 +24,24 @@ import {
     addMatch,
     updateSummary,
 } from "../localstorage";
-import { addInvite, deleteInvite } from "../localstorage/group";
+import { addInvite, deleteInvite, deleteMember } from "../localstorage/group";
+
+const serverURL = import.meta.env.VITE_PYTHON_SERVER_URL;
 
 let socket: WebSocket | null = null;
+let reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
+let isIntentionallyClosed = false;
+let isHydrated = false;
+let onHydratedCallback: (() => void) | null = null;
+
+export function registerHydrationListener(callback: () => void) {
+    onHydratedCallback = callback;
+    if (isHydrated) callback();
+}
+
+export function resetHydrationState() {
+    isHydrated = false;
+}
 
 const pendingRequests = new Map<
     string,
@@ -37,22 +52,30 @@ const pendingRequests = new Map<
     }
 >();
 
-export async function connectToSession() {
+export async function connectToSession(): Promise<WebSocket | null> {
     if (socket?.readyState === WebSocket.OPEN) {
         return socket;
     }
+
+    isIntentionallyClosed = false;
 
     const {
         data: { session },
     } = await supabase.auth.getSession();
 
-    if (!session) {
+    const isExpired = session?.expires_at
+        ? session.expires_at * 1000 <= Date.now()
+        : true;
+
+    if (!session || isExpired) {
+        console.warn("Session expired or invalid. Redirecting to sign in");
+        disconnectFromSession();
+        window.location.href = "/signin";
         return null;
     }
 
     const accessToken = session.access_token;
-
-    socket = new WebSocket(`ws://localhost:8000/ws?token=${accessToken}`);
+    socket = new WebSocket(`ws://${serverURL}/ws?token=${accessToken}`);
 
     socket.onopen = () => {
         console.log("Realtime connection established");
@@ -65,6 +88,11 @@ export async function connectToSession() {
     socket.onclose = (event) => {
         console.log("Realtime connection closed:", event.code, event.reason);
         socket = null;
+        if (!isIntentionallyClosed) {
+            reconnectTimeout = setTimeout(() => {
+                connectToSession();
+            }, 2000);
+        }
     };
 
     socket.onmessage = (event) => {
@@ -120,6 +148,11 @@ export async function connectToSession() {
                     message.data.members,
                     message.data.invited,
                 );
+
+                isHydrated = true;
+                if (onHydratedCallback) {
+                    onHydratedCallback();
+                }
             }
 
             if (message?.type === "addTeam") {
@@ -254,12 +287,28 @@ export async function connectToSession() {
             if (message?.type === "deleteInvite") {
                 deleteInvite(message.content, false, false, true);
             }
+
+            if (message?.type === "deleteMember") {
+                deleteMember(message.content, false, false, true);
+            }
         } catch {
             console.log("WebSocket text message:", event.data);
         }
     };
 
     return socket;
+}
+
+export function disconnectFromSession() {
+    isIntentionallyClosed = true;
+    if (reconnectTimeout) {
+        clearTimeout(reconnectTimeout);
+        reconnectTimeout = null;
+    }
+    if (socket) {
+        socket.close();
+        socket = null;
+    }
 }
 
 export function sendMessage(message: {

@@ -1,4 +1,5 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client
 import os
 from dotenv import load_dotenv
@@ -13,6 +14,16 @@ supabase = create_client(
 )
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 groups: dict[int, set[WebSocket]] = {}
 groupData: dict[int, dict] = {}
@@ -170,3 +181,21 @@ async def websocketConnect(websocket: WebSocket):
 
         if not groups[groupId]:
             del groups[groupId]
+
+@app.get("/checkusergroup/{userId}")
+async def checkUserGroup(userId: str):
+    try:
+        result = (
+            supabase
+            .table("usergroup")
+            .select("group_id")
+            .eq("id", userId)
+            .maybe_single()
+            .execute()
+        )
+        
+        return result.data is not None
+        
+    except Exception as e:
+        print(f"Error checking usergroup: {e}")
+        return False

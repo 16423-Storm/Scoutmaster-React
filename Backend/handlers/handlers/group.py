@@ -57,6 +57,28 @@ async def handleAddInvite(
         )
         return
 
+    if len(groupData[group]["members"]) + len(groupData[group]["invited"]) >= 32:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    if content in groupData[group]["invited"]:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
     try:
         supabase.rpc(
             "add_invite",
@@ -193,6 +215,106 @@ async def handleDeleteInvite(
         group,
         {
             "type": "deleteInvite",
+            "content": content
+        },
+        exclude=websocket
+    )
+
+    await sendToUser(
+        websocket,
+        {
+            "type": "confirm",
+            "requestId": message.get("requestId"),
+            "content": True
+        }
+    )
+
+async def handleDeleteMember(
+    websocket: WebSocket,
+    id: str,
+    message: dict,
+    supabase,
+    group: int,
+    groupData,
+    groups
+):
+    members = groupData[group]["members"] or []
+
+    member = next(
+        (
+            member
+            for member in members
+            if member.get("id") == id
+        ),
+        None
+    )
+
+    if not member:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    isAdmin = member.get("isAdmin", False)
+
+    if not isAdmin:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    content = message.get("content")
+
+    if not content:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    try:
+        supabase.rpc(
+            "delete_member",
+            {
+                "p_group_id": group,
+                "p_id": content,
+            }
+        ).execute()
+
+    except Exception:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    groupData[group]["members"][:] = [
+        m for m in groupData[group]["members"] if m.get("id") != content
+    ]
+
+    await sendToGroup(
+        groups,
+        group,
+        {
+            "type": "deleteMember",
             "content": content
         },
         exclude=websocket

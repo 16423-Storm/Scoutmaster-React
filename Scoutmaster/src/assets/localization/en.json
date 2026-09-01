@@ -63,6 +63,9 @@
     "invitemember": "Invite Member",
     "email": "Email:",
     "placeholderemail": "e.g. email@gmail.com",
+    "maxmemberserror": "Max members reached, kick out or uninvite members to invite more",
+    "duplicateinvite": "Duplicate invite",
+    "loadinggroupdata": "Loading Group Data",
 
     "warning!": "Warning!",
     "customwarning": "If you switch this competition to custom, it will keep all existing data, but it will no longer get new info from the FTC API, this CANNOT be reverted.",

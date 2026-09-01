@@ -3,6 +3,7 @@ import { connectToSession } from "./serverutils/realtime";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+const serverURL = import.meta.env.VITE_PYTHON_SERVER_URL;
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
     auth: {
@@ -76,9 +77,15 @@ export async function signIn(data: UserData): Promise<"Success" | string> {
         }
     }
 
-    await connectToSession();
+    const {
+        data: { session },
+    } = await supabase.auth.getSession();
 
-    return "Success";
+    if (await checkUserGroup(session?.user?.id)) {
+        return "Success";
+    } else {
+        return "ChoiceSuccess";
+    }
 }
 
 /**
@@ -102,4 +109,23 @@ export async function isUserSignedIn(): Promise<boolean> {
  */
 export function getNumberOfMembers() {
     return 1;
+}
+
+export async function checkUserGroup(
+    userId: string | undefined,
+): Promise<boolean> {
+    if (!userId) {
+        return false;
+    }
+    try {
+        const response = await fetch(
+            `http://${serverURL}/checkusergroup/${userId}`,
+        );
+        if (!response.ok) return false;
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error checking user group status:", error);
+        return false;
+    }
 }

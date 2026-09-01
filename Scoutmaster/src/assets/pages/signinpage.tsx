@@ -42,6 +42,10 @@ function SignInPage() {
             setCurrentError("");
             setSpinner(false);
             goToDash();
+        } else if (result === "ChoiceSuccess") {
+            setCurrentError("");
+            setSpinner(false);
+            goToChoice();
         } else {
             console.error(result);
             setSpinner(false);
@@ -54,6 +58,7 @@ function SignInPage() {
 
     const goToSignUp = useGoToPage("/signup");
     const goToDash = useGoToPage("/dashboard");
+    const goToChoice = useGoToPage("/choice");
     const [showPassword, setShowPassword] = useState(false);
 
     if (screenType === "phone" || screenType === "tablet") {

@@ -173,6 +173,18 @@ export async function addInvite(
     try {
         const parsed = JSON.parse(data);
 
+        if (parsed.invited.length + parsed.members.length >= 32) {
+            console.error("ERROR: Max members reached");
+            errorToast(i18n.t("maxmemberserror"), 3000);
+            return;
+        }
+
+        if (parsed.invited.includes(email)) {
+            console.error("ERROR: Duplicate invite");
+            errorToast(i18n.t("duplicateinvite"), 3000);
+            return;
+        }
+
         parsed.invited.push(email);
 
         if (sendServer) {
