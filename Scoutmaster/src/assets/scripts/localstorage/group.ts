@@ -77,6 +77,15 @@ export async function deleteMember(
     try {
         const parsed = JSON.parse(data);
 
+        const memberToDelete = parsed.members.find(
+            (member: { id: string; email: string; isAdmin: boolean }) =>
+                member.email === email,
+        );
+
+        if (!memberToDelete) {
+            return;
+        }
+
         parsed.members = parsed.members.filter(
             (member: { id: string; email: string; isAdmin: boolean }) =>
                 member.email !== email,
@@ -87,7 +96,7 @@ export async function deleteMember(
 
             const confirmed = await sendMessage({
                 type: "deleteMember",
-                content: parsed.members,
+                content: memberToDelete.id,
                 requestId,
             });
 
@@ -143,14 +152,13 @@ export function getInvited() {
 
 /**
  *
- * @param {string[]} invited
+ * @param {string} email
  * @param {boolean} sendServer
  * @param {boolean} show
  * @param {boolean} infoShow
- * @returns
  */
-export async function updateInvited(
-    invited: string[],
+export async function addInvite(
+    email: string,
     sendServer: boolean = true,
     show: boolean = false,
     infoShow: boolean = false,
@@ -165,14 +173,14 @@ export async function updateInvited(
     try {
         const parsed = JSON.parse(data);
 
-        parsed.invited = invited;
+        parsed.invited.push(email);
 
         if (sendServer) {
             const requestId = nanoid(10);
 
             const confirmed = await sendMessage({
-                type: "updateInvited",
-                content: invited,
+                type: "addInvite",
+                content: email,
                 requestId,
             });
 
@@ -184,6 +192,72 @@ export async function updateInvited(
 
         localStorage.setItem("group", JSON.stringify(parsed));
         useInvited.getState().setInvited(getInvited());
+
+        if (show) {
+            successToast(i18n.t("successinvite"), 2000);
+        }
+
+        if (infoShow) {
+            infoToast(i18n.t("inviteinfoshow"), 2000);
+        }
+    } catch (e) {
+        console.error("ERROR: Could not update invited:", e);
+        errorToast(i18n.t("seterror"), 3000);
+    }
+}
+
+/**
+ *
+ * @param {string} email
+ * @param {boolean} sendServer
+ * @param {boolean} show
+ * @param {boolean} infoShow
+ */
+export async function deleteInvite(
+    email: string,
+    sendServer: boolean = true,
+    show: boolean = false,
+    infoShow: boolean = false,
+) {
+    const data = localStorage.getItem("group");
+
+    if (!data) {
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+
+        parsed.invited = parsed.invited.filter(
+            (notTarget: string) => notTarget !== email,
+        );
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "deleteInvite",
+                content: email,
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+
+        localStorage.setItem("group", JSON.stringify(parsed));
+        useInvited.getState().setInvited(getInvited());
+
+        if (show) {
+            successToast(i18n.t("successuninvite"), 2000);
+        }
+
+        if (infoShow) {
+            infoToast(i18n.t("uninviteinfoshow"), 2000);
+        }
     } catch (e) {
         console.error("ERROR: Could not update invited:", e);
         errorToast(i18n.t("seterror"), 3000);

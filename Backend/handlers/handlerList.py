@@ -4,6 +4,7 @@ from handlers.handlers.matches import *
 from handlers.handlers.sections import *
 from handlers.handlers.questions import *
 from handlers.handlers.summary import *
+from handlers.handlers.group import *
 
 handlers = {
     "compCodeChange": handleCompCodeChange,
@@ -28,5 +29,8 @@ handlers = {
     "updateQuestion": handleUpdateQuestion,
     "moveQuestion": handleMoveQuestion,
 
-    "updateSummary": handleUpdateSummary
+    "updateSummary": handleUpdateSummary,
+
+    "addInvite": handleAddInvite,
+    "deleteInvite": handleDeleteInvite
 }

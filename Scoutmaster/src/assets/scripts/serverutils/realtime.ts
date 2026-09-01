@@ -24,6 +24,7 @@ import {
     addMatch,
     updateSummary,
 } from "../localstorage";
+import { addInvite, deleteInvite } from "../localstorage/group";
 
 let socket: WebSocket | null = null;
 
@@ -244,6 +245,14 @@ export async function connectToSession() {
 
             if (message?.tyoe === "updateSummary") {
                 updateSummary(message.content.changes, false);
+            }
+
+            if (message?.type === "addInvite") {
+                addInvite(message.content, false, false, true);
+            }
+
+            if (message?.type === "deleteInvite") {
+                deleteInvite(message.content, false, false, true);
             }
         } catch {
             console.log("WebSocket text message:", event.data);

@@ -16,6 +16,7 @@ import DashboardSummary from "./subpages/dashboard/summary.tsx";
 import DashboardSettings from "./subpages/dashboard/settings.tsx";
 import DashboardCompetition from "./subpages/dashboard/competition.tsx";
 import Blocker499 from "./components/blocker.tsx";
+import { Bounce, ToastContainer } from "react-toastify";
 
 // Script Imports
 import { languages } from "../scripts/localization.js";
@@ -357,6 +358,19 @@ function Dashboard() {
                         </div>
                     ))}
                 <div className="desktop-dash-maincontainer">
+                    <ToastContainer
+                        position="bottom-right"
+                        autoClose={2000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick={false}
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="colored"
+                        transition={Bounce}
+                    />
                     <div className="desktop-dash-dashcontainer">
                         {renderCurrentPage()}
                     </div>
@@ -693,6 +707,19 @@ function Dashboard() {
                     </>
                 )}
                 <div className="phone-dash-maincontainer">
+                    <ToastContainer
+                        position="bottom-right"
+                        autoClose={2000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick={false}
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="colored"
+                        transition={Bounce}
+                    />
                     <div className="phone-dash-dashcontainer">
                         {renderCurrentPage()}
                     </div>

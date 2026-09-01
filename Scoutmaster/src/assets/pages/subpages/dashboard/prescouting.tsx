@@ -17,7 +17,6 @@ import Flag from "../../components/flag";
 import { getNumOfQuestions } from "../../../scripts/localstorage";
 import { FaGhost } from "react-icons/fa";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
-import { Bounce, ToastContainer } from "react-toastify";
 import {
     AddSectionModal,
     EditSectionModal,
@@ -117,20 +116,6 @@ function DashboardPrescout() {
     if (useScreenType() == "desktop") {
         return (
             <>
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={2000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                    transition={Bounce}
-                />
-
                 {deleteWarningVisible && (
                     <WarningModal
                         title={t("warning!")}
@@ -485,19 +470,6 @@ function DashboardPrescout() {
     } else {
         return (
             <>
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={2000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                    transition={Bounce}
-                />
                 {deleteWarningVisible && (
                     <WarningModal
                         title={t("warning!")}

@@ -14,7 +14,6 @@ import {
     deleteMatch,
     initMatchesAPI,
 } from "../../../scripts/localstorage";
-import { Bounce, ToastContainer } from "react-toastify";
 
 import data from "./comps.json";
 
@@ -119,20 +118,6 @@ function DashboardCompetition() {
     if (useScreenType() == "desktop") {
         return (
             <>
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={2000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                    transition={Bounce}
-                />
-
                 {addTeamVisible && (
                     <AddTeamModal
                         onCancel={() => setAddTeamVisible(false)}
@@ -375,20 +360,6 @@ function DashboardCompetition() {
     } else {
         return (
             <>
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={2000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                    transition={Bounce}
-                />
-
                 {addTeamVisible && (
                     <AddTeamModal
                         onCancel={() => setAddTeamVisible(false)}
