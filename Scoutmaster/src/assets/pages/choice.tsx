@@ -1,10 +1,11 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, useEffect, type ChangeEvent } from "react";
 import { useScreenType } from "../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 
 import { FaMagnifyingGlass, FaPlus } from "react-icons/fa6";
 
 import { GridLoader } from "react-spinners";
+import { createGroup, joinGroup } from "../scripts/auth";
 
 function Choice() {
     const { t } = useTranslation();
@@ -15,7 +16,43 @@ function Choice() {
     // 2 -> Join existing group UI
     const [currentChoice, setCurrentChoice] = useState(0);
 
+    useEffect(() => {
+        if (currentChoice === 1) {
+            handleCreateGroup();
+        }
+    }, [currentChoice]);
+
+    // TODO, ADD PROPER ERROR SHOWING
+    const handleCreateGroup = async () => {
+        const success = await createGroup();
+
+        if (success) {
+            window.location.href = "/dashboard";
+        } else {
+            setCurrentChoice(0);
+        }
+    };
+
     const [groupID, setGroupID] = useState("");
+    const [joinError, setJoinError] = useState(false);
+    const handleJoinGroup = async () => {
+        const parsedId = parseInt(groupID, 10);
+        if (isNaN(parsedId)) {
+            setJoinError(true);
+            return;
+        }
+
+        setJoinError(false);
+
+        const success = await joinGroup(parsedId);
+
+        if (success) {
+            window.location.href = "/dashboard";
+        } else {
+            setJoinError(true);
+            console.error("e");
+        }
+    };
 
     if (screenType === "desktop") {
         return (
@@ -81,11 +118,10 @@ function Choice() {
                                 autoFocus
                                 maxLength={9}
                             />
+                            {joinError === true && <p>Error joining group.</p>}
                             <button
                                 className="desktop-signup-button"
-                                onClick={() => {
-                                    setCurrentChoice(2);
-                                }}
+                                onClick={handleJoinGroup}
                                 style={{
                                     justifyContent: "center",
                                     gap: "30px",

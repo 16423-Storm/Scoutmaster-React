@@ -24,7 +24,12 @@ import {
     addMatch,
     updateSummary,
 } from "../localstorage";
-import { addInvite, deleteInvite, deleteMember } from "../localstorage/group";
+import {
+    addInvite,
+    addMember,
+    deleteInvite,
+    deleteMember,
+} from "../localstorage/group";
 
 const serverURL = import.meta.env.VITE_PYTHON_SERVER_URL;
 
@@ -290,6 +295,14 @@ export async function connectToSession(): Promise<WebSocket | null> {
 
             if (message?.type === "deleteMember") {
                 deleteMember(message.content, false, false, true);
+            }
+
+            if (message?.type === "addMember") {
+                addMember(message.content, true, false);
+            }
+
+            if (message?.type === "deleteInviteForAdd") {
+                deleteInvite(message.content, false, false, false);
             }
         } catch {
             console.log("WebSocket text message:", event.data);

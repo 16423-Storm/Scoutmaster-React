@@ -77,11 +77,7 @@ export async function signIn(data: UserData): Promise<"Success" | string> {
         }
     }
 
-    const {
-        data: { session },
-    } = await supabase.auth.getSession();
-
-    if (await checkUserGroup(session?.user?.id)) {
+    if (await checkUserGroup()) {
         return "Success";
     } else {
         return "ChoiceSuccess";
@@ -111,21 +107,83 @@ export function getNumberOfMembers() {
     return 1;
 }
 
-export async function checkUserGroup(
-    userId: string | undefined,
-): Promise<boolean> {
-    if (!userId) {
-        return false;
-    }
+export async function checkUserGroup(): Promise<boolean> {
     try {
-        const response = await fetch(
-            `http://${serverURL}/checkusergroup/${userId}`,
-        );
+        const {
+            data: { session },
+        } = await supabase.auth.getSession();
+        const token = session?.access_token;
+
+        if (!token) {
+            return false;
+        }
+
+        const response = await fetch(`http://${serverURL}/checkusergroup`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
         if (!response.ok) return false;
 
         return await response.json();
     } catch (error) {
         console.error("Error checking user group status:", error);
+        return false;
+    }
+}
+
+export async function joinGroup(groupId: number): Promise<boolean> {
+    try {
+        const {
+            data: { session },
+        } = await supabase.auth.getSession();
+        const token = session?.access_token;
+
+        if (!token) {
+            return false;
+        }
+
+        const response = await fetch(`http://${serverURL}/join/${groupId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) return false;
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error joining group:", error);
+        return false;
+    }
+}
+
+export async function createGroup(): Promise<boolean> {
+    try {
+        const {
+            data: { session },
+        } = await supabase.auth.getSession();
+        const token = session?.access_token;
+
+        if (!token) {
+            return false;
+        }
+
+        const response = await fetch(`http://${serverURL}/creategroup`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) return false;
+
+        const data = await response.json();
+        return data.success === true;
+    } catch (error) {
+        console.error("Error creating group:", error);
         return false;
     }
 }

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client
 import os
@@ -135,7 +135,7 @@ async def websocketConnect(websocket: WebSocket):
         len(groups[groupId]) == 0
     )
 
-    groups.setdefault(groupId, set()).add(websocket)
+    groups.setdefault(groupId, []).append(websocket)
 
     await websocket.send_json({
         "type": "groupHydration",
@@ -182,20 +182,182 @@ async def websocketConnect(websocket: WebSocket):
         if not groups[groupId]:
             del groups[groupId]
 
-@app.get("/checkusergroup/{userId}")
-async def checkUserGroup(userId: str):
+@app.get("/checkusergroup")
+async def checkUserGroup(request: Request):
+    authHeader = request.headers.get("Authorization")
+    token = None
+
+    if authHeader and authHeader.startswith("Bearer "):
+        token = authHeader.split(" ")[1]
+    else:
+        token = request.query_params.get("token")
+
+    if not token:
+        return False
+
     try:
+        response = supabase.auth.get_user(token)
+        user = response.user
+
+        if not user:
+            return False
+
         result = (
             supabase
             .table("usergroup")
             .select("group_id")
-            .eq("id", userId)
+            .eq("id", user.id)
             .maybe_single()
             .execute()
         )
-        
+
         return result.data is not None
-        
+
     except Exception as e:
         print(f"Error checking usergroup: {e}")
         return False
+
+@app.get("/join/{groupId}")
+async def joinGroup(groupId: int, request: Request):
+    authHeader = request.headers.get("Authorization")
+    token = None
+
+    if authHeader and authHeader.startswith("Bearer "):
+        token = authHeader.split(" ")[1]
+    else:
+        token = request.query_params.get("token")
+
+    if not token:
+        return False
+
+    try:
+        response = supabase.auth.get_user(token)
+        user = response.user
+
+        if not user or not user.email:
+            return False
+
+        userEmail = user.email
+
+        response = (
+            supabase
+            .table("group")
+            .select("id, invited")
+            .eq("id", groupId)
+            .maybe_single()
+            .execute()
+        )
+
+        if not response.data:
+            return False
+
+        invites = response.data.get("invited") or []
+
+        if userEmail not in invites:
+            return False
+
+        supabase.rpc(
+            "join_group",
+            {
+                "p_user_id": user.id,
+                "p_group_id": groupId,
+                "p_user_email": userEmail,
+            }
+        ).execute()
+
+        if groupId in groupData:
+            if "invited" not in groupData[groupId] or groupData[groupId]["invited"] is None:
+                groupData[groupId]["invited"] = []
+            if "members" not in groupData[groupId] or groupData[groupId]["members"] is None:
+                groupData[groupId]["members"] = []
+
+            groupData[groupId]["invited"][:] = [
+                email for email in groupData[groupId]["invited"] if email != userEmail
+            ]
+
+            newMember = {
+                "id": user.id,
+                "email": userEmail,
+                "isAdmin": False
+            }
+            groupData[groupId]["members"].append(newMember)
+
+        removePayload = {
+            "type": "deleteInviteForAdd",
+            "content": userEmail
+        }
+
+        addPayload = {
+            "type": "addMember",
+            "content": {"id": user.id, "email": userEmail, "isAdmin": False}
+        }
+
+        if groupId in groups:
+            for connection in list(groups[groupId]):
+                await connection.send_json(removePayload)
+                await connection.send_json(addPayload)
+
+        return True
+
+    except Exception as e:
+        print(f"Error joining group {groupId}: {e}")
+        return False
+
+@app.post("/creategroup")
+async def createGroup(request: Request):
+    authHeader = request.headers.get("Authorization")
+    token = None
+
+    if authHeader and authHeader.startswith("Bearer "):
+        token = authHeader.split(" ")[1]
+    else:
+        token = request.query_params.get("token")
+
+    if not token:
+        return {"success": False, "error": "Missing token"}
+
+    try:
+        response = supabase.auth.get_user(token)
+        user = response.user
+
+        if not user or not user.email:
+            return {"success": False, "error": "Invalid user session"}
+
+        rpc_response = supabase.rpc(
+            "create_group",
+            {
+                "p_user_id": user.id,
+                "p_user_email": user.email,
+            }
+        ).execute()
+
+        new_group_id = rpc_response.data
+
+        if not new_group_id:
+            return {"success": False, "error": "Failed to generate group ID"}
+
+        groupData[new_group_id] = {
+            "members": [
+                {
+                    "id": str(user.id),
+                    "email": user.email,
+                    "isAdmin": True
+                }
+            ],
+            "invited": [],
+            "compkey": "",
+            "custom": {},
+            "currentTeam": None,
+            "prescout": {},
+            "matchscout": {},
+            "summary": {}
+        }
+
+        if new_group_id not in groups:
+            groups[new_group_id] = []
+
+        return {"success": True, "groupId": new_group_id}
+
+    except Exception as e:
+        print(f"Error creating group: {e}")
+        return {"success": False, "error": str(e)}

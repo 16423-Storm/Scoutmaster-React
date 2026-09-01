@@ -40,7 +40,9 @@ export function getTeams() {
     }
 
     try {
-        const teams = JSON.parse(data).prescout.teams as Teams;
+        const parsed = JSON.parse(data);
+        const teams = (parsed?.prescout?.teams ?? {}) as Teams;
+
         return Object.fromEntries(
             Object.entries(teams).sort(([a], [b]) => Number(a) - Number(b)),
         );
