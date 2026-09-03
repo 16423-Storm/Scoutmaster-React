@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client
 import os
 from dotenv import load_dotenv
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
+import time
+import json
 
 from router import routeMessage
 
@@ -14,6 +19,13 @@ supabase = create_client(
 )
 
 app = FastAPI()
+
+limiter = Limiter(key_func=get_remote_address)
+
+app = FastAPI()
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -91,9 +103,37 @@ async def getGroup(groupId: int):
 
     return result.data
 
+wsConnectionTracker: dict[str, list[float]] = {}
+WS_CONNECT_LIMIT = 300
+WS_CONNECT_WINDOW = 60
+
+MAX_PAYLOAD_BYTES = 64 * 1024
+
+async def checkPayloadSize(message: dict, websocket: WebSocket) -> bool:
+    payloadBytes = len(json.dumps(message).encode("utf-8"))
+
+    if payloadBytes > MAX_PAYLOAD_BYTES:
+        await websocket.close(code=1009, reason="Payload size exceeded limit")
+        return False
+        
+    return True
 
 @app.websocket("/ws")
 async def websocketConnect(websocket: WebSocket):
+    clientIp = websocket.client.host if websocket.client else "unknown"
+    now = time.time()
+
+    connectionHistory = wsConnectionTracker.setdefault(clientIp, [])
+    wsConnectionTracker[clientIp] = [
+        t for t in connectionHistory if now - t < WS_CONNECT_WINDOW
+    ]
+
+    if len(wsConnectionTracker[clientIp]) >= WS_CONNECT_LIMIT:
+        await websocket.close(code=1008)
+        return
+
+    wsConnectionTracker[clientIp].append(now)
+
     token = websocket.query_params.get("token")
 
     if not token:
@@ -155,6 +195,9 @@ async def websocketConnect(websocket: WebSocket):
         while True:
             message = await websocket.receive_json()
 
+            if not await checkPayloadSize(message, websocket):
+                return
+
             print(f"{userId}: {message}")
 
 
@@ -177,12 +220,14 @@ async def websocketConnect(websocket: WebSocket):
             f"Disconnected: {userId} from group {groupId}"
         )
 
-        groups[groupId].discard(websocket)
+        if groupId in groups and websocket in groups[groupId]:
+            groups[groupId].remove(websocket)
 
         if not groups[groupId]:
             del groups[groupId]
 
 @app.get("/checkusergroup")
+@limiter.limit("10/minute")
 async def checkUserGroup(request: Request):
     authHeader = request.headers.get("Authorization")
     token = None
@@ -304,6 +349,7 @@ async def joinGroup(groupId: int, request: Request):
         return False
 
 @app.post("/creategroup")
+@limiter.limit("1/5minutes")
 async def createGroup(request: Request):
     authHeader = request.headers.get("Authorization")
     token = None

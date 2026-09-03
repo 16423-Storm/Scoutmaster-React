@@ -1,5 +1,6 @@
 from messageRouting import *
 
+@ws_limit(maxCalls=32, window=60)
 async def handleAddInvite(
     websocket: WebSocket,
     id: str,
@@ -120,6 +121,7 @@ async def handleAddInvite(
         }
     )
 
+@ws_limit(maxCalls=32, window=60)
 async def handleDeleteInvite(
     websocket: WebSocket,
     id: str,
@@ -229,6 +231,7 @@ async def handleDeleteInvite(
         }
     )
 
+@ws_limit(maxCalls=12, window=60)
 async def handleDeleteMember(
     websocket: WebSocket,
     id: str,

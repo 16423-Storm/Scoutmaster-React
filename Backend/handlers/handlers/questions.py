@@ -1,5 +1,6 @@
 from messageRouting import *
 
+@ws_limit(maxCalls=30, window=60)
 async def handleAddQuestion(
     websocket: WebSocket,
     id: str,
@@ -34,6 +35,17 @@ async def handleAddQuestion(
     isAdmin = member.get("isAdmin", False)
 
     if not isAdmin:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    if len(groupData[group]["prescout"]["structure"]) >= 30:
         await sendToUser(
             websocket,
             {
@@ -97,6 +109,7 @@ async def handleAddQuestion(
         }
     )
 
+@ws_limit(maxCalls=60, window=60)
 async def handleDeleteQuestion(
     websocket: WebSocket,
     id: str,
@@ -210,6 +223,7 @@ async def handleDeleteQuestion(
         }
     )
 
+@ws_limit(maxCalls=60, window=60)
 async def handleUpdateQuestion(
     websocket: WebSocket,
     id: str,
@@ -325,6 +339,7 @@ async def handleUpdateQuestion(
         }
     )
 
+@ws_limit(maxCalls=120, window=60)
 async def handleMoveQuestion(
     websocket: WebSocket,
     id: str,

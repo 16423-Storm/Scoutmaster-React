@@ -71,7 +71,15 @@ export async function addTeam(
     code?: string,
     infoShow = false,
 ) {
-    if (Object.hasOwn(getTeams(), num.toString())) {
+    const teams = getTeams();
+
+    if (Object.keys(teams).length >= 500) {
+        console.error("ERROR: Team limit of 500 reached");
+        errorToast(i18n.t("teamlimitreached"), 3000);
+        return;
+    }
+
+    if (Object.hasOwn(teams, num.toString())) {
         console.error("ERROR: Attempted to add duplicate team");
         errorToast(i18n.t("teamduplicate"), 3000);
         return;

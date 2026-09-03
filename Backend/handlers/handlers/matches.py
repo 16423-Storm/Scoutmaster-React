@@ -1,6 +1,7 @@
 from messageRouting import *
 import asyncio
 
+@ws_limit(maxCalls=40, window=60)
 async def handleAddMatch(
     websocket: WebSocket,
     id: str,
@@ -58,7 +59,17 @@ async def handleAddMatch(
         )
         return
 
-    key = str(content["key"])
+    matchscout = groupData[group]["matchscout"] or {}
+    if len(matchscout) >= 750:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
 
     match = {
         "teams": [
@@ -80,14 +91,15 @@ async def handleAddMatch(
     }
 
     try:
-        supabase.rpc(
+        response = supabase.rpc(
             "add_match",
             {
                 "p_group_id": group,
-                "p_match_key": key,
                 "p_match": match,
             }
         ).execute()
+
+        generatedKey = str(response.data)
 
     except Exception:
         await sendToUser(
@@ -100,9 +112,10 @@ async def handleAddMatch(
         )
         return
 
-    matchscout = groupData[group]["matchscout"] or {}
-    matchscout[key] = match
+    matchscout[generatedKey] = match
     groupData[group]["matchscout"] = matchscout
+
+    content["k"] = generatedKey
 
     await sendToGroup(
         groups,
@@ -111,7 +124,6 @@ async def handleAddMatch(
             "type": "addMatch",
             "content": content
         },
-        exclude=websocket
     )
 
     await sendToUser(
@@ -123,6 +135,7 @@ async def handleAddMatch(
         }
     )
     
+@ws_limit(maxCalls=8, window=60)
 async def handleAddMatches(
     websocket: WebSocket,
     id: str,
@@ -238,6 +251,7 @@ async def handleAddMatches(
         }
     )
 
+@ws_limit(maxCalls=500, window=60)
 async def handleUpdateScore(
     websocket: WebSocket,
     id: str,
@@ -338,6 +352,7 @@ async def handleUpdateScore(
         }
     )
 
+@ws_limit(maxCalls=40, window=60)
 async def handleDeleteMatch(
     websocket: WebSocket,
     id: str,

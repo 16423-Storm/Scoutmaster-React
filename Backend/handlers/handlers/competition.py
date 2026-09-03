@@ -1,5 +1,6 @@
 from messageRouting import *
 
+@ws_limit(maxCalls=8, window=60)
 async def handleCompCodeChange(
     websocket: WebSocket,
     id: str,
@@ -115,7 +116,7 @@ async def handleCompCodeChange(
         exclude=websocket
     )
     
-
+@ws_limit(maxCalls=8, window=60)
 async def handleCustom(
     websocket: WebSocket,
     id: str,

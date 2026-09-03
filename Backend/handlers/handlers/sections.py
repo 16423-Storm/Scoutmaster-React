@@ -1,5 +1,6 @@
 from messageRouting import *
 
+@ws_limit(maxCalls=10, window=60)
 async def handleAddSection(
     websocket: WebSocket,
     id: str,
@@ -119,6 +120,7 @@ async def handleAddSection(
         }
     )
 
+@ws_limit(maxCalls=10, window=60)
 async def handleDeleteSection(
     websocket: WebSocket,
     id: str,
@@ -254,6 +256,7 @@ async def handleDeleteSection(
         }
     )
 
+@ws_limit(maxCalls=30, window=60)
 async def handleUpdateSection(
     websocket: WebSocket,
     id: str,
@@ -367,6 +370,7 @@ async def handleUpdateSection(
         }
     )
 
+@ws_limit(maxCalls=60, window=60)
 async def handleUpdateSectionIndexes(
     websocket: WebSocket,
     id: str,

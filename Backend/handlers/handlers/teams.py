@@ -1,6 +1,6 @@
 from messageRouting import *
-import asyncio
 
+@ws_limit(maxCalls=100, window=60)
 async def handleAddTeam(
     websocket: WebSocket,
     id: str,
@@ -35,6 +35,20 @@ async def handleAddTeam(
     isAdmin = member.get("isAdmin", False)
 
     if not isAdmin:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    prescout = groupData[group]["prescout"] or {}
+    teams = prescout.get("teams", [])
+
+    if len(teams) >= 500:
         await sendToUser(
             websocket,
             {
@@ -80,9 +94,6 @@ async def handleAddTeam(
         )
         return
 
-    prescout = groupData[group]["prescout"] or {}
-    teams = prescout.get("teams", [])
-
     teams[content["num"]] = {
         "name": content["name"],
         "code": content["code"],
@@ -112,6 +123,7 @@ async def handleAddTeam(
         }
     )
 
+@ws_limit(maxCalls=8, window=60)
 async def handleAddTeams(
     websocket: WebSocket,
     id: str,
@@ -212,6 +224,7 @@ async def handleAddTeams(
         }
     )
 
+@ws_limit(maxCalls=100, window=60)
 async def handleDeleteTeam(
     websocket: WebSocket,
     id: str,

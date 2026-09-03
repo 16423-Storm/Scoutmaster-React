@@ -1,4 +1,5 @@
 import { supabase } from "../auth";
+import i18n from "../localization";
 
 import {
     hydrate,
@@ -23,6 +24,7 @@ import {
     moveQuestion,
     addMatch,
     updateSummary,
+    addMatchToStorage,
 } from "../localstorage";
 import {
     addInvite,
@@ -30,6 +32,7 @@ import {
     deleteInvite,
     deleteMember,
 } from "../localstorage/group";
+import { errorToast } from "../misc/toastmanager";
 
 const serverURL = import.meta.env.VITE_PYTHON_SERVER_URL;
 
@@ -196,15 +199,15 @@ export async function connectToSession(): Promise<WebSocket | null> {
             }
 
             if (message?.type === "addMatch") {
-                addMatch(
+                addMatchToStorage(
                     message.content.red1,
                     message.content.red2,
                     message.content.blue1,
                     message.content.blue2,
+                    message.content.k,
+                    true,
                     true,
                     false,
-                    false,
-                    true,
                 );
             }
 
@@ -303,6 +306,19 @@ export async function connectToSession(): Promise<WebSocket | null> {
 
             if (message?.type === "deleteInviteForAdd") {
                 deleteInvite(message.content, false, false, false);
+            }
+
+            if (message?.type === "RATELIMITED") {
+                const rawAction = message?.content ?? "messageTypes";
+
+                const translatedAction = i18n.t(`messageTypes.${rawAction}`, {
+                    defaultValue: rawAction,
+                });
+
+                errorToast(
+                    i18n.t("ratelimited", { content: translatedAction }),
+                    3000,
+                );
             }
         } catch {
             console.log("WebSocket text message:", event.data);

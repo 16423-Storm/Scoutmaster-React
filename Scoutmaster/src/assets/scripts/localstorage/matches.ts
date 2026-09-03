@@ -66,7 +66,7 @@ export function getMatches() {
 }
 
 /**
- * Add match to competition
+ * Sends signal to server to add match, does NOT save to localstorage
  * @param {number} key - Match Number
  * @param {number} red1 - Team for red 1
  * @param {number} red2 - Team for red 2
@@ -87,9 +87,11 @@ export async function addMatch(
     infoShow: boolean = false,
 ) {
     const matches = getMatches();
-    let key = 1;
-    while (Object.hasOwn(matches, key)) {
-        key++;
+
+    if (Object.keys(matches).length >= 750) {
+        console.error("ERROR: Match limit of 750 reached");
+        errorToast(i18n.t("matchlimitreached"), 3000);
+        return;
     }
 
     const teams = [red1, red2, blue1, blue2];
@@ -116,6 +118,51 @@ export async function addMatch(
     }
 
     try {
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "addMatch",
+                content: {
+                    red1: red1,
+                    red2: red2,
+                    blue1: blue1,
+                    blue2: blue2,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
+        }
+    } catch (e) {
+        console.error("ERROR: Could not add match: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+}
+
+export async function addMatchToStorage(
+    red1: number,
+    red2: number,
+    blue1: number,
+    blue2: number,
+    key: number,
+    custom: boolean = false,
+    show: boolean = true,
+    infoShow: boolean = false,
+) {
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const teams = [red1, red2, blue1, blue2];
         const parsed = JSON.parse(data);
         parsed.match[key.toString()] = {
             teams,
@@ -131,31 +178,11 @@ export async function addMatch(
             ],
         };
 
-        if (sendServer) {
-            const requestId = nanoid(10);
-
-            const confirmed = await sendMessage({
-                type: "addMatch",
-                content: {
-                    red1: red1,
-                    red2: red2,
-                    blue1: blue1,
-                    blue2: blue2,
-                    key: key,
-                },
-                requestId,
-            });
-
-            if (!confirmed) {
-                errorToast(i18n.t("seterror"), 3000);
-                return;
-            }
-        }
-
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
+
         if (custom) {
-            setCustom(true, false, sendServer, infoShow);
+            setCustom(true, false, false, infoShow);
         }
 
         if (show) {
@@ -250,6 +277,12 @@ export async function updateScore(
     counter: boolean,
     sendServer: boolean = true,
 ) {
+    if (value > 10000) {
+        console.error("ERROR: Score value exceeds the max limit of 10 000");
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);

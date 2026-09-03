@@ -99,6 +99,39 @@
     "matchdeletedinfoshow": "Someone else deleted a match",
     "matchduplicateteams": "Duplicate teams added",
     "matchnotenoughteams": "Not all team slots filled, if needed, fill with negative numbers",
+    "ratelimited": "Your request for {{content}} has been rate limited. Please wait before making more requests",
+    "teamlimitreached": "You have reached the limit of 500 teams",
+    "matchlimitreached": "You have reached the limit of 750 matches",
+
+    "messageTypes": {
+        "compCodeChange": "Changing Competition Code",
+        "custom": "Custom Action",
+
+        "addTeam": "Adding Team",
+        "addTeams": "Adding Teams",
+        "deleteTeam": "Deleting Team",
+
+        "addMatch": "Adding Match",
+        "addMatches": "Adding Matches",
+        "updateScore": "Updating Score",
+        "deleteMatch": "Deleting Match",
+
+        "addSection": "Adding Section",
+        "deleteSection": "Deleting Section",
+        "updateSection": "Updating Section",
+        "updateSectionIndexes": "Moving Sections",
+
+        "addQuestion": "Adding Question",
+        "deleteQuestion": "Deleting Question",
+        "updateQuestion": "Updating Question",
+        "moveQuestion": "Moving Question",
+
+        "updateSummary": "Updating Summary",
+
+        "addInvite": "Adding Invite",
+        "deleteInvite": "Deleting Invite",
+        "deleteMember": "Removing Member"
+    },
 
     "totalmatches": "Total Matches: {{num}}",
     "match": "Match",

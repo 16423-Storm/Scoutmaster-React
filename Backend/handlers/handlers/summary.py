@@ -1,5 +1,6 @@
 from messageRouting import *
 
+@ws_limit(maxCalls=120, window=60)
 async def handleUpdateSummary(
     websocket: WebSocket,
     id: str,
