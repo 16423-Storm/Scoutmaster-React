@@ -1,17 +1,17 @@
 import { useTranslation } from "react-i18next";
-import Flag from "../../../components/flag";
 import { useScreenType } from "../../../../scripts/multipageutils";
-import type { Team, Question } from "../../../../scripts/localstorage";
+import type { Question } from "../../../../scripts/localstorage";
 import {
     useSections,
     useQuestions,
     useTeams,
     updateTeamQuestion,
-    getQuestion,
 } from "../../../../scripts/localstorage";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import { IoMdStar } from "react-icons/io";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
 export function TeamPage({
     onBack,
@@ -24,7 +24,6 @@ export function TeamPage({
 
     const sections = useSections((state) => state.sections);
     const questions = useQuestions((state) => state.questions);
-
     const teams = useTeams((state) => state.teams);
 
     if (useScreenType() == "desktop") {
@@ -197,6 +196,7 @@ function RenderQuestion({
     data?: string | number | boolean | string[] | number[] | boolean[];
 }) {
     const { t } = useTranslation();
+
     if (useScreenType() == "desktop") {
         if (question.type == "ln") {
             const [area, setArea] = useState(
@@ -204,29 +204,13 @@ function RenderQuestion({
             );
 
             useEffect(() => {
-                if (area === "") {
-                    if (data !== undefined) {
-                        updateTeamQuestion(team, questionId, undefined);
-                    }
-                    return;
-                }
-
-                if (data !== area) {
-                    updateTeamQuestion(team, questionId, area);
-                }
-            }, [area]);
+                setArea(typeof data === "string" ? data : "");
+            }, [data]);
 
             const handleAreaChange = (
                 event: ChangeEvent<HTMLTextAreaElement>,
             ) => {
-                const value = event.target.value;
-                setArea(value);
-
-                if (value === "") {
-                    updateTeamQuestion(team, questionId, undefined);
-                } else {
-                    updateTeamQuestion(team, questionId, value);
-                }
+                setArea(event.target.value);
             };
 
             const handleAreaBlur = () => {
@@ -264,22 +248,15 @@ function RenderQuestion({
             const [input, setInput] = useState(
                 typeof data === "string" ? data.slice(0, 100) : "",
             );
-            useEffect(() => {
-                if (input === "") {
-                    if (data !== undefined) {
-                        updateTeamQuestion(team, questionId, undefined);
-                    }
-                    return;
-                }
 
-                if (data !== input) {
-                    updateTeamQuestion(team, questionId, input);
-                }
-            }, [input]);
+            useEffect(() => {
+                setInput(typeof data === "string" ? data.slice(0, 100) : "");
+            }, [data]);
+
             const handleAreaChange = (event: ChangeEvent<HTMLInputElement>) => {
-                const { value } = event.target;
-                setInput(value);
+                setInput(event.target.value);
             };
+
             const handleAreaBlur = () => {
                 if (input !== "") {
                     updateTeamQuestion(team, questionId, input);
@@ -316,6 +293,10 @@ function RenderQuestion({
             );
 
             useEffect(() => {
+                setCheck(typeof data === "boolean" ? data : false);
+            }, [data]);
+
+            useEffect(() => {
                 if (data === undefined) {
                     updateTeamQuestion(team, questionId, false);
                 }
@@ -345,15 +326,20 @@ function RenderQuestion({
                     ? Number(data.toString().slice(0, 20))
                     : 0,
             );
+
             useEffect(() => {
-                if (data !== input) {
-                    updateTeamQuestion(team, questionId, input);
-                }
-            }, [input]);
+                setInput(
+                    typeof data === "number"
+                        ? Number(data.toString().slice(0, 20))
+                        : 0,
+                );
+            }, [data]);
+
             const handleNumChange = (event: ChangeEvent<HTMLInputElement>) => {
                 const { value } = event.target;
                 const num = Number(value.slice(0, 20));
-                if (!Number.isNaN(num)) {
+
+                if (!Number.isNaN(num) && num >= -999999 && num <= 999999) {
                     setInput(num);
                     updateTeamQuestion(team, questionId, num);
                 }
@@ -363,6 +349,8 @@ function RenderQuestion({
                 <input
                     className="desktop-dash-prescout-team-numinput"
                     value={input}
+                    min={-999999}
+                    max={999999}
                     onChange={handleNumChange}
                 />
             );
@@ -379,17 +367,35 @@ function RenderQuestion({
             );
 
             useEffect(() => {
-                const selected = Object.keys(checked).filter(
-                    (key) => checked[key],
+                setChecked(
+                    Object.fromEntries(
+                        Object.keys(question.opt).map((key) => [
+                            key,
+                            Array.isArray(data) &&
+                                data.every(
+                                    (item) => typeof item === "string",
+                                ) &&
+                                data.includes(key),
+                        ]),
+                    ),
                 );
-                updateTeamQuestion(team, questionId, selected);
-            }, [checked]);
+            }, [data, question.opt]);
 
             const handleCheckChange = (key: string) => {
-                setChecked((prev) => ({
-                    ...prev,
-                    [key]: !prev[key],
-                }));
+                setChecked((prev) => {
+                    const next = {
+                        ...prev,
+                        [key]: !prev[key],
+                    };
+
+                    const selected = Object.keys(next).filter(
+                        (optionKey) => next[optionKey],
+                    );
+
+                    updateTeamQuestion(team, questionId, selected);
+
+                    return next;
+                });
             };
 
             return (
@@ -416,16 +422,19 @@ function RenderQuestion({
                     ? data
                     : undefined,
             );
+
             useEffect(() => {
-                if (selected !== undefined) {
-                    updateTeamQuestion(team, questionId, selected);
-                } else if (data !== undefined) {
-                    updateTeamQuestion(team, questionId, undefined);
-                }
-            }, [selected]);
+                setSelected(
+                    typeof data === "string" &&
+                        Object.hasOwn(question.opt, data)
+                        ? data
+                        : undefined,
+                );
+            }, [data, question.opt]);
 
             const handleSelectChange = (key: string) => {
                 setSelected(key);
+                updateTeamQuestion(team, questionId, key);
             };
 
             return (
@@ -449,8 +458,12 @@ function RenderQuestion({
             );
         } else if (question.type == "r") {
             const [value, setValue] = useState(
-                typeof data === "number" ? data : 0,
+                typeof data === "number" ? data : question.minmax[0],
             );
+
+            useEffect(() => {
+                setValue(typeof data === "number" ? data : question.minmax[0]);
+            }, [data, question.minmax]);
 
             useEffect(() => {
                 if (data === undefined) {
@@ -458,29 +471,24 @@ function RenderQuestion({
                 }
             }, []);
 
-            useEffect(() => {
-                if (data !== value) {
-                    updateTeamQuestion(team, questionId, value);
-                }
-            }, [value]);
-
-            const handleRangeChange = (
-                event: ChangeEvent<HTMLInputElement>,
-            ) => {
-                const newValue = Number(event.target.value);
-                setValue(newValue);
-                updateTeamQuestion(team, questionId, newValue);
-            };
-
             return (
                 <div style={{ width: "80%" }}>
-                    <input
+                    <Slider
                         className="desktop-dash-prescout-team-range"
-                        type="range"
-                        value={value}
                         min={question.minmax[0]}
                         max={question.minmax[1]}
-                        onChange={handleRangeChange}
+                        step={1}
+                        value={value}
+                        onChange={(newValue) => {
+                            if (typeof newValue === "number") {
+                                setValue(newValue);
+                            }
+                        }}
+                        onChangeComplete={(newValue) => {
+                            if (typeof newValue === "number") {
+                                updateTeamQuestion(team, questionId, newValue);
+                            }
+                        }}
                     />
                     <p>{value}</p>
                 </div>
@@ -491,16 +499,14 @@ function RenderQuestion({
             );
 
             useEffect(() => {
+                setSelected(typeof data === "number" ? data : 0);
+            }, [data]);
+
+            useEffect(() => {
                 if (data === undefined) {
                     updateTeamQuestion(team, questionId, 0);
                 }
             }, []);
-
-            useEffect(() => {
-                if (data !== selected) {
-                    updateTeamQuestion(team, questionId, selected);
-                }
-            }, [selected]);
 
             return (
                 <div className="desktop-dash-prescout-team-starcontainer">
@@ -535,29 +541,13 @@ function RenderQuestion({
             );
 
             useEffect(() => {
-                if (area === "") {
-                    if (data !== undefined) {
-                        updateTeamQuestion(team, questionId, undefined);
-                    }
-                    return;
-                }
-
-                if (data !== area) {
-                    updateTeamQuestion(team, questionId, area);
-                }
-            }, [area]);
+                setArea(typeof data === "string" ? data : "");
+            }, [data]);
 
             const handleAreaChange = (
                 event: ChangeEvent<HTMLTextAreaElement>,
             ) => {
-                const value = event.target.value;
-                setArea(value);
-
-                if (value === "") {
-                    updateTeamQuestion(team, questionId, undefined);
-                } else {
-                    updateTeamQuestion(team, questionId, value);
-                }
+                setArea(event.target.value);
             };
 
             const handleAreaBlur = () => {
@@ -595,22 +585,15 @@ function RenderQuestion({
             const [input, setInput] = useState(
                 typeof data === "string" ? data.slice(0, 100) : "",
             );
-            useEffect(() => {
-                if (input === "") {
-                    if (data !== undefined) {
-                        updateTeamQuestion(team, questionId, undefined);
-                    }
-                    return;
-                }
 
-                if (data !== input) {
-                    updateTeamQuestion(team, questionId, input);
-                }
-            }, [input]);
+            useEffect(() => {
+                setInput(typeof data === "string" ? data.slice(0, 100) : "");
+            }, [data]);
+
             const handleAreaChange = (event: ChangeEvent<HTMLInputElement>) => {
-                const { value } = event.target;
-                setInput(value);
+                setInput(event.target.value);
             };
+
             const handleAreaBlur = () => {
                 if (input !== "") {
                     updateTeamQuestion(team, questionId, input);
@@ -645,11 +628,17 @@ function RenderQuestion({
             const [check, setCheck] = useState(
                 typeof data === "boolean" ? data : false,
             );
+
+            useEffect(() => {
+                setCheck(typeof data === "boolean" ? data : false);
+            }, [data]);
+
             useEffect(() => {
                 if (data === undefined) {
                     updateTeamQuestion(team, questionId, false);
                 }
             }, []);
+
             const handleCheckChange = (
                 event: ChangeEvent<HTMLInputElement>,
             ) => {
@@ -674,15 +663,20 @@ function RenderQuestion({
                     ? Number(data.toString().slice(0, 20))
                     : 0,
             );
+
             useEffect(() => {
-                if (data !== input) {
-                    updateTeamQuestion(team, questionId, input);
-                }
-            }, [input]);
+                setInput(
+                    typeof data === "number"
+                        ? Number(data.toString().slice(0, 20))
+                        : 0,
+                );
+            }, [data]);
+
             const handleNumChange = (event: ChangeEvent<HTMLInputElement>) => {
                 const { value } = event.target;
                 const num = Number(value.slice(0, 20));
-                if (!Number.isNaN(num)) {
+
+                if (!Number.isNaN(num) && num >= -999999 && num <= 999999) {
                     setInput(num);
                     updateTeamQuestion(team, questionId, num);
                 }
@@ -692,6 +686,8 @@ function RenderQuestion({
                 <input
                     className="phone-dash-prescout-team-numinput"
                     value={input}
+                    min={-999999}
+                    max={999999}
                     onChange={handleNumChange}
                 />
             );
@@ -706,23 +702,41 @@ function RenderQuestion({
                     ]),
                 ),
             );
+
             useEffect(() => {
-                const selected = Object.keys(checked).filter(
-                    (key) => checked[key],
+                setChecked(
+                    Object.fromEntries(
+                        Object.keys(question.opt).map((key) => [
+                            key,
+                            Array.isArray(data) &&
+                                data.every(
+                                    (item) => typeof item === "string",
+                                ) &&
+                                data.includes(key),
+                        ]),
+                    ),
                 );
-                if (selected.length === 0) {
-                    if (data !== undefined) {
-                        updateTeamQuestion(team, questionId, undefined);
-                    }
-                } else {
-                    updateTeamQuestion(team, questionId, selected);
-                }
-            }, [checked]);
+            }, [data, question.opt]);
+
             const handleCheckChange = (key: string) => {
-                setChecked((prev) => ({
-                    ...prev,
-                    [key]: !prev[key],
-                }));
+                setChecked((prev) => {
+                    const next = {
+                        ...prev,
+                        [key]: !prev[key],
+                    };
+
+                    const selected = Object.keys(next).filter(
+                        (optionKey) => next[optionKey],
+                    );
+
+                    if (selected.length === 0) {
+                        updateTeamQuestion(team, questionId, undefined);
+                    } else {
+                        updateTeamQuestion(team, questionId, selected);
+                    }
+
+                    return next;
+                });
             };
 
             return (
@@ -749,16 +763,19 @@ function RenderQuestion({
                     ? data
                     : undefined,
             );
+
             useEffect(() => {
-                if (selected !== undefined) {
-                    updateTeamQuestion(team, questionId, selected);
-                } else if (data !== undefined) {
-                    updateTeamQuestion(team, questionId, undefined);
-                }
-            }, [selected]);
+                setSelected(
+                    typeof data === "string" &&
+                        Object.hasOwn(question.opt, data)
+                        ? data
+                        : undefined,
+                );
+            }, [data, question.opt]);
 
             const handleSelectChange = (key: string) => {
                 setSelected(key);
+                updateTeamQuestion(team, questionId, key);
             };
 
             return (
@@ -782,8 +799,12 @@ function RenderQuestion({
             );
         } else if (question.type == "r") {
             const [value, setValue] = useState(
-                typeof data === "number" ? data : 0,
+                typeof data === "number" ? data : question.minmax[0],
             );
+
+            useEffect(() => {
+                setValue(typeof data === "number" ? data : question.minmax[0]);
+            }, [data, question.minmax]);
 
             useEffect(() => {
                 if (data === undefined) {
@@ -791,28 +812,24 @@ function RenderQuestion({
                 }
             }, []);
 
-            useEffect(() => {
-                if (data !== value) {
-                    updateTeamQuestion(team, questionId, value);
-                }
-            }, [value]);
-            const handleRangeChange = (
-                event: ChangeEvent<HTMLInputElement>,
-            ) => {
-                const newValue = Number(event.target.value);
-                setValue(newValue);
-                updateTeamQuestion(team, questionId, newValue);
-            };
-
             return (
                 <div style={{ width: "80%" }}>
-                    <input
+                    <Slider
                         className="phone-dash-prescout-team-range"
-                        type="range"
-                        value={value}
                         min={question.minmax[0]}
                         max={question.minmax[1]}
-                        onChange={handleRangeChange}
+                        step={1}
+                        value={value}
+                        onChange={(newValue) => {
+                            if (typeof newValue === "number") {
+                                setValue(newValue);
+                            }
+                        }}
+                        onChangeComplete={(newValue) => {
+                            if (typeof newValue === "number") {
+                                updateTeamQuestion(team, questionId, newValue);
+                            }
+                        }}
                     />
                     <p>{value}</p>
                 </div>
@@ -823,16 +840,14 @@ function RenderQuestion({
             );
 
             useEffect(() => {
+                setSelected(typeof data === "number" ? data : 0);
+            }, [data]);
+
+            useEffect(() => {
                 if (data === undefined) {
                     updateTeamQuestion(team, questionId, 0);
                 }
             }, []);
-
-            useEffect(() => {
-                if (data !== selected) {
-                    updateTeamQuestion(team, questionId, selected);
-                }
-            }, [selected]);
 
             return (
                 <div className="phone-dash-prescout-team-starcontainer">

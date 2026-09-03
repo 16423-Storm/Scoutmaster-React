@@ -265,7 +265,7 @@ export const useTeams = create<{
  * @param {boolean} show - Whether to show success toasts or not (Default false)
  * @param {boolean} sendServer - Send data to server for update, true by default
  */
-export function updateTeamQuestion(
+export async function updateTeamQuestion(
     teamId: string,
     questionId: string,
     value:
@@ -276,7 +276,6 @@ export function updateTeamQuestion(
         | number[]
         | boolean[]
         | undefined,
-    show: boolean = false,
     sendServer: boolean = true,
 ) {
     const data = localStorage.getItem("data");
@@ -287,6 +286,7 @@ export function updateTeamQuestion(
     }
 
     try {
+        const originalParsed = JSON.parse(data);
         const parsed = JSON.parse(data);
         const team = parsed.prescout.teams[teamId];
         if (!team) {
@@ -301,12 +301,27 @@ export function updateTeamQuestion(
         localStorage.setItem("data", JSON.stringify(parsed));
         useTeams.getState().setTeams(getTeams());
 
-        if (show) {
-            successToast(i18n.t("teamupdated"), 2000);
-        }
-
         if (sendServer) {
-            console.log("SEND TO SERVER");
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "updateTeamQuestion",
+                // tId: teamId, qId: questionId, v: value
+                // this is only because updateTeamQuestion will be called so often that we need to lower the data sent back and forth as much as possible
+                content: {
+                    tId: teamId,
+                    qId: questionId,
+                    v: value,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                localStorage.setItem("data", JSON.stringify(originalParsed));
+                useTeams.getState().setTeams(getTeams());
+                return;
+            }
         }
     } catch (e) {
         console.error("ERROR: Could not update team question: " + e);

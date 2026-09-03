@@ -326,7 +326,7 @@ export async function updateScore(
             const confirmed = await sendMessage({
                 type: "updateScore",
                 // k = key, a = alliance index, a = alliance, q = question index, v = value, c = counter
-                // this is only because updateScore will be called so often that I need to lower the data sent back and forth as much as possible
+                // this is only because updateScore will be called so often that we need to lower the data sent back and forth as much as possible
                 content: {
                     k: matchId,
                     a: allianceIndex,

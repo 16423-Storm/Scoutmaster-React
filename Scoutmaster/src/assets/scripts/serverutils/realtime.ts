@@ -25,6 +25,7 @@ import {
     addMatch,
     updateSummary,
     addMatchToStorage,
+    updateTeamQuestion,
 } from "../localstorage";
 import {
     addInvite,
@@ -181,6 +182,15 @@ export async function connectToSession(): Promise<WebSocket | null> {
 
             if (message?.type === "deleteTeam") {
                 deleteTeam(message.content.num, true, false, false, true);
+            }
+
+            if (message?.type === "updateTeamQuestion") {
+                updateTeamQuestion(
+                    message.content.tId,
+                    message.content.qId,
+                    message.content.v,
+                    false,
+                );
             }
 
             if (message?.type === "addMatches") {

@@ -55,7 +55,20 @@ class AddTeamPayload(StrictModel):
 AddTeamsPayload = Annotated[list[AddTeamPayload], Field(max_length=500)]
 
 class DeleteTeamPayload(StrictModel):
-    num: Annotated[str, Field(max_length=6)]  
+    num: Annotated[str, Field(max_length=6)]
+
+class UpdateTeamQuestionPayload(StrictModel):
+    tId: Annotated[str, Field(max_length=6)]
+    qId: Annotated[str, Field(max_length=3)]
+    v: (
+        Annotated[str, Field(max_length=400)]
+        | Annotated[int, Field(ge=-999999, le=999999)]
+        | bool
+        | Annotated[list[Annotated[str, Field(max_length=1)]], Field(max_length=10)]
+        | Annotated[list[int], Field(max_length=10)]
+        | Annotated[list[bool], Field(max_length=10)]
+        | None
+    )
 
 class AddMatchPayload(StrictModel):
     red1: Annotated[int, Field(ge=-999999, le=999999)]
@@ -160,6 +173,11 @@ class DeleteTeamMsg(StrictModel):
     requestId: IdStr
     content: DeleteTeamPayload
 
+class UpdateTeamQuestionMsg(StrictModel):
+    type: Literal["updateTeamQuestion"]
+    requestId: IdStr
+    content: UpdateTeamQuestionPayload
+
 class AddMatchMsg(StrictModel):
     type: Literal["addMatch"]
     requestId: IdStr
@@ -247,6 +265,7 @@ WebSocketIncomingMessage = Annotated[
         AddTeamMsg,
         AddTeamsMsg,
         DeleteTeamMsg,
+        UpdateTeamQuestionMsg,
         AddMatchMsg,
         AddMatchesMsg,
         UpdateScoreMsg,

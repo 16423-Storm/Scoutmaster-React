@@ -144,13 +144,30 @@
 }
 
 .phone-dash-prescout-team-range {
-    padding: 5px;
+    padding: 30px 0px;
     font-size: 1rem;
     box-sizing: border-box;
     width: 90%;
     margin: 0px;
-    border-radius: 5px;
-    border: 1px solid var(--clr-surface-tonal-a10);
-    background-color: var(--white);
-    accent-color: var(--clr-surface-a50);
+}
+
+.phone-dash-prescout-team-range .rc-slider-track {
+    background-color: var(--clr-surface-a30);
+}
+
+.phone-dash-prescout-team-range .rc-slider-rail {
+    background-color: var(--clr-surface-a10);
+}
+
+.phone-dash-prescout-team-range .rc-slider-handle {
+    background-color: var(--clr-surface-a20);
+    border-color: var(--black);
+    width: 22px;
+    height: 22px;
+    margin-top: -8px;
+}
+
+.phone-dash-prescout-team-range .rc-slider-handle:active,
+.phone-dash-prescout-team-range .rc-slider-handle:focus {
+    box-shadow: none !important;
 }

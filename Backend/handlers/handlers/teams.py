@@ -322,3 +322,103 @@ async def handleDeleteTeam(
             "content": True
         }
     )
+
+@ws_limit(maxCalls=500, window=60)
+async def handleUpdateTeamQuestion(
+    websocket: WebSocket,
+    id: str,
+    message: dict,
+    supabase,
+    group: int,
+    groupData,
+    groups
+):
+    members = groupData[group]["members"] or []
+
+    member = next(
+        (
+            member
+            for member in members
+            if member.get("id") == id
+        ),
+        None
+    )
+
+    if not member:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    content = message.get("content")
+
+    if not content:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    try:
+        supabase.rpc(
+            "update_team_question",
+            {
+                "p_group_id": group,
+                "p_team_id": str(content["tId"]),
+                "p_question_id": str(content["qId"]),
+                "p_value": content.get("v"),
+            }
+        ).execute()
+
+        if content.get("v") is None:
+            groupData[group]["prescout"]["teams"][str(content["tId"])]["data"].pop(
+                str(content["qId"]),
+                None
+            )
+        else:
+            groupData[group]["prescout"]["teams"][str(content["tId"])]["data"][
+                str(content["qId"])
+            ] = content["v"]
+
+        await sendToGroup(
+            groups,
+            group,
+            {
+                "type": "updateTeamQuestion",
+                "content": {
+                    "tId": content["tId"],
+                    "qId": content["qId"],
+                    "v": content.get("v"),
+                }
+            },
+            exclude=websocket
+        )
+
+    except Exception:
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    await sendToUser(
+        websocket,
+        {
+            "type": "confirm",
+            "requestId": message.get("requestId"),
+            "content": True
+        }
+    )

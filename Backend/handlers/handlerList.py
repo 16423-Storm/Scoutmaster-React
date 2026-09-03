@@ -13,6 +13,7 @@ handlers = {
     "addTeam": handleAddTeam,
     "addTeams": handleAddTeams,
     "deleteTeam": handleDeleteTeam,
+    "updateTeamQuestion": handleUpdateTeamQuestion,
 
     "addMatch": handleAddMatch,
     "addMatches": handleAddMatches,

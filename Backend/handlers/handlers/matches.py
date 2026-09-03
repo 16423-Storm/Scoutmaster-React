@@ -296,8 +296,6 @@ async def handleUpdateScore(
         )
         return
 
-    print(group)
-
     try:
         result = await asyncio.to_thread(
             lambda: supabase.rpc(
