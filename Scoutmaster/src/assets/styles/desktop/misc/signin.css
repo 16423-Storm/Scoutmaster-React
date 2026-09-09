@@ -120,7 +120,7 @@
     color: #070700;
 }
 
-.desktop-signup-input.invalid {
+.desktop-signup-input.invalid:not(#avoidinputsonspecial) {
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
 
@@ -145,6 +145,58 @@
             #ffffff 14px,
             #ffffff 15px,
             #ffffff 16px,
+            var(--clr-custom-a10) 16px,
+            var(--clr-custom-a10) 17px,
+            var(--clr-custom-a10) 18px,
+            var(--clr-custom-a10) 19px,
+            var(--clr-custom-a10) 20px,
+            var(--clr-custom-a10) 21px,
+            var(--clr-custom-a10) 22px,
+            var(--clr-custom-a10) 23px,
+            var(--clr-custom-a10) 24px,
+            var(--clr-custom-a10) 25px,
+            var(--clr-custom-a10) 26px,
+            var(--clr-custom-a10) 27px,
+            var(--clr-custom-a10) 28px,
+            var(--clr-custom-a10) 29px,
+            var(--clr-custom-a10) 30px,
+            var(--clr-custom-a10) 31px,
+            var(--clr-custom-a10) 32px
+        );
+
+    background-size: 200% 100%;
+
+    -webkit-animation: desktop-input-dash 10s linear infinite;
+    -moz-animation: desktop-input-dash 10s linear infinite;
+    -o-animation: desktop-input-dash 10s linear infinite;
+    animation: desktop-input-dash 10s linear infinite;
+}
+
+.desktop-signup-input.invalid#avoidinputsonspecial {
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+
+    background:
+        linear-gradient(var(--white), var(--white)) padding-box,
+        repeating-linear-gradient(
+            90deg,
+            var(--white) 0px,
+            var(--white) 1px,
+            var(--white) 2px,
+            var(--white) 3px,
+            var(--white) 4px,
+            var(--white) 5px,
+            var(--white) 6px,
+            var(--white) 7px,
+            var(--white) 8px,
+            var(--white) 9px,
+            var(--white) 10px,
+            var(--white) 11px,
+            var(--white) 12px,
+            var(--white) 13px,
+            var(--white) 14px,
+            var(--white) 15px,
+            var(--white) 16px,
             var(--clr-custom-a10) 16px,
             var(--clr-custom-a10) 17px,
             var(--clr-custom-a10) 18px,
@@ -299,9 +351,9 @@
 
 .desktop-signup-button:disabled {
     opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 .desktop-signup-bottomlink {

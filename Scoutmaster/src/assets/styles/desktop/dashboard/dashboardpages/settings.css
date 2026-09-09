@@ -25,7 +25,7 @@
     box-sizing: border-box;
     padding: 10px;
     font-size: 1rem;
-    transition: background-color 0.15s;
+    transition: ease background-color 0.15s;
 }
 
 .desktop-dash-settings-navcontainer
@@ -50,7 +50,7 @@
 .desktop-dash-settings-navcontainer > button:hover {
     background-color: var(--clr-surface-a10);
     cursor: pointer;
-    transition: background-color 0.15s;
+    transition: ease background-color 0.15s;
 }
 
 .desktop-dash-settings-navcontainer > button:active {
@@ -83,7 +83,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 72%;
+    width: 100%;
     background-color: var(--clr-surface-a0);
     border: 1px solid var(--clr-surface-tonal-a10);
     border-radius: 10px;
@@ -99,7 +99,7 @@
     border: none;
 }
 
-.desktop-dash-settings-infocontainer-setting * {
+.desktop-dash-settings-infocontainer-setting > * {
     font-size: 1.2rem;
 }
 
@@ -112,13 +112,13 @@
     box-sizing: border-box;
     padding: 10px;
     background-color: transparent;
-    transition: background-color 0.15s;
+    transition: ease background-color 0.15s;
 }
 
 .desktop-dash-settings-infocontainer-setting > button:hover {
     background-color: var(--clr-surface-a10);
     cursor: pointer;
-    transition: background-color 0.15s;
+    transition: ease background-color 0.15s;
 }
 
 .desktop-dash-settings-infocontainer-setting > button:active {
@@ -160,7 +160,7 @@
     flex-direction: column;
     border: 1px solid var(--clr-surface-tonal-a10);
     border-radius: 10px;
-    width: 80%;
+    width: 95%;
     overflow: hidden;
 }
 
@@ -191,14 +191,116 @@
 }
 
 .dash-settings-membertable > div:not(.nav-language-dropdown) > * {
-    transition: transform 0.1s ease;
+    transition: ease transform 0.1s ease;
 }
 
-.dash-settings-membertable > div:not(.nav-language-dropdown) > *:hover {
+.dash-settings-membertable > div:not(.nav-language-dropdown) > *:not(p):hover {
     color: var(--clr-danger-a0);
     cursor: pointer;
 }
 
-.dash-settings-membertable > div:not(.nav-language-dropdown) > *:active {
+.dash-settings-membertable > div:not(.nav-language-dropdown) > *:not(p):active {
     transform: scale(0.8);
+}
+
+.desktop-dash-settings-infocontainer-danger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--clr-surface-a0);
+    border: 1px solid var(--clr-danger-a0);
+    border-style: dashed;
+    border-radius: 10px;
+}
+
+.desktop-dash-settings-infocontainer-setting-danger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    border: none;
+}
+
+.desktop-dash-settings-infocontainer-setting-danger > * {
+    font-size: 1.2rem;
+}
+
+.desktop-dash-settings-infocontainer-setting-danger > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid var(--clr-danger-a0);
+    background-color: var(--clr-surface-a0);
+    transition:
+        transform 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.desktop-dash-settings-infocontainer-setting-danger > button:hover {
+    background-color: var(--clr-danger-a0);
+    cursor: pointer;
+}
+
+.desktop-dash-settings-infocontainer-setting-danger > button:active {
+    background-color: var(--clr-danger-a10);
+    transform: scale(0.95);
+}
+
+.desktop-dash-settings-infocontainer-setting-danger:first-child {
+    border-bottom: 1px solid var(--clr-danger-a0);
+}
+
+.desktop-dash-settings-infocontainer-setting-danger:last-child {
+    border-top: 1px solid var(--clr-danger-a0);
+}
+
+.desktop-dash-settings-infocontainer-setting-danger:not(:last-child):not(
+        :first-child
+    ) {
+    border-top: 1px solid var(--clr-danger-a0);
+    border-bottom: 1px solid var(--clr-danger-a0);
+}
+
+.desktop-dash-settings-infocontainer-setting-danger:only-child {
+    border: none;
+}
+
+.desktop-dash-settings-infocontainer-setting-danger
+    > div:not(.nav-language-dropdown) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+}
+
+.desktop-dash-settings-infocontainer-setting-buttonplus:is(button) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid var(--clr-surface-tonal-a10);
+    background-color: var(--clr-surface-a0);
+    transition:
+        transform 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.desktop-dash-settings-infocontainer-setting-buttonplus:is(button):hover {
+    background-color: var(--clr-surface-a10);
+    cursor: pointer;
+}
+
+.desktop-dash-settings-infocontainer-setting-buttonplus:is(button):active {
+    background-color: var(--clr-surface-a20);
+    transform: scale(0.95);
 }

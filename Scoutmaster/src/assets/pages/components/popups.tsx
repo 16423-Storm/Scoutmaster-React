@@ -28,7 +28,10 @@ export function WarningModal({
                 <Blocker499 />
                 <div
                     className="desktop-warningpopup"
-                    style={{ padding: "12px" }}
+                    style={{
+                        padding: "12px",
+                        height: useIsAkwardHeight() ? "40vh" : "25vh",
+                    }}
                 >
                     <p className="desktop-warningpopup-title">{title}</p>
                     <p className="desktop-warningpopup-message">{message}</p>

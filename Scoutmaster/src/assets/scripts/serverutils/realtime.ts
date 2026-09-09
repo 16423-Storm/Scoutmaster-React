@@ -156,6 +156,7 @@ export async function connectToSession(): Promise<WebSocket | null> {
                     message.data.summary,
                     message.data.members,
                     message.data.invited,
+                    message.data.id,
                 );
 
                 isHydrated = true;

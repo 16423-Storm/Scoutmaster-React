@@ -135,6 +135,7 @@ export function hydrate(
     summary: SummaryData | null,
     members: string[],
     invited: string[],
+    groupId: number,
 ) {
     const skeleton: LocalStorageData = {
         compkey: compkey ?? "",
@@ -163,6 +164,7 @@ export function hydrate(
         JSON.stringify({
             members: members,
             invited: invited,
+            groupId: groupId,
         }),
     );
 

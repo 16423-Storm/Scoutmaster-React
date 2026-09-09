@@ -263,6 +263,7 @@ async def checkUserGroup(request: Request):
         return False
 
 @app.get("/join/{groupId}")
+@limiter.limit("10/5minutes")
 async def joinGroup(groupId: int, request: Request):
     authHeader = request.headers.get("Authorization")
     token = None
@@ -349,7 +350,7 @@ async def joinGroup(groupId: int, request: Request):
         return False
 
 @app.post("/creategroup")
-@limiter.limit("1/5minutes")
+@limiter.limit("10/5minutes")
 async def createGroup(request: Request):
     authHeader = request.headers.get("Authorization")
     token = None
@@ -377,12 +378,12 @@ async def createGroup(request: Request):
             }
         ).execute()
 
-        new_group_id = rpc_response.data
+        newGroupId = rpc_response.data
 
-        if not new_group_id:
+        if not newGroupId:
             return {"success": False, "error": "Failed to generate group ID"}
 
-        groupData[new_group_id] = {
+        groupData[newGroupId] = {
             "members": [
                 {
                     "id": str(user.id),
@@ -399,11 +400,130 @@ async def createGroup(request: Request):
             "summary": {}
         }
 
-        if new_group_id not in groups:
-            groups[new_group_id] = []
+        if newGroupId not in groups:
+            groups[newGroupId] = []
 
-        return {"success": True, "groupId": new_group_id}
+        return {"success": True, "groupId": newGroupId}
 
     except Exception as e:
         print(f"Error creating group: {e}")
+        return {"success": False, "error": str(e)}
+
+@app.post("/leavegroup")
+@limiter.limit("10/1minutes")
+async def leaveGroup(request: Request):
+    AuthHeader = request.headers.get("Authorization")
+    Token = None
+
+    if AuthHeader and AuthHeader.startswith("Bearer "):
+        Token = AuthHeader.split(" ")[1]
+    else:
+        Token = request.query_params.get("token")
+
+    if not Token:
+        return {"success": False, "error": "Missing token"}
+
+    try:
+        Response = supabase.auth.get_user(Token)
+        User = Response.user
+
+        if not User:
+            return {"success": False, "error": "Invalid user session"}
+
+        Body = await request.json()
+        GroupId = Body.get("groupId")
+
+        if not GroupId:
+            return {"success": False, "error": "Missing group ID"}
+
+        supabase.rpc(
+            "leave_group",
+            {
+                "p_group_id": GroupId,
+                "p_user_id": User.id
+            }
+        ).execute()
+
+        return {"success": True}
+
+    except Exception as e:
+        print(f"Error leaving group: {e}")
+        return {"success": False, "error": str(e)}
+
+@app.post("/deletegroup")
+@limiter.limit("10/5minutes")
+async def deleteGroup(request: Request):
+    AuthHeader = request.headers.get("Authorization")
+    Token = None
+
+    if AuthHeader and AuthHeader.startswith("Bearer "):
+        Token = AuthHeader.split(" ")[1]
+    else:
+        Token = request.query_params.get("token")
+
+    if not Token:
+        return {"success": False, "error": "Missing token"}
+
+    try:
+        Response = supabase.auth.get_user(Token)
+        User = Response.user
+
+        if not User:
+            return {"success": False, "error": "Invalid user session"}
+
+        Body = await request.json()
+        GroupId = Body.get("groupId")
+
+        if not GroupId:
+            return {"success": False, "error": "Missing group ID"}
+
+        supabase.rpc(
+            "delete_group",
+            {
+                "p_group_id": GroupId
+            }
+        ).execute()
+
+        return {"success": True}
+
+    except Exception as e:
+        print(f"Error deleting group: {e}")
+        return {"success": False, "error": str(e)}
+
+@app.post("/deleteaccount")
+@limiter.limit("10/5minutes")
+async def deleteAccount(request: Request):
+    AuthHeader = request.headers.get("Authorization")
+    Token = None
+
+    if AuthHeader and AuthHeader.startswith("Bearer "):
+        Token = AuthHeader.split(" ")[1]
+    else:
+        Token = request.query_params.get("token")
+
+    if not Token:
+        return {"success": False, "error": "Missing token"}
+
+    try:
+        Response = supabase.auth.get_user(Token)
+        User = Response.user
+
+        if not User:
+            return {"success": False, "error": "Invalid user session"}
+
+        UserId = User.id
+
+        supabase.rpc(
+            "delete_account",
+            {
+                "p_user_id": UserId
+            }
+        ).execute()
+
+        supabase.auth.admin.delete_user(UserId)
+
+        return {"success": True}
+
+    except Exception as e:
+        print(f"Error deleting account: {e}")
         return {"success": False, "error": str(e)}

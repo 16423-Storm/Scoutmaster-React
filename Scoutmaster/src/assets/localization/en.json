@@ -13,6 +13,8 @@
 
     "emailwithcolon": "Email:",
     "passwordwithcolon": "Password:",
+    "oldpasswordwithcolon": "Old Password:",
+    "newpasswordwithcolon": "New Password:",
     "mustinclude": "Must Include:",
     "passwordrequirement1": "8 Characters",
     "passwordrequirement2": "An uppercase letter",

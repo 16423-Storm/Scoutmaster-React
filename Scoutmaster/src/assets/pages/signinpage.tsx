@@ -110,7 +110,11 @@ function SignInPage() {
                             </button>
                         </div>
                         {currentError !== "" && <p>{t(currentError)}</p>}
-                        <button type="submit" className="phone-signup-button">
+                        <button
+                            type="submit"
+                            className="phone-signup-button"
+                            disabled={spinner}
+                        >
                             {spinner ? <MoonLoader size={30} /> : t("signin")}
                         </button>
 
@@ -184,7 +188,11 @@ function SignInPage() {
                         </button>
                     </div>
                     {currentError !== "" && <p>{t(currentError)}</p>}
-                    <button type="submit" className="desktop-signup-button">
+                    <button
+                        type="submit"
+                        className="desktop-signup-button"
+                        disabled={spinner}
+                    >
                         {spinner ? <MoonLoader size={30} /> : t("signin")}
                     </button>
 
