@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import { useScreenType } from "../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 
-import { updateSummary, getNumOfTeams } from "../../../scripts/localstorage";
+import {
+    updateSummary,
+    getNumOfTeams,
+    updateGroupTeam,
+} from "../../../scripts/localstorage";
 
 import { FaRegStar, FaMountain } from "react-icons/fa";
 import { BsAlignMiddle } from "react-icons/bs";
@@ -391,7 +395,17 @@ function DashboardSummary() {
                                         <Label>{t("yourteam")}</Label>
                                         <Combobox
                                             value={selected}
-                                            onChange={setSelected}
+                                            onChange={(team) => {
+                                                setSelected(team);
+
+                                                if (team) {
+                                                    const teamNumber =
+                                                        team.name.split(
+                                                            " - ",
+                                                        )[0];
+                                                    updateGroupTeam(teamNumber);
+                                                }
+                                            }}
                                             onClose={() => setQuery("")}
                                         >
                                             <ComboboxInput
@@ -523,7 +537,17 @@ function DashboardSummary() {
                                         <Label>{t("yourteam")}</Label>
                                         <Combobox
                                             value={selected}
-                                            onChange={setSelected}
+                                            onChange={(team) => {
+                                                setSelected(team);
+
+                                                if (team) {
+                                                    const teamNumber =
+                                                        team.name.split(
+                                                            " - ",
+                                                        )[0];
+                                                    updateGroupTeam(teamNumber);
+                                                }
+                                            }}
                                             onClose={() => setQuery("")}
                                         >
                                             <ComboboxInput

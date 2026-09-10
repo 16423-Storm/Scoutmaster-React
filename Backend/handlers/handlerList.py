@@ -31,6 +31,7 @@ handlers = {
     "moveQuestion": handleMoveQuestion,
 
     "updateSummary": handleUpdateSummary,
+    "updateGroupTeam": handleUpdateGroupTeam,
 
     "addInvite": handleAddInvite,
     "deleteInvite": handleDeleteInvite,

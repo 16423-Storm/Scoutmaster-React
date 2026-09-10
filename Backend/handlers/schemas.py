@@ -128,6 +128,8 @@ MoveQuestionPayload = tuple[
 class UpdateSummaryPayload(StrictModel):
     changes: SummaryChanges
 
+UpdateGroupTeamPayload = Annotated[str, StringConstraints(pattern=r"^-?[0-9]{1,6}$")]
+
 AddInvitePayload = Annotated[str, Field(max_length=80)]
 
 DeleteInvitePayload = Annotated[str, Field(max_length=80)]
@@ -243,6 +245,11 @@ class UpdateSummaryMsg(StrictModel):
     requestId: IdStr
     content: UpdateSummaryPayload
 
+class UpdateGroupTeamMsg(StrictModel):
+    type: Literal["updateGroupTeam"]
+    requestId: IdStr
+    content: UpdateGroupTeamPayload
+
 class AddInviteMsg(StrictModel):
     type: Literal["addInvite"]
     requestId: IdStr
@@ -279,6 +286,7 @@ WebSocketIncomingMessage = Annotated[
         UpdateQuestionMsg,
         MoveQuestionMsg,
         UpdateSummaryMsg,
+        UpdateGroupTeamMsg,
         AddInviteMsg,
         DeleteInviteMsg,
         DeleteMemberMsg

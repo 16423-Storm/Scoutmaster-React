@@ -149,7 +149,10 @@ export function getGroupTeam() {
     }
 }
 
-export function updateGroupTeam(team: string, sendServer: boolean = true) {
+export async function updateGroupTeam(
+    team: string,
+    sendServer: boolean = true,
+) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
@@ -158,17 +161,30 @@ export function updateGroupTeam(team: string, sendServer: boolean = true) {
     }
 
     try {
+        const originalParsed = JSON.parse(data);
         const parsed = JSON.parse(data);
 
         parsed.team = team;
 
-        localStorage.setItem("data", JSON.stringify(parsed));
-
-        useGroupTeam.getState().setGroupTeam(getGroupTeam());
-
         if (sendServer) {
-            console.log("SEND TO SERVER");
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "updateGroupTeam",
+                content: team,
+                requestId,
+            });
+
+            if (!confirmed) {
+                localStorage.setItem("data", JSON.stringify(originalParsed));
+                useGroupTeam.getState().setGroupTeam(getGroupTeam());
+                errorToast(i18n.t("seterror"), 3000);
+                return;
+            }
         }
+
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useGroupTeam.getState().setGroupTeam(getGroupTeam());
     } catch (e) {
         console.error("ERROR: Could not edit group team: " + e);
         errorToast(i18n.t("seterror"), 3000);

@@ -449,7 +449,7 @@ export function Tab2({
     const defaultPicks = teamsBelow.map((team) => team.number);
 
     useEffect(() => {
-        if (summary.picks.length === 0) {
+        if (summary.picks.length === 0 && defaultPicks.length > 0) {
             updateSummary({
                 picks: defaultPicks,
             });
@@ -704,8 +704,12 @@ export function Tab3({
                         </div>
                     ) : (
                         teamsAbove.map((team, index) => {
-                            const accept = summary.accept.includes(team.number);
-                            const reject = summary.reject.includes(team.number);
+                            const accept = (summary.accept ?? []).includes(
+                                team.number,
+                            );
+                            const reject = (summary.reject ?? []).includes(
+                                team.number,
+                            );
 
                             const handleAccept = () => {
                                 if (accept) {

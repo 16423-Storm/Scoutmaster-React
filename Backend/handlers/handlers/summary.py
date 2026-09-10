@@ -120,3 +120,82 @@ async def handleUpdateSummary(
             "content": True
         }
     )
+
+@ws_limit(maxCalls=120, window=60)
+async def handleUpdateGroupTeam(
+    websocket: WebSocket,
+    id: str,
+    message: dict,
+    supabase,
+    group: int,
+    groupData,
+    groups
+):
+    members = groupData[group]["members"] or []
+
+    member = next(
+        (member for member in members if member.get("id") == id),
+        None
+    )
+
+    if not member or not member.get("isAdmin", False):
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    content = message.get("content")
+
+    if not content or not isinstance(content, str):
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    try:
+        supabase.table("group").update({
+            "currentTeam": content
+        }).eq("id", group).execute()
+
+    except Exception as e:
+        print(f"updateSummary failed: {e}")
+        await sendToUser(
+            websocket,
+            {
+                "type": "confirm",
+                "requestId": message.get("requestId"),
+                "content": False
+            }
+        )
+        return
+
+    groupData[group]["currentTeam"] = content
+
+    await sendToGroup(
+        groups,
+        group,
+        {
+            "type": "updateSummary",
+            "content": content
+        },
+        exclude=websocket
+    )
+
+    await sendToUser(
+        websocket,
+        {
+            "type": "confirm",
+            "requestId": message.get("requestId"),
+            "content": True
+        }
+    )
