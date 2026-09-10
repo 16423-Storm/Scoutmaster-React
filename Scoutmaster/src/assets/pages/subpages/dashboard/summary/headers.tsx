@@ -504,7 +504,10 @@ export function Tab2({
                     </div>
 
                     {belowPicks.length === 0 ? (
-                        <div className="desktop-dash-summary-row">
+                        <div
+                            className="desktop-dash-summary-row"
+                            style={{ pointerEvents: "none" }}
+                        >
                             <div
                                 className="desktop-dash-summary-cell"
                                 style={{ width: "100%" }}
@@ -593,63 +596,78 @@ export function Tab2({
                         </div>
                     </div>
 
-                    {belowPicks.map((teamNumber, index) => {
-                        const team = teamsBelow.find(
-                            (team) => team.number === teamNumber,
-                        );
-
-                        if (!team) return null;
-
-                        return (
+                    {belowPicks.length === 0 ? (
+                        <div
+                            className="phone-dash-summary-row"
+                            style={{ pointerEvents: "none" }}
+                        >
                             <div
-                                className="phone-dash-summary-row"
-                                key={team.number}
+                                className="phone-dash-summary-cell"
+                                style={{ width: "100%" }}
                             >
+                                {t("lastplacenopicks")}
+                            </div>
+                        </div>
+                    ) : (
+                        belowPicks.map((teamNumber, index) => {
+                            const team = teamsBelow.find(
+                                (team) => team.number === teamNumber,
+                            );
+
+                            if (!team) return null;
+
+                            return (
                                 <div
-                                    className="phone-dash-summary-cell"
-                                    style={{
-                                        width: "30%",
-                                    }}
+                                    className="phone-dash-summary-row"
+                                    key={team.number}
                                 >
                                     <div
-                                        className="summary-reorder"
+                                        className="phone-dash-summary-cell"
                                         style={{
-                                            flexDirection: "row",
-                                            gap: "15px",
-                                            fontSize: "1.5rem",
+                                            width: "30%",
                                         }}
                                     >
-                                        {index !== 0 && (
-                                            <FaArrowUp
-                                                onClick={() =>
-                                                    movePicks(index, -1)
-                                                }
-                                            />
-                                        )}
-                                        {index !== belowPicks.length - 1 && (
-                                            <FaArrowDown
-                                                onClick={() =>
-                                                    movePicks(index, 1)
-                                                }
-                                            />
-                                        )}
+                                        <div
+                                            className="summary-reorder"
+                                            style={{
+                                                flexDirection: "row",
+                                                gap: "15px",
+                                                fontSize: "1.5rem",
+                                            }}
+                                        >
+                                            {index !== 0 && (
+                                                <FaArrowUp
+                                                    onClick={() =>
+                                                        movePicks(index, -1)
+                                                    }
+                                                />
+                                            )}
+                                            {index !==
+                                                belowPicks.length - 1 && (
+                                                <FaArrowDown
+                                                    onClick={() =>
+                                                        movePicks(index, 1)
+                                                    }
+                                                />
+                                            )}
+                                        </div>
+                                        {index + 1}
                                     </div>
-                                    {index + 1}
-                                </div>
 
-                                <div
-                                    className="phone-dash-summary-cell"
-                                    style={{ width: "70%" }}
-                                >
-                                    {team.number} - {team.name}
-                                    <Flag
-                                        code={team.code}
-                                        imageClass="phone-dash-prescout-infodisplay-table-flag"
-                                    />
+                                    <div
+                                        className="phone-dash-summary-cell"
+                                        style={{ width: "70%" }}
+                                    >
+                                        {team.number} - {team.name}
+                                        <Flag
+                                            code={team.code}
+                                            imageClass="phone-dash-prescout-infodisplay-table-flag"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })
+                    )}
                 </div>
             </>
         );
@@ -694,7 +712,10 @@ export function Tab3({
                     </div>
 
                     {teamsAbove.length === 0 ? (
-                        <div className="desktop-dash-summary-row">
+                        <div
+                            className="desktop-dash-summary-row"
+                            style={{ pointerEvents: "none" }}
+                        >
                             <div
                                 className="desktop-dash-summary-cell"
                                 style={{ width: "100%" }}
@@ -833,7 +854,10 @@ export function Tab3({
                     </div>
 
                     {teamsAbove.length === 0 ? (
-                        <div className="phone-dash-summary-row">
+                        <div
+                            className="phone-dash-summary-row"
+                            style={{ pointerEvents: "none" }}
+                        >
                             <div
                                 className="phone-dash-summary-cell"
                                 style={{ width: "100%" }}

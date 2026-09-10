@@ -75,6 +75,7 @@ class AddMatchPayload(StrictModel):
     red2: Annotated[int, Field(ge=-999999, le=999999)]
     blue1: Annotated[int, Field(ge=-999999, le=999999)]
     blue2: Annotated[int, Field(ge=-999999, le=999999)]
+    key: Annotated[int, Field(ge=0, le=1000)]
 
 AddMatchesPayload = Annotated[list[AddMatchPayload], Field(max_length=750)]
 

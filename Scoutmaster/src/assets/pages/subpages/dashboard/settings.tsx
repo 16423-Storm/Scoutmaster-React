@@ -411,14 +411,14 @@ function GroupPage() {
                     </button>
                 </div>
             </div>
-            <div className="desktop-dash-settings-infocontainer-setting">
+            {/* <div className="desktop-dash-settings-infocontainer-setting">
                 <p>{t("customteamcountry")}</p>
                 <input
                     type="checkbox"
                     checked={useSpecifyCustomCountry() === true}
                     onChange={flipCustomCountry()}
                 />
-            </div>
+            </div> */}
         </>
     );
 }
