@@ -196,3 +196,65 @@ export const useCustom = create<{
 
     setCustom: (value) => set({ isCustom: value }),
 }));
+
+export type Competition = {
+    name: string;
+    key: string;
+};
+
+const competitionSearchCache = new Map<string, Competition[]>();
+
+export async function searchCompetitions(
+    season: number,
+    searchText: string,
+    currentKey: string,
+): Promise<Competition[]> {
+    const search = searchText.trim();
+
+    if (!search) {
+        return [];
+    }
+
+    const cacheKey = `${season}:${search.toLowerCase()}`;
+
+    const cached = competitionSearchCache.get(cacheKey);
+
+    if (cached) {
+        return cached.filter((event) => event.key !== currentKey);
+    }
+
+    try {
+        const params = new URLSearchParams({
+            searchText: search,
+        });
+
+        const response = await fetch(
+            `https://api.ftcscout.org/rest/v1/events/search/${season}?${params}`,
+        );
+
+        if (!response.ok) {
+            console.error(
+                "FTCScout API error:",
+                response.status,
+                await response.text(),
+            );
+            return [];
+        }
+
+        const events = await response.json();
+
+        const competitions: Competition[] = events
+            .slice(0, 12)
+            .map((event: { name: string; code: string }) => ({
+                name: event.name,
+                key: event.code,
+            }));
+
+        competitionSearchCache.set(cacheKey, competitions);
+
+        return competitions.filter((event) => event.key !== currentKey);
+    } catch (error) {
+        console.error("ERROR: Could not search competitions:", error);
+        return [];
+    }
+}

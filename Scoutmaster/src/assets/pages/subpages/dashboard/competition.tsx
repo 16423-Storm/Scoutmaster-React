@@ -13,9 +13,9 @@ import {
     useMatches,
     deleteMatch,
     initMatchesAPI,
+    searchCompetitions,
+    type Competition,
 } from "../../../scripts/localstorage";
-
-import data from "./comps.json";
 
 import { FaRegSadTear, FaTrash } from "react-icons/fa";
 import { IoAddCircleOutline, IoReload } from "react-icons/io5";
@@ -36,7 +36,7 @@ function DashboardCompetition() {
     const matches = useMatches((state) => state.matches);
 
     const [search, setSearch] = useState("");
-    const [filteredData, setFilteredData] = useState(data);
+    const [filteredData, setFilteredData] = useState<Competition[]>([]);
 
     const [customWarningVisible, setCustomWarningVisible] = useState(false);
     const [compWarningVisible, setCompWarningVisible] = useState(false);
@@ -92,21 +92,23 @@ function DashboardCompetition() {
         setSearch("");
     }
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
-        setSearch(value);
-        filterData(value);
-    };
 
-    const filterData = (search: string) => {
-        const filteredData = data
-            .filter(
-                (item) =>
-                    item.name.toLowerCase().includes(search.toLowerCase()) ||
-                    item.key.toLowerCase().includes(search.toLowerCase()),
-            )
-            .slice(0, 6);
-        setFilteredData(filteredData);
+        setSearch(value);
+
+        if (!value.trim()) {
+            setFilteredData([]);
+            return;
+        }
+
+        const results = await searchCompetitions(
+            2025,
+            value.trim(),
+            currentKey,
+        );
+
+        setFilteredData(results.filter((item) => item.key !== currentKey));
     };
 
     useEffect(() => {
