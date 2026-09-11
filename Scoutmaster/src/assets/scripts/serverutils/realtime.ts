@@ -38,6 +38,7 @@ import { errorToast } from "../misc/toastmanager";
 const serverURL = import.meta.env.VITE_PYTHON_SERVER_URL;
 
 let socket: WebSocket | null = null;
+let isConnecting: Boolean = false;
 let reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
 let isIntentionallyClosed = false;
 let isHydrated = false;
@@ -66,6 +67,7 @@ export async function connectToSession(): Promise<WebSocket | null> {
         return socket;
     }
 
+    isConnecting = true;
     isIntentionallyClosed = false;
 
     const {
@@ -97,6 +99,7 @@ export async function connectToSession(): Promise<WebSocket | null> {
     socket.onclose = (event) => {
         console.log("Realtime connection closed:", event.code, event.reason);
         socket = null;
+        isConnecting = false;
         if (!isIntentionallyClosed) {
             reconnectTimeout = setTimeout(() => {
                 connectToSession();

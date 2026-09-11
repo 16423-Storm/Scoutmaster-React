@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import { connectToSession } from "./serverutils/realtime";
 import { errorToast, successToast } from "./misc/toastmanager";
 import { useGoToPage } from "./multipageutils";
 
