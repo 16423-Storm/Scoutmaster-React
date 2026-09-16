@@ -17,16 +17,17 @@ export type MatchData = {
     };
 };
 
-// Scores will use the following index: !!! NOTE, THESE ARE FOR DECODE, NOT BIOBUZZ, WILL BE UPDATED WHEN SEASON STARTS !!!
-// - Auto classified
-// - Auto overflow
-// - Auto pattern
-// - Auto leave
-
-// - Teleop classified
-// - Teleop overflow
-// - Teleop pattern
-// - Teleop base
+// Scores will use the following index:
+// - Auto Tip
+// - Auto Ball Launched
+// - Auto Leave
+// - Auto Park
+//
+// - TeleOp Tip
+// - TeleOp Ball Launched
+// - TeleOp Ball in Flower
+// - TeleOp Park
+// - TeleOp Garden
 
 export type Match = {
     teams: number[];
@@ -171,10 +172,10 @@ export async function addMatchToStorage(
             blue1,
             blue2,
             scores: [
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
         };
 
@@ -229,10 +230,10 @@ export async function addMatches(
                 blue1: match.blue1,
                 blue2: match.blue2,
                 scores: [
-                    [0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 ],
             };
         }

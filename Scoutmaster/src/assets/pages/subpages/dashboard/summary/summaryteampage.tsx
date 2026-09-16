@@ -64,14 +64,15 @@ export function SummaryTeamPage({
 
             const scores = match.scores[teamIndex];
 
-            const score0 = scores[0] * 3;
+            const score0 = scores[0] * 20;
             const score1 = scores[1];
-            const score2 = scores[2] * 2;
-            const score3 = scores[3] * 3;
-            const score4 = scores[4] * 3;
+            const score2 = scores[2] * 3;
+            const score3 = scores[3] * 5;
+            const score4 = scores[4] * 20;
             const score5 = scores[5];
-            const score6 = scores[6] * 2;
+            const score6 = scores[6];
             const score7 = scores[7] * 5;
+            const score8 = scores[8];
 
             const scoresMultiplied = [
                 score0,
@@ -82,6 +83,7 @@ export function SummaryTeamPage({
                 score5,
                 score6,
                 score7,
+                score8,
             ];
 
             return {
@@ -131,8 +133,14 @@ export function SummaryTeamPage({
         datasets: [
             {
                 label: t("totalpoints"),
-                data: matchScores.map((match) =>
-                    match.scores.reduce((sum, score) => sum + score, 0),
+                data: matchScores.map(
+                    (match) =>
+                        match.scores[0] +
+                        match.scores[2] +
+                        match.scores[3] +
+                        match.scores[4] +
+                        match.scores[7] +
+                        match.scores[8],
                 ),
                 borderColor: "#3B82F6",
                 backgroundColor: "#3B82F6",
@@ -143,10 +151,9 @@ export function SummaryTeamPage({
             },
             {
                 label: t("autonomouspoints"),
-                data: matchScores.map((match) =>
-                    match.scores
-                        .slice(0, 4)
-                        .reduce((sum, score) => sum + score, 0),
+                data: matchScores.map(
+                    (match) =>
+                        match.scores[0] + match.scores[2] + match.scores[3],
                 ),
                 borderColor: "#14B8A6",
                 backgroundColor: "#14B8A6",
@@ -157,10 +164,9 @@ export function SummaryTeamPage({
             },
             {
                 label: t("teleoppoints"),
-                data: matchScores.map((match) =>
-                    match.scores
-                        .slice(4, 8)
-                        .reduce((sum, score) => sum + score, 0),
+                data: matchScores.map(
+                    (match) =>
+                        match.scores[4] + match.scores[7] + match.scores[8],
                 ),
                 borderColor: "#8B5CF6",
                 backgroundColor: "#8B5CF6",
@@ -177,10 +183,9 @@ export function SummaryTeamPage({
         datasets: [
             {
                 label: t("autonomouspoints"),
-                data: matchScores.map((match) =>
-                    match.scores
-                        .slice(0, 4)
-                        .reduce((sum, score) => sum + score, 0),
+                data: matchScores.map(
+                    (match) =>
+                        match.scores[0] + match.scores[2] + match.scores[3],
                 ),
                 borderColor: "#14B8A6",
                 backgroundColor: "#14B8A6",
@@ -190,7 +195,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: t("classified"),
+                label: t("tips"),
                 data: matchScores.map((match) => match.scores[0]),
                 borderColor: "#EC4899",
                 backgroundColor: "#EC4899",
@@ -200,7 +205,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: t("overflow"),
+                label: t("ballslaunched"),
                 data: matchScores.map((match) => match.scores[1]),
                 borderColor: "#F97316",
                 backgroundColor: "#F97316",
@@ -210,7 +215,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: t("pattern"),
+                label: t("leave"),
                 data: matchScores.map((match) => match.scores[2]),
                 borderColor: "#22C55E",
                 backgroundColor: "#22C55E",
@@ -220,7 +225,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: t("leave"),
+                label: t("park"),
                 data: matchScores.map((match) => match.scores[3]),
                 borderColor: "#6366F1",
                 backgroundColor: "#6366F1",
@@ -237,10 +242,9 @@ export function SummaryTeamPage({
         datasets: [
             {
                 label: t("teleoppoints"),
-                data: matchScores.map((match) =>
-                    match.scores
-                        .slice(4, 8)
-                        .reduce((sum, score) => sum + score, 0),
+                data: matchScores.map(
+                    (match) =>
+                        match.scores[4] + match.scores[7] + match.scores[8],
                 ),
                 borderColor: "#8B5CF6",
                 backgroundColor: "#8B5CF6",
@@ -250,7 +254,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: t("classified"),
+                label: t("tips"),
                 data: matchScores.map((match) => match.scores[4]),
                 borderColor: "#EC4899",
                 backgroundColor: "#EC4899",
@@ -260,7 +264,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: t("overflow"),
+                label: t("ballslaunched"),
                 data: matchScores.map((match) => match.scores[5]),
                 borderColor: "#F97316",
                 backgroundColor: "#F97316",
@@ -270,7 +274,7 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: t("pattern"),
+                label: t("ballsinflower"),
                 data: matchScores.map((match) => match.scores[6]),
                 borderColor: "#22C55E",
                 backgroundColor: "#22C55E",
@@ -280,7 +284,17 @@ export function SummaryTeamPage({
                 tension: 0,
             },
             {
-                label: t("base"),
+                label: t("garden"),
+                data: matchScores.map((match) => match.scores[8]),
+                borderColor: "#9722c5",
+                backgroundColor: "#9722c5",
+                borderWidth: 3,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                tension: 0,
+            },
+            {
+                label: t("park"),
                 data: matchScores.map((match) => match.scores[7]),
                 borderColor: "#EAB308",
                 backgroundColor: "#EAB308",
@@ -311,7 +325,7 @@ export function SummaryTeamPage({
                                 <FaRegStar style={{ color: "#4F81A8" }} />
                             </div>
                             <div className="desktop-dash-summary-topbar-item-text">
-                                <p>{average}</p>
+                                <p>{average.toFixed(1)}</p>
                                 <p>{t("averagepoints")}</p>
                             </div>
                         </div>
@@ -320,7 +334,7 @@ export function SummaryTeamPage({
                                 <BsAlignMiddle style={{ color: "#4F9A91" }} />
                             </div>
                             <div className="desktop-dash-summary-topbar-item-text">
-                                <p>{median}</p>
+                                <p>{median.toFixed(1)}</p>
                                 <p>{t("medianpoints")}</p>
                             </div>
                         </div>
@@ -453,7 +467,7 @@ export function SummaryTeamPage({
                                 <FaRegStar style={{ color: "#4F81A8" }} />
                             </div>
                             <div className="phone-dash-summary-topbar-item-text">
-                                <p>{average}</p>
+                                <p>{average.toFixed(1)}</p>
                                 <p>{t("averagepoints")}</p>
                             </div>
                         </div>
@@ -462,7 +476,7 @@ export function SummaryTeamPage({
                                 <BsAlignMiddle style={{ color: "#4F9A91" }} />
                             </div>
                             <div className="phone-dash-summary-topbar-item-text">
-                                <p>{median}</p>
+                                <p>{median.toFixed(1)}</p>
                                 <p>{t("medianpoints")}</p>
                             </div>
                         </div>

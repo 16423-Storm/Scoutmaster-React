@@ -103,14 +103,12 @@ function DashboardSummary() {
             }
 
             const score =
-                match.scores[teamIndex][0] * 3 +
-                match.scores[teamIndex][1] +
-                match.scores[teamIndex][2] * 2 +
-                match.scores[teamIndex][3] * 3 +
-                match.scores[teamIndex][4] * 3 +
-                match.scores[teamIndex][5] * 1 +
-                match.scores[teamIndex][6] * 2 +
-                match.scores[teamIndex][7] * 5;
+                match.scores[teamIndex][0] * 20 +
+                match.scores[teamIndex][2] * 3 +
+                match.scores[teamIndex][3] * 5 +
+                match.scores[teamIndex][4] * 20 +
+                match.scores[teamIndex][7] * 5 +
+                match.scores[teamIndex][8];
 
             matchScores.push(score);
         }

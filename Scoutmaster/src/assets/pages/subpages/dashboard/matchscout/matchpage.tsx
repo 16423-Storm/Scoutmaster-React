@@ -38,7 +38,7 @@ function DashboardMatchPage({
                             <>
                                 <div className="desktop-dash-match-scorecontainer-row">
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Classified:</p>
+                                        <p>Tip:</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -89,60 +89,7 @@ function DashboardMatchPage({
                                         </div>
                                     </div>
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Pattern:</p>
-                                        <div className="desktop-dash-match-scorecontainer-numinput-container">
-                                            <button
-                                                onClick={() => {
-                                                    if (
-                                                        target.scores[
-                                                            currentStation
-                                                        ][2] -
-                                                            1 >
-                                                        -1
-                                                    ) {
-                                                        updateScore(
-                                                            match,
-                                                            currentStation,
-                                                            2,
-                                                            -1,
-                                                            true,
-                                                        );
-                                                    }
-                                                }}
-                                                disabled={
-                                                    target.scores[
-                                                        currentStation
-                                                    ][2] == 0
-                                                }
-                                            >
-                                                -
-                                            </button>
-                                            <div>
-                                                {
-                                                    target.scores[
-                                                        currentStation
-                                                    ][2]
-                                                }
-                                            </div>
-                                            <button
-                                                onClick={() =>
-                                                    updateScore(
-                                                        match,
-                                                        currentStation,
-                                                        2,
-                                                        1,
-                                                        true,
-                                                    )
-                                                }
-                                            >
-                                                +
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="desktop-dash-match-scorecontainer-row">
-                                    <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Overflow:</p>
+                                        <p>Ball Launched:</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -192,8 +139,51 @@ function DashboardMatchPage({
                                             </button>
                                         </div>
                                     </div>
+                                </div>
+                                <div className="desktop-dash-match-scorecontainer-row">
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
                                         <p>Leave:</p>
+                                        <div className="desktop-dash-match-scorecontainer-checkinput-container">
+                                            <button
+                                                onClick={() => {
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        2,
+                                                        0,
+                                                        false,
+                                                    );
+                                                }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][2] == 0
+                                                }
+                                            >
+                                                ✕
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        2,
+                                                        1,
+                                                        false,
+                                                    )
+                                                }
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][2] == 1
+                                                }
+                                            >
+                                                ✓
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="desktop-dash-match-scorecontainer-labelcontainer">
+                                        <p>Park:</p>
                                         <div className="desktop-dash-match-scorecontainer-checkinput-container">
                                             <button
                                                 onClick={() => {
@@ -239,7 +229,7 @@ function DashboardMatchPage({
                             <>
                                 <div className="desktop-dash-match-scorecontainer-row">
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Classified:</p>
+                                        <p>Tip:</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -290,60 +280,7 @@ function DashboardMatchPage({
                                         </div>
                                     </div>
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Pattern:</p>
-                                        <div className="desktop-dash-match-scorecontainer-numinput-container">
-                                            <button
-                                                onClick={() => {
-                                                    if (
-                                                        target.scores[
-                                                            currentStation
-                                                        ][6] -
-                                                            1 >
-                                                        -1
-                                                    ) {
-                                                        updateScore(
-                                                            match,
-                                                            currentStation,
-                                                            6,
-                                                            -1,
-                                                            true,
-                                                        );
-                                                    }
-                                                }}
-                                                disabled={
-                                                    target.scores[
-                                                        currentStation
-                                                    ][6] == 0
-                                                }
-                                            >
-                                                -
-                                            </button>
-                                            <div>
-                                                {
-                                                    target.scores[
-                                                        currentStation
-                                                    ][6]
-                                                }
-                                            </div>
-                                            <button
-                                                onClick={() =>
-                                                    updateScore(
-                                                        match,
-                                                        currentStation,
-                                                        6,
-                                                        1,
-                                                        true,
-                                                    )
-                                                }
-                                            >
-                                                +
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="desktop-dash-match-scorecontainer-row">
-                                    <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Overflow:</p>
+                                        <p>Ball Launched:</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -394,8 +331,112 @@ function DashboardMatchPage({
                                         </div>
                                     </div>
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Base:</p>
-                                        <div className="desktop-dash-match-scorecontainer-baseinput-container">
+                                        <p>Garden:</p>
+                                        <div className="desktop-dash-match-scorecontainer-numinput-container">
+                                            <button
+                                                onClick={() => {
+                                                    if (
+                                                        target.scores[
+                                                            currentStation
+                                                        ][8] -
+                                                            1 >
+                                                        -1
+                                                    ) {
+                                                        updateScore(
+                                                            match,
+                                                            currentStation,
+                                                            8,
+                                                            -1,
+                                                            true,
+                                                        );
+                                                    }
+                                                }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][8] == 0
+                                                }
+                                            >
+                                                -
+                                            </button>
+                                            <div>
+                                                {
+                                                    target.scores[
+                                                        currentStation
+                                                    ][8]
+                                                }
+                                            </div>
+                                            <button
+                                                onClick={() =>
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        8,
+                                                        1,
+                                                        true,
+                                                    )
+                                                }
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="desktop-dash-match-scorecontainer-row">
+                                    <div className="desktop-dash-match-scorecontainer-labelcontainer">
+                                        <p>Ball In Flower:</p>
+                                        <div className="desktop-dash-match-scorecontainer-numinput-container">
+                                            <button
+                                                onClick={() => {
+                                                    if (
+                                                        target.scores[
+                                                            currentStation
+                                                        ][6] -
+                                                            1 >
+                                                        -1
+                                                    ) {
+                                                        updateScore(
+                                                            match,
+                                                            currentStation,
+                                                            6,
+                                                            -1,
+                                                            true,
+                                                        );
+                                                    }
+                                                }}
+                                                disabled={
+                                                    target.scores[
+                                                        currentStation
+                                                    ][6] == 0
+                                                }
+                                            >
+                                                -
+                                            </button>
+                                            <div>
+                                                {
+                                                    target.scores[
+                                                        currentStation
+                                                    ][6]
+                                                }
+                                            </div>
+                                            <button
+                                                onClick={() =>
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        6,
+                                                        1,
+                                                        true,
+                                                    )
+                                                }
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="desktop-dash-match-scorecontainer-labelcontainer">
+                                        <p>Park:</p>
+                                        <div className="desktop-dash-match-scorecontainer-checkinput-container">
                                             <button
                                                 onClick={() => {
                                                     updateScore(
@@ -412,7 +453,7 @@ function DashboardMatchPage({
                                                     ][7] == 0
                                                 }
                                             >
-                                                None
+                                                ✕
                                             </button>
                                             <button
                                                 onClick={() =>
@@ -430,25 +471,7 @@ function DashboardMatchPage({
                                                     ][7] == 1
                                                 }
                                             >
-                                                Partial
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    updateScore(
-                                                        match,
-                                                        currentStation,
-                                                        7,
-                                                        2,
-                                                        false,
-                                                    )
-                                                }
-                                                disabled={
-                                                    target.scores[
-                                                        currentStation
-                                                    ][7] == 2
-                                                }
-                                            >
-                                                Full
+                                                ✓
                                             </button>
                                         </div>
                                     </div>
@@ -521,10 +544,10 @@ function DashboardMatchPage({
                         {isAuto ? (
                             <>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Classified:</p>
+                                    <p>Tip:</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
-                                            onPointerUp={() => {
+                                            onClick={() => {
                                                 if (
                                                     target.scores[
                                                         currentStation
@@ -553,7 +576,7 @@ function DashboardMatchPage({
                                             {target.scores[currentStation][0]}
                                         </div>
                                         <button
-                                            onPointerUp={() =>
+                                            onClick={() =>
                                                 updateScore(
                                                     match,
                                                     currentStation,
@@ -568,57 +591,10 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Pattern:</p>
+                                    <p>Ball Launched:</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
-                                            onPointerUp={() => {
-                                                if (
-                                                    target.scores[
-                                                        currentStation
-                                                    ][2] -
-                                                        1 >
-                                                    -1
-                                                ) {
-                                                    updateScore(
-                                                        match,
-                                                        currentStation,
-                                                        2,
-                                                        -1,
-                                                        true,
-                                                    );
-                                                }
-                                            }}
-                                            disabled={
-                                                target.scores[
-                                                    currentStation
-                                                ][2] == 0
-                                            }
-                                        >
-                                            -
-                                        </button>
-                                        <div>
-                                            {target.scores[currentStation][2]}
-                                        </div>
-                                        <button
-                                            onPointerUp={() =>
-                                                updateScore(
-                                                    match,
-                                                    currentStation,
-                                                    2,
-                                                    1,
-                                                    true,
-                                                )
-                                            }
-                                        >
-                                            +
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Overflow:</p>
-                                    <div className="phone-dash-match-scorecontainer-numinput-container">
-                                        <button
-                                            onPointerUp={() => {
+                                            onClick={() => {
                                                 if (
                                                     target.scores[
                                                         currentStation
@@ -647,7 +623,7 @@ function DashboardMatchPage({
                                             {target.scores[currentStation][1]}
                                         </div>
                                         <button
-                                            onPointerUp={() =>
+                                            onClick={() =>
                                                 updateScore(
                                                     match,
                                                     currentStation,
@@ -665,7 +641,48 @@ function DashboardMatchPage({
                                     <p>Leave:</p>
                                     <div className="phone-dash-match-scorecontainer-checkinput-container">
                                         <button
-                                            onPointerUp={() => {
+                                            onClick={() => {
+                                                updateScore(
+                                                    match,
+                                                    currentStation,
+                                                    2,
+                                                    0,
+                                                    false,
+                                                );
+                                            }}
+                                            disabled={
+                                                target.scores[
+                                                    currentStation
+                                                ][2] == 0
+                                            }
+                                        >
+                                            ✕
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                updateScore(
+                                                    match,
+                                                    currentStation,
+                                                    2,
+                                                    1,
+                                                    false,
+                                                )
+                                            }
+                                            disabled={
+                                                target.scores[
+                                                    currentStation
+                                                ][2] == 1
+                                            }
+                                        >
+                                            ✓
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="phone-dash-match-scorecontainer-labelcontainer">
+                                    <p>Park:</p>
+                                    <div className="phone-dash-match-scorecontainer-checkinput-container">
+                                        <button
+                                            onClick={() => {
                                                 updateScore(
                                                     match,
                                                     currentStation,
@@ -683,7 +700,7 @@ function DashboardMatchPage({
                                             ✕
                                         </button>
                                         <button
-                                            onPointerUp={() =>
+                                            onClick={() =>
                                                 updateScore(
                                                     match,
                                                     currentStation,
@@ -706,10 +723,10 @@ function DashboardMatchPage({
                         ) : (
                             <>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Classified:</p>
+                                    <p>Tip:</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
-                                            onPointerUp={() => {
+                                            onClick={() => {
                                                 if (
                                                     target.scores[
                                                         currentStation
@@ -738,7 +755,7 @@ function DashboardMatchPage({
                                             {target.scores[currentStation][4]}
                                         </div>
                                         <button
-                                            onPointerUp={() =>
+                                            onClick={() =>
                                                 updateScore(
                                                     match,
                                                     currentStation,
@@ -753,57 +770,10 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Pattern:</p>
+                                    <p>Ball Launched:</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
-                                            onPointerUp={() => {
-                                                if (
-                                                    target.scores[
-                                                        currentStation
-                                                    ][6] -
-                                                        1 >
-                                                    -1
-                                                ) {
-                                                    updateScore(
-                                                        match,
-                                                        currentStation,
-                                                        6,
-                                                        -1,
-                                                        true,
-                                                    );
-                                                }
-                                            }}
-                                            disabled={
-                                                target.scores[
-                                                    currentStation
-                                                ][6] == 0
-                                            }
-                                        >
-                                            -
-                                        </button>
-                                        <div>
-                                            {target.scores[currentStation][6]}
-                                        </div>
-                                        <button
-                                            onPointerUp={() =>
-                                                updateScore(
-                                                    match,
-                                                    currentStation,
-                                                    6,
-                                                    1,
-                                                    true,
-                                                )
-                                            }
-                                        >
-                                            +
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Overflow:</p>
-                                    <div className="phone-dash-match-scorecontainer-numinput-container">
-                                        <button
-                                            onPointerUp={() => {
+                                            onClick={() => {
                                                 if (
                                                     target.scores[
                                                         currentStation
@@ -832,7 +802,7 @@ function DashboardMatchPage({
                                             {target.scores[currentStation][5]}
                                         </div>
                                         <button
-                                            onPointerUp={() =>
+                                            onClick={() =>
                                                 updateScore(
                                                     match,
                                                     currentStation,
@@ -847,10 +817,104 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Base:</p>
-                                    <div className="phone-dash-match-scorecontainer-baseinput-container">
+                                    <p>Garden:</p>
+                                    <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
-                                            onPointerUp={() => {
+                                            onClick={() => {
+                                                if (
+                                                    target.scores[
+                                                        currentStation
+                                                    ][8] -
+                                                        1 >
+                                                    -1
+                                                ) {
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        8,
+                                                        -1,
+                                                        true,
+                                                    );
+                                                }
+                                            }}
+                                            disabled={
+                                                target.scores[
+                                                    currentStation
+                                                ][8] == 0
+                                            }
+                                        >
+                                            -
+                                        </button>
+                                        <div>
+                                            {target.scores[currentStation][8]}
+                                        </div>
+                                        <button
+                                            onClick={() =>
+                                                updateScore(
+                                                    match,
+                                                    currentStation,
+                                                    8,
+                                                    1,
+                                                    true,
+                                                )
+                                            }
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="phone-dash-match-scorecontainer-labelcontainer">
+                                    <p>Ball In Flower:</p>
+                                    <div className="phone-dash-match-scorecontainer-numinput-container">
+                                        <button
+                                            onClick={() => {
+                                                if (
+                                                    target.scores[
+                                                        currentStation
+                                                    ][6] -
+                                                        1 >
+                                                    -1
+                                                ) {
+                                                    updateScore(
+                                                        match,
+                                                        currentStation,
+                                                        6,
+                                                        -1,
+                                                        true,
+                                                    );
+                                                }
+                                            }}
+                                            disabled={
+                                                target.scores[
+                                                    currentStation
+                                                ][6] == 0
+                                            }
+                                        >
+                                            -
+                                        </button>
+                                        <div>
+                                            {target.scores[currentStation][6]}
+                                        </div>
+                                        <button
+                                            onClick={() =>
+                                                updateScore(
+                                                    match,
+                                                    currentStation,
+                                                    6,
+                                                    1,
+                                                    true,
+                                                )
+                                            }
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="phone-dash-match-scorecontainer-labelcontainer">
+                                    <p>Park:</p>
+                                    <div className="phone-dash-match-scorecontainer-checkinput-container">
+                                        <button
+                                            onClick={() => {
                                                 updateScore(
                                                     match,
                                                     currentStation,
@@ -865,10 +929,10 @@ function DashboardMatchPage({
                                                 ][7] == 0
                                             }
                                         >
-                                            None
+                                            ✕
                                         </button>
                                         <button
-                                            onPointerUp={() =>
+                                            onClick={() =>
                                                 updateScore(
                                                     match,
                                                     currentStation,
@@ -883,25 +947,7 @@ function DashboardMatchPage({
                                                 ][7] == 1
                                             }
                                         >
-                                            Partial
-                                        </button>
-                                        <button
-                                            onPointerUp={() =>
-                                                updateScore(
-                                                    match,
-                                                    currentStation,
-                                                    7,
-                                                    2,
-                                                    false,
-                                                )
-                                            }
-                                            disabled={
-                                                target.scores[
-                                                    currentStation
-                                                ][7] == 2
-                                            }
-                                        >
-                                            Full
+                                            ✓
                                         </button>
                                     </div>
                                 </div>

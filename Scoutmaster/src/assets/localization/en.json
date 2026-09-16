@@ -228,5 +228,11 @@
     "overflow": "Overflow",
     "pattern": "Pattern",
     "leave": "Leave",
-    "base": "Base"
+    "base": "Base",
+
+    "tips": "Tips",
+    "ballslaunched": "Balls Launched",
+    "park": "Park",
+    "ballsinflower": "Balls in Flower",
+    "garden": "Garden"
 }

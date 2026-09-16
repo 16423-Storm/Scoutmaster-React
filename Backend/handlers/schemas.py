@@ -23,7 +23,7 @@ Str = Annotated[str, Field(max_length=100)]
 
 class SectionChanges(StrictModel):
     title: Annotated[str, Field(max_length=50)] | None = None
-    hs: Literal[1, 2, 3] | None = None
+    headersize: Literal[1, 2, 3] | None = None
     questions: Annotated[list[Annotated[str, Field(max_length=2)]], Field(max_length=30)]| None = None
     index: int | None = None
 
@@ -109,8 +109,8 @@ class UpdateSectionIndexesPayload(StrictModel):
     ]
 
 class AddQuestionPayload(StrictModel):
-    id: Annotated[str, Field(max_length=5)]
-    sId: Annotated[str, Field(max_length=5)]
+    id: Annotated[str, Field(max_length=5)] | None = None
+    sId: Annotated[str, Field(max_length=5)] | None = None
 
 class DeleteQuestionPayload(StrictModel):
     id: Annotated[str, Field(max_length=5)]
