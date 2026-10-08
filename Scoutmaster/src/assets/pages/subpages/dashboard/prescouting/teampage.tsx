@@ -12,6 +12,9 @@ import type { ChangeEvent } from "react";
 import { IoMdStar } from "react-icons/io";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import Blocker499 from "../../../components/blocker";
+
+import fieldImage from "../../../../images/biobuzzdark.webp";
 
 export function TeamPage({
     onBack,
@@ -193,11 +196,36 @@ function RenderQuestion({
     team: string;
     question: Question;
     questionId: string;
-    data?: string | number | boolean | string[] | number[] | boolean[];
+    data?:
+        | string
+        | number
+        | boolean
+        | string[]
+        | number[]
+        | boolean[]
+        | [number, number, string?][][];
 }) {
     const { t } = useTranslation();
 
-    if (useScreenType() == "desktop") {
+    const [heightSetting, setHeightSetting] = useState(25);
+    const [pathStage, setPathStage] = useState(0);
+    const [pathsOpen, setPathsOpen] = useState(false);
+
+    const screenType = useScreenType();
+    const isDesktop = screenType === "desktop";
+
+    const pathCanvasSize = isDesktop ? "min(300px, 70vw)" : "min(280px, 78vw)";
+
+    const pathPopupHeight = isDesktop ? "60vh" : "85vh";
+
+    const pathButtonWidth = isDesktop ? "75%" : "85%";
+
+    const pathButtonFontSize = isDesktop ? "1.2rem" : "1rem";
+
+    type Point = [number, number, string?];
+    type Paths = Point[][];
+
+    if (isDesktop) {
         if (question.type == "ln") {
             const [area, setArea] = useState(
                 typeof data === "string" ? data : "",
@@ -319,7 +347,421 @@ function RenderQuestion({
                 />
             );
         } else if (question.type == "a") {
-            return <></>;
+            const [paths, setPaths] = useState<Paths>([]);
+            const [selectedColor, setSelectedColor] = useState("r");
+
+            const colors = [
+                { key: "r", color: "red" },
+                { key: "g", color: "green" },
+                { key: "b", color: "blue" },
+                { key: "y", color: "yellow" },
+                { key: "p", color: "purple" },
+                { key: "o", color: "orange" },
+            ];
+
+            const getColor = (color?: string) => {
+                switch (color) {
+                    case "r":
+                        return "red";
+                    case "g":
+                        return "green";
+                    case "b":
+                        return "blue";
+                    case "y":
+                        return "yellow";
+                    case "p":
+                        return "purple";
+                    case "o":
+                        return "orange";
+                    default:
+                        return "black";
+                }
+            };
+
+            const openPaths = () => {
+                let initialPaths: Paths;
+
+                if (Array.isArray(data)) {
+                    initialPaths = (data as Paths).map((path) =>
+                        path.map((point) => [...point] as Point),
+                    );
+                } else {
+                    initialPaths = [[]];
+                }
+
+                if (initialPaths.length === 0) {
+                    initialPaths = [[]];
+                }
+
+                setPaths(initialPaths);
+                setPathStage(Math.min(initialPaths.length - 1, 2));
+                setSelectedColor("r");
+                setPathsOpen(true);
+            };
+
+            const handleSvgClick = (event: React.MouseEvent<SVGSVGElement>) => {
+                const rect = event.currentTarget.getBoundingClientRect();
+
+                const x = Math.round(
+                    ((event.clientX - rect.left) / rect.width) * 600,
+                );
+
+                const y = Math.round(
+                    ((event.clientY - rect.top) / rect.height) * 600,
+                );
+
+                const newPaths: Paths = paths.map((path) =>
+                    path.map((point) => [...point] as Point),
+                );
+
+                if (!newPaths[pathStage]) {
+                    newPaths[pathStage] = [];
+                }
+
+                const currentPath = newPaths[pathStage];
+
+                const newPoint: Point =
+                    currentPath.length === 0 ? [x, y] : [x, y, selectedColor];
+
+                newPaths[pathStage] = [...currentPath, newPoint];
+
+                setPaths(newPaths);
+            };
+
+            const handleAddPath = () => {
+                if (paths.length >= 3) return;
+
+                const newPaths: Paths = [...paths, []];
+
+                setPaths(newPaths);
+
+                setPathStage(newPaths.length - 1);
+            };
+
+            const handleDeletePath = () => {
+                if (paths.length <= 1) return;
+
+                const newPaths = paths.filter(
+                    (_, index) => index !== pathStage,
+                );
+
+                setPaths(newPaths);
+
+                setPathStage(Math.min(pathStage, newPaths.length - 1));
+            };
+
+            const handleExit = () => {
+                updateTeamQuestion(team, questionId, paths);
+
+                setPathsOpen(false);
+            };
+
+            return (
+                <>
+                    {pathsOpen && (
+                        <>
+                            <Blocker499 />
+
+                            <div
+                                className="desktop-warningpopup"
+                                style={{
+                                    height: pathPopupHeight,
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: isDesktop ? "20px" : "12px",
+                                        width: "90%",
+                                    }}
+                                >
+                                    <button
+                                        onClick={() => {
+                                            if (pathStage > 0) {
+                                                setPathStage(
+                                                    (prev) => prev - 1,
+                                                );
+                                            }
+                                        }}
+                                        disabled={pathStage === 0}
+                                        style={{
+                                            fontSize: isDesktop
+                                                ? "2rem"
+                                                : "1.5rem",
+                                            padding: isDesktop
+                                                ? "5px 15px"
+                                                : "4px 12px",
+                                            border: "none",
+                                            borderRadius: "8px",
+                                            cursor:
+                                                pathStage === 0
+                                                    ? "default"
+                                                    : "pointer",
+                                        }}
+                                    >
+                                        ←
+                                    </button>
+
+                                    <p
+                                        style={{
+                                            margin: 0,
+                                            fontSize: isDesktop
+                                                ? "1.2rem"
+                                                : "1rem",
+                                        }}
+                                    >
+                                        Path {pathStage + 1} / {paths.length}
+                                    </p>
+
+                                    <button
+                                        onClick={() => {
+                                            if (pathStage < paths.length - 1) {
+                                                setPathStage(
+                                                    (prev) => prev + 1,
+                                                );
+                                            }
+                                        }}
+                                        disabled={
+                                            pathStage === paths.length - 1
+                                        }
+                                        style={{
+                                            fontSize: isDesktop
+                                                ? "2rem"
+                                                : "1.5rem",
+                                            padding: isDesktop
+                                                ? "5px 15px"
+                                                : "4px 12px",
+                                            border: "none",
+                                            borderRadius: "8px",
+                                            cursor:
+                                                pathStage === paths.length - 1
+                                                    ? "default"
+                                                    : "pointer",
+                                        }}
+                                    >
+                                        →
+                                    </button>
+                                </div>
+
+                                <div
+                                    style={{
+                                        width: pathCanvasSize,
+                                        height: pathCanvasSize,
+                                        aspectRatio: "1 / 1",
+                                        position: "relative",
+                                        margin: "0 auto",
+                                        flexShrink: 0,
+                                    }}
+                                >
+                                    <img
+                                        src={fieldImage}
+                                        alt=""
+                                        style={{
+                                            position: "absolute",
+                                            inset: 0,
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "fill",
+                                            pointerEvents: "none",
+                                            userSelect: "none",
+                                        }}
+                                    />
+
+                                    <svg
+                                        viewBox="0 0 600 600"
+                                        width="100%"
+                                        height="100%"
+                                        onClick={handleSvgClick}
+                                        style={{
+                                            position: "absolute",
+                                            inset: 0,
+                                            display: "block",
+                                            cursor: "crosshair",
+                                            width: "100%",
+                                            height: "100%",
+                                        }}
+                                    >
+                                        {paths[pathStage]?.length > 0 && (
+                                            <>
+                                                {paths[pathStage]
+                                                    .slice(1)
+                                                    .map(
+                                                        (
+                                                            [x, y, color],
+                                                            pointIndex,
+                                                        ) => {
+                                                            const [
+                                                                prevX,
+                                                                prevY,
+                                                            ] =
+                                                                paths[
+                                                                    pathStage
+                                                                ][pointIndex];
+
+                                                            return (
+                                                                <line
+                                                                    key={`line-${pointIndex}`}
+                                                                    x1={prevX}
+                                                                    y1={prevY}
+                                                                    x2={x}
+                                                                    y2={y}
+                                                                    stroke={getColor(
+                                                                        color,
+                                                                    )}
+                                                                    strokeWidth={
+                                                                        isDesktop
+                                                                            ? 4
+                                                                            : 3
+                                                                    }
+                                                                    strokeLinecap="round"
+                                                                />
+                                                            );
+                                                        },
+                                                    )}
+
+                                                {paths[pathStage].map(
+                                                    ([x, y], pointIndex) => (
+                                                        <circle
+                                                            key={`point-${pointIndex}`}
+                                                            cx={x}
+                                                            cy={y}
+                                                            r={
+                                                                isDesktop
+                                                                    ? 6
+                                                                    : 5
+                                                            }
+                                                            fill="white"
+                                                            stroke="black"
+                                                            strokeWidth={
+                                                                isDesktop
+                                                                    ? 2
+                                                                    : 1.5
+                                                            }
+                                                        />
+                                                    ),
+                                                )}
+                                            </>
+                                        )}
+                                    </svg>
+                                </div>
+
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: isDesktop ? "8px" : "5px",
+                                        margin: isDesktop ? "8px 0" : "5px 0",
+                                        flexWrap: "wrap",
+                                        width: "90%",
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            fontSize: isDesktop
+                                                ? undefined
+                                                : "0.9rem",
+                                        }}
+                                    >
+                                        Color:
+                                    </span>
+
+                                    {colors.map(({ key, color }) => (
+                                        <button
+                                            key={key}
+                                            onClick={() =>
+                                                setSelectedColor(key)
+                                            }
+                                            style={{
+                                                width: isDesktop
+                                                    ? "30px"
+                                                    : "25px",
+                                                height: isDesktop
+                                                    ? "30px"
+                                                    : "25px",
+                                                padding: 0,
+                                                borderRadius: "50%",
+                                                border:
+                                                    selectedColor === key
+                                                        ? "3px solid black"
+                                                        : "2px solid #ccc",
+                                                backgroundColor: color,
+                                                cursor: "pointer",
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+
+                                <button
+                                    className="desktop-warningpopup-continue"
+                                    style={{
+                                        padding: isDesktop
+                                            ? "10px 0px"
+                                            : "8px 0px",
+                                        width: pathButtonWidth,
+                                        fontSize: pathButtonFontSize,
+                                        borderRadius: "10px",
+                                        border: "none",
+                                        boxShadow:
+                                            "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                    }}
+                                    onClick={handleAddPath}
+                                    disabled={paths.length >= 3}
+                                >
+                                    Add New Path
+                                </button>
+
+                                {paths.length > 1 && (
+                                    <button
+                                        className="desktop-warningpopup-cancel"
+                                        style={{
+                                            padding: isDesktop
+                                                ? "10px 0px"
+                                                : "8px 0px",
+                                            width: pathButtonWidth,
+                                            fontSize: pathButtonFontSize,
+                                            borderRadius: "10px",
+                                            border: "none",
+                                            boxShadow:
+                                                "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                        }}
+                                        onClick={handleDeletePath}
+                                    >
+                                        Delete Path
+                                    </button>
+                                )}
+
+                                <button
+                                    className="desktop-warningpopup-cancel"
+                                    style={{
+                                        padding: isDesktop
+                                            ? "10px 0px"
+                                            : "8px 0px",
+                                        width: pathButtonWidth,
+                                        fontSize: pathButtonFontSize,
+                                        borderRadius: "10px",
+                                        border: "none",
+                                        boxShadow:
+                                            "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                    }}
+                                    onClick={handleExit}
+                                >
+                                    Exit
+                                </button>
+                            </div>
+                        </>
+                    )}
+
+                    <button
+                        className="desktop-dash-comp-infodisplay-button"
+                        onClick={openPaths}
+                    >
+                        Auto Paths
+                    </button>
+                </>
+            );
         } else if (question.type == "n") {
             const [input, setInput] = useState(
                 typeof data === "number"
@@ -656,7 +1098,406 @@ function RenderQuestion({
                 />
             );
         } else if (question.type == "a") {
-            return <></>;
+            type Point = [number, number, string?];
+            type Paths = Point[][];
+
+            const [paths, setPaths] = useState<Paths>([]);
+            const [selectedColor, setSelectedColor] = useState("r");
+
+            const colors = [
+                { key: "r", color: "red" },
+                { key: "g", color: "green" },
+                { key: "b", color: "blue" },
+                { key: "y", color: "yellow" },
+                { key: "p", color: "purple" },
+                { key: "o", color: "orange" },
+            ];
+
+            const getColor = (color?: string) => {
+                switch (color) {
+                    case "r":
+                        return "red";
+                    case "g":
+                        return "green";
+                    case "b":
+                        return "blue";
+                    case "y":
+                        return "yellow";
+                    case "p":
+                        return "purple";
+                    case "o":
+                        return "orange";
+                    default:
+                        return "black";
+                }
+            };
+
+            const openPaths = () => {
+                let initialPaths: Paths;
+
+                if (Array.isArray(data)) {
+                    initialPaths = (data as Paths).map((path) => [...path]);
+                } else {
+                    initialPaths = [[]];
+                }
+
+                if (initialPaths.length === 0) {
+                    initialPaths = [[]];
+                }
+
+                initialPaths = initialPaths.slice(0, 3);
+
+                setPaths(initialPaths);
+                setPathStage(Math.min(initialPaths.length - 1, 2));
+                setPathsOpen(true);
+            };
+
+            const handleSvgClick = (event: React.MouseEvent<SVGSVGElement>) => {
+                const rect = event.currentTarget.getBoundingClientRect();
+
+                const x = Math.round(
+                    ((event.clientX - rect.left) / rect.width) * 600,
+                );
+
+                const y = Math.round(
+                    ((event.clientY - rect.top) / rect.height) * 600,
+                );
+
+                const newPaths: Paths = paths.map((path) => [...path]);
+
+                if (!newPaths[pathStage]) {
+                    newPaths[pathStage] = [];
+                }
+
+                const currentPath = newPaths[pathStage];
+
+                const newPoint: Point =
+                    currentPath.length === 0 ? [x, y] : [x, y, selectedColor];
+
+                newPaths[pathStage] = [...currentPath, newPoint];
+
+                setPaths(newPaths);
+            };
+
+            const handleAddPath = () => {
+                if (paths.length >= 3) return;
+
+                const newPaths: Paths = [...paths, []];
+
+                setPaths(newPaths);
+                setPathStage(newPaths.length - 1);
+            };
+
+            const handleDeletePath = () => {
+                if (paths.length <= 1) return;
+
+                const newPaths = paths.filter(
+                    (_, index) => index !== pathStage,
+                );
+
+                setPaths(newPaths);
+
+                setPathStage(Math.min(pathStage, newPaths.length - 1));
+            };
+
+            const handleExit = () => {
+                updateTeamQuestion(team, questionId, paths);
+
+                setPathsOpen(false);
+            };
+
+            return (
+                <>
+                    {pathsOpen && (
+                        <>
+                            <Blocker499 />
+
+                            <div
+                                className="desktop-warningpopup"
+                                style={{
+                                    height: "90vh",
+                                    width: "95vw",
+                                    maxWidth: "500px",
+                                    boxSizing: "border-box",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    overflowY: "auto",
+                                    padding: "15px 10px",
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "15px",
+                                        width: "100%",
+                                        flexShrink: 0,
+                                    }}
+                                >
+                                    <button
+                                        onClick={() => {
+                                            if (pathStage > 0) {
+                                                setPathStage(
+                                                    (prev) => prev - 1,
+                                                );
+                                            }
+                                        }}
+                                        disabled={pathStage === 0}
+                                        style={{
+                                            fontSize: "1.7rem",
+                                            padding: "4px 12px",
+                                            border: "none",
+                                            borderRadius: "8px",
+                                            cursor:
+                                                pathStage === 0
+                                                    ? "default"
+                                                    : "pointer",
+                                        }}
+                                    >
+                                        ←
+                                    </button>
+
+                                    <p
+                                        style={{
+                                            margin: 0,
+                                            fontSize: "1rem",
+                                            whiteSpace: "nowrap",
+                                        }}
+                                    >
+                                        Path {pathStage + 1} / {paths.length}
+                                    </p>
+
+                                    <button
+                                        onClick={() => {
+                                            if (pathStage < paths.length - 1) {
+                                                setPathStage(
+                                                    (prev) => prev + 1,
+                                                );
+                                            }
+                                        }}
+                                        disabled={
+                                            pathStage === paths.length - 1
+                                        }
+                                        style={{
+                                            fontSize: "1.7rem",
+                                            padding: "4px 12px",
+                                            border: "none",
+                                            borderRadius: "8px",
+                                            cursor:
+                                                pathStage === paths.length - 1
+                                                    ? "default"
+                                                    : "pointer",
+                                        }}
+                                    >
+                                        →
+                                    </button>
+                                </div>
+
+                                <div
+                                    style={{
+                                        width: "min(85vw, 380px)",
+                                        height: "min(85vw, 380px)",
+                                        aspectRatio: "1 / 1",
+                                        position: "relative",
+                                        margin: "12px auto",
+                                        flexShrink: 0,
+                                    }}
+                                >
+                                    <img
+                                        src={fieldImage}
+                                        alt=""
+                                        style={{
+                                            position: "absolute",
+                                            inset: 0,
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "fill",
+                                            pointerEvents: "none",
+                                            userSelect: "none",
+                                        }}
+                                    />
+
+                                    <svg
+                                        viewBox="0 0 600 600"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        width="100%"
+                                        height="100%"
+                                        onClick={handleSvgClick}
+                                        style={{
+                                            position: "absolute",
+                                            inset: 0,
+                                            display: "block",
+                                            width: "100%",
+                                            height: "100%",
+                                            cursor: "crosshair",
+                                            touchAction: "none",
+                                        }}
+                                    >
+                                        {paths[pathStage]?.length > 0 && (
+                                            <>
+                                                {paths[pathStage]
+                                                    .slice(1)
+                                                    .map(
+                                                        (
+                                                            [x, y, color],
+                                                            pointIndex,
+                                                        ) => {
+                                                            const [
+                                                                prevX,
+                                                                prevY,
+                                                            ] =
+                                                                paths[
+                                                                    pathStage
+                                                                ][pointIndex];
+
+                                                            return (
+                                                                <line
+                                                                    key={`line-${pointIndex}`}
+                                                                    x1={prevX}
+                                                                    y1={prevY}
+                                                                    x2={x}
+                                                                    y2={y}
+                                                                    stroke={getColor(
+                                                                        color,
+                                                                    )}
+                                                                    strokeWidth={
+                                                                        4
+                                                                    }
+                                                                    strokeLinecap="round"
+                                                                />
+                                                            );
+                                                        },
+                                                    )}
+
+                                                {paths[pathStage].map(
+                                                    ([x, y], pointIndex) => (
+                                                        <circle
+                                                            key={`point-${pointIndex}`}
+                                                            cx={x}
+                                                            cy={y}
+                                                            r={6}
+                                                            fill="white"
+                                                            stroke="black"
+                                                            strokeWidth={2}
+                                                        />
+                                                    ),
+                                                )}
+                                            </>
+                                        )}
+                                    </svg>
+                                </div>
+
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        flexWrap: "wrap",
+                                        gap: "7px",
+                                        width: "100%",
+                                        margin: "5px 0 10px",
+                                        flexShrink: 0,
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            fontSize: "0.9rem",
+                                        }}
+                                    >
+                                        Color:
+                                    </span>
+
+                                    {colors.map(({ key, color }) => (
+                                        <button
+                                            key={key}
+                                            onClick={() =>
+                                                setSelectedColor(key)
+                                            }
+                                            style={{
+                                                width: "27px",
+                                                height: "27px",
+                                                padding: 0,
+                                                borderRadius: "50%",
+                                                border:
+                                                    selectedColor === key
+                                                        ? "3px solid black"
+                                                        : "2px solid #ccc",
+                                                backgroundColor: color,
+                                                cursor: "pointer",
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+
+                                <button
+                                    className="desktop-warningpopup-continue"
+                                    style={{
+                                        padding: "9px 0px",
+                                        width: "85%",
+                                        fontSize: "1rem",
+                                        borderRadius: "10px",
+                                        border: "none",
+                                        boxShadow:
+                                            "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                        marginBottom: "8px",
+                                        flexShrink: 0,
+                                    }}
+                                    onClick={handleAddPath}
+                                    disabled={paths.length >= 3}
+                                >
+                                    Add New Path
+                                </button>
+
+                                {paths.length > 1 && (
+                                    <button
+                                        className="desktop-warningpopup-cancel"
+                                        style={{
+                                            padding: "9px 0px",
+                                            width: "85%",
+                                            fontSize: "1rem",
+                                            borderRadius: "10px",
+                                            border: "none",
+                                            boxShadow:
+                                                "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                            marginBottom: "8px",
+                                            flexShrink: 0,
+                                        }}
+                                        onClick={handleDeletePath}
+                                    >
+                                        Delete Path
+                                    </button>
+                                )}
+
+                                <button
+                                    className="desktop-warningpopup-cancel"
+                                    style={{
+                                        padding: "9px 0px",
+                                        width: "85%",
+                                        fontSize: "1rem",
+                                        borderRadius: "10px",
+                                        border: "none",
+                                        boxShadow:
+                                            "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                        flexShrink: 0,
+                                    }}
+                                    onClick={handleExit}
+                                >
+                                    Exit
+                                </button>
+                            </div>
+                        </>
+                    )}
+
+                    <button
+                        className="phone-dash-comp-infodisplay-button"
+                        onClick={openPaths}
+                    >
+                        Auto Paths
+                    </button>
+                </>
+            );
         } else if (question.type == "n") {
             const [input, setInput] = useState(
                 typeof data === "number"

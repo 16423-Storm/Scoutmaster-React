@@ -64,9 +64,33 @@ class UpdateTeamQuestionPayload(StrictModel):
         Annotated[str, Field(max_length=400)]
         | Annotated[int, Field(ge=-999999, le=999999)]
         | bool
-        | Annotated[list[Annotated[str, Field(max_length=1)]], Field(max_length=10)]
+        | Annotated[
+            list[Annotated[str, Field(max_length=1)]],
+            Field(max_length=10),
+        ]
         | Annotated[list[int], Field(max_length=10)]
         | Annotated[list[bool], Field(max_length=10)]
+        | Annotated[
+            list[
+                Annotated[
+                    list[
+                        (
+                            tuple[
+                                Annotated[int, Field(ge=0, le=600)],
+                                Annotated[int, Field(ge=0, le=600)],
+                            ]
+                            | tuple[
+                                Annotated[int, Field(ge=0, le=600)],
+                                Annotated[int, Field(ge=0, le=600)],
+                                Literal["r", "g", "b", "y", "p", "o"],
+                            ]
+                        )
+                    ],
+                    Field(max_length=1000),
+                ]
+            ],
+            Field(min_length=1, max_length=3),
+        ]
         | None
     )
 
