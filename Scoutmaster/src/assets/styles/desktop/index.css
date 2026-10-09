@@ -4,6 +4,7 @@
 @import "./misc/popup.css";
 @import "./misc/progressbar.css";
 @import "./misc/404.css";
+@import "./misc/pathscout.css";
 
 /* Dashboard */
 @import "./dashboard/dashboard.css";

@@ -1,0 +1,30 @@
+.desktop-dash-prescout-path-nextbutton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--clr-surface-a10);
+    border: 1px solid var(--clr-surface-tonal-a10) !important;
+    font-size: 1.2rem;
+    width: 30% !important;
+    cursor: pointer;
+    height: unset !important;
+    padding: 10px 0px;
+}
+
+.desktop-dash-prescout-path-nextbutton:not(:disabled):hover {
+    filter: brightness(0.92);
+}
+
+.desktop-dash-prescout-path-nextbutton:not(:disabled):active {
+    transform: scale(0.95);
+}
+
+.desktop-dash-prescout-path-nextbutton:disabled {
+    background-color: var(--clr-surface-a10);
+    filter: brightness(0.5);
+    cursor: not-allowed;
+}
+
+.desktop-dash-prescout-path-colorselected {
+    border: 2px solid var(--black) !important;
+}

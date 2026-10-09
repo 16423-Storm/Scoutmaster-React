@@ -1,5 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { useScreenType } from "../../../../scripts/multipageutils";
+import {
+    useIsLightMode,
+    useScreenType,
+} from "../../../../scripts/multipageutils";
 import type { Question } from "../../../../scripts/localstorage";
 import {
     useSections,
@@ -14,7 +17,8 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import Blocker499 from "../../../components/blocker";
 
-import fieldImage from "../../../../images/biobuzzdark.webp";
+import fieldImageDark from "../../../../images/biobuzzdark.webp";
+import fieldImageLight from "../../../../images/biobuzzlight.webp";
 
 export function TeamPage({
     onBack,
@@ -216,9 +220,9 @@ function RenderQuestion({
 
     const pathCanvasSize = isDesktop ? "min(300px, 70vw)" : "min(280px, 78vw)";
 
-    const pathPopupHeight = isDesktop ? "60vh" : "85vh";
+    const pathPopupHeight = isDesktop ? "70vh" : "85vh";
 
-    const pathButtonWidth = isDesktop ? "75%" : "85%";
+    const pathButtonWidth = isDesktop ? "45%" : "85%";
 
     const pathButtonFontSize = isDesktop ? "1.2rem" : "1rem";
 
@@ -456,6 +460,8 @@ function RenderQuestion({
                 setPathsOpen(false);
             };
 
+            const isLightMode = useIsLightMode();
+
             return (
                 <>
                     {pathsOpen && (
@@ -473,7 +479,7 @@ function RenderQuestion({
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
-                                        gap: isDesktop ? "20px" : "12px",
+                                        gap: "20px",
                                         width: "90%",
                                     }}
                                 >
@@ -486,20 +492,7 @@ function RenderQuestion({
                                             }
                                         }}
                                         disabled={pathStage === 0}
-                                        style={{
-                                            fontSize: isDesktop
-                                                ? "2rem"
-                                                : "1.5rem",
-                                            padding: isDesktop
-                                                ? "5px 15px"
-                                                : "4px 12px",
-                                            border: "none",
-                                            borderRadius: "8px",
-                                            cursor:
-                                                pathStage === 0
-                                                    ? "default"
-                                                    : "pointer",
-                                        }}
+                                        className="desktop-dash-prescout-path-nextbutton"
                                     >
                                         ←
                                     </button>
@@ -526,20 +519,7 @@ function RenderQuestion({
                                         disabled={
                                             pathStage === paths.length - 1
                                         }
-                                        style={{
-                                            fontSize: isDesktop
-                                                ? "2rem"
-                                                : "1.5rem",
-                                            padding: isDesktop
-                                                ? "5px 15px"
-                                                : "4px 12px",
-                                            border: "none",
-                                            borderRadius: "8px",
-                                            cursor:
-                                                pathStage === paths.length - 1
-                                                    ? "default"
-                                                    : "pointer",
-                                        }}
+                                        className="desktop-dash-prescout-path-nextbutton"
                                     >
                                         →
                                     </button>
@@ -556,7 +536,11 @@ function RenderQuestion({
                                     }}
                                 >
                                     <img
-                                        src={fieldImage}
+                                        src={
+                                            isLightMode == true
+                                                ? fieldImageLight
+                                                : fieldImageDark
+                                        }
                                         alt=""
                                         style={{
                                             position: "absolute",
@@ -652,8 +636,8 @@ function RenderQuestion({
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
-                                        gap: isDesktop ? "8px" : "5px",
-                                        margin: isDesktop ? "8px 0" : "5px 0",
+                                        gap: "8px",
+                                        margin: "8px 0",
                                         flexWrap: "wrap",
                                         width: "90%",
                                     }}
@@ -674,19 +658,16 @@ function RenderQuestion({
                                             onClick={() =>
                                                 setSelectedColor(key)
                                             }
+                                            className={
+                                                selectedColor === key
+                                                    ? "desktop-dash-prescout-path-colorselected"
+                                                    : "desktop-dash-prescout-path-colorunselected"
+                                            }
                                             style={{
-                                                width: isDesktop
-                                                    ? "30px"
-                                                    : "25px",
-                                                height: isDesktop
-                                                    ? "30px"
-                                                    : "25px",
+                                                width: "30px",
+                                                height: "30px",
                                                 padding: 0,
                                                 borderRadius: "50%",
-                                                border:
-                                                    selectedColor === key
-                                                        ? "3px solid black"
-                                                        : "2px solid #ccc",
                                                 backgroundColor: color,
                                                 cursor: "pointer",
                                             }}
@@ -694,44 +675,58 @@ function RenderQuestion({
                                     ))}
                                 </div>
 
-                                <button
-                                    className="desktop-warningpopup-continue"
+                                <div
                                     style={{
-                                        padding: isDesktop
-                                            ? "10px 0px"
-                                            : "8px 0px",
-                                        width: pathButtonWidth,
-                                        fontSize: pathButtonFontSize,
-                                        borderRadius: "10px",
-                                        border: "none",
-                                        boxShadow:
-                                            "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        flexDirection: "row",
+                                        gap: "8px",
+                                        margin: "8px 0",
+                                        flexWrap: "wrap",
+                                        width: "90%",
                                     }}
-                                    onClick={handleAddPath}
-                                    disabled={paths.length >= 3}
                                 >
-                                    Add New Path
-                                </button>
-
-                                {paths.length > 1 && (
-                                    <button
-                                        className="desktop-warningpopup-cancel"
-                                        style={{
-                                            padding: isDesktop
-                                                ? "10px 0px"
-                                                : "8px 0px",
-                                            width: pathButtonWidth,
-                                            fontSize: pathButtonFontSize,
-                                            borderRadius: "10px",
-                                            border: "none",
-                                            boxShadow:
-                                                "0 6px 18px rgba(0, 0, 0, 0.25)",
-                                        }}
-                                        onClick={handleDeletePath}
-                                    >
-                                        Delete Path
-                                    </button>
-                                )}
+                                    {paths.length > 1 && (
+                                        <button
+                                            className="desktop-warningpopup-cancel"
+                                            style={{
+                                                padding: isDesktop
+                                                    ? "10px 0px"
+                                                    : "8px 0px",
+                                                width: pathButtonWidth,
+                                                fontSize: pathButtonFontSize,
+                                                borderRadius: "10px",
+                                                border: "none",
+                                                boxShadow:
+                                                    "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                            }}
+                                            onClick={handleDeletePath}
+                                        >
+                                            Delete Path
+                                        </button>
+                                    )}
+                                    {paths.length < 3 && (
+                                        <button
+                                            className="desktop-warningpopup-continue"
+                                            style={{
+                                                padding: isDesktop
+                                                    ? "10px 0px"
+                                                    : "8px 0px",
+                                                width: pathButtonWidth,
+                                                fontSize: pathButtonFontSize,
+                                                borderRadius: "10px",
+                                                border: "none",
+                                                boxShadow:
+                                                    "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                            }}
+                                            onClick={handleAddPath}
+                                            disabled={paths.length >= 3}
+                                        >
+                                            Add New Path
+                                        </button>
+                                    )}
+                                </div>
 
                                 <button
                                     className="desktop-warningpopup-cancel"
@@ -757,8 +752,9 @@ function RenderQuestion({
                     <button
                         className="desktop-dash-comp-infodisplay-button"
                         onClick={openPaths}
+                        style={{ width: "40%" }}
                     >
-                        Auto Paths
+                        Paths
                     </button>
                 </>
             );
@@ -1206,6 +1202,8 @@ function RenderQuestion({
                 setPathsOpen(false);
             };
 
+            const isLightMode = useIsLightMode();
+
             return (
                 <>
                     {pathsOpen && (
@@ -1215,7 +1213,8 @@ function RenderQuestion({
                             <div
                                 className="desktop-warningpopup"
                                 style={{
-                                    height: "90vh",
+                                    maxHeight: "90vh",
+                                    minHeight: "426px",
                                     width: "95vw",
                                     maxWidth: "500px",
                                     boxSizing: "border-box",
@@ -1245,16 +1244,7 @@ function RenderQuestion({
                                             }
                                         }}
                                         disabled={pathStage === 0}
-                                        style={{
-                                            fontSize: "1.7rem",
-                                            padding: "4px 12px",
-                                            border: "none",
-                                            borderRadius: "8px",
-                                            cursor:
-                                                pathStage === 0
-                                                    ? "default"
-                                                    : "pointer",
-                                        }}
+                                        className="desktop-dash-prescout-path-nextbutton"
                                     >
                                         ←
                                     </button>
@@ -1280,16 +1270,7 @@ function RenderQuestion({
                                         disabled={
                                             pathStage === paths.length - 1
                                         }
-                                        style={{
-                                            fontSize: "1.7rem",
-                                            padding: "4px 12px",
-                                            border: "none",
-                                            borderRadius: "8px",
-                                            cursor:
-                                                pathStage === paths.length - 1
-                                                    ? "default"
-                                                    : "pointer",
-                                        }}
+                                        className="desktop-dash-prescout-path-nextbutton"
                                     >
                                         →
                                     </button>
@@ -1306,7 +1287,11 @@ function RenderQuestion({
                                     }}
                                 >
                                     <img
-                                        src={fieldImage}
+                                        src={
+                                            isLightMode == true
+                                                ? fieldImageLight
+                                                : fieldImageDark
+                                        }
                                         alt=""
                                         style={{
                                             position: "absolute",
@@ -1431,24 +1416,26 @@ function RenderQuestion({
                                     ))}
                                 </div>
 
-                                <button
-                                    className="desktop-warningpopup-continue"
-                                    style={{
-                                        padding: "9px 0px",
-                                        width: "85%",
-                                        fontSize: "1rem",
-                                        borderRadius: "10px",
-                                        border: "none",
-                                        boxShadow:
-                                            "0 6px 18px rgba(0, 0, 0, 0.25)",
-                                        marginBottom: "8px",
-                                        flexShrink: 0,
-                                    }}
-                                    onClick={handleAddPath}
-                                    disabled={paths.length >= 3}
-                                >
-                                    Add New Path
-                                </button>
+                                {paths.length < 3 && (
+                                    <button
+                                        className="desktop-warningpopup-continue"
+                                        style={{
+                                            padding: "9px 0px",
+                                            width: "85%",
+                                            fontSize: "1rem",
+                                            borderRadius: "10px",
+                                            border: "none",
+                                            boxShadow:
+                                                "0 6px 18px rgba(0, 0, 0, 0.25)",
+                                            marginBottom: "8px",
+                                            flexShrink: 0,
+                                        }}
+                                        onClick={handleAddPath}
+                                        disabled={paths.length >= 3}
+                                    >
+                                        Add New Path
+                                    </button>
+                                )}
 
                                 {paths.length > 1 && (
                                     <button
@@ -1494,7 +1481,7 @@ function RenderQuestion({
                         className="phone-dash-comp-infodisplay-button"
                         onClick={openPaths}
                     >
-                        Auto Paths
+                        Paths
                     </button>
                 </>
             );
