@@ -413,3 +413,50 @@
         background-position: 200% 0%;
     }
 }
+
+.desktop-signup-checkdiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 80%;
+    gap: 20px;
+    padding: 10px 0px;
+}
+
+.desktop-signup-checkdiv > p > span {
+    color: black;
+}
+
+.desktop-signup-checkdiv > p > span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.desktop-signup-checkdiv > input {
+    height: 18px;
+    width: 18px;
+}
+
+.desktop-signup-policybody {
+    width: 90%;
+    height: 80% !important;
+    overflow-y: scroll;
+    flex-direction: column !important;
+    display: flex;
+    justify-content: unset !important;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.desktop-signup-policybody > h2, .desktop-signup-policybody > p {
+    color: white;
+    width: 100%;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    text-align: start;
+}
+
+.desktop-signup-policybody > p {
+    padding: 5px 17px
+}

@@ -11,6 +11,9 @@ import { useGoToPage } from "../scripts/multipageutils";
 import logobanner from "../images/branding/logowhitebanner.png";
 
 import { MoonLoader } from "react-spinners";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+
+import { PrivacyPolicy } from "./components/policies.js";
 
 function SignUpPage() {
     const { t } = useTranslation();
@@ -50,7 +53,12 @@ function SignUpPage() {
         return Object.values(hasRules).every(Boolean);
     }, [hasRules]);
 
-    const showPasswordRules = focus.password || form.password.length > 0;
+    const [tosAgreed, setTosAgreed] = useState(false)
+    const [privacyAgreed, setPrivacyAgreed] = useState(false)
+
+    const canHide = passwordValid;
+
+    const showPasswordRules = (focus.password || form.password.length > 0) && !canHide;
 
     const inputClass = (valid: boolean) => (valid ? "valid" : "invalid");
 
@@ -76,9 +84,13 @@ function SignUpPage() {
         }
     };
 
-    const canSubmit = emailValid && passwordValid;
+    const canSubmit = emailValid && passwordValid && privacyAgreed && tosAgreed;
 
     const goToSignIn = useGoToPage("/signin");
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPrivacy, setShowPrivacy] = useState(false);
+    const [showTos, setShowTos] = useState(false);
 
     if (screenType === "phone" || screenType === "tablet") {
         return (
@@ -120,17 +132,30 @@ function SignUpPage() {
                                 <MdOutlineLock className="phone-signup-input-icon" />{" "}
                                 {t("passwordwithcolon")}
                             </p>
-                            <input
-                                className={`phone-signup-input ${
-                                    form.password.length > 0 && !passwordValid
-                                        ? "invalid"
-                                        : ""
-                                }`}
-                                type="password"
-                                value={form.password}
-                                name="password"
-                                onChange={updateField("password")}
-                            />
+                            <div className="phone-signup-password-input-wrapper">
+                                <input
+                                    className={"phone-signup-input"}
+                                    type={showPassword ? "text" : "password"}
+                                    value={form.password}
+                                    name="password"
+                                    onChange={updateField("password")}
+                                />
+
+                                <button
+                                    type="button"
+                                    className="phone-signup-eye-icon"
+                                    onPointerDown={(e) => {
+                                        e.preventDefault();
+                                        setShowPassword((prev) => !prev);
+                                    }}
+                                >
+                                    {showPassword ? (
+                                        <IoMdEyeOff size={20} />
+                                    ) : (
+                                        <IoMdEye size={20} />
+                                    )}
+                                </button>
+                            </div>
 
                             <p
                                 className={`phone-signup-text-hidden ${
@@ -161,6 +186,23 @@ function SignUpPage() {
                                     {t("passwordrequirement5")}
                                 </li>
                             </ul>
+
+                            <div className="desktop-signup-checkdiv">
+                                <input 
+                                    type="checkbox" 
+                                    checked={tosAgreed} 
+                                    onChange={(e) => setTosAgreed(e.target.checked)} 
+                                />
+                                <p>Do you agree to our <span>Terms of Service</span>?</p>
+                            </div>
+                            <div className="desktop-signup-checkdiv">
+                                <input 
+                                    type="checkbox" 
+                                    checked={privacyAgreed} 
+                                    onChange={(e) => setPrivacyAgreed(e.target.checked)} 
+                                />
+                                <p>Do you agree to our <span>Privacy Policy</span>?</p>
+                            </div>
 
                             {currentError !== "" && <p>{t(currentError)}</p>}
 
@@ -201,6 +243,7 @@ function SignUpPage() {
 
     return (
         <div className="desktop-signup-maincontainer">
+            {showPrivacy && <PrivacyPolicy onClose={() => setShowPrivacy(false)}/>}
             <img className="image35" src={logobanner} />
             {successSignUp ? (
                 <div className="desktop-signup-infocontainer">
@@ -238,17 +281,30 @@ function SignUpPage() {
                             <MdOutlineLock className="desktop-signup-input-icon" />{" "}
                             {t("passwordwithcolon")}
                         </p>
-                        <input
-                            className={`desktop-signup-input ${
-                                form.password.length > 0 && !passwordValid
-                                    ? "invalid"
-                                    : ""
-                            }`}
-                            type="password"
-                            value={form.password}
-                            name="password"
-                            onChange={updateField("password")}
-                        />
+                        <div className="desktop-signup-password-input-wrapper">
+                            <input
+                                className={"desktop-signup-input"}
+                                type={showPassword ? "text" : "password"}
+                                value={form.password}
+                                name="password"
+                                onChange={updateField("password")}
+                            />
+
+                            <button
+                                type="button"
+                                className="desktop-signup-eye-icon"
+                                onPointerDown={(e) => {
+                                    e.preventDefault();
+                                    setShowPassword((prev) => !prev);
+                                }}
+                            >
+                                {showPassword ? (
+                                    <IoMdEyeOff size={20} />
+                                ) : (
+                                    <IoMdEye size={20} />
+                                )}
+                            </button>
+                        </div>
 
                         <p
                             className={`desktop-signup-text-hidden ${
@@ -279,6 +335,23 @@ function SignUpPage() {
                                 {t("passwordrequirement5")}
                             </li>
                         </ul>
+
+                        <div className="desktop-signup-checkdiv">
+                            <input 
+                                type="checkbox" 
+                                checked={tosAgreed} 
+                                onChange={(e) => setTosAgreed(e.target.checked)} 
+                            />
+                            <p>Do you agree to our <span>Terms of Service</span>?</p>
+                        </div>
+                        <div className="desktop-signup-checkdiv">
+                            <input 
+                                type="checkbox" 
+                                checked={privacyAgreed} 
+                                onChange={(e) => setPrivacyAgreed(e.target.checked)} 
+                            />
+                            <p>Do you agree to our <span onClick={() => setShowPrivacy(true)}>Privacy Policy</span>?</p>
+                        </div>
 
                         {currentError !== "" && <p>{t(currentError)}</p>}
 

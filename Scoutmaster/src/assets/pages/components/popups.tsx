@@ -80,7 +80,7 @@ export function WarningModal({
 }
 
 /**
- * Confirms whether user wants to continue with action
+ * Confirms whether user wants to continue with action, with 3 buttons
  */
 export function WarningModal3Button({
     title,
