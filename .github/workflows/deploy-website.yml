@@ -43,6 +43,12 @@ jobs:
             - name: Install dependencies
               run: npm install
 
+            - name: Create .env file
+              run: |
+                  echo "VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}" >> .env
+                  echo "VITE_SUPABASE_PUBLISHABLE_KEY=${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}" >> .env
+                  echo "VITE_PYTHON_SERVER_URL=${{ secrets.VITE_PYTHON_SERVER_URL }}" >> .env
+
             - name: Build React website
               run: npm run build
 
