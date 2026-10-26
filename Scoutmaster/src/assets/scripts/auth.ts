@@ -36,7 +36,7 @@ export async function signUp(data: UserData): Promise<"Success" | `Error`> {
         email: data.email,
         password: data.password,
         options: {
-            emailRedirectTo: `http://ftcscoutmaster.xyz/choice`,
+            emailRedirectTo: `https://ftcscoutmaster.xyz/choice`,
         },
     });
 
@@ -120,7 +120,7 @@ export async function checkUserGroup(): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`http://${serverURL}/checkusergroup`, {
+        const response = await fetch(`https://${serverURL}/checkusergroup`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -146,7 +146,7 @@ export async function joinGroup(groupId: number): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`http://${serverURL}/join/${groupId}`, {
+        const response = await fetch(`https://${serverURL}/join/${groupId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -172,7 +172,7 @@ export async function createGroup(): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`http://${serverURL}/creategroup`, {
+        const response = await fetch(`https://${serverURL}/creategroup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -202,7 +202,7 @@ export async function leaveGroup(groupId: number): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`http://${serverURL}/leavegroup`, {
+        const response = await fetch(`https://${serverURL}/leavegroup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -238,7 +238,7 @@ export async function deleteGroup(groupId: number): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`http://${serverURL}/deletegroup`, {
+        const response = await fetch(`https://${serverURL}/deletegroup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -275,7 +275,7 @@ export async function deleteAccount(): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`http://${serverURL}/deleteaccount`, {
+        const response = await fetch(`https://${serverURL}/deleteaccount`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
