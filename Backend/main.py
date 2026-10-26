@@ -47,7 +47,7 @@ async def root():
     return {"status": "ok"}
 
 @app.head("/")
-async def root_head():
+async def rootHead():
     return Response(status_code=200)
 
 async def getUserGroup(user_id: str):
