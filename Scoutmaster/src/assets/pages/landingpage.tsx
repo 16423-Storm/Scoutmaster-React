@@ -14,8 +14,19 @@ import { languages } from "../scripts/localization.js";
 // Component Imports
 import { LanguageDropdown } from "./components/languagedropdown.js";
 
+// Icon Imports
+import {
+    FaDiscord,
+    FaGavel,
+    FaGlobe,
+    FaInstagram,
+    FaShieldAlt,
+    FaTiktok,
+} from "react-icons/fa";
+
 // Image Imports
 import LogoWhite from "../images/branding/logowhite.png";
+import { PrivacyPolicy, TOS } from "./components/policies.js";
 
 function LandingPage() {
     const { t } = useTranslation();
@@ -56,10 +67,17 @@ function LandingPage() {
             });
     }, []);
 
+    const [showTos, setShowTos] = useState(false);
+    const [showPrivacy, setShowPrivacy] = useState(false);
+
     const screenType = useScreenType();
     if (screenType === "phone") {
         return (
             <>
+                {showPrivacy && (
+                    <PrivacyPolicy onClose={() => setShowPrivacy(false)} />
+                )}
+                {showTos && <TOS onClose={() => setShowTos(false)} />}
                 <div className="phone-landing-hero">
                     <div className="phone-landing-navbar">
                         <LanguageDropdown
@@ -69,8 +87,8 @@ function LandingPage() {
                             languageMenuOpen={languageMenuOpen}
                             languages={languages}
                         />
-                        <button>{t("wiki")}</button>
-                        <button>{t("about")}</button>
+                        {/* <button>{t("wiki")}</button>
+                        <button>{t("about")}</button> */}
                         <button
                             className="phone-landing-signinbutton"
                             onClick={signedIn ? goToSignIn : goToSignUp}
@@ -87,7 +105,7 @@ function LandingPage() {
                         </p>
                     </div>
                 </div>
-                <div className="fullpage">
+                {/* <div className="fullpage">
                     <div className="centerdiv-top">
                         <p className="phone-landing-title1">
                             {t("landingtitle1")}
@@ -96,13 +114,43 @@ function LandingPage() {
                             {t("landingbody1")}
                         </p>
                     </div>
-                </div>
+                </div> */}
+                <footer className="phone-landing-footer">
+                    <div>
+                        <p>SOCIALS</p>
+                        <a href="https://www.instagram.com/sdhs_stormbot16423/">
+                            <FaInstagram /> Our Instagram
+                        </a>
+                        <a href="https://www.tiktok.com/@sdhstormbot16423?_r=1&_t=ZS-9AljGz3Uesp">
+                            <FaTiktok /> Our TikTok
+                        </a>
+                        <a href="https://discord.gg/xB7YX7yww2">
+                            <FaDiscord /> Scoutmaster Discord
+                        </a>
+                        <a href="https://storm16423.ca/">
+                            <FaGlobe /> Our Website
+                        </a>
+                    </div>
+                    <div>
+                        <p>RESOURCES</p>
+                        <a onClick={() => setShowPrivacy(true)}>
+                            <FaGavel /> Privacy Policy
+                        </a>
+                        <a onClick={() => setShowTos(true)}>
+                            <FaShieldAlt /> Terms of Service
+                        </a>
+                    </div>
+                </footer>
             </>
         );
     }
 
     return (
         <>
+            {showPrivacy && (
+                <PrivacyPolicy onClose={() => setShowPrivacy(false)} />
+            )}
+            {showTos && <TOS onClose={() => setShowTos(false)} />}
             <div className="desktop-landing-hero">
                 <div className="desktop-landing-navbar">
                     <LanguageDropdown
@@ -113,8 +161,8 @@ function LandingPage() {
                         languages={languages}
                     />
                     <div className="desktop-landing-navbardivider">
-                        <button>{t("wiki")}</button>
-                        <button>{t("about")}</button>
+                        {/* <button>{t("wiki")}</button>
+                        <button>{t("about")}</button> */}
                         <button
                             className="desktop-landing-signinbutton"
                             onClick={signedIn ? goToSignIn : goToSignUp}
@@ -130,7 +178,7 @@ function LandingPage() {
                     <p className="desktop-landing-heroslogan">{t("slogan")}</p>
                 </div>
             </div>
-            <div className="fullpage">
+            {/* <div className="fullpage">
                 <div className="centerdiv-top">
                     <p className="desktop-landing-title1">
                         {t("landingtitle1")}
@@ -139,7 +187,33 @@ function LandingPage() {
                         {t("landingbody1")}
                     </p>
                 </div>
-            </div>
+            </div> */}
+            <footer className="desktop-landing-footer">
+                <div>
+                    <p>SOCIALS</p>
+                    <a href="https://www.instagram.com/sdhs_stormbot16423/">
+                        <FaInstagram /> Our Instagram
+                    </a>
+                    <a href="https://www.tiktok.com/@sdhstormbot16423?_r=1&_t=ZS-9AljGz3Uesp">
+                        <FaTiktok /> Our TikTok
+                    </a>
+                    <a href="https://discord.gg/xB7YX7yww2">
+                        <FaDiscord /> Scoutmaster Discord
+                    </a>
+                    <a href="https://storm16423.ca/">
+                        <FaGlobe /> Our Website
+                    </a>
+                </div>
+                <div>
+                    <p>RESOURCES</p>
+                    <a onClick={() => setShowPrivacy(true)}>
+                        <FaGavel /> Privacy Policy
+                    </a>
+                    <a onClick={() => setShowTos(true)}>
+                        <FaShieldAlt /> Terms of Service
+                    </a>
+                </div>
+            </footer>
         </>
     );
 }

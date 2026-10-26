@@ -553,7 +553,8 @@
     color: white;
 }
 
-.desktop-signup-policybody a {
+.desktop-signup-policybody a,
+.desktop-signup-policybody li {
     color: white;
 }
 
