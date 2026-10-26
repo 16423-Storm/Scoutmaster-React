@@ -1,13 +1,13 @@
+import os
+import json
+import time
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client
-import os
 from dotenv import load_dotenv
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
-import time
-import json
 
 from router import routeMessage
 
@@ -17,8 +17,6 @@ supabase = create_client(
     os.environ["SUPABASE_URL"],
     os.environ["SUPABASE_KEY"],
 )
-
-app = FastAPI()
 
 limiter = Limiter(key_func=get_remote_address)
 
@@ -46,6 +44,7 @@ groupData: dict[int, dict] = {}
 @app.get("/")
 async def root():
     return {"status": "ok"}
+
 
 async def getUserGroup(user_id: str):
     result = (
@@ -93,6 +92,7 @@ async def getUserGroup(user_id: str):
         "member": member,
     }
 
+
 async def getGroup(groupId: int):
     result = (
         supabase
@@ -105,11 +105,13 @@ async def getGroup(groupId: int):
 
     return result.data
 
+
 wsConnectionTracker: dict[str, list[float]] = {}
 WS_CONNECT_LIMIT = 300
 WS_CONNECT_WINDOW = 60
 
 MAX_PAYLOAD_BYTES = 64 * 1024
+
 
 async def checkPayloadSize(message: dict, websocket: WebSocket) -> bool:
     payloadBytes = len(json.dumps(message).encode("utf-8"))
@@ -119,6 +121,7 @@ async def checkPayloadSize(message: dict, websocket: WebSocket) -> bool:
         return False
         
     return True
+
 
 @app.websocket("/ws")
 async def websocketConnect(websocket: WebSocket):
@@ -184,14 +187,10 @@ async def websocketConnect(websocket: WebSocket):
         "data": group
     })
 
-    print(
-        f"User {userId} connected to group {groupId}"
-    )
+    print(f"User {userId} connected to group {groupId}")
 
     if isFirstConnection:
-        print(
-            f"User {userId} is the first connection in group {groupId}"
-        )
+        print(f"User {userId} is the first connection in group {groupId}")
 
     try:
         while True:
@@ -201,7 +200,6 @@ async def websocketConnect(websocket: WebSocket):
                 return
 
             print(f"{userId}: {message}")
-
 
             await routeMessage(
                 websocket,
@@ -213,20 +211,17 @@ async def websocketConnect(websocket: WebSocket):
                 groups
             )
 
-            await websocket.send_text(
-                f"Server received message"
-            )
+            await websocket.send_text("Server received message")
 
     except WebSocketDisconnect:
-        print(
-            f"Disconnected: {userId} from group {groupId}"
-        )
+        print(f"Disconnected: {userId} from group {groupId}")
 
         if groupId in groups and websocket in groups[groupId]:
             groups[groupId].remove(websocket)
 
         if not groups[groupId]:
             del groups[groupId]
+
 
 @app.get("/checkusergroup")
 @limiter.limit("10/minute")
@@ -263,6 +258,7 @@ async def checkUserGroup(request: Request):
     except Exception as e:
         print(f"Error checking usergroup: {e}")
         return False
+
 
 @app.get("/join/{groupId}")
 @limiter.limit("10/5minutes")
@@ -351,6 +347,7 @@ async def joinGroup(groupId: int, request: Request):
         print(f"Error joining group {groupId}: {e}")
         return False
 
+
 @app.post("/creategroup")
 @limiter.limit("10/5minutes")
 async def createGroup(request: Request):
@@ -411,38 +408,39 @@ async def createGroup(request: Request):
         print(f"Error creating group: {e}")
         return {"success": False, "error": str(e)}
 
+
 @app.post("/leavegroup")
 @limiter.limit("10/1minutes")
 async def leaveGroup(request: Request):
-    AuthHeader = request.headers.get("Authorization")
-    Token = None
+    authHeader = request.headers.get("Authorization")
+    token = None
 
-    if AuthHeader and AuthHeader.startswith("Bearer "):
-        Token = AuthHeader.split(" ")[1]
+    if authHeader and authHeader.startswith("Bearer "):
+        token = authHeader.split(" ")[1]
     else:
-        Token = request.query_params.get("token")
+        token = request.query_params.get("token")
 
-    if not Token:
+    if not token:
         return {"success": False, "error": "Missing token"}
 
     try:
-        Response = supabase.auth.get_user(Token)
-        User = Response.user
+        response = supabase.auth.get_user(token)
+        user = response.user
 
-        if not User:
+        if not user:
             return {"success": False, "error": "Invalid user session"}
 
-        Body = await request.json()
-        GroupId = Body.get("groupId")
+        body = await request.json()
+        groupId = body.get("groupId")
 
-        if not GroupId:
+        if not groupId:
             return {"success": False, "error": "Missing group ID"}
 
         supabase.rpc(
             "leave_group",
             {
-                "p_group_id": GroupId,
-                "p_user_id": User.id
+                "p_group_id": groupId,
+                "p_user_id": user.id
             }
         ).execute()
 
@@ -452,37 +450,38 @@ async def leaveGroup(request: Request):
         print(f"Error leaving group: {e}")
         return {"success": False, "error": str(e)}
 
+
 @app.post("/deletegroup")
 @limiter.limit("10/5minutes")
 async def deleteGroup(request: Request):
-    AuthHeader = request.headers.get("Authorization")
-    Token = None
+    authHeader = request.headers.get("Authorization")
+    token = None
 
-    if AuthHeader and AuthHeader.startswith("Bearer "):
-        Token = AuthHeader.split(" ")[1]
+    if authHeader and authHeader.startswith("Bearer "):
+        token = authHeader.split(" ")[1]
     else:
-        Token = request.query_params.get("token")
+        token = request.query_params.get("token")
 
-    if not Token:
+    if not token:
         return {"success": False, "error": "Missing token"}
 
     try:
-        Response = supabase.auth.get_user(Token)
-        User = Response.user
+        response = supabase.auth.get_user(token)
+        user = response.user
 
-        if not User:
+        if not user:
             return {"success": False, "error": "Invalid user session"}
 
-        Body = await request.json()
-        GroupId = Body.get("groupId")
+        body = await request.json()
+        groupId = body.get("groupId")
 
-        if not GroupId:
+        if not groupId:
             return {"success": False, "error": "Missing group ID"}
 
         supabase.rpc(
             "delete_group",
             {
-                "p_group_id": GroupId
+                "p_group_id": groupId
             }
         ).execute()
 
@@ -492,37 +491,38 @@ async def deleteGroup(request: Request):
         print(f"Error deleting group: {e}")
         return {"success": False, "error": str(e)}
 
+
 @app.post("/deleteaccount")
 @limiter.limit("10/5minutes")
 async def deleteAccount(request: Request):
-    AuthHeader = request.headers.get("Authorization")
-    Token = None
+    authHeader = request.headers.get("Authorization")
+    token = None
 
-    if AuthHeader and AuthHeader.startswith("Bearer "):
-        Token = AuthHeader.split(" ")[1]
+    if authHeader and authHeader.startswith("Bearer "):
+        token = authHeader.split(" ")[1]
     else:
-        Token = request.query_params.get("token")
+        token = request.query_params.get("token")
 
-    if not Token:
+    if not token:
         return {"success": False, "error": "Missing token"}
 
     try:
-        Response = supabase.auth.get_user(Token)
-        User = Response.user
+        response = supabase.auth.get_user(token)
+        user = response.user
 
-        if not User:
+        if not user:
             return {"success": False, "error": "Invalid user session"}
 
-        UserId = User.id
+        userId = user.id
 
         supabase.rpc(
             "delete_account",
             {
-                "p_user_id": UserId
+                "p_user_id": userId
             }
         ).execute()
 
-        supabase.auth.admin.delete_user(UserId)
+        supabase.auth.admin.delete_user(userId)
 
         return {"success": True}
 
