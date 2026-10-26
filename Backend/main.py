@@ -1,7 +1,7 @@
 import os
 import json
 import time
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client
 from dotenv import load_dotenv
@@ -46,6 +46,9 @@ groupData: dict[int, dict] = {}
 async def root():
     return {"status": "ok"}
 
+@app.head("/")
+async def root_head():
+    return Response(status_code=200)
 
 async def getUserGroup(user_id: str):
     result = (
