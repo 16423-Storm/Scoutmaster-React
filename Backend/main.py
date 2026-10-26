@@ -30,7 +30,8 @@ app.add_middleware(
     allow_origins=[
         "https://www.ftcscoutmaster.xyz",
         "https://ftcscoutmaster.xyz",
-        "http://localhost:5173"
+        "http://localhost:5173",
+        "http://localhost:4173"
     ],
     allow_credentials=True,
     allow_methods=["*"],
