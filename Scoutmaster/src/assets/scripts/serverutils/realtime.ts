@@ -86,7 +86,7 @@ export async function connectToSession(): Promise<WebSocket | null> {
     }
 
     const accessToken = session.access_token;
-    socket = new WebSocket(`wss://${serverURL}/wss?token=${accessToken}`);
+    socket = new WebSocket(`wss://${serverURL}/ws?token=${accessToken}`);
 
     socket.onopen = () => {
         console.log("Realtime connection established");
