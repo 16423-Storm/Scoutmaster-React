@@ -13,7 +13,7 @@ import logobanner from "../images/branding/logowhitebanner.png";
 import { MoonLoader } from "react-spinners";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
-import { PrivacyPolicy } from "./components/policies.js";
+import { PrivacyPolicy, TOS } from "./components/policies.js";
 
 function SignUpPage() {
     const { t } = useTranslation();
@@ -53,12 +53,13 @@ function SignUpPage() {
         return Object.values(hasRules).every(Boolean);
     }, [hasRules]);
 
-    const [tosAgreed, setTosAgreed] = useState(false)
-    const [privacyAgreed, setPrivacyAgreed] = useState(false)
+    const [tosAgreed, setTosAgreed] = useState(false);
+    const [privacyAgreed, setPrivacyAgreed] = useState(false);
 
     const canHide = passwordValid;
 
-    const showPasswordRules = (focus.password || form.password.length > 0) && !canHide;
+    const showPasswordRules =
+        (focus.password || form.password.length > 0) && !canHide;
 
     const inputClass = (valid: boolean) => (valid ? "valid" : "invalid");
 
@@ -95,6 +96,10 @@ function SignUpPage() {
     if (screenType === "phone" || screenType === "tablet") {
         return (
             <div className="phone-signup-maincontainer">
+                {showPrivacy && (
+                    <PrivacyPolicy onClose={() => setShowPrivacy(false)} />
+                )}
+                {showTos && <TOS onClose={() => setShowTos(false)} />}
                 <img className="image85" src={logobanner} />
                 {successSignUp ? (
                     <div className="phone-signup-infocontainer">
@@ -188,20 +193,42 @@ function SignUpPage() {
                             </ul>
 
                             <div className="desktop-signup-checkdiv">
-                                <input 
-                                    type="checkbox" 
-                                    checked={tosAgreed} 
-                                    onChange={(e) => setTosAgreed(e.target.checked)} 
+                                <input
+                                    type="checkbox"
+                                    checked={tosAgreed}
+                                    onChange={(e) =>
+                                        setTosAgreed(e.target.checked)
+                                    }
                                 />
-                                <p>Do you agree to our <span>Terms of Service</span>?</p>
+                                <p>
+                                    Do you agree to our{" "}
+                                    <span
+                                        onClick={() => setShowTos(true)}
+                                        className="desktop-signup-bottomlink"
+                                    >
+                                        Terms of Service
+                                    </span>
+                                    ?
+                                </p>
                             </div>
                             <div className="desktop-signup-checkdiv">
-                                <input 
-                                    type="checkbox" 
-                                    checked={privacyAgreed} 
-                                    onChange={(e) => setPrivacyAgreed(e.target.checked)} 
+                                <input
+                                    type="checkbox"
+                                    checked={privacyAgreed}
+                                    onChange={(e) =>
+                                        setPrivacyAgreed(e.target.checked)
+                                    }
                                 />
-                                <p>Do you agree to our <span>Privacy Policy</span>?</p>
+                                <p>
+                                    Do you agree to our{" "}
+                                    <span
+                                        onClick={() => setShowPrivacy(true)}
+                                        className="desktop-signup-bottomlink"
+                                    >
+                                        Privacy Policy
+                                    </span>
+                                    ?
+                                </p>
                             </div>
 
                             {currentError !== "" && <p>{t(currentError)}</p>}
@@ -243,7 +270,10 @@ function SignUpPage() {
 
     return (
         <div className="desktop-signup-maincontainer">
-            {showPrivacy && <PrivacyPolicy onClose={() => setShowPrivacy(false)}/>}
+            {showPrivacy && (
+                <PrivacyPolicy onClose={() => setShowPrivacy(false)} />
+            )}
+            {showTos && <TOS onClose={() => setShowTos(false)} />}
             <img className="image35" src={logobanner} />
             {successSignUp ? (
                 <div className="desktop-signup-infocontainer">
@@ -337,20 +367,40 @@ function SignUpPage() {
                         </ul>
 
                         <div className="desktop-signup-checkdiv">
-                            <input 
-                                type="checkbox" 
-                                checked={tosAgreed} 
-                                onChange={(e) => setTosAgreed(e.target.checked)} 
+                            <input
+                                type="checkbox"
+                                checked={tosAgreed}
+                                onChange={(e) => setTosAgreed(e.target.checked)}
                             />
-                            <p>Do you agree to our <span>Terms of Service</span>?</p>
+                            <p>
+                                Do you agree to our{" "}
+                                <span
+                                    onClick={() => setShowTos(true)}
+                                    className="desktop-signup-bottomlink"
+                                >
+                                    Terms of Service
+                                </span>
+                                ?
+                            </p>
                         </div>
                         <div className="desktop-signup-checkdiv">
-                            <input 
-                                type="checkbox" 
-                                checked={privacyAgreed} 
-                                onChange={(e) => setPrivacyAgreed(e.target.checked)} 
+                            <input
+                                type="checkbox"
+                                checked={privacyAgreed}
+                                onChange={(e) =>
+                                    setPrivacyAgreed(e.target.checked)
+                                }
                             />
-                            <p>Do you agree to our <span onClick={() => setShowPrivacy(true)}>Privacy Policy</span>?</p>
+                            <p>
+                                Do you agree to our{" "}
+                                <span
+                                    onClick={() => setShowPrivacy(true)}
+                                    className="desktop-signup-bottomlink"
+                                >
+                                    Privacy Policy
+                                </span>
+                                ?
+                            </p>
                         </div>
 
                         {currentError !== "" && <p>{t(currentError)}</p>}
@@ -372,13 +422,6 @@ function SignUpPage() {
                                 {t("clickhere")}
                             </span>
                         </a>
-
-                        <p className="desktop-signup-bottomtext">
-                            {t("bysigningupyouagree")}{" "}
-                            <span className="desktop-signup-bottomlink">
-                                {t("privacypolicylowercase")}
-                            </span>
-                        </p>
                     </form>
                 </div>
             )}

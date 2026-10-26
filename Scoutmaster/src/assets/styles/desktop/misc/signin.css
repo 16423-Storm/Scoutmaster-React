@@ -414,7 +414,7 @@
     }
 }
 
-.desktop-signup-checkdiv{
+.desktop-signup-checkdiv {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -424,39 +424,181 @@
     padding: 10px 0px;
 }
 
-.desktop-signup-checkdiv > p > span {
-    color: black;
-}
-
-.desktop-signup-checkdiv > p > span:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
 .desktop-signup-checkdiv > input {
     height: 18px;
     width: 18px;
 }
 
-.desktop-signup-policybody {
-    width: 90%;
-    height: 80% !important;
-    overflow-y: scroll;
-    flex-direction: column !important;
+.desktop-privacy-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 500;
     display: flex;
-    justify-content: unset !important;
-    align-items: center;
-    overflow-x: hidden;
-}
-
-.desktop-signup-policybody > h2, .desktop-signup-policybody > p {
-    color: white;
-    width: 100%;
-    padding: 5px 10px;
+    flex-direction: column;
+    width: 60vw;
+    max-width: 850px;
+    min-width: 420px;
+    height: 75vh;
+    max-height: 800px;
     box-sizing: border-box;
-    text-align: start;
+    overflow: hidden;
+    background: #be0000;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
 }
 
-.desktop-signup-policybody > p {
-    padding: 5px 17px
+.desktop-privacy-header {
+    padding: 24px 28px 20px;
+    flex-shrink: 0;
+
+    background: #be0000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.desktop-privacy-header h1 {
+    letter-spacing: -0.6px;
+    line-height: 1.25;
+}
+
+.desktop-privacy-header p {
+    margin-top: 8px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.desktop-signup-policybody {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    height: auto !important;
+    padding: 24px 28px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+}
+
+.desktop-signup-policybody::-webkit-scrollbar {
+    width: 6px;
+}
+
+.desktop-signup-policybody::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.desktop-signup-policybody::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 10px;
+}
+
+.desktop-signup-policybody::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.desktop-signup-policybody section {
+    margin: 0 0 28px;
+}
+
+.desktop-signup-policybody section:last-child {
+    margin-bottom: 0;
+}
+
+.desktop-signup-policybody h2 {
+    margin: 0 0 10px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.15px;
+    color: #fff;
+}
+
+.desktop-signup-policybody p {
+    margin: 0 0 12px;
+    font-size: 0.94rem;
+    font-weight: 400;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.desktop-signup-policybody ul {
+    margin: 12px 0;
+    padding-left: 22px;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.desktop-signup-policybody li {
+    margin-bottom: 8px;
+    padding-left: 3px;
+    font-size: 0.94rem;
+    line-height: 1.65;
+}
+
+.desktop-signup-policybody li:last-child {
+    margin-bottom: 0;
+}
+
+.desktop-signup-policybody strong {
+    color: white;
+}
+
+.desktop-signup-policybody a {
+    color: white;
+}
+
+.desktop-privacy-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 28px;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.desktop-privacy-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    margin: 0;
+    padding: 9px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    background: #fff;
+    color: #850000;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        transform 150ms ease;
+}
+
+.desktop-privacy-button:hover {
+    background: #f1f1f1;
+    border-color: #f1f1f1;
+}
+
+.desktop-privacy-button:active {
+    transform: translateY(1px);
+}
+
+.desktop-privacy-button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
 }

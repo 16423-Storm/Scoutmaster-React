@@ -351,3 +351,157 @@
         background-position: 200% 0%;
     }
 }
+
+.phone-privacy-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: #be0000;
+    color: #fff;
+}
+
+.phone-privacy-header {
+    padding: 24px 22px 18px;
+    flex-shrink: 0;
+    background: #be0000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.phone-privacy-header h1 {
+    letter-spacing: -0.4px;
+    line-height: 1.3;
+}
+
+.phone-privacy-header p {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.phone-signup-policybody {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    padding: 22px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.phone-signup-policybody h2 {
+    margin: 0 0 10px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.15px;
+    color: #fff;
+}
+
+.phone-signup-policybody strong,
+.phone-signup-policybody a,
+.phone-signup-policybody li {
+    color: white;
+}
+
+.phone-signup-policybody::-webkit-scrollbar {
+    width: 4px;
+}
+
+.phone-signup-policybody::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 10px;
+}
+
+.phone-signup-policybody section {
+    margin: 0 0 26px;
+}
+
+.phone-signup-policybody section:last-child {
+    margin-bottom: 0;
+}
+
+.phone-signup-policybody h2 {
+    margin: 0 0 9px;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: -0.1px;
+}
+
+.phone-signup-policybody p {
+    margin: 0 0 12px;
+
+    font-size: 0.91rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.phone-signup-policybody ul {
+    margin: 10px 0;
+    padding-left: 21px;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.phone-signup-policybody li {
+    margin-bottom: 8px;
+    padding-left: 2px;
+    font-size: 0.91rem;
+    line-height: 1.65;
+}
+
+.phone-privacy-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 14px 22px;
+    padding-bottom: max(14px, env(safe-area-inset-bottom));
+    flex-shrink: 0;
+    background: #b00000;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.phone-privacy-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    min-width: 100px;
+    padding: 10px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    background: #fff;
+    color: #850000;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+}
+
+.phone-privacy-button:hover {
+    background: #f1f1f1;
+}
+
+.phone-privacy-button:active {
+    background: #e5e5e5;
+}
+
+.phone-privacy-button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
