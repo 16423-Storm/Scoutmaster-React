@@ -357,7 +357,7 @@ export async function initTeamsAPI(
     `;
 
     const variables = {
-        season: 2025,
+        season: 2026,
         code: eventCode,
     };
 

@@ -448,7 +448,7 @@ export async function initMatchesAPI(eventCode: string, sendServer: boolean) {
     `;
 
     const variables = {
-        season: 2025,
+        season: 2026,
         code: eventCode,
     };
 

@@ -772,6 +772,12 @@ function RenderQuestion({
                 );
             }, [data]);
 
+            useEffect(() => {
+                if (data === undefined) {
+                    updateTeamQuestion(team, questionId, 0);
+                }
+            }, [data, team, questionId]);
+
             const handleNumChange = (event: ChangeEvent<HTMLInputElement>) => {
                 const { value } = event.target;
                 const num = Number(value.slice(0, 20));
@@ -1495,6 +1501,12 @@ function RenderQuestion({
                         : 0,
                 );
             }, [data]);
+
+            useEffect(() => {
+                if (data === undefined) {
+                    updateTeamQuestion(team, questionId, 0);
+                }
+            }, [data, team, questionId]);
 
             const handleNumChange = (event: ChangeEvent<HTMLInputElement>) => {
                 const { value } = event.target;
