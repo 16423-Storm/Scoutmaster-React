@@ -20,6 +20,8 @@ import Blocker499 from "../../../components/blocker";
 import fieldImageDark from "../../../../images/biobuzzdark.webp";
 import fieldImageLight from "../../../../images/biobuzzlight.webp";
 
+import type { Paths, Point } from "../../../../scripts/localstorage";
+
 export function TeamPage({
     onBack,
     teamNum,
@@ -225,9 +227,6 @@ function RenderQuestion({
     const pathButtonWidth = isDesktop ? "45%" : "85%";
 
     const pathButtonFontSize = isDesktop ? "1.2rem" : "1rem";
-
-    type Point = [number, number, string?];
-    type Paths = Point[][];
 
     if (isDesktop) {
         if (question.type == "ln") {
@@ -1094,9 +1093,6 @@ function RenderQuestion({
                 />
             );
         } else if (question.type == "a") {
-            type Point = [number, number, string?];
-            type Paths = Point[][];
-
             const [paths, setPaths] = useState<Paths>([]);
             const [selectedColor, setSelectedColor] = useState("r");
 

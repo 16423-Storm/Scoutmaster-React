@@ -257,6 +257,9 @@ export const useTeams = create<{
     setTeams: (value) => set({ teams: value }),
 }));
 
+export type Point = [number, number, string?];
+export type Paths = Point[][];
+
 /**
  * Update a team's answer for a specific question.
  * @param {string} teamId - Team ID
@@ -275,6 +278,7 @@ export async function updateTeamQuestion(
         | string[]
         | number[]
         | boolean[]
+        | Paths
         | undefined,
     sendServer: boolean = true,
 ) {
