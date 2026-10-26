@@ -53,22 +53,22 @@ jobs:
                       ${{ steps.image.outputs.name }}:latest
                       ${{ steps.image.outputs.name }}:${{ github.sha }}
 
-            - name: Trigger Render deployment
-              env:
-                  RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
-                  IMAGE_NAME: ${{ steps.image.outputs.name }}
-                  IMAGE_TAG: ${{ github.sha }}
-              shell: bash
-              run: |
-                  if [ -z "$RENDER_DEPLOY_HOOK" ]; then
-                    echo "Missing RENDER_DEPLOY_HOOK secret"
-                    exit 1
-                  fi
-
-                  IMAGE_URL="${IMAGE_NAME}:${IMAGE_TAG}"
-                  ENCODED_IMAGE=$(python -c \
-                    "import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=''))" \
-                    "$IMAGE_URL")
-
-                  curl --fail --silent --show-error \
-                    "${RENDER_DEPLOY_HOOK}&imgURL=${ENCODED_IMAGE}"
+            # - name: Trigger Render deployment
+            #   env:
+            #     RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+            #     IMAGE_NAME: ${{ steps.image.outputs.name }}
+            #     IMAGE_TAG: ${{ github.sha }}
+            #   shell: bash
+            #   run: |
+            #     if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            #       echo "Missing RENDER_DEPLOY_HOOK secret"
+            #       exit 1
+            #     fi
+            #
+            #     IMAGE_URL="${IMAGE_NAME}:${IMAGE_TAG}"
+            #     ENCODED_IMAGE=$(python -c \
+            #       "import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=''))" \
+            #       "$IMAGE_URL")
+            #
+            #     curl --fail --silent --show-error \
+            #       "${RENDER_DEPLOY_HOOK}&imgURL=${ENCODED_IMAGE}"
