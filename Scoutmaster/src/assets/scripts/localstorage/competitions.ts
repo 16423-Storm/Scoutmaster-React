@@ -74,9 +74,11 @@ export async function setCompKey(
         localStorage.setItem("data", JSON.stringify(parsed));
         useCompKey.getState().setCompKey(compkey);
 
-        if (sendServer) {
+        if (compkey.trim().toLowerCase() !== "custom" && sendServer) {
             initTeamsAPI(compkey, sendServer);
             initMatchesAPI(compkey, sendServer);
+        } else {
+            setCustom(true, true, true);
         }
 
         if (show) {

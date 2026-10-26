@@ -333,6 +333,9 @@ export async function initTeamsAPI(
     eventCode: string,
     sendServer: boolean = true,
 ) {
+    if (eventCode.trim().toLowerCase() === "custom") {
+        return;
+    }
     const query = `
         query ExampleQuery($season: Int!, $code: String!) {
             eventByCode(season: $season, code: $code) {

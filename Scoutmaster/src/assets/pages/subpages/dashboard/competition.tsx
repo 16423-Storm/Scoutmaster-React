@@ -102,6 +102,16 @@ function DashboardCompetition() {
             return;
         }
 
+        if (value.trim().toUpperCase() === "CUSTOM") {
+            setFilteredData([
+                {
+                    key: "CUSTOM",
+                    name: "CUSTOM",
+                } as Competition,
+            ]);
+            return;
+        }
+
         const results = await searchCompetitions(
             2025,
             value.trim(),

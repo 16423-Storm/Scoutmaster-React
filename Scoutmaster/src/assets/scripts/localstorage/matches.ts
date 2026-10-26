@@ -428,6 +428,9 @@ export const useMatches = create<{
 }));
 
 export async function initMatchesAPI(eventCode: string, sendServer: boolean) {
+    if (eventCode.trim().toLowerCase() === "custom") {
+        return;
+    }
     const query = `
         query ExampleQuery($season: Int!, $code: String!) {
             eventByCode(season: $season, code: $code) {
