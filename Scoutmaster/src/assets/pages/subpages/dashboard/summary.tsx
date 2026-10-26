@@ -269,7 +269,7 @@ function DashboardSummary() {
                 eventByCode(season: $season, code: $code) {
                     teams {
                         stats {
-                            ... on TeamEventStats2025 {
+                            ... on TeamEventStats2026 {
                                 rank
                             }
                         }
@@ -289,7 +289,7 @@ function DashboardSummary() {
             body: JSON.stringify({
                 query,
                 variables: {
-                    season: 2025,
+                    season: 2026,
                     code: eventCode,
                 },
             }),

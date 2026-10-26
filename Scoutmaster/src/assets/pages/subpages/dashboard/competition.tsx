@@ -113,7 +113,7 @@ function DashboardCompetition() {
         }
 
         const results = await searchCompetitions(
-            2025,
+            2026,
             value.trim(),
             currentKey,
         );
