@@ -3,7 +3,6 @@ import { successToast, errorToast } from "../misc/toastmanager";
 import { create } from "zustand";
 import { nanoid } from "nanoid";
 import { sendMessage } from "../serverutils/realtime";
-
 import { getTeams } from "./teams";
 
 export type SummaryData = {
