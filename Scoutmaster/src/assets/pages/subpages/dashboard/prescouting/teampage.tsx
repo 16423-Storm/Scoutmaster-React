@@ -471,6 +471,7 @@ function RenderQuestion({
                                 className="desktop-warningpopup"
                                 style={{
                                     height: pathPopupHeight,
+                                    overflowY: "scroll"
                                 }}
                             >
                                 <div
