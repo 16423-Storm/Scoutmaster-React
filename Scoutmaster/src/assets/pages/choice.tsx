@@ -16,11 +16,11 @@ function Choice() {
     // 2 -> Join existing group UI
     const [currentChoice, setCurrentChoice] = useState(0);
 
-    useEffect(() => {
-        if (currentChoice === 1) {
-            handleCreateGroup();
-        }
-    }, [currentChoice]);
+    // useEffect(() => {
+    //     if (currentChoice === 1) {
+    //         handleCreateGroup();
+    //     }
+    // }, [currentChoice]);
 
     // TODO, ADD PROPER ERROR SHOWING
     const handleCreateGroup = async () => {
@@ -65,8 +65,9 @@ function Choice() {
                         >
                             <button
                                 className="desktop-signup-button"
-                                onClick={() => {
+                                onClick={async () => {
                                     setCurrentChoice(1);
+                                    await handleCreateGroup();
                                 }}
                             >
                                 <FaPlus /> {t("createnewgroup")}
