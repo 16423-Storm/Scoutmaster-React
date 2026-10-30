@@ -11,11 +11,9 @@ function NotFound() {
     return (
         <div className="error404-main">
             <SVG404 />
-            <h1>Page Not Found</h1>
-            <p>
-                The page you are looking for is not available or does not exist.
-            </p>
-            <button onClick={goHome}>Go back to home</button>
+            <h1>{t("pagenotfound")}</h1>
+            <p>{t("pagenotfounddesc")}</p>
+            <button onClick={goHome}>{t("gobackhome")}</button>
         </div>
     );
 }

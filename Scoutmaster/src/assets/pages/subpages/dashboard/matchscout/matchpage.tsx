@@ -38,7 +38,7 @@ function DashboardMatchPage({
                             <>
                                 <div className="desktop-dash-match-scorecontainer-row">
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Tip:</p>
+                                        <p>{t("tipswithcolon")}</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -89,7 +89,7 @@ function DashboardMatchPage({
                                         </div>
                                     </div>
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Ball Launched:</p>
+                                        <p>{t("ballslaunchedwithcolon")}</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -142,7 +142,7 @@ function DashboardMatchPage({
                                 </div>
                                 <div className="desktop-dash-match-scorecontainer-row">
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Leave:</p>
+                                        <p>{t("leavewithcolon")}</p>
                                         <div className="desktop-dash-match-scorecontainer-checkinput-container">
                                             <button
                                                 onClick={() => {
@@ -183,7 +183,7 @@ function DashboardMatchPage({
                                         </div>
                                     </div>
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Park:</p>
+                                        <p>{t("parkwithcolon")}</p>
                                         <div className="desktop-dash-match-scorecontainer-checkinput-container">
                                             <button
                                                 onClick={() => {
@@ -229,7 +229,7 @@ function DashboardMatchPage({
                             <>
                                 <div className="desktop-dash-match-scorecontainer-row">
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Tip:</p>
+                                        <p>{t("tipswithcolon")}</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -280,7 +280,7 @@ function DashboardMatchPage({
                                         </div>
                                     </div>
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Ball Launched:</p>
+                                        <p>{t("ballslaunchedwithcolon")}</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -331,7 +331,7 @@ function DashboardMatchPage({
                                         </div>
                                     </div>
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Garden:</p>
+                                        <p>{t("gardenwithcolon")}</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -384,7 +384,7 @@ function DashboardMatchPage({
                                 </div>
                                 <div className="desktop-dash-match-scorecontainer-row">
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Ball In Flower:</p>
+                                        <p>{t("ballsinflowerwithcolon")}</p>
                                         <div className="desktop-dash-match-scorecontainer-numinput-container">
                                             <button
                                                 onClick={() => {
@@ -435,7 +435,7 @@ function DashboardMatchPage({
                                         </div>
                                     </div>
                                     <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Park:</p>
+                                        <p>{t("parkwithcolon")}</p>
                                         <div className="desktop-dash-match-scorecontainer-checkinput-container">
                                             <button
                                                 onClick={() => {
@@ -486,7 +486,7 @@ function DashboardMatchPage({
                                 disabled={isAuto}
                                 onClick={() => setIsAuto(true)}
                             >
-                                Auto
+                                {t("auto")}
                             </button>
                             <button
                                 className="desktop-dash-matchscout-selectioncontainer-row-teambutton-red"
@@ -509,7 +509,7 @@ function DashboardMatchPage({
                                 disabled={!isAuto}
                                 onClick={() => setIsAuto(false)}
                             >
-                                TeleOp
+                                {t("teleop")}
                             </button>
                             <button
                                 className="desktop-dash-matchscout-selectioncontainer-row-teambutton-blue"
@@ -544,7 +544,7 @@ function DashboardMatchPage({
                         {isAuto ? (
                             <>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Tip:</p>
+                                    <p>{t("tipswithcolon")}</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
                                             onClick={() => {
@@ -591,7 +591,7 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Ball Launched:</p>
+                                    <p>{t("ballslaunchedwithcolon")}</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
                                             onClick={() => {
@@ -638,7 +638,7 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Leave:</p>
+                                    <p>{t("leavewithcolon")}</p>
                                     <div className="phone-dash-match-scorecontainer-checkinput-container">
                                         <button
                                             onClick={() => {
@@ -679,7 +679,7 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Park:</p>
+                                    <p>{t("parkwithcolon")}</p>
                                     <div className="phone-dash-match-scorecontainer-checkinput-container">
                                         <button
                                             onClick={() => {
@@ -723,7 +723,7 @@ function DashboardMatchPage({
                         ) : (
                             <>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Tip:</p>
+                                    <p>{t("tipswithcolon")}</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
                                             onClick={() => {
@@ -770,7 +770,7 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Ball Launched:</p>
+                                    <p>{t("ballslaunchedwithcolon")}</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
                                             onClick={() => {
@@ -817,7 +817,7 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Garden:</p>
+                                    <p>{t("gardenwithcolon")}</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
                                             onClick={() => {
@@ -864,7 +864,7 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Ball In Flower:</p>
+                                    <p>{t("ballsinflowerwithcolon")}</p>
                                     <div className="phone-dash-match-scorecontainer-numinput-container">
                                         <button
                                             onClick={() => {
@@ -911,7 +911,7 @@ function DashboardMatchPage({
                                     </div>
                                 </div>
                                 <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Park:</p>
+                                    <p>{t("parkwithcolon")}</p>
                                     <div className="phone-dash-match-scorecontainer-checkinput-container">
                                         <button
                                             onClick={() => {
@@ -961,7 +961,7 @@ function DashboardMatchPage({
                                 disabled={isAuto}
                                 onClick={() => setIsAuto(true)}
                             >
-                                Auto
+                                {t("auto")}
                             </button>
                             <button
                                 className="phone-dash-matchscout-selectioncontainer-row-teambutton-red"
@@ -984,7 +984,7 @@ function DashboardMatchPage({
                                 disabled={!isAuto}
                                 onClick={() => setIsAuto(false)}
                             >
-                                TeleOp
+                                {t("teleop")}
                             </button>
                             <button
                                 className="phone-dash-matchscout-selectioncontainer-row-teambutton-blue"

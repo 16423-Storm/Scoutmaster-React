@@ -105,7 +105,7 @@ export function AddSectionModal({
                                             : undefined
                                     }
                                 >
-                                    {inputTitle.length}/50
+                                    {t("/50s", { num: inputTitle.length })}
                                 </div>
                             </div>
                             <div className="desktop-popupinput-childcontainer">
@@ -191,7 +191,7 @@ export function AddSectionModal({
                                             : undefined
                                     }
                                 >
-                                    {inputTitle.length}/50
+                                    {t("/50s", { num: inputTitle.length })}
                                 </div>
                             </div>
                             <div className="phone-popupinput-childcontainer">
@@ -326,7 +326,7 @@ export function EditSectionModal({
                                             : undefined
                                     }
                                 >
-                                    {inputTitle.length}/50
+                                    {t("/50s", { num: inputTitle.length })}
                                 </div>
                             </div>
                             <div className="desktop-popupinput-childcontainer">
@@ -412,7 +412,7 @@ export function EditSectionModal({
                                             : undefined
                                     }
                                 >
-                                    {inputTitle.length}/50
+                                    {t("/50s", { num: inputTitle.length })}
                                 </div>
                             </div>
                             <div className="phone-popupinput-childcontainer">
@@ -748,12 +748,14 @@ export function EditQuestionModal({
                                                                                             : undefined
                                                                                     }
                                                                                 >
-                                                                                    {
-                                                                                        choice
-                                                                                            .title
-                                                                                            .length
-                                                                                    }
-                                                                                    /50
+                                                                                    {t(
+                                                                                        "/50s",
+                                                                                        {
+                                                                                            num: choice
+                                                                                                .title
+                                                                                                .length,
+                                                                                        },
+                                                                                    )}
                                                                                 </div>
                                                                             </div>
                                                                             <div
@@ -987,12 +989,14 @@ export function EditQuestionModal({
                                                                                             : undefined
                                                                                     }
                                                                                 >
-                                                                                    {
-                                                                                        choice
-                                                                                            .title
-                                                                                            .length
-                                                                                    }
-                                                                                    /50
+                                                                                    {t(
+                                                                                        "/50s",
+                                                                                        {
+                                                                                            num: choice
+                                                                                                .title
+                                                                                                .length,
+                                                                                        },
+                                                                                    )}
                                                                                 </div>
                                                                             </div>
                                                                             <div

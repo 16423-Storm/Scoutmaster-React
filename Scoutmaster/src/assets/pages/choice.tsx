@@ -91,7 +91,7 @@ function Choice() {
                                     fontSize: "3rem",
                                 }}
                             >
-                                Creating Group
+                                {t("creatinggroup")}
                             </p>
                         </>
                     ) : (
@@ -118,7 +118,9 @@ function Choice() {
                                 autoFocus
                                 maxLength={9}
                             />
-                            {joinError === true && <p>Error joining group.</p>}
+                            {joinError === true && (
+                                <p>{t("errorjoininggroup")}</p>
+                            )}
                             <button
                                 className="desktop-signup-button"
                                 onClick={handleJoinGroup}

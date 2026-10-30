@@ -248,6 +248,8 @@ function GeneralPage() {
 }
 
 function AccountPage() {
+    const { t } = useTranslation();
+
     async function handleLogout() {
         const success = await logOut();
 
@@ -269,21 +271,21 @@ function AccountPage() {
                 />
             )}
             <div className="desktop-dash-settings-infocontainer-setting">
-                <p>Log Out:</p>
+                <p>{t("logoutwithcolon")}</p>
                 <button
                     onClick={handleLogout}
                     className="desktop-dash-settings-infocontainer-setting-buttonplus"
                 >
-                    Log Out
+                    {t("logout")}
                 </button>
             </div>
             <div className="desktop-dash-settings-infocontainer-setting">
-                <p>Change Password:</p>
+                <p>{t("changepasswordwithcolon")}</p>
                 <button
                     onClick={() => setChangeVisible(true)}
                     className="desktop-dash-settings-infocontainer-setting-buttonplus"
                 >
-                    Change
+                    {t("change")}
                 </button>
             </div>
         </>
@@ -483,7 +485,7 @@ function InviteModal({
                                             : undefined
                                     }
                                 >
-                                    {inputEmail.length}/80
+                                    {t("/80s", { num: inputEmail.length })}
                                 </div>
                             </div>
                         </div>
@@ -548,7 +550,7 @@ function InviteModal({
                                             : undefined
                                     }
                                 >
-                                    {inputEmail.length}/80
+                                    {t("/80s", { num: inputEmail.length })}
                                 </div>
                             </div>
                         </div>
@@ -644,7 +646,7 @@ function ChangePasswordModal({
                     }}
                 >
                     <p className="desktop-warningpopup-title">
-                        Change Password
+                        {t("changepassword")}
                     </p>
                     <div className="desktop-popupinput-highlightedbody">
                         <div
@@ -793,7 +795,9 @@ function ChangePasswordModal({
                                             {t("passwordrequirement5")}
                                         </li>
                                     </ul>
-                                    {oldError && <p>Old password incorrect</p>}
+                                    {oldError && (
+                                        <p>{t("oldpasswordincorrect")}</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -895,20 +899,20 @@ function AccountPageDanger({ groupId }: { groupId: number }) {
                     padding: "20px",
                 }}
             >
-                Danger Zone
+                {t("dangerzone")}
             </p>
 
             <div className="desktop-dash-settings-infocontainer-setting-danger">
-                <p>Leave Group:</p>
+                <p>{t("leavegroup")}</p>
                 <button onClick={() => setLeaveGroupWarning(true)}>
-                    Leave
+                    {t("leave")}
                 </button>
             </div>
 
             <div className="desktop-dash-settings-infocontainer-setting-danger">
-                <p>Delete Account:</p>
+                <p>{t("deleteaccount")}</p>
                 <button onClick={() => setDeleteAccountWarning(true)}>
-                    Delete
+                    {t("delete")}
                 </button>
             </div>
         </>
@@ -944,11 +948,13 @@ function GroupPageDanger({ groupId }: { groupId: number }) {
                     padding: "20px",
                 }}
             >
-                Danger Zone
+                {t("dangerzone")}
             </p>
             <div className="desktop-dash-settings-infocontainer-setting-danger">
-                <p>Delete Group:</p>
-                <button onClick={() => setDeleteWarning(true)}>Delete</button>
+                <p>{t("deletegroup")}</p>
+                <button onClick={() => setDeleteWarning(true)}>
+                    {t("delete")}
+                </button>
             </div>
         </>
     );

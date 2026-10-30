@@ -278,8 +278,7 @@ function DesktopSortableQuestion({
 
                             {isMoreFieldsNeeded(selectedType.id) && (
                                 <p className="notetext">
-                                    More fields required, press edit (pencil),
-                                    to finish
+                                    {t("morefieldsrequired")}
                                 </p>
                             )}
                         </div>

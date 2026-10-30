@@ -1,6 +1,6 @@
 import { useState, useMemo, type ChangeEvent, type FormEvent } from "react";
 import { useScreenType } from "../scripts/multipageutils";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { signUp } from "../scripts/auth.js";
 import { MdOutlineEmail, MdOutlineLock } from "react-icons/md";
 import { BsEnvelopeCheck } from "react-icons/bs";
@@ -104,14 +104,12 @@ function SignUpPage() {
                 {successSignUp ? (
                     <div className="phone-signup-infocontainer">
                         <div className="phone-signup-title">
-                            Successfully signed up!
+                            {t("signupsuccess")}
                         </div>
                         <BsEnvelopeCheck
                             style={{ fontSize: "10rem", color: "white" }}
                         />
-                        <p style={{ padding: "20px" }}>
-                            Check your email for a link to verify your account.
-                        </p>
+                        <p style={{ padding: "20px" }}>{t("checkemail")}</p>
                     </div>
                 ) : (
                     <div className="phone-signup-infocontainer">
@@ -201,14 +199,19 @@ function SignUpPage() {
                                     }
                                 />
                                 <p>
-                                    Do you agree to our{" "}
-                                    <span
-                                        onClick={() => setShowTos(true)}
-                                        className="desktop-signup-bottomlink"
-                                    >
-                                        Terms of Service
-                                    </span>
-                                    ?
+                                    <Trans
+                                        i18nKey="agreeToTos"
+                                        components={{
+                                            tos: (
+                                                <span
+                                                    onClick={() =>
+                                                        setShowTos(true)
+                                                    }
+                                                    className="desktop-signup-bottomlink"
+                                                />
+                                            ),
+                                        }}
+                                    />
                                 </p>
                             </div>
                             <div className="desktop-signup-checkdiv">
@@ -220,14 +223,19 @@ function SignUpPage() {
                                     }
                                 />
                                 <p>
-                                    Do you agree to our{" "}
-                                    <span
-                                        onClick={() => setShowPrivacy(true)}
-                                        className="desktop-signup-bottomlink"
-                                    >
-                                        Privacy Policy
-                                    </span>
-                                    ?
+                                    <Trans
+                                        i18nKey="agreeToPrivacy"
+                                        components={{
+                                            privacy: (
+                                                <span
+                                                    onClick={() =>
+                                                        setShowPrivacy(true)
+                                                    }
+                                                    className="desktop-signup-bottomlink"
+                                                />
+                                            ),
+                                        }}
+                                    />
                                 </p>
                             </div>
 
@@ -278,14 +286,12 @@ function SignUpPage() {
             {successSignUp ? (
                 <div className="desktop-signup-infocontainer">
                     <div className="desktop-signup-title">
-                        Successfully signed up!
+                        {t("signupsuccess")}
                     </div>
                     <BsEnvelopeCheck
                         style={{ fontSize: "10rem", color: "white" }}
                     />
-                    <p style={{ padding: "20px" }}>
-                        Check your email for a link to verify your account.
-                    </p>
+                    <p style={{ padding: "20px" }}>{t("checkemail")}</p>
                 </div>
             ) : (
                 <div className="desktop-signup-infocontainer">
@@ -373,14 +379,17 @@ function SignUpPage() {
                                 onChange={(e) => setTosAgreed(e.target.checked)}
                             />
                             <p>
-                                Do you agree to our{" "}
-                                <span
-                                    onClick={() => setShowTos(true)}
-                                    className="desktop-signup-bottomlink"
-                                >
-                                    Terms of Service
-                                </span>
-                                ?
+                                <Trans
+                                    i18nKey="agreeToTos"
+                                    components={{
+                                        tos: (
+                                            <span
+                                                onClick={() => setShowTos(true)}
+                                                className="desktop-signup-bottomlink"
+                                            />
+                                        ),
+                                    }}
+                                />
                             </p>
                         </div>
                         <div className="desktop-signup-checkdiv">
@@ -392,14 +401,19 @@ function SignUpPage() {
                                 }
                             />
                             <p>
-                                Do you agree to our{" "}
-                                <span
-                                    onClick={() => setShowPrivacy(true)}
-                                    className="desktop-signup-bottomlink"
-                                >
-                                    Privacy Policy
-                                </span>
-                                ?
+                                <Trans
+                                    i18nKey="agreeToPrivacy"
+                                    components={{
+                                        privacy: (
+                                            <span
+                                                onClick={() =>
+                                                    setShowPrivacy(true)
+                                                }
+                                                className="desktop-signup-bottomlink"
+                                            />
+                                        ),
+                                    }}
+                                />
                             </p>
                         </div>
 

@@ -117,27 +117,27 @@ function LandingPage() {
                 </div> */}
                 <footer className="phone-landing-footer">
                     <div>
-                        <p>SOCIALS</p>
+                        <p>{t("socials")}</p>
                         <a href="https://www.instagram.com/sdhs_stormbot16423/">
-                            <FaInstagram /> Our Instagram
+                            <FaInstagram /> {t("ourinstagram")}
                         </a>
                         <a href="https://www.tiktok.com/@sdhstormbot16423?_r=1&_t=ZS-9AljGz3Uesp">
-                            <FaTiktok /> Our TikTok
+                            <FaTiktok /> {t("ourtiktok")}
                         </a>
                         <a href="https://discord.gg/xB7YX7yww2">
-                            <FaDiscord /> Scoutmaster Discord
+                            <FaDiscord /> {t("scoutmasterdiscord")}
                         </a>
                         <a href="https://storm16423.ca/">
-                            <FaGlobe /> Our Website
+                            <FaGlobe /> {t("ourwebsite")}
                         </a>
                     </div>
                     <div>
-                        <p>RESOURCES</p>
+                        <p>{t("resources")}</p>
                         <a onClick={() => setShowPrivacy(true)}>
-                            <FaGavel /> Privacy Policy
+                            <FaGavel /> {t("privacypolicy")}
                         </a>
                         <a onClick={() => setShowTos(true)}>
-                            <FaShieldAlt /> Terms of Service
+                            <FaShieldAlt /> {t("tos")}
                         </a>
                     </div>
                 </footer>
@@ -190,27 +190,27 @@ function LandingPage() {
             </div> */}
             <footer className="desktop-landing-footer">
                 <div>
-                    <p>SOCIALS</p>
+                    <p>{t("socials")}</p>
                     <a href="https://www.instagram.com/sdhs_stormbot16423/">
-                        <FaInstagram /> Our Instagram
+                        <FaInstagram /> {t("ourinstagram")}
                     </a>
                     <a href="https://www.tiktok.com/@sdhstormbot16423?_r=1&_t=ZS-9AljGz3Uesp">
-                        <FaTiktok /> Our TikTok
+                        <FaTiktok /> {t("ourtiktok")}
                     </a>
                     <a href="https://discord.gg/xB7YX7yww2">
-                        <FaDiscord /> Scoutmaster Discord
+                        <FaDiscord /> {t("scoutmasterdiscord")}
                     </a>
                     <a href="https://storm16423.ca/">
-                        <FaGlobe /> Our Website
+                        <FaGlobe /> {t("ourwebsite")}
                     </a>
                 </div>
                 <div>
-                    <p>RESOURCES</p>
+                    <p>{t("resources")}</p>
                     <a onClick={() => setShowPrivacy(true)}>
-                        <FaGavel /> Privacy Policy
+                        <FaGavel /> {t("privacypolicy")}
                     </a>
                     <a onClick={() => setShowTos(true)}>
-                        <FaShieldAlt /> Terms of Service
+                        <FaShieldAlt /> {t("tos")}
                     </a>
                 </div>
             </footer>

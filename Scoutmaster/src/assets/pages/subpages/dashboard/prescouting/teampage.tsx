@@ -122,7 +122,7 @@ export function TeamPage({
                         className="phone-dash-prescout-team-backbutton"
                         onClick={onBack}
                     >
-                        &lt; Back
+                        &lt; {t("back")}
                     </button>
                     <p className="phone-dash-prescout-team-title">
                         {teamNum} - {teams[teamNum].name}
@@ -271,7 +271,7 @@ function RenderQuestion({
                             area.length === 400 ? { color: "red" } : undefined
                         }
                     >
-                        {area.length}/400
+                        {t("/400s", { num: area.length })}
                     </p>
                 </div>
             );
@@ -314,7 +314,7 @@ function RenderQuestion({
                             input.length === 100 ? { color: "red" } : undefined
                         }
                     >
-                        {input.length}/100
+                        {t("/100s", { num: input.length })}
                     </p>
                 </div>
             );
@@ -504,7 +504,9 @@ function RenderQuestion({
                                                 : "1rem",
                                         }}
                                     >
-                                        Path {pathStage + 1} / {paths.length}
+                                        {t("path", {
+                                            num: (pathStage + 1) / paths.length,
+                                        })}
                                     </p>
 
                                     <button
@@ -648,7 +650,7 @@ function RenderQuestion({
                                                 : "0.9rem",
                                         }}
                                     >
-                                        Color:
+                                        {t("color")}
                                     </span>
 
                                     {colors.map(({ key, color }) => (
@@ -702,7 +704,7 @@ function RenderQuestion({
                                             }}
                                             onClick={handleDeletePath}
                                         >
-                                            Delete Path
+                                            {t("deletepath")}
                                         </button>
                                     )}
                                     {paths.length < 3 && (
@@ -722,7 +724,7 @@ function RenderQuestion({
                                             onClick={handleAddPath}
                                             disabled={paths.length >= 3}
                                         >
-                                            Add New Path
+                                            {t("addnewpath")}
                                         </button>
                                     )}
                                 </div>
@@ -742,7 +744,7 @@ function RenderQuestion({
                                     }}
                                     onClick={handleExit}
                                 >
-                                    Exit
+                                    {t("exit")}
                                 </button>
                             </div>
                         </>
@@ -753,7 +755,7 @@ function RenderQuestion({
                         onClick={openPaths}
                         style={{ width: "40%" }}
                     >
-                        Paths
+                        {t("paths")}
                     </button>
                 </>
             );
@@ -1020,7 +1022,7 @@ function RenderQuestion({
                             area.length === 400 ? { color: "red" } : undefined
                         }
                     >
-                        {area.length}/400
+                        {t("/400s", { num: area.length })}
                     </p>
                 </div>
             );
@@ -1063,7 +1065,7 @@ function RenderQuestion({
                             input.length === 100 ? { color: "red" } : undefined
                         }
                     >
-                        {input.length}/100
+                        {t("/100s", { num: input.length })}
                     </p>
                 </div>
             );
@@ -1258,7 +1260,9 @@ function RenderQuestion({
                                             whiteSpace: "nowrap",
                                         }}
                                     >
-                                        Path {pathStage + 1} / {paths.length}
+                                        {t("path", {
+                                            num: (pathStage + 1) / paths.length,
+                                        })}
                                     </p>
 
                                     <button
@@ -1393,7 +1397,7 @@ function RenderQuestion({
                                             fontSize: "0.9rem",
                                         }}
                                     >
-                                        Color:
+                                        {t("color")}
                                     </span>
 
                                     {colors.map(({ key, color }) => (
@@ -1435,7 +1439,7 @@ function RenderQuestion({
                                         onClick={handleAddPath}
                                         disabled={paths.length >= 3}
                                     >
-                                        Add New Path
+                                        {t("addnewpath")}
                                     </button>
                                 )}
 
@@ -1455,7 +1459,7 @@ function RenderQuestion({
                                         }}
                                         onClick={handleDeletePath}
                                     >
-                                        Delete Path
+                                        {t("deletepath")}
                                     </button>
                                 )}
 
@@ -1473,7 +1477,7 @@ function RenderQuestion({
                                     }}
                                     onClick={handleExit}
                                 >
-                                    Exit
+                                    {t("exit")}
                                 </button>
                             </div>
                         </>
@@ -1483,7 +1487,7 @@ function RenderQuestion({
                         className="phone-dash-comp-infodisplay-button"
                         onClick={openPaths}
                     >
-                        Paths
+                        {t("paths")}
                     </button>
                 </>
             );

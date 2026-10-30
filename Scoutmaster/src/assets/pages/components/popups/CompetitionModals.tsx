@@ -116,7 +116,7 @@ export function AddTeamModal({
                                             : undefined
                                     }
                                 >
-                                    {inputTeam.length}/90
+                                    {t("/90s", { num: inputTeam.length })}
                                 </div>
                             </div>
                         </div>
@@ -201,7 +201,7 @@ export function AddTeamModal({
                                             : undefined
                                     }
                                 >
-                                    {inputTeam.length}/90
+                                    {t("/90s", { num: inputTeam.length })}
                                 </div>
                             </div>
                         </div>
