@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Scoutmaster</title>
+        <script>
+            (function () {
+                var pathSegmentsToKeep = 0;
+                var l = window.location;
+                var pathname = l.pathname
+                    .split("/")
+                    .slice(pathSegmentsToKeep + 1)
+                    .join("/");
+                var targetUrl =
+                    l.protocol +
+                    "//" +
+                    l.hostname +
+                    (l.port ? ":" + l.port : "") +
+                    l.pathname
+                        .split("/")
+                        .slice(0, pathSegmentsToKeep + 1)
+                        .join("/") +
+                    "/";
+                if (pathname) {
+                    targetUrl += "#/" + pathname;
+                }
+                if (l.search) {
+                    targetUrl += (pathname ? "&" : "?") + l.search.slice(1);
+                }
+                if (l.hash) {
+                    targetUrl += l.hash;
+                }
+                window.location.replace(targetUrl);
+            })();
+        </script>
+    </head>
+    <body></body>
+</html>
