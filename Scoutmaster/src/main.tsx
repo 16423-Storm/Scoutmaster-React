@@ -11,9 +11,7 @@ import "./assets/styles/tablet1024/index.css";
 import "./assets/styles/misc/index.css";
 
 createRoot(document.getElementById("root")!).render(
-    <BrowserRouter>
-        <StrictMode>
-            <App />
-        </StrictMode>
-    </BrowserRouter>,
+    <StrictMode>
+        <App />
+    </StrictMode>,
 );
