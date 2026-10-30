@@ -9,7 +9,7 @@ const webURL = "https://ftcscoutmaster.xyz/";
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
     auth: {
-        flowType: "pkce",
+        flowType: "implicit",
         lock: (name, acquireTimeout, fn) => fn(),
     },
 });
