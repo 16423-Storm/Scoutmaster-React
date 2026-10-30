@@ -1,8 +1,13 @@
 {
     "$schema": "./node_modules/wrangler/config-schema.json",
-    "name": "scoutmaster",
+    "name": "scoutmaster-react",
     "compatibility_date": "2026-10-29",
     "assets": {
         "not_found_handling": "single-page-application",
+    },
+    "vars": {
+        "VITE_SUPABASE_URL": "https://tgptsuzheleshmtesbcx.supabase.co",
+        "VITE_SUPABASE_ANON_KEY": "sb_publishable_FfDOe_BD9aRM1Tm5uN-meQ_q2CLDKdc",
+        "VITE_PYTHON_SERVER_URL": "scoutmaster-react-backend-latest.onrender.com",
     },
 }
