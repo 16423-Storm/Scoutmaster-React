@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { FaMagnifyingGlass, FaPlus } from "react-icons/fa6";
 
 import { GridLoader } from "react-spinners";
-import { createGroup, joinGroup } from "../scripts/auth";
+import { createGroup, joinGroup, supabase } from "../scripts/auth";
 
 function Choice() {
     const { t } = useTranslation();
@@ -54,6 +54,33 @@ function Choice() {
             console.error("e");
         }
     };
+
+    useEffect(() => {
+        const handleAuth = async () => {
+            const url = new URL(window.location.href);
+            const code = url.searchParams.get("code");
+
+            if (code) {
+                const { data, error } =
+                    await supabase.auth.exchangeCodeForSession(code);
+
+                if (error) {
+                    console.error("Authentication failed:", error);
+                    return;
+                }
+
+                console.log("Logged in!", data.session);
+
+                window.history.replaceState(
+                    {},
+                    document.title,
+                    "/choice"
+                );
+            }
+        };
+
+        handleAuth();
+    }, []);
 
     if (screenType === "desktop") {
         return (
