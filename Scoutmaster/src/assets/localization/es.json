@@ -233,5 +233,18 @@
     "ballslaunched": "Bolas lanzadas",
     "park": "Aparcar",
     "ballsinflower": "Bolas en Flor",
-    "garden": "Jardín"
+    "garden": "Jardín",
+
+    "tos": "Condiciones del servicio",
+    "privacypolicy": "Política de privacidad",
+    "resources": "RECURSOS",
+    "ourwebsite": "Nuestra página web",
+    "scoutmasterdiscord": "Discord de Scoutmaster",
+    "ourtiktok": "Nuestro TikTok",
+    "ourinstagram": "Nuestro Instagram",
+    "socials": "REDES SOCIALES",
+
+    "pagenotfound": "Página no encontrada",
+    "pagenotfounddesc": "La página que buscas no está disponible o no existe.",
+    "gobackhome": "Volver al inicio",
 }
