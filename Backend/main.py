@@ -226,6 +226,8 @@ async def websocketConnect(websocket: WebSocket):
 
         if not groups[groupId]:
             del groups[groupId]
+            if groupId in groupData:
+                del groupData[groupId]
 
 
 @app.get("/checkusergroup")
@@ -399,9 +401,28 @@ async def createGroup(request: Request):
             "compkey": "",
             "custom": {},
             "currentTeam": None,
-            "prescout": {},
+            "prescout": {
+                "teams": {},
+                "sections": {
+                    "0": {
+                        "index": 0,
+                        "title": "Section 1",
+                        "questions": [],
+                        "headersize": 1
+                    }
+                },
+                "structure": {}
+            },
             "matchscout": {},
-            "summary": {}
+            "summary": {
+                "picks": [],
+                "accept": [],
+                "reject": [],
+                "currentPos": 0
+            },
+            "settings": {
+                "stc": False
+            }
         }
 
         if newGroupId not in groups:
