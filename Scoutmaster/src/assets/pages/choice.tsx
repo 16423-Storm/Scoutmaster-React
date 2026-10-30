@@ -57,8 +57,10 @@ function Choice() {
 
     useEffect(() => {
         const handleAuth = async () => {
-            const url = new URL(window.location.href);
-            const code = url.searchParams.get("code");
+            const hash = window.location.hash;
+            const queryString = hash.split('?')[1]; 
+            const urlParams = new URLSearchParams(queryString);
+            const code = urlParams.get('code');
 
             if (code) {
                 const { data, error } =
