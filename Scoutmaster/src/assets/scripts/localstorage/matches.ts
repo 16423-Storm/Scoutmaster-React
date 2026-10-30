@@ -220,6 +220,10 @@ export async function addMatches(
     try {
         const parsed = JSON.parse(data);
 
+        if (!parsed.match) {
+            parsed.match = {};
+        }
+
         for (const match of matches) {
             const teams = [match.red1, match.red2, match.blue1, match.blue2];
 
