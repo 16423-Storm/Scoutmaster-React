@@ -81,7 +81,7 @@ export async function connectToSession(): Promise<WebSocket | null> {
     if (!session || isExpired) {
         console.warn("Session expired or invalid. Redirecting to sign in");
         disconnectFromSession();
-        window.location.href = "/signin";
+        window.location.href = "/#/signin";
         return null;
     }
 

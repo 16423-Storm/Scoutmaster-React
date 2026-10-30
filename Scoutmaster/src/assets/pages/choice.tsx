@@ -27,7 +27,7 @@ function Choice() {
         const success = await createGroup();
 
         if (success) {
-            window.location.href = "/dashboard";
+            window.location.href = "/#/dashboard";
         } else {
             setCurrentChoice(0);
         }
@@ -47,7 +47,7 @@ function Choice() {
         const success = await joinGroup(parsedId);
 
         if (success) {
-            window.location.href = "/dashboard";
+            window.location.href = "/#/dashboard";
         } else {
             setJoinError(true);
             console.error("e");
