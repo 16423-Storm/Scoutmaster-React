@@ -164,6 +164,7 @@ export async function joinGroup(groupId: number): Promise<boolean> {
 
 export async function createGroup(): Promise<boolean> {
     try {
+        console.log("Got into creategroup")
         const {
             data: { session },
         } = await supabase.auth.getSession();
@@ -172,6 +173,7 @@ export async function createGroup(): Promise<boolean> {
         if (!token) {
             return false;
         }
+        console.log("Got token")
 
         const response = await fetch(`https://${serverURL}/creategroup`, {
             method: "POST",
@@ -180,6 +182,8 @@ export async function createGroup(): Promise<boolean> {
                 Authorization: `Bearer ${token}`,
             },
         });
+
+        console.log(response)
 
         if (!response.ok) return false;
 
