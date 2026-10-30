@@ -63,6 +63,7 @@ function Choice() {
             const code = urlParams.get('code');
 
             if (code) {
+                console.log("Got into code");
                 const { data, error } =
                     await supabase.auth.exchangeCodeForSession(code);
 
