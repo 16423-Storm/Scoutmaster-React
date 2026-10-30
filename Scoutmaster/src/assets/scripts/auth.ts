@@ -170,6 +170,8 @@ export async function createGroup(): Promise<boolean> {
         } = await supabase.auth.getSession();
         const token = session?.access_token;
 
+        console.log(session);
+        console.log(token)
         if (!token) {
             return false;
         }
