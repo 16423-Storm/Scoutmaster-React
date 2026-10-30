@@ -49,15 +49,12 @@
 
         <script>
             (function () {
-                const params = new URLSearchParams(window.location.search);
-                const targetRoute = params.get("redirect");
-                if (
-                    targetRoute &&
-                    !window.location.hash.includes(targetRoute)
-                ) {
-                    params.delete("redirect");
-                    const remainingSearch = params.toString()
-                        ? "?" + params.toString()
+                const searchParams = new URLSearchParams(window.location.search);
+                const targetRoute = searchParams.get("redirect");
+                if (targetRoute && !window.location.hash.includes(targetRoute)) {
+                    searchParams.delete("redirect");
+                    const remainingSearch = searchParams.toString() 
+                        ? "?" + searchParams.toString() 
                         : "";
                     const newUrl =
                         window.location.origin +
@@ -65,6 +62,7 @@
                         "#" +
                         targetRoute +
                         remainingSearch;
+                        
                     window.location.href = newUrl;
                 }
             })();
