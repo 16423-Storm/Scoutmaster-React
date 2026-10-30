@@ -10,7 +10,7 @@ Please take a moment to read these guidelines, as it will make life easier for y
 
 We have a wide range of things that you can contribute to this project. Have a look at the [issues tab](https://github.com/16423-Storm/Scoutmaster-React/issues) for bugs already found, or consider anything from this list:
 
-- [Localization](#Localization) (For now, LTR ONLY, no RTL) - Our goal for Scoutmaster is for it to be localized in as many languages as possible, if you know a language that Scoutmaster is not already localized in, consider adding it in yourself!
+- [Localization](#Localization) (For now, LTR ONLY, no RTL) - Our goal for Scoutmaster is for it to be localized in as many languages as possible, if you know a language that Scoutmaster is not already localized in, consider adding it in yourself! We have put a lot of languages in the [issues tab](https://github.com/16423-Storm/Scoutmaster-React/issues) for people to consider, but feel free to add your own if you find the one you want is missing!
 
 - [Bug Reports](#How-to-Report-a-Bug) - If you find a bug with our tool that is not already in the [issues tab](https://github.com/16423-Storm/Scoutmaster-React/issues), please consider reporting it. **WARNING, DO NOT REPORT SECURITY BUGS IN THE ISSUES TAB, INSTEAD EMAIL US AT [sdhs_stormbot16423@outlook.com](sdhs_stormbot16423@outlook.com)**
 

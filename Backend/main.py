@@ -31,7 +31,8 @@ app.add_middleware(
         "https://www.ftcscoutmaster.xyz",
         "https://ftcscoutmaster.xyz",
         "http://localhost:5173",
-        "http://localhost:4173"
+        "http://localhost:4173",
+        "https://scoutmaster.ca"
     ],
     allow_credentials=True,
     allow_methods=["*"],
