@@ -46,6 +46,29 @@
 
         <link rel="canonical" href="https://ftcscoutmaster.xyz/" />
         <meta name="robots" content="index, follow" />
+
+        <script>
+            (function () {
+                const params = new URLSearchParams(window.location.search);
+                const targetRoute = params.get("redirect");
+                if (
+                    targetRoute &&
+                    !window.location.hash.includes(targetRoute)
+                ) {
+                    params.delete("redirect");
+                    const remainingSearch = params.toString()
+                        ? "?" + params.toString()
+                        : "";
+                    const newUrl =
+                        window.location.origin +
+                        window.location.pathname +
+                        "#" +
+                        targetRoute +
+                        remainingSearch;
+                    window.location.href = newUrl;
+                }
+            })();
+        </script>
     </head>
     <body>
         <div id="root"></div>

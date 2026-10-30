@@ -36,7 +36,7 @@ export async function signUp(data: UserData): Promise<"Success" | `Error`> {
         email: data.email,
         password: data.password,
         options: {
-            emailRedirectTo: `https://ftcscoutmaster.xyz/#/choice`,
+            emailRedirectTo: `https://ftcscoutmaster.xyz/?redirect=/choice`,
         },
     });
 
