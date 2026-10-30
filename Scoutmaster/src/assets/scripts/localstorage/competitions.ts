@@ -18,7 +18,7 @@ export function getCompKey() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return "NONE";
     }
 
@@ -26,7 +26,7 @@ export function getCompKey() {
         return JSON.parse(data).compkey;
     } catch (e) {
         console.error(`ERROR: Failed to get competition key: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return "NONE";
     }
 }
@@ -64,7 +64,7 @@ export async function setCompKey(
         const data = localStorage.getItem("data");
         if (!data) {
             console.error(`ERROR: Could not get item "data" from localstorage`);
-            errorToast(i18n.t("dataloaderror"), 3000);
+            //errorToast(i18n.t("dataloaderror"), 3000);
             return;
         }
 
@@ -112,7 +112,7 @@ export function getCustom() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return false;
     }
 
@@ -120,7 +120,7 @@ export function getCustom() {
         return JSON.parse(data).custom;
     } catch (e) {
         console.error(`ERROR: Could not get custom: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return false;
     }
 }
@@ -143,7 +143,7 @@ export async function setCustom(
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
         if (show) {
-            errorToast(i18n.t("dataloaderror"), 3000);
+            //errorToast(i18n.t("dataloaderror"), 3000);
         }
         return;
     }

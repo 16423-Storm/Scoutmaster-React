@@ -50,7 +50,7 @@ export function getMatches() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {};
     }
 
@@ -61,7 +61,7 @@ export function getMatches() {
         );
     } catch (e) {
         console.error(`ERROR: Could not get matches: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {};
     }
 }
@@ -114,7 +114,7 @@ export async function addMatch(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -158,7 +158,7 @@ export async function addMatchToStorage(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -213,7 +213,7 @@ export async function addMatches(
     const data = localStorage.getItem("data");
 
     if (!data) {
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -287,7 +287,7 @@ export async function updateScore(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -369,7 +369,7 @@ export async function deleteMatch(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -470,7 +470,7 @@ export async function initMatchesAPI(eventCode: string, sendServer: boolean) {
 
         if (result.errors) {
             console.error("GraphQL errors:", result.errors);
-            errorToast(i18n.t("dataloaderror"), 3000);
+            //errorToast(i18n.t("dataloaderror"), 3000);
             return;
         }
 
@@ -478,7 +478,7 @@ export async function initMatchesAPI(eventCode: string, sendServer: boolean) {
 
         if (!matches) {
             console.error("ERROR: No matches returned from GraphQL");
-            errorToast(i18n.t("dataloaderror"), 3000);
+            //errorToast(i18n.t("dataloaderror"), 3000);
             return;
         }
 
@@ -512,6 +512,6 @@ export async function initMatchesAPI(eventCode: string, sendServer: boolean) {
         await addMatches(modifiedMatches, sendServer);
     } catch (error) {
         console.error("ERROR: Could not load teams: ", error);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
     }
 }

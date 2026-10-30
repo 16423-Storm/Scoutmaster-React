@@ -16,7 +16,7 @@ export function getSummary() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {} as SummaryData;
     }
 
@@ -25,7 +25,7 @@ export function getSummary() {
         return summary;
     } catch (e) {
         console.error(`ERROR: Could not get summary: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {} as SummaryData;
     }
 }
@@ -37,7 +37,7 @@ export async function updateSummary(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -92,7 +92,7 @@ export async function movePicks(
 
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -134,7 +134,7 @@ export function getGroupTeam() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return "";
     }
 
@@ -143,7 +143,7 @@ export function getGroupTeam() {
         return team;
     } catch (e) {
         console.error(`ERROR: Could not get team: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return "";
     }
 }
@@ -155,7 +155,7 @@ export async function updateGroupTeam(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 

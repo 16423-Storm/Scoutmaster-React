@@ -14,7 +14,7 @@ export function getMembers() {
     const data = localStorage.getItem("group");
     if (!data) {
         console.error(`ERROR: Could not get item "group" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {
             id: "",
             email: "",
@@ -27,7 +27,7 @@ export function getMembers() {
         return members;
     } catch (e) {
         console.error(`ERROR: Could not get members: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {
             id: "",
             email: "",
@@ -44,7 +44,7 @@ export async function addMember(
     const data = localStorage.getItem("group");
 
     if (!data) {
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -70,7 +70,7 @@ export async function deleteMember(
     const data = localStorage.getItem("group");
 
     if (!data) {
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -136,7 +136,7 @@ export function getInvited() {
     const data = localStorage.getItem("group");
     if (!data) {
         console.error(`ERROR: Could not get item "group" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return [];
     }
 
@@ -145,7 +145,7 @@ export function getInvited() {
         return invited;
     } catch (e) {
         console.error(`ERROR: Could not get invited: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return [];
     }
 }
@@ -166,7 +166,7 @@ export async function addInvite(
     const data = localStorage.getItem("group");
 
     if (!data) {
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -234,7 +234,7 @@ export async function deleteInvite(
     const data = localStorage.getItem("group");
 
     if (!data) {
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 

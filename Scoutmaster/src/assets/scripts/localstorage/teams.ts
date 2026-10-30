@@ -35,7 +35,7 @@ export function getTeams() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {};
     }
 
@@ -48,7 +48,7 @@ export function getTeams() {
         );
     } catch (e) {
         console.error(`ERROR: Could not get teams: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {};
     }
 }
@@ -88,7 +88,7 @@ export async function addTeam(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -152,7 +152,7 @@ export async function addTeams(
     const data = localStorage.getItem("data");
 
     if (!data) {
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -200,7 +200,7 @@ export async function deleteTeam(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -285,7 +285,7 @@ export async function updateTeamQuestion(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -379,7 +379,7 @@ export async function initTeamsAPI(
 
         if (result.errors) {
             console.error("GraphQL errors:", result.errors);
-            errorToast(i18n.t("dataloaderror"), 3000);
+            //errorToast(i18n.t("dataloaderror"), 3000);
             return;
         }
 
@@ -402,6 +402,6 @@ export async function initTeamsAPI(
         await addTeams(modifiedTeams, sendServer);
     } catch (error) {
         console.error("ERROR: Could not load teams: ", error);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
     }
 }

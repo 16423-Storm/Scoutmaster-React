@@ -60,7 +60,7 @@ export function getNumOfQuestions() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return 0;
     }
 
@@ -71,7 +71,7 @@ export function getNumOfQuestions() {
         return questionsAmount;
     } catch (e) {
         console.error(`ERROR: Could not get amount of questions: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return 0;
     }
 }
@@ -84,7 +84,7 @@ export function getSections() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {};
     }
 
@@ -93,7 +93,7 @@ export function getSections() {
         return sections;
     } catch (e) {
         console.error(`ERROR: Could not get sections: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {};
     }
 }
@@ -106,7 +106,7 @@ export function getSection(id: string) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {} as QuestionSection;
     }
 
@@ -117,7 +117,7 @@ export function getSection(id: string) {
         return section;
     } catch (e) {
         console.error(`ERROR: Could not get section: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {} as QuestionSection;
     }
 }
@@ -130,7 +130,7 @@ export function getQuestions() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {};
     }
 
@@ -139,7 +139,7 @@ export function getQuestions() {
         return questions;
     } catch (e) {
         console.error(`ERROR: Could not get questions: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {};
     }
 }
@@ -153,7 +153,7 @@ export function getQuestion(id: string) {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {} as Question;
     }
 
@@ -162,7 +162,7 @@ export function getQuestion(id: string) {
         return question;
     } catch (e) {
         console.error(`ERROR: Could not get question: ` + e);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return {} as Question;
     }
 }
@@ -174,7 +174,7 @@ export async function addQuestion() {
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -212,7 +212,7 @@ export async function addQuestionToStorage(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -263,7 +263,7 @@ export async function deleteQuestion(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -341,7 +341,7 @@ export async function updateQuestion(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -483,7 +483,7 @@ export async function addSection(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -534,7 +534,7 @@ export async function addSectionToStorage(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -577,7 +577,7 @@ export async function deleteSection(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -694,7 +694,7 @@ export async function deleteSectionFromStorage(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -759,7 +759,7 @@ export async function updateSection(
     const data = localStorage.getItem("data");
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
@@ -818,7 +818,7 @@ export async function updateSectionIndexes(
 
     if (!data) {
         console.error(`ERROR: Could not get item "data" from localstorage`);
-        errorToast(i18n.t("dataloaderror"), 3000);
+        //errorToast(i18n.t("dataloaderror"), 3000);
         return;
     }
 
