@@ -24,6 +24,7 @@ function Choice() {
 
     // TODO, ADD PROPER ERROR SHOWING
     const handleCreateGroup = async () => {
+        setCurrentChoice(1);
         const success = await createGroup();
 
         if (success) {
@@ -65,10 +66,7 @@ function Choice() {
                         >
                             <button
                                 className="desktop-signup-button"
-                                onClick={async () => {
-                                    setCurrentChoice(1);
-                                    await handleCreateGroup();
-                                }}
+                                onClick={handleCreateGroup}
                             >
                                 <FaPlus /> {t("createnewgroup")}
                             </button>
