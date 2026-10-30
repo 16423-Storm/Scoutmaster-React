@@ -5,6 +5,7 @@ import { useGoToPage } from "./multipageutils";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 const serverURL = import.meta.env.VITE_PYTHON_SERVER_URL;
+const webURL = "https://ftcscoutmaster.xyz/";
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
     auth: {
