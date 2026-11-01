@@ -26,7 +26,6 @@ import {
     updateSummary,
     addMatchToStorage,
     updateTeamQuestion,
-    updateNote,
 } from "../localstorage";
 import {
     addInvite,
@@ -321,16 +320,6 @@ export async function connectToSession(): Promise<WebSocket | null> {
 
             if (message?.type === "deleteInviteForAdd") {
                 deleteInvite(message.content, false, false, false);
-            }
-
-            if (message?.type === "updateNote") {
-                updateNote(
-                    message.content.k,
-                    message.content.a,
-                    message.content.q,
-                    message.content.v,
-                    false,
-                );
             }
 
             if (message?.type === "RATELIMITED") {
