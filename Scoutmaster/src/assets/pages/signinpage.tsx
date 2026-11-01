@@ -127,13 +127,6 @@ function SignInPage() {
                                 {t("clickhere")}
                             </span>
                         </a>
-
-                        <p className="phone-signup-bottomtext">
-                            {t("bysigningupyouagree")}{" "}
-                            <span className="phone-signup-bottomlink">
-                                {t("privacypolicylowercase")}
-                            </span>
-                        </p>
                     </form>
                 </div>
             </div>
@@ -205,13 +198,6 @@ function SignInPage() {
                             {t("clickhere")}
                         </span>
                     </a>
-
-                    <p className="desktop-signup-bottomtext">
-                        {t("bysigningupyouagree")}{" "}
-                        <span className="desktop-signup-bottomlink">
-                            {t("privacypolicylowercase")}
-                        </span>
-                    </p>
                 </form>
             </div>
         </div>
