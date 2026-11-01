@@ -350,7 +350,6 @@ async def handleUpdateScore(
         }
     )
 
-<<<<<<< HEAD
 @ws_limit(maxCalls=250, window=60)
 async def handleUpdateNote(
     websocket: WebSocket,
@@ -447,9 +446,6 @@ async def handleUpdateNote(
         }
     )
 
-
-=======
->>>>>>> origin/main
 @ws_limit(maxCalls=40, window=60)
 async def handleDeleteMatch(
     websocket: WebSocket,
