@@ -111,11 +111,6 @@ class UpdateScorePayload(StrictModel):
     v: Annotated[int, Field(ge=0, le=10000)]
     c: bool
 
-class UpdateNotePayload(StrictModel):
-    k: Annotated[int, Field(ge=0, le=750)]
-    a: Annotated[int, Field(ge=0, le=3)]
-    v: Annotated[str, Field(max_length=400)]
-
 class DeleteMatchPayload(StrictModel):
     key: Annotated[int, Field(ge=0, le=750)]
 
@@ -225,11 +220,6 @@ class UpdateScoreMsg(StrictModel):
     requestId: IdStr
     content: UpdateScorePayload
 
-class UpdateNoteMsg(StrictModel):
-    type: Literal["updateNote"]
-    requestId: IdStr
-    content: UpdateNotePayload    
-
 class DeleteMatchMsg(StrictModel):
     type: Literal["deleteMatch"]
     requestId: IdStr
@@ -311,7 +301,6 @@ WebSocketIncomingMessage = Annotated[
         AddMatchMsg,
         AddMatchesMsg,
         UpdateScoreMsg,
-        UpdateNoteMsg,
         DeleteMatchMsg,
         AddSectionMsg,
         DeleteSectionMsg,

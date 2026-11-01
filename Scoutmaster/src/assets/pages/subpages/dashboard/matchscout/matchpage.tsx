@@ -1,13 +1,8 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import { useScreenType } from "../../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 
-import {
-    useMatches,
-    updateScore,
-    updateNote,
-} from "../../../../scripts/localstorage";
-import Blocker499 from "../../../components/blocker";
+import { useMatches, updateScore } from "../../../../scripts/localstorage";
 
 function DashboardMatchPage({
     match,
@@ -28,18 +23,9 @@ function DashboardMatchPage({
 
     const [isAuto, setIsAuto] = useState(true);
 
-    const [notesOpen, setNotesOpen] = useState(false);
-
     if (useScreenType() == "desktop") {
         return (
             <>
-                {notesOpen && (
-                    <NotesPopUp
-                        matchId={match}
-                        station={currentStation}
-                        onClose={() => setNotesOpen(false)}
-                    />
-                )}
                 <div className="desktop-dash-prescout-team-maincontainer">
                     <button
                         className="desktop-dash-prescout-team-backbutton"
@@ -236,15 +222,6 @@ function DashboardMatchPage({
                                                 ✓
                                             </button>
                                         </div>
-                                    </div>
-                                    <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Notes:</p>
-                                        <button
-                                            className="desktop-dash-comp-infodisplay-button"
-                                            onClick={() => setNotesOpen(true)}
-                                        >
-                                            Notes
-                                        </button>
                                     </div>
                                 </div>
                             </>
@@ -498,15 +475,6 @@ function DashboardMatchPage({
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="desktop-dash-match-scorecontainer-labelcontainer">
-                                        <p>Notes:</p>
-                                        <button
-                                            className="desktop-dash-comp-infodisplay-button"
-                                            onClick={() => setNotesOpen(true)}
-                                        >
-                                            Notes
-                                        </button>
-                                    </div>
                                 </div>
                             </>
                         )}
@@ -565,13 +533,6 @@ function DashboardMatchPage({
     } else {
         return (
             <>
-                {notesOpen && (
-                    <NotesPopUp
-                        matchId={match}
-                        station={currentStation}
-                        onClose={() => setNotesOpen(false)}
-                    />
-                )}
                 <div className="phone-dash-prescout-team-maincontainer">
                     <button
                         className="phone-dash-prescout-team-backbutton"
@@ -757,15 +718,6 @@ function DashboardMatchPage({
                                             ✓
                                         </button>
                                     </div>
-                                </div>
-                                <div className="phone-dash-match-scorecontainer-labelcontainer">
-                                    <p>Notes:</p>
-                                    <button
-                                        className="phone-dash-comp-infodisplay-button"
-                                        onClick={() => setNotesOpen(true)}
-                                    >
-                                        Auto Notes
-                                    </button>
                                 </div>
                             </>
                         ) : (
@@ -1048,149 +1000,6 @@ function DashboardMatchPage({
                             >
                                 {target.blue2}
                             </button>
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
-    }
-}
-
-function NotesPopUp({
-    station,
-    matchId,
-    onClose,
-}: {
-    station: number;
-    matchId: string;
-    onClose: () => void;
-}) {
-    const { t } = useTranslation();
-
-    const matchState = useMatches((state) => state.matches[matchId]);
-    const [area, setArea] = useState(matchState.scores[station][9] ?? "");
-
-    useEffect(() => {
-        setArea(matchState.scores[station][9] ?? "");
-    }, [matchState, station]);
-
-    const handleAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setArea(event.target.value);
-    };
-
-    const handleAreaBlur = () => {
-        if (area !== "") {
-            updateNote(matchId, station, area, true);
-        } else {
-            updateNote(matchId, station, "", true);
-        }
-    };
-
-    if (useScreenType() == "desktop") {
-        return (
-            <>
-                <Blocker499 />
-                <div
-                    className="desktop-warningpopup"
-                    style={{ height: "30vh" }}
-                >
-                    <button
-                        className="desktop-dash-match-scorecontainer-popupclose"
-                        onClick={onClose}
-                    >
-                        ✕
-                    </button>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: "20px",
-                            width: "90%",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <p
-                            style={{
-                                margin: 0,
-                                fontSize: "1.2rem",
-                            }}
-                        >
-                            Notes
-                        </p>
-                        <div className="desktop-dash-prescout-team-lncontainer">
-                            <textarea
-                                rows={3}
-                                maxLength={400}
-                                value={area}
-                                onChange={handleAreaChange}
-                                className={
-                                    area.length === 400
-                                        ? "desktop-popupinput-maxedinput"
-                                        : undefined
-                                }
-                                onBlur={handleAreaBlur}
-                            />
-                            <p
-                                style={
-                                    area.length === 400
-                                        ? { color: "red" }
-                                        : undefined
-                                }
-                            >
-                                {t("/400s", { num: area.length })}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
-    } else {
-        return (
-            <>
-                <Blocker499 />
-                <div className="phone-warningpopup">
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: "20px",
-                            width: "90%",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <p
-                            style={{
-                                margin: 0,
-                                fontSize: "1.2rem",
-                            }}
-                        >
-                            Notes
-                        </p>
-                        <div className="phone-dash-prescout-team-lncontainer">
-                            <textarea
-                                rows={7}
-                                maxLength={400}
-                                value={area}
-                                onChange={handleAreaChange}
-                                className={
-                                    area.length === 400
-                                        ? "phone-popupinput-maxedinput"
-                                        : undefined
-                                }
-                                onBlur={handleAreaBlur}
-                                style={{ width: "90%" }}
-                            />
-                            <p
-                                style={
-                                    area.length === 400
-                                        ? { color: "red" }
-                                        : undefined
-                                }
-                            >
-                                {t("/400s", { num: area.length })}
-                            </p>
                         </div>
                     </div>
                 </div>
