@@ -12,7 +12,7 @@
     justify-content: center;
     align-items: center;
     width: 30%;
-    height: 40%;
+    height: 60%;
     flex-direction: column;
     gap: 10px;
     box-sizing: border-box;
@@ -23,6 +23,23 @@
     font-size: 2rem;
     font-weight: 200;
     color: var(--black);
+}
+
+.desktop-dash-match-scorecontainer-popupclose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    padding: 3px;
+    text-align: center;
+}
+
+.desktop-dash-match-scorecontainer-popupclose:hover {
+    background-color: var(--clr-surface-a30);
+    cursor: pointer;
 }
 
 .desktop-dash-match-scorecontainer-numinput-container {
