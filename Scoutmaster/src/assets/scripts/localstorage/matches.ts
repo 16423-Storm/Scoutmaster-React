@@ -13,7 +13,18 @@ export type MatchData = {
         red2: number;
         blue1: number;
         blue2: number;
-        scores: number[][];
+        scores: [
+            number,
+            number,
+            number,
+            number,
+            number,
+            number,
+            number,
+            number,
+            number,
+            string?,
+        ][];
     };
 };
 
@@ -35,7 +46,18 @@ export type Match = {
     red2: number;
     blue1: number;
     blue2: number;
-    scores: number[][];
+    scores: [
+        number,
+        number,
+        number,
+        number,
+        number,
+        number,
+        number,
+        number,
+        number,
+        string?,
+    ][];
 };
 
 type Matches = {
@@ -172,10 +194,10 @@ export async function addMatchToStorage(
             blue1,
             blue2,
             scores: [
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, ""],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, ""],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, ""],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, ""],
             ],
         };
 
@@ -234,10 +256,10 @@ export async function addMatches(
                 blue1: match.blue1,
                 blue2: match.blue2,
                 scores: [
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, ""],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, ""],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, ""],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, ""],
                 ],
             };
         }
@@ -351,6 +373,76 @@ export async function updateScore(
         }
     } catch (e) {
         console.error("ERROR: Could not update score: " + e);
+        errorToast(i18n.t("seterror"), 3000);
+    }
+}
+
+/**
+ * Updates a notes in a match
+ * @param {string} matchId - The ID of the match
+ * @param {number} allianceIndex - The alliance station (0 = Red1, 1 = Red2, 2 = Blue1, 3 = Blue2)
+ * @param {number} questionIndex - The index of the question
+ * @param {string} value - The new score to set
+ * @param {boolean} sendServer - Send data to server for update, true by default
+ */
+export async function updateNote(
+    matchId: string,
+    allianceIndex: number,
+    questionIndex: number,
+    value: string,
+    sendServer: boolean = true,
+) {
+    if (value.length > 400) {
+        console.error("ERROR: Score value exceeds the max limit of 10 000");
+        errorToast(i18n.t("seterror"), 3000);
+        return;
+    }
+
+    const data = localStorage.getItem("data");
+    if (!data) {
+        console.error(`ERROR: Could not get item "data" from localstorage`);
+        //errorToast(i18n.t("dataloaderror"), 3000);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(data);
+        const originalParsed = JSON.parse(data);
+        const note = parsed.match[matchId].scores[allianceIndex][questionIndex];
+        if (note === undefined) {
+            parsed.match[matchId].scores[allianceIndex][questionIndex] = "";
+        }
+
+        parsed.match[matchId].scores[allianceIndex][questionIndex] = value;
+
+        localStorage.setItem("data", JSON.stringify(parsed));
+        useMatches.getState().setMatches(getMatches());
+
+        if (sendServer) {
+            const requestId = nanoid(10);
+
+            const confirmed = await sendMessage({
+                type: "updateNote",
+                // k = key, a = alliance index, a = alliance, q = question index, v = value
+                // this is only because updateNote will be called so often that we need to lower the data sent back and forth as much as possible
+                content: {
+                    k: matchId,
+                    a: allianceIndex,
+                    q: questionIndex,
+                    v: value,
+                },
+                requestId,
+            });
+
+            if (!confirmed) {
+                errorToast(i18n.t("seterror"), 3000);
+                localStorage.setItem("data", JSON.stringify(originalParsed));
+                useMatches.getState().setMatches(getMatches());
+                return;
+            }
+        }
+    } catch (e) {
+        console.error("ERROR: Could not update note: " + e);
         errorToast(i18n.t("seterror"), 3000);
     }
 }
