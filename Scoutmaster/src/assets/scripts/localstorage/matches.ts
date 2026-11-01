@@ -392,7 +392,7 @@ export async function updateNote(
     sendServer: boolean = true,
 ) {
     if (value.length > 400) {
-        console.error("ERROR: Score value exceeds the max limit of 10 000");
+        console.error("ERROR: Length exceeds limit of 400");
         errorToast(i18n.t("seterror"), 3000);
         return;
     }
