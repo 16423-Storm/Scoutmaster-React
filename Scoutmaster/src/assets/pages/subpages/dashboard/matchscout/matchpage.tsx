@@ -1160,6 +1160,12 @@ function NotesPopUp({
                             flexDirection: "column",
                         }}
                     >
+                        <button
+                            className="phone-dash-match-scorecontainer-popupclose"
+                            onClick={onClose}
+                        >
+                            ✕
+                        </button>
                         <p
                             style={{
                                 margin: 0,

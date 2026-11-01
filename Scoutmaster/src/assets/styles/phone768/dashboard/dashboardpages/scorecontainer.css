@@ -16,6 +16,21 @@
     color: var(--black);
 }
 
+.phone-dash-match-scorecontainer-popupclose {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    padding: 3px;
+    text-align: center;
+    width: 50% !important;
+}
+
+.phone-dash-match-scorecontainer-popupclose:active {
+    background-color: var(--clr-surface-a30);
+    cursor: pointer;
+}
+
 .phone-dash-match-scorecontainer-numinput-container {
     display: flex;
     justify-content: center;
