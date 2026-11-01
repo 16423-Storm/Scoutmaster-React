@@ -410,7 +410,12 @@ async def handleUpdateNote(
 
         note = result.data
 
-        groupData[group]["matchscout"][str(content["k"])]["scores"][content["a"]][9] = note
+        scores = groupData[group]["matchscout"][str(content["k"])]["scores"][content["a"]]
+        
+        if len(scores) <= 9:
+            scores.append(note)
+        else:
+            scores[9] = note
 
         await sendToGroup(
             groups,
