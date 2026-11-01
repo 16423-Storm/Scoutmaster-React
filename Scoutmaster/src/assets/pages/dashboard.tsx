@@ -383,14 +383,14 @@ function Dashboard() {
                             </div>
                             <div className="desktop-dash-sidebar-bottomhalf">
                                 <div className="desktop-dash-sidebar-bottomhalf-borderplaceholder">
-                                    <div
+                                    {/* <div
                                         className={
                                             "desktop-dash-sidebar-mainbutton"
                                         }
                                         style={{ justifyContent: "center" }}
                                     >
                                         <FaBook />
-                                    </div>
+                                    </div> */}
                                     <div
                                         className={
                                             currentPage == "settings"
@@ -746,7 +746,7 @@ function Dashboard() {
                                     </div>
                                     <div className="phone-dash-sidebar-bottomhalf">
                                         <div className="phone-dash-sidebar-bottomhalf-borderplaceholder">
-                                            <div
+                                            {/* <div
                                                 className={
                                                     "phone-dash-sidebar-mainbutton"
                                                 }
@@ -763,7 +763,7 @@ function Dashboard() {
                                                 // }
                                             >
                                                 <FaBook />
-                                            </div>
+                                            </div> */}
                                             <div
                                                 className={
                                                     currentPage == "settings"
