@@ -398,12 +398,11 @@ async def handleUpdateNote(
     try:
         result = await asyncio.to_thread(
             lambda: supabase.rpc(
-                "update_match_score",
+                "update_match_note",
                 {
                     "p_group_id": group,
                     "p_match_key": str(content["k"]),
                     "p_alliance": content["a"],
-                    "p_question": 9,
                     "p_value": content["v"]
                 }
             ).execute()
