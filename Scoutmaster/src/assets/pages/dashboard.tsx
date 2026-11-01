@@ -254,7 +254,7 @@ function Dashboard() {
                             </div>
                             <div className="desktop-dash-sidebar-bottomhalf">
                                 <div className="desktop-dash-sidebar-bottomhalf-borderplaceholder">
-                                    <div
+                                    {/* <div
                                         className={
                                             "desktop-dash-sidebar-mainbutton"
                                         }
@@ -267,7 +267,7 @@ function Dashboard() {
                                         <FaBook />
                                         {""}
                                         {t("wiki")}
-                                    </div>
+                                    </div> */}
                                     <div
                                         className={
                                             currentPage == "settings"
@@ -590,7 +590,7 @@ function Dashboard() {
                                     </div>
                                     <div className="phone-dash-sidebar-bottomhalf">
                                         <div className="phone-dash-sidebar-bottomhalf-borderplaceholder">
-                                            <div
+                                            {/* <div
                                                 className={
                                                     "phone-dash-sidebar-mainbutton"
                                                 }
@@ -606,7 +606,7 @@ function Dashboard() {
                                                 <FaBook />
                                                 {""}
                                                 {t("wiki")}
-                                            </div>
+                                            </div> */}
                                             <div
                                                 className={
                                                     currentPage == "settings"
