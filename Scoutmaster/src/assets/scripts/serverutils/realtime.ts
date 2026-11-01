@@ -327,7 +327,6 @@ export async function connectToSession(): Promise<WebSocket | null> {
                 updateNote(
                     message.content.k,
                     message.content.a,
-                    message.content.q,
                     message.content.v,
                     false,
                 );

@@ -403,7 +403,7 @@ async def handleUpdateNote(
                     "p_group_id": group,
                     "p_match_key": str(content["k"]),
                     "p_alliance": content["a"],
-                    "p_question": content["q"],
+                    "p_question": 9,
                     "p_value": content["v"]
                 }
             ).execute()
@@ -411,7 +411,7 @@ async def handleUpdateNote(
 
         note = result.data
 
-        groupData[group]["matchscout"][str(content["k"])]["scores"][content["a"]][content["q"]] = note
+        groupData[group]["matchscout"][str(content["k"])]["scores"][content["a"]][9] = note
 
         await sendToGroup(
             groups,
@@ -421,7 +421,6 @@ async def handleUpdateNote(
                 "content": {
                     "k": content["k"],
                     "a": content["a"],
-                    "q": content["q"],
                     "v": note,
                 }
             },

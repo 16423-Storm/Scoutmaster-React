@@ -114,7 +114,6 @@ class UpdateScorePayload(StrictModel):
 class UpdateNotePayload(StrictModel):
     k: Annotated[int, Field(ge=0, le=750)]
     a: Annotated[int, Field(ge=0, le=3)]
-    q: Annotated[int, Field(ge=0, le=8)]
     v: Annotated[str, Field(max_length=400)]
 
 class DeleteMatchPayload(StrictModel):

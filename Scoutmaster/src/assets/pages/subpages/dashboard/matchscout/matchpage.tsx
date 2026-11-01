@@ -1080,9 +1080,9 @@ function NotesPopUp({
 
     const handleAreaBlur = () => {
         if (area !== "") {
-            updateNote(matchId, station, 9, area, true);
+            updateNote(matchId, station, area, true);
         } else {
-            updateNote(matchId, station, 9, "", true);
+            updateNote(matchId, station, "", true);
         }
     };
 

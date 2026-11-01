@@ -388,7 +388,6 @@ export async function updateScore(
 export async function updateNote(
     matchId: string,
     allianceIndex: number,
-    questionIndex: number,
     value: string,
     sendServer: boolean = true,
 ) {
@@ -408,12 +407,12 @@ export async function updateNote(
     try {
         const parsed = JSON.parse(data);
         const originalParsed = JSON.parse(data);
-        const note = parsed.match[matchId].scores[allianceIndex][questionIndex];
+        const note = parsed.match[matchId].scores[allianceIndex][9];
         if (note === undefined) {
-            parsed.match[matchId].scores[allianceIndex][questionIndex] = "";
+            parsed.match[matchId].scores[allianceIndex][9] = "";
         }
 
-        parsed.match[matchId].scores[allianceIndex][questionIndex] = value;
+        parsed.match[matchId].scores[allianceIndex][9] = value;
 
         localStorage.setItem("data", JSON.stringify(parsed));
         useMatches.getState().setMatches(getMatches());
@@ -428,7 +427,6 @@ export async function updateNote(
                 content: {
                     k: matchId,
                     a: allianceIndex,
-                    q: questionIndex,
                     v: value,
                 },
                 requestId,
