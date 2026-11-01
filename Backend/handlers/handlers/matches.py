@@ -421,7 +421,7 @@ async def handleUpdateNote(
             groups,
             group,
             {
-                "type": "updateScore",
+                "type": "updateNote",
                 "content": {
                     "k": content["k"],
                     "a": content["a"],
