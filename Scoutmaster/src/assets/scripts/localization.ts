@@ -3,6 +3,8 @@ import { initReactI18next } from "react-i18next";
 
 import en from "../localization/en.json";
 import es from "../localization/es.json";
+import hi from "../localization/hi.json";
+import pa from "../localization/pa.json";
 // import fr from "../localization/fr.json";
 // import pt from "../localization/pt.json";
 // import ro from "../localization/ro.json";
@@ -12,7 +14,7 @@ const browserLanguage =
     typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en";
 
 // const supportedLanguages = ["en", "fr", "es", "pt", "ro", "tr"];
-const supportedLanguages = ["en", "es"];
+const supportedLanguages = ["en", "es", "hi", "pa"];
 const defaultLanguage = supportedLanguages.includes(browserLanguage)
     ? browserLanguage
     : "en";
@@ -23,6 +25,8 @@ i18n.use(initReactI18next).init({
     resources: {
         en: { translation: en },
         es: { translation: es },
+        hi: { translation: hi },
+        pa: { translation: pa },
         // fr: { translation: fr },
         // pt: { translation: pt },
         // ro: { translation: ro },
@@ -36,6 +40,8 @@ i18n.use(initReactI18next).init({
 export const languages = [
     { code: "en", label: "EN", flag: "GB" },
     { code: "es", label: "ES", flag: "ES" },
+    { code: "hi", label: "HI", flag: "IN" },
+    { code: "pa", label: "PA", flag: "IN" },
     // { code: "fr", label: "FR", flag: "FR" },
     // { code: "pt", label: "PT", flag: "PT" },
     // { code: "ro", label: "RO", flag: "RO" },
