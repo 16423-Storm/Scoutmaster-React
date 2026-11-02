@@ -760,6 +760,17 @@ function RenderQuestion({
                     </button>
                 </>
             );
+        } else if (question.type == "img") {
+            return (
+                <>
+                    <p>Placeholderforimage</p>
+                    <button
+                        className="desktop-dash-comp-infodisplay-button"
+                    >
+                        Take Image
+                    </button>
+                </>
+            )
         } else if (question.type == "n") {
             const [input, setInput] = useState(
                 typeof data === "number"
