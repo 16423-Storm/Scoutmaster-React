@@ -1,4 +1,7 @@
-import { useScreenType } from "../../../../scripts/multipageutils";
+import {
+    useIsLightMode,
+    useScreenType,
+} from "../../../../scripts/multipageutils";
 import { useTranslation } from "react-i18next";
 
 import { FaRegStar, FaMountain } from "react-icons/fa";
@@ -24,6 +27,9 @@ import {
 } from "chart.js";
 
 import { Line } from "react-chartjs-2";
+
+import fieldImageDark from "../../../../images/biobuzzdark.webp";
+import fieldImageLight from "../../../../images/biobuzzlight.webp";
 
 ChartJS.register(
     CategoryScale,
@@ -608,13 +614,11 @@ function RenderQuestionAnswer({
             ? "desktop-dash-prescout-team"
             : "phone-dash-prescout-team";
 
-    if (question.type === "a") {
-        return null;
-    }
-
     if (data === undefined) {
         return <p className="notetext">{t("noanswer")}</p>;
     }
+
+    const isLightMode = useIsLightMode();
 
     switch (question.type) {
         case "ln":
@@ -746,6 +750,109 @@ function RenderQuestionAnswer({
                     })}
                 </div>
             );
+        }
+
+        case "a": {
+            return (
+                <>
+                <div
+                    style={{
+                        width: "min(85vw, 380px)",
+                        height: "min(85vw, 380px)",
+                        aspectRatio: "1 / 1",
+                        position: "relative",
+                        margin: "12px auto",
+                        flexShrink: 0,
+                    }}
+                >
+                    <img
+                        src={
+                            isLightMode == true
+                                ? fieldImageLight
+                                : fieldImageDark
+                        }
+                        alt=""
+                        style={{
+                            position: "absolute",
+                            inset: 0,
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "fill",
+                            pointerEvents: "none",
+                            userSelect: "none",
+                        }}
+                    />
+
+                    <svg
+                        viewBox="0 0 600 600"
+                        preserveAspectRatio="xMidYMid meet"
+                        width="100%"
+                        height="100%"
+                        style={{
+                            position: "absolute",
+                            inset: 0,
+                            display: "block",
+                            width: "100%",
+                            height: "100%",
+                            cursor: "crosshair",
+                            touchAction: "none",
+                        }}
+                    >
+                        {paths[pathStage]?.length > 0 && (
+                            <>
+                                {paths[pathStage]
+                                    .slice(1)
+                                    .map(
+                                        (
+                                            [x, y, color],
+                                            pointIndex,
+                                        ) => {
+                                            const [
+                                                prevX,
+                                                prevY,
+                                            ] =
+                                                paths[
+                                                    pathStage
+                                                ][pointIndex];
+
+                                            return (
+                                                <line
+                                                    key={`line-${pointIndex}`}
+                                                    x1={prevX}
+                                                    y1={prevY}
+                                                    x2={x}
+                                                    y2={y}
+                                                    stroke={getColor(
+                                                        color,
+                                                    )}
+                                                    strokeWidth={
+                                                        4
+                                                    }
+                                                    strokeLinecap="round"
+                                                />
+                                            );
+                                        },
+                                    )}
+
+                                {paths[pathStage].map(
+                                    ([x, y], pointIndex) => (
+                                        <circle
+                                            key={`point-${pointIndex}`}
+                                            cx={x}
+                                            cy={y}
+                                            r={6}
+                                            fill="white"
+                                            stroke="black"
+                                            strokeWidth={2}
+                                        />
+                                    ),
+                                )}
+                            </>
+                        )}
+                    </svg>
+                </div>
+                </>
+            )
         }
 
         default:
