@@ -5,11 +5,11 @@ import en from "../localization/en.json";
 import es from "../localization/es.json";
 import hi from "../localization/hi.json";
 import pa from "../localization/pa.json";
-import ua from "../localization/ua.json";
 // import fr from "../localization/fr.json";
 // import pt from "../localization/pt.json";
 // import ro from "../localization/ro.json";
 import tr from "../localization/tr.json";
+import ua from "../localization/ua.json";
 
 const browserLanguage =
     typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en";
