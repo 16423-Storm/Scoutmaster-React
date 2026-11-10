@@ -9,12 +9,13 @@ import pa from "../localization/pa.json";
 // import pt from "../localization/pt.json";
 // import ro from "../localization/ro.json";
 import tr from "../localization/tr.json";
+import ua from "../localization/ua.json";
 
 const browserLanguage =
     typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en";
 
 // const supportedLanguages = ["en", "fr", "es", "pt", "ro", "tr"];
-const supportedLanguages = ["en", "es", "hi", "pa", "tr"];
+const supportedLanguages = ["en", "es", "hi", "pa", "tr", "ua"];
 const defaultLanguage = supportedLanguages.includes(browserLanguage)
     ? browserLanguage
     : "en";
@@ -31,6 +32,7 @@ i18n.use(initReactI18next).init({
         // pt: { translation: pt },
         // ro: { translation: ro },
         tr: { translation: tr },
+        ua: { translation: ua }
     },
     interpolation: {
         escapeValue: false,
@@ -46,6 +48,7 @@ export const languages = [
     // { code: "pt", label: "PT", flag: "PT" },
     // { code: "ro", label: "RO", flag: "RO" },
     { code: "tr", label: "TR", flag: "TR" },
+    { code: "ua", label: "UA", flag: "UA" }
 ];
 
 export default i18n;
