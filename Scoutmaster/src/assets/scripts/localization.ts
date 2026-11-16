@@ -45,7 +45,7 @@ export const languages = [
     { code: "es", label: "ES", flag: "ES" },
     { code: "ro", label: "RO", flag: "RO" },
     { code: "tr", label: "TR", flag: "TR" },
-    { code: "ua", label: "UA", flag: "UA" }
+    { code: "ua", label: "UA", flag: "UA" },
     { code: "hi", label: "HI", flag: "IN" },
     { code: "pa", label: "PA", flag: "IN" },
     // { code: "fr", label: "FR", flag: "FR" },
