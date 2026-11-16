@@ -7,7 +7,7 @@ import hi from "../localization/hi.json";
 import pa from "../localization/pa.json";
 // import fr from "../localization/fr.json";
 // import pt from "../localization/pt.json";
-// import ro from "../localization/ro.json";
+import ro from "../localization/ro.json";
 import tr from "../localization/tr.json";
 import ua from "../localization/ua.json";
 
@@ -15,7 +15,7 @@ const browserLanguage =
     typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en";
 
 // const supportedLanguages = ["en", "fr", "es", "pt", "ro", "tr"];
-const supportedLanguages = ["en", "es", "hi", "pa", "tr", "ua"];
+const supportedLanguages = ["en", "es", "hi", "pa", "tr", "ua", "ro"];
 const defaultLanguage = supportedLanguages.includes(browserLanguage)
     ? browserLanguage
     : "en";
@@ -32,7 +32,8 @@ i18n.use(initReactI18next).init({
         // pt: { translation: pt },
         // ro: { translation: ro },
         tr: { translation: tr },
-        ua: { translation: ua }
+        ua: { translation: ua },
+        ro: { translation: ro }
     },
     interpolation: {
         escapeValue: false,
@@ -42,13 +43,14 @@ i18n.use(initReactI18next).init({
 export const languages = [
     { code: "en", label: "EN", flag: "GB" },
     { code: "es", label: "ES", flag: "ES" },
+    { code: "ro", label: "RO", flag: "RO" },
+    { code: "tr", label: "TR", flag: "TR" },
+    { code: "ua", label: "UA", flag: "UA" }
     { code: "hi", label: "HI", flag: "IN" },
     { code: "pa", label: "PA", flag: "IN" },
     // { code: "fr", label: "FR", flag: "FR" },
     // { code: "pt", label: "PT", flag: "PT" },
-    // { code: "ro", label: "RO", flag: "RO" },
-    { code: "tr", label: "TR", flag: "TR" },
-    { code: "ua", label: "UA", flag: "UA" }
+    // { code: "ro", label: "RO", flag: "RO" }
 ];
 
 export default i18n;
