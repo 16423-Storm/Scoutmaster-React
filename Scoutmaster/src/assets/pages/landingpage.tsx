@@ -28,6 +28,11 @@ import {
 import LogoWhite from "../images/branding/logowhite.png";
 import { PrivacyPolicy, TOS } from "./components/policies.js";
 
+// Contributor Logo Imports
+import StormLogo from "../images/contributors/storm.png";
+import AsteriaLogo from "../images/contributors/asteria.jpg";
+import BruteForceLogo from "../images/contributors/bruteforce.png";
+
 function LandingPage() {
     const { t } = useTranslation();
     const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
@@ -105,16 +110,126 @@ function LandingPage() {
                         </p>
                     </div>
                 </div>
-                {/* <div className="fullpage">
-                    <div className="centerdiv-top">
-                        <p className="phone-landing-title1">
-                            {t("landingtitle1")}
+                <div
+                    className="phone-landing-footer fullpage"
+                    style={{
+                        alignItems: "center",
+                        paddingBottom: "50px",
+                        height: "unset",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexDirection: "column",
+                            width: "90%",
+                        }}
+                    >
+                        <p
+                            className="phone-landing-herotitle"
+                            style={{ fontSize: "3.6rem" }}
+                        >
+                            Contributors
                         </p>
-                        <p className="phone-landing-bodytext">
-                            {t("landingbody1")}
+                        <p
+                            className="phone-landing-heroslogan"
+                            style={{ paddingTop: "3px" }}
+                        >
+                            Scoutmaster would not be possible without the
+                            amazing FTC teams that have contributed to it!
                         </p>
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flexDirection: "column",
+                            }}
+                        >
+                            <p
+                                className="phone-landing-herotitle"
+                                style={{ fontSize: "1.6rem" }}
+                            >
+                                Founders
+                            </p>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    flexDirection: "column",
+                                    gap: "8px",
+                                }}
+                            >
+                                <img
+                                    src={StormLogo}
+                                    className="phone-landing-contributorlogo"
+                                />
+                                <p style={{ color: "white" }}>#16423 STORM</p>
+                            </div>
+                        </div>
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flexDirection: "column",
+                            }}
+                        >
+                            <p
+                                className="phone-landing-herotitle"
+                                style={{ fontSize: "1.6rem" }}
+                            >
+                                Localization
+                            </p>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    flexDirection: "column",
+                                    gap: "20px",
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        flexDirection: "column",
+                                        gap: "8px",
+                                    }}
+                                >
+                                    <img
+                                        src={AsteriaLogo}
+                                        className="phone-landing-contributorlogo"
+                                    />
+                                    <p style={{ color: "white" }}>
+                                        #32334 ASTERIA
+                                    </p>
+                                </div>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        flexDirection: "column",
+                                        gap: "8px",
+                                    }}
+                                >
+                                    <img
+                                        src={BruteForceLogo}
+                                        className="phone-landing-contributorlogo"
+                                    />
+                                    <p style={{ color: "white" }}>
+                                        #22941 BRUTE FORCE
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div> */}
+                </div>
                 <footer className="phone-landing-footer">
                     <div>
                         <p>{t("socials")}</p>
@@ -178,16 +293,124 @@ function LandingPage() {
                     <p className="desktop-landing-heroslogan">{t("slogan")}</p>
                 </div>
             </div>
-            {/* <div className="fullpage">
-                <div className="centerdiv-top">
-                    <p className="desktop-landing-title1">
-                        {t("landingtitle1")}
+            <div
+                className="desktop-landing-footer fullpage"
+                style={{
+                    alignItems: "center",
+                    paddingBottom: "50px",
+                    height: "unset",
+                }}
+            >
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                        width: "90%",
+                    }}
+                >
+                    <p
+                        className="desktop-landing-herotitle"
+                        style={{ fontSize: "3.6rem" }}
+                    >
+                        Contributors
                     </p>
-                    <p className="desktop-landing-bodytext">
-                        {t("landingbody1")}
+                    <p
+                        className="desktop-landing-heroslogan"
+                        style={{ paddingTop: "3px" }}
+                    >
+                        Scoutmaster would not be possible without the amazing
+                        FTC teams that have contributed to it!
                     </p>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <p
+                            className="desktop-landing-herotitle"
+                            style={{ fontSize: "1.6rem" }}
+                        >
+                            Founders
+                        </p>
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flexDirection: "column",
+                                gap: "8px",
+                            }}
+                        >
+                            <img
+                                src={StormLogo}
+                                className="desktop-landing-contributorlogo"
+                            />
+                            <p style={{ color: "white" }}>#16423 STORM</p>
+                        </div>
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <p
+                            className="desktop-landing-herotitle"
+                            style={{ fontSize: "1.6rem" }}
+                        >
+                            Localization
+                        </p>
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flexDirection: "row",
+                                gap: "20px",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    flexDirection: "column",
+                                    gap: "8px",
+                                }}
+                            >
+                                <img
+                                    src={AsteriaLogo}
+                                    className="desktop-landing-contributorlogo"
+                                />
+                                <p style={{ color: "white" }}>#32334 ASTERIA</p>
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    flexDirection: "column",
+                                    gap: "8px",
+                                }}
+                            >
+                                <img
+                                    src={BruteForceLogo}
+                                    className="desktop-landing-contributorlogo"
+                                />
+                                <p style={{ color: "white" }}>
+                                    #22941 BRUTE FORCE
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div> */}
+            </div>
             <footer className="desktop-landing-footer">
                 <div>
                     <p>{t("socials")}</p>
