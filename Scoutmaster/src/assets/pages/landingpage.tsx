@@ -254,7 +254,7 @@ function LandingPage() {
                         <a onClick={() => setShowTos(true)}>
                             <FaShieldAlt /> {t("tos")}
                         </a>
-                        <a onClick={() => setShowTos(true)}>
+                        <a href="https://github.com/16423-Storm/Scoutmaster-React">
                             <FaGithub /> Github
                         </a>
                     </div>
@@ -437,7 +437,7 @@ function LandingPage() {
                     <a onClick={() => setShowTos(true)}>
                         <FaShieldAlt /> {t("tos")}
                     </a>
-                    <a onClick={() => setShowTos(true)}>
+                    <a href="https://github.com/16423-Storm/Scoutmaster-React">
                         <FaGithub /> Github
                     </a>
                 </div>
