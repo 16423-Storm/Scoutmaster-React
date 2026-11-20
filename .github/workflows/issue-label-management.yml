@@ -1,5 +1,4 @@
 name: Issue Label Management
-
 on:
   issues:
     types: [opened, assigned]
@@ -19,10 +18,15 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const action = context.payload.action;
+            const assigneesCount = context.payload.issue.assignees.length;
             const currentLabels = context.payload.issue.labels.map(l => l.name);
-            const hasAssignees = context.payload.issue.assignees.length > 0;
 
-            if (action === 'assigned' || (action === 'opened' && hasAssignees)) {
+            // Exit early if someone was already assigned before this event
+            if (action === 'assigned' && assigneesCount > 1) {
+              return;
+            }
+
+            if (action === 'assigned' || (action === 'opened' && assigneesCount > 0)) {
               if (currentLabels.includes('not claimed')) {
                 await github.rest.issues.removeLabel({
                   owner,
@@ -39,8 +43,7 @@ jobs:
                   labels: ['claimed']
                 });
               }
-            } 
-            else if (action === 'opened' && !hasAssignees) {
+            } else if (action === 'opened' && assigneesCount === 0) {
               if (!currentLabels.includes('not claimed')) {
                 await github.rest.issues.addLabels({
                   owner,
