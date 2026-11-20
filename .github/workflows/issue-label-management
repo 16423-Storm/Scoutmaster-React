@@ -1,0 +1,52 @@
+name: Issue Label Management
+
+on:
+  issues:
+    types: [opened, assigned]
+
+permissions:
+  issues: write
+
+jobs:
+  update-claim-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Manage claimed / not claimed labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue_number = context.issue.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const action = context.payload.action;
+            const currentLabels = context.payload.issue.labels.map(l => l.name);
+            const hasAssignees = context.payload.issue.assignees.length > 0;
+
+            if (action === 'assigned' || (action === 'opened' && hasAssignees)) {
+              if (currentLabels.includes('not claimed')) {
+                await github.rest.issues.removeLabel({
+                  owner,
+                  repo,
+                  issue_number,
+                  name: 'not claimed'
+                });
+              }
+              if (!currentLabels.includes('claimed')) {
+                await github.rest.issues.addLabels({
+                  owner,
+                  repo,
+                  issue_number,
+                  labels: ['claimed']
+                });
+              }
+            } 
+            else if (action === 'opened' && !hasAssignees) {
+              if (!currentLabels.includes('not claimed')) {
+                await github.rest.issues.addLabels({
+                  owner,
+                  repo,
+                  issue_number,
+                  labels: ['not claimed']
+                });
+              }
+            }
