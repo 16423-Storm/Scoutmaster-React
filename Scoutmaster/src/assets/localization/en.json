@@ -411,5 +411,10 @@
         "p16": "If you have questions about these Terms of Service, contact us at:",
         "p16/2": "Email:",
         "p16/3": "This is a placeholder email address. Replace it with a working contact address before launch."
-    }
+    },
+
+    "contributors": "Contributors",
+    "contributorthankyou": "Scoutmaster would not be possible without the amazing teams that have contributed to it!",
+    "founders": "Founders",
+    "localization": "Localization"
 }

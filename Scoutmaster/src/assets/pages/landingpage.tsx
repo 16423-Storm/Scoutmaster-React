@@ -18,6 +18,7 @@ import { LanguageDropdown } from "./components/languagedropdown.js";
 import {
     FaDiscord,
     FaGavel,
+    FaGithub,
     FaGlobe,
     FaInstagram,
     FaShieldAlt,
@@ -130,14 +131,13 @@ function LandingPage() {
                             className="phone-landing-herotitle"
                             style={{ fontSize: "3.6rem" }}
                         >
-                            Contributors
+                            {t("contributors")}
                         </p>
                         <p
                             className="phone-landing-heroslogan"
                             style={{ paddingTop: "3px" }}
                         >
-                            Scoutmaster would not be possible without the
-                            amazing FTC teams that have contributed to it!
+                            {t("contributorthankyou")}
                         </p>
                         <div
                             style={{
@@ -151,7 +151,7 @@ function LandingPage() {
                                 className="phone-landing-herotitle"
                                 style={{ fontSize: "1.6rem" }}
                             >
-                                Founders
+                                {t("founders")}
                             </p>
                             <div
                                 style={{
@@ -181,7 +181,7 @@ function LandingPage() {
                                 className="phone-landing-herotitle"
                                 style={{ fontSize: "1.6rem" }}
                             >
-                                Localization
+                                {t("localization")}
                             </p>
                             <div
                                 style={{
@@ -254,6 +254,9 @@ function LandingPage() {
                         <a onClick={() => setShowTos(true)}>
                             <FaShieldAlt /> {t("tos")}
                         </a>
+                        <a onClick={() => setShowTos(true)}>
+                            <FaGithub /> Github
+                        </a>
                     </div>
                 </footer>
             </>
@@ -313,14 +316,13 @@ function LandingPage() {
                         className="desktop-landing-herotitle"
                         style={{ fontSize: "3.6rem" }}
                     >
-                        Contributors
+                        {t("contributors")}
                     </p>
                     <p
                         className="desktop-landing-heroslogan"
                         style={{ paddingTop: "3px" }}
                     >
-                        Scoutmaster would not be possible without the amazing
-                        FTC teams that have contributed to it!
+                        {t("contributorthankyou")}
                     </p>
                     <div
                         style={{
@@ -334,7 +336,7 @@ function LandingPage() {
                             className="desktop-landing-herotitle"
                             style={{ fontSize: "1.6rem" }}
                         >
-                            Founders
+                            {t("founders")}
                         </p>
                         <div
                             style={{
@@ -364,7 +366,7 @@ function LandingPage() {
                             className="desktop-landing-herotitle"
                             style={{ fontSize: "1.6rem" }}
                         >
-                            Localization
+                            {t("localization")}
                         </p>
                         <div
                             style={{
@@ -434,6 +436,9 @@ function LandingPage() {
                     </a>
                     <a onClick={() => setShowTos(true)}>
                         <FaShieldAlt /> {t("tos")}
+                    </a>
+                    <a onClick={() => setShowTos(true)}>
+                        <FaGithub /> Github
                     </a>
                 </div>
             </footer>
