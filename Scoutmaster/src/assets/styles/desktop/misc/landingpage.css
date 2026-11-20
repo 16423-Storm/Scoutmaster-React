@@ -29,6 +29,7 @@
     font-size: 3.6rem;
     font-weight: 900;
     color: white;
+    text-align: center;
 }
 
 .desktop-landing-herologo {
@@ -224,4 +225,10 @@
 .desktop-landing-footer > div > a:hover {
     padding-bottom: 0px;
     border-bottom: white 1px solid;
+}
+
+.desktop-landing-contributorlogo {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
 }
