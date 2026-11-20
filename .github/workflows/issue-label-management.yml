@@ -32,7 +32,7 @@ jobs:
                   owner,
                   repo,
                   issue_number,
-                  name: 'not claimed'
+                  name: 'not claimed 🙁'
                 });
               }
               if (!currentLabels.includes('claimed')) {
@@ -40,7 +40,7 @@ jobs:
                   owner,
                   repo,
                   issue_number,
-                  labels: ['claimed']
+                  labels: ['claimed 😁']
                 });
               }
             } else if (action === 'opened' && assigneesCount === 0) {
