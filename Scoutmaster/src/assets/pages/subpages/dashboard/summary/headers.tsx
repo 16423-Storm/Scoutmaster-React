@@ -446,15 +446,17 @@ export function Tab2({
 
     const summary = useSummary((state) => state.summary);
 
+    const currentPicks = summary.picks ?? [];
+
     const defaultPicks = teamsBelow.map((team) => team.number);
 
     useEffect(() => {
-        if (summary.picks.length === 0 && defaultPicks.length > 0) {
+        if (currentPicks.length === 0 && defaultPicks.length > 0) {
             updateSummary({
                 picks: defaultPicks,
             });
         } else {
-            const validPicks = summary.picks.filter((pick) =>
+            const validPicks = currentPicks.filter((pick) =>
                 defaultPicks.includes(pick),
             );
 
@@ -464,19 +466,19 @@ export function Tab2({
             ];
 
             if (
-                newPicks.length !== summary.picks.length ||
-                newPicks.some((pick, i) => pick !== summary.picks[i])
+                newPicks.length !== currentPicks.length ||
+                newPicks.some((pick, i) => pick !== currentPicks[i])
             ) {
                 updateSummary({
                     picks: newPicks,
                 });
             }
         }
-    }, [teamsBelow, summary.picks]);
+    }, [teamsBelow, currentPicks]);
 
     const belowPicks =
-        summary.picks.length > 0
-            ? summary.picks.filter((pick) =>
+        currentPicks.length > 0
+            ? currentPicks.filter((pick) =>
                   teamsBelow.some((team) => team.number === pick),
               )
             : teamsBelow.map((team) => team.number);
@@ -683,6 +685,9 @@ export function Tab3({
 
     const summary = useSummary((state) => state.summary);
 
+    const accepts = summary.accept ?? [];
+    const rejects = summary.reject ?? [];
+
     if (useScreenType() == "desktop") {
         return (
             <>
@@ -725,27 +730,20 @@ export function Tab3({
                         </div>
                     ) : (
                         teamsAbove.map((team, index) => {
-                            const accept = (summary.accept ?? []).includes(
-                                team.number,
-                            );
-                            const reject = (summary.reject ?? []).includes(
-                                team.number,
-                            );
+                            const accept = accepts.includes(team.number);
+                            const reject = rejects.includes(team.number);
 
                             const handleAccept = () => {
                                 if (accept) {
                                     updateSummary({
-                                        accept: summary.accept.filter(
+                                        accept: accepts.filter(
                                             (number) => number !== team.number,
                                         ),
                                     });
                                 } else {
                                     updateSummary({
-                                        accept: [
-                                            ...summary.accept,
-                                            team.number,
-                                        ],
-                                        reject: summary.reject.filter(
+                                        accept: [...accepts, team.number],
+                                        reject: rejects.filter(
                                             (number) => number !== team.number,
                                         ),
                                     });
@@ -755,17 +753,14 @@ export function Tab3({
                             const handleReject = () => {
                                 if (reject) {
                                     updateSummary({
-                                        reject: summary.reject.filter(
+                                        reject: rejects.filter(
                                             (number) => number !== team.number,
                                         ),
                                     });
                                 } else {
                                     updateSummary({
-                                        reject: [
-                                            ...summary.reject,
-                                            team.number,
-                                        ],
-                                        accept: summary.accept.filter(
+                                        reject: [...rejects, team.number],
+                                        accept: accepts.filter(
                                             (number) => number !== team.number,
                                         ),
                                     });
@@ -867,23 +862,20 @@ export function Tab3({
                         </div>
                     ) : (
                         teamsAbove.map((team, index) => {
-                            const accept = summary.accept.includes(team.number);
-                            const reject = summary.reject.includes(team.number);
+                            const accept = accepts.includes(team.number);
+                            const reject = rejects.includes(team.number);
 
                             const handleAccept = () => {
                                 if (accept) {
                                     updateSummary({
-                                        accept: summary.accept.filter(
+                                        accept: accepts.filter(
                                             (number) => number !== team.number,
                                         ),
                                     });
                                 } else {
                                     updateSummary({
-                                        accept: [
-                                            ...summary.accept,
-                                            team.number,
-                                        ],
-                                        reject: summary.reject.filter(
+                                        accept: [...accepts, team.number],
+                                        reject: rejects.filter(
                                             (number) => number !== team.number,
                                         ),
                                     });
@@ -893,17 +885,14 @@ export function Tab3({
                             const handleReject = () => {
                                 if (reject) {
                                     updateSummary({
-                                        reject: summary.reject.filter(
+                                        reject: rejects.filter(
                                             (number) => number !== team.number,
                                         ),
                                     });
                                 } else {
                                     updateSummary({
-                                        reject: [
-                                            ...summary.reject,
-                                            team.number,
-                                        ],
-                                        accept: summary.accept.filter(
+                                        reject: [...rejects, team.number],
+                                        accept: accepts.filter(
                                             (number) => number !== team.number,
                                         ),
                                     });
