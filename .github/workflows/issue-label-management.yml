@@ -27,7 +27,7 @@ jobs:
             }
 
             if (action === 'assigned' || (action === 'opened' && assigneesCount > 0)) {
-              if (currentLabels.includes('not claimed')) {
+              if (currentLabels.includes('not claimed 🙁')) {
                 await github.rest.issues.removeLabel({
                   owner,
                   repo,
