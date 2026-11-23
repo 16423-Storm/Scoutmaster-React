@@ -44,12 +44,12 @@ jobs:
                 });
               }
             } else if (action === 'opened' && assigneesCount === 0) {
-              if (!currentLabels.includes('not claimed')) {
+              if (!currentLabels.includes('not claimed 🙁')) {
                 await github.rest.issues.addLabels({
                   owner,
                   repo,
                   issue_number,
-                  labels: ['not claimed']
+                  labels: ['not claimed 🙁']
                 });
               }
             }
