@@ -1,0 +1,69 @@
+name: Sign-in tests
+
+on:
+    pull_request:
+        paths:
+            - "Backend/main.py"
+            - "Scoutmaster/src/assets/scripts/auth.ts"
+            - "Scoutmaster/src/assets/scripts/supabase.ts"
+            - "Scoutmaster/src/assets/scripts/serverutils/realtime.ts"
+            - "Scoutmaster/src/assets/pages/signinpage.tsx"
+            - "Backend/test_main.py"
+            - "Scoutmaster/src/test/**"
+            - "Scoutmaster/package.json"
+            - "Scoutmaster/package-lock.json"
+            - "Scoutmaster/vitest.config.ts"
+            - ".github/workflows/test-sign-in.yml"
+    push:
+        branches: [main]
+        paths:
+            - "Backend/main.py"
+            - "Scoutmaster/src/assets/scripts/auth.ts"
+            - "Scoutmaster/src/assets/scripts/supabase.ts"
+            - "Scoutmaster/src/assets/scripts/serverutils/realtime.ts"
+            - "Scoutmaster/src/assets/pages/signinpage.tsx"
+            - "Backend/test_main.py"
+            - "Scoutmaster/src/test/**"
+            - "Scoutmaster/package.json"
+            - "Scoutmaster/package-lock.json"
+            - "Scoutmaster/vitest.config.ts"
+            - ".github/workflows/test-sign-in.yml"
+
+jobs:
+    frontend:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: Scoutmaster
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: npm
+                  cache-dependency-path: Scoutmaster/package-lock.json
+            - run: npm ci
+            - run: npm test
+            - name: Install Playwright browser
+              run: npx playwright install --with-deps chromium
+            - name: Run authenticated sign-in browser test
+              env:
+                  VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+                  VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+                  VITE_PYTHON_SERVER_URL: ${{ secrets.VITE_PYTHON_SERVER_URL }}
+                  E2E_EMAIL: ${{ secrets.E2E_EMAIL }}
+                  E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
+              run: npm run test:e2e
+
+    backend:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: Backend
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-python@v5
+              with:
+                  python-version: "3.12"
+            - run: pip install -r requirements.txt pytest httpx
+            - run: pytest -q
