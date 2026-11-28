@@ -37,6 +37,10 @@ import {
 import { errorToast } from "../misc/toastmanager";
 
 const serverURL = import.meta.env.VITE_PYTHON_SERVER_URL;
+const serverBaseURL = serverURL?.startsWith("http")
+    ? serverURL
+    : `https://${serverURL}`;
+const websocketBaseURL = serverBaseURL.replace(/^http/, "ws");
 
 let socket: WebSocket | null = null;
 let isConnecting: Boolean = false;
@@ -87,7 +91,7 @@ export async function connectToSession(): Promise<WebSocket | null> {
     }
 
     const accessToken = session.access_token;
-    socket = new WebSocket(`wss://${serverURL}/ws?token=${accessToken}`);
+    socket = new WebSocket(`${websocketBaseURL}/ws?token=${accessToken}`);
 
     socket.onopen = () => {
         console.log("Realtime connection established");

@@ -5,6 +5,9 @@ import { useGoToPage } from "./multipageutils";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 const serverURL = import.meta.env.VITE_PYTHON_SERVER_URL;
+const serverBaseURL = serverURL?.startsWith("http")
+    ? serverURL
+    : `https://${serverURL}`;
 const webURL = "https://ftcscoutmaster.xyz/";
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
@@ -121,7 +124,7 @@ export async function checkUserGroup(): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`https://${serverURL}/checkusergroup`, {
+        const response = await fetch(`${serverBaseURL}/checkusergroup`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -147,7 +150,7 @@ export async function joinGroup(groupId: number): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`https://${serverURL}/join/${groupId}`, {
+        const response = await fetch(`${serverBaseURL}/join/${groupId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -177,7 +180,7 @@ export async function createGroup(): Promise<boolean> {
         }
         console.log("Got token")
 
-        const response = await fetch(`https://${serverURL}/creategroup`, {
+        const response = await fetch(`${serverBaseURL}/creategroup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -209,7 +212,7 @@ export async function leaveGroup(groupId: number): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`https://${serverURL}/leavegroup`, {
+        const response = await fetch(`${serverBaseURL}/leavegroup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -245,7 +248,7 @@ export async function deleteGroup(groupId: number): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`https://${serverURL}/deletegroup`, {
+        const response = await fetch(`${serverBaseURL}/deletegroup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -282,7 +285,7 @@ export async function deleteAccount(): Promise<boolean> {
             return false;
         }
 
-        const response = await fetch(`https://${serverURL}/deleteaccount`, {
+        const response = await fetch(`${serverBaseURL}/deleteaccount`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
