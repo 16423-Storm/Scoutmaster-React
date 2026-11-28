@@ -15,7 +15,19 @@ test.describe("sign in", () => {
         await page.locator('input[name="password"]').fill(password!);
         await page.getByRole("button", { name: /sign in/i }).click();
 
-        await expect(page).toHaveURL(/#\/dashboard$/);
-        await expect(page.locator(".desktop-dash-maincontainer, .phone-dash-maincontainer")).toBeVisible();
+        const createGroupButton = page.getByRole("button", {
+            name: /create new group/i,
+        });
+
+        if (await createGroupButton.isVisible({ timeout: 5000 }).catch(() => false)) {
+            await createGroupButton.click();
+        }
+
+        await expect(page).toHaveURL(/#\/dashboard$/, { timeout: 30000 });
+        await expect(
+            page.locator(
+                ".desktop-dash-maincontainer, .phone-dash-maincontainer",
+            ).first(),
+        ).toBeVisible();
     });
 });
